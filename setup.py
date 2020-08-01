@@ -46,8 +46,6 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
@@ -67,13 +65,13 @@ setup(
     package_data={
         module.__name__: walker(
             os.path.dirname(module.__file__),
-            'files'
+            'create/templates'
         ),
     },
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/mlf-core/mlf_core',
+    url='https://github.com/mlf-core/mlf-core',
     version='0.1.0',
     zip_safe=False,
 )

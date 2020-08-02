@@ -25,7 +25,7 @@ WD = os.path.dirname(__file__)
 
 def main():
     traceback.install(width=200, word_wrap=True)
-    print(rf"""[bold blue]
+    print(r"""[bold blue]
                 .__   _____
           _____ |  |_/ ____\          ____  ___________   ____
          /     \|  |\   __\  ______ _/ ___\/  _ \_  __ \_/ __ \

@@ -26,4 +26,4 @@ jobs:
       - name: Create mlflow_pytorch Template
         run: |
           cd ..
-          echo -e "\n\n\n\n\n\n\n\n\nn" | mlf-core create
+          echo -e "\n\n\n\n\nn\n\nn" | mlf-core create

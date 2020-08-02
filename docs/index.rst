@@ -7,7 +7,6 @@ Welcome to mlf-core's documentation!
    readme
    installation
    usage
-   modules
    authors
    changelog
    code_of_conduct

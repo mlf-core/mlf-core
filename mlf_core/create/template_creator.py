@@ -61,7 +61,7 @@ class TemplateCreator:
             fix_short_title_underline(f'{project_path}/docs/index.rst')
 
         # Lint the project to verify that the new template adheres to all standards
-        lint_project(project_path, is_create=True)
+        lint_project(project_path)
 
         if self.creator_ctx.is_github_repo and not dot_mlf_core:
             # rename the currently created template to a temporary name, create Github repo, push, remove temporary template
@@ -194,14 +194,15 @@ class TemplateCreator:
                                                                              to_get_property='project_name')
 
         # check if the project name is already taken on readthedocs.io
+        # lower the string, since mlflow doesn't play with uppercase docker container names
         while self.readthedocs_slug_already_exists(self.creator_ctx.project_name) and not dot_mlf_core:
             print(f'[bold red]A project named {self.creator_ctx.project_name} already exists at readthedocs.io!')
             if mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                                     question='Do you want to choose another name for your project?\n'
                                                              'Otherwise you will not be able to host your docs at readthedocs.io!', default='Yes'):
-                self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core('text',
-                                                                                     'Project name',
-                                                                                     default='Exploding Springfield')
+                self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(function='text',
+                                                                                     question='Project name',
+                                                                                     default='Exploding Springfield').lower()
             # break if the project should be named anyways
             else:
                 break
@@ -209,7 +210,7 @@ class TemplateCreator:
         self.creator_ctx.project_short_description = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                                           question='Short description of your project',
                                                                                           default=f'{self.creator_ctx.project_name}'
-                                                                                                  f'. A mlf_core based .',
+                                                                                                  f'. A mlf-core based .',
                                                                                           dot_mlf_core=dot_mlf_core,
                                                                                           to_get_property='project_short_description')
         poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',

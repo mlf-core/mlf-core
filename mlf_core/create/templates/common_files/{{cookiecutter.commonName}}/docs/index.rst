@@ -6,9 +6,8 @@ Welcome to {{ cookiecutter.project_name }}'s documentation!
    :caption: Contents:
 
    readme
-   installation
    usage
-   modules
+   model
    authors
    changelog
    code_of_conduct

@@ -109,20 +109,18 @@ class TemplateLinter(object):
         files_fail = [
             ['Dockerfile'],
             ['mlf_core.cfg'],
-            ['Makefile'],
             ['README.rst'],
             ['CHANGELOG.rst'],
             ['LICENSE', 'LICENSE.md', 'LICENCE', 'LICENCE.md'],  # NB: British / American spelling
             [os.path.join('docs', 'index.rst')],
             [os.path.join('docs', 'readme.rst')],
             [os.path.join('docs', 'changelog.rst')],
-            [os.path.join('docs', 'installation.rst')],
+            [os.path.join('docs', 'model.rst')],
             [os.path.join('docs', 'usage.rst')],
         ]
 
         files_warn = [
             ['.gitignore'],
-            ['.dependabot/config.yml'],
             [os.path.join('.github', 'ISSUE_TEMPLATE', 'bug_report.md')],
             [os.path.join('.github', 'ISSUE_TEMPLATE', 'feature_request.md')],
             [os.path.join('.github', 'ISSUE_TEMPLATE', 'general_question.md')],
@@ -389,7 +387,7 @@ class GetLintingFunctionsMeta(type):
         cls = type.__call__(self, *args)
 
         # set the methods attribute to a list of all specific linting functions
-        setattr(cls, "methods", self.get_linting_functions())
+        setattr(cls, 'methods', self.get_linting_functions())
 
         return cls
 

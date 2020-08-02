@@ -225,7 +225,8 @@ def get_repo_public_key(username: str, repo_name: str, token: str) -> dict:
 
 def create_secret(username: str, repo_name: str, token: str, public_key_value: str, public_key_id: str) -> None:
     """
-    Create the secret named CT_SYNC_TOKEN using a PUT request via the Github API. This request needs a PAT with the repo scope for authentification purposes.
+    Create the secret named MLF_CORE_SYNC_TOKEN using a PUT request via the Github API.
+    This request needs a PAT with the repo scope for authentication purposes.
     Using PyNacl, a Python binding for Javascripts LibSodium, it encrypts the secret value, which is required by the Github API.
 
     :param username: The user's github username
@@ -243,7 +244,7 @@ def create_secret(username: str, repo_name: str, token: str, public_key_value: s
     # the authentification header
     headers = {'Authorization': f'token {token}'}
     # the url used for PUT
-    put_url = f'https://api.github.com/repos/{username}/{repo_name}/actions/secrets/CT_SYNC_TOKEN'
+    put_url = f'https://api.github.com/repos/{username}/{repo_name}/actions/secrets/MLF_CORE_SYNC_TOKEN'
     requests.put(put_url, headers=headers, data=json.dumps(params))
 
 

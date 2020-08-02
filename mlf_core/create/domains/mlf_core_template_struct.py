@@ -6,11 +6,11 @@ class MlfcoreTemplateStruct:
     """
     First section declares the variables that all template have in common
     """
-    cookietemple_version: str = ''  # Version of cookietemple, which was used for creating the project
+    cookietemple_version: str = ''  # Version of mlf-core, which was used for creating the project
     domain: str = ''  # Domain of the template
     language: str = ''  # Primary language
-    project_slug: str = ''  # Project name cookietemple uses for almost all further processing
-    template_version: str = ''  # Version of the provided cookietemple template
+    project_slug: str = ''  # Project name mlf-core uses for almost all further processing
+    template_version: str = ''  # Version of the provided mlf-core template
     template_handle: str = ''  # Handle of the specific template, indicating which template is currently used
     github_username: str = ''  # Github username
     is_github_repo: bool = False  # Whether the user wants to create a GitHub repo automatically

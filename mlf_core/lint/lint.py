@@ -3,6 +3,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from rich import print
 
+from mlf_core.lint.domains.mlflow import MlflowPytorchLint
 from mlf_core.lint.template_linter import TemplateLinter
 
 
@@ -16,6 +17,7 @@ def lint_project(project_dir: str) -> TemplateLinter:
     template_handle = get_template_handle(project_dir)
 
     switcher = {
+        'mlflow-pytorch': MlflowPytorchLint
     }
 
     try:
@@ -26,15 +28,9 @@ def lint_project(project_dir: str) -> TemplateLinter:
 
     # Run the linting tests
     try:
-        # Disable check files?
-        disable_check_files_templates = ['pub-thesis-latex']
-        if template_handle in disable_check_files_templates:
-            disable_check_files = True
-        else:
-            disable_check_files = False
         # Run non project specific linting
         print('[bold blue]Running general linting')
-        lint_obj.lint_project(super(lint_obj.__class__, lint_obj), custom_check_files=disable_check_files, is_subclass_calling=False)
+        lint_obj.lint_project(super(lint_obj.__class__, lint_obj), is_subclass_calling=False)
 
         # Run the project specific linting
         print('[bold blue]Running {template_handle} linting')

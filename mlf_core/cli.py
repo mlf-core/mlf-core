@@ -10,10 +10,12 @@ from rich import traceback
 from rich import print
 
 import mlf_core
+from mlf_core.bump_version.bump_version import VersionBumper
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain
 from mlf_core.custom_cli.click import HelpErrorHandling, print_project_version, CustomHelpSubcommand, CustomArg
 from mlf_core.info.info import TemplateInfo
+from mlf_core.lint.lint import lint_project
 from mlf_core.list.list import TemplateLister
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.upgrade.upgrade import UpgradeCommand
@@ -82,7 +84,7 @@ def lint(project_dir) -> None:
     Afterwards, template specific linting is invoked. cli-python for example may check for the existence of a setup.py file.
     Both results are collected and displayed.
     """
-    # lint_project(project_dir)
+    lint_project(project_dir)
 
 
 @mlf_core_cli.command(short_help='List all available mlf-core templates.', cls=CustomHelpSubcommand)
@@ -167,33 +169,33 @@ def bump_version(ctx, new_version, project_dir, downgrade) -> None:
     Unless the user uses downgrade mode via the -d flag, a downgrade of a version is never allowed. Note that bump-version with the new version
     equals the current version is never allowed, either with or without -d.
     """
-    # if not new_version:
-    #     HelpErrorHandling.args_not_provided(ctx, 'bump-version')
-    # else:
-    #     # if the path entered ends with a trailing slash remove it for consistent output
-    #     if str(project_dir).endswith('/'):
-    #         project_dir = Path(str(project_dir).replace(str(project_dir)[len(str(project_dir)) - 1:], ''))
-    #
-    #     version_bumper = VersionBumper(project_dir, downgrade)
-    #     # lint before run bump-version
-    #     version_bumper.lint_before_bump()
-    #     # only run bump-version if conditions are met
-    #     if version_bumper.can_run_bump_version(new_version, project_dir):
-    #         # only run "sanity" checker when the downgrade flag is not set
-    #         if not downgrade:
-    #             # if the check fails, ask the user for confirmation
-    #             if version_bumper.check_bump_range(version_bumper.CURRENT_VERSION.split('-')[0], new_version.split('-')[0]):
-    #                 version_bumper.bump_template_version(new_version, project_dir)
-    #             elif mlf_core_questionary_or_dot_mlf_core(function='confirm',
-    #                                                       question=f'Bumping from {version_bumper.CURRENT_VERSION} to {new_version} seems not reasonable.\n'
-    #                                                       f'Do you really want to bump the project version?',
-    #                                                       default='n'):
-    #                 print('\n')
-    #                 version_bumper.bump_template_version(new_version, project_dir)
-    #         else:
-    #             version_bumper.bump_template_version(new_version, project_dir)
-    #     else:
-    #         sys.exit(1)
+    if not new_version:
+        HelpErrorHandling.args_not_provided(ctx, 'bump-version')
+    else:
+        # if the path entered ends with a trailing slash remove it for consistent output
+        if str(project_dir).endswith('/'):
+            project_dir = Path(str(project_dir).replace(str(project_dir)[len(str(project_dir)) - 1:], ''))
+
+        version_bumper = VersionBumper(project_dir, downgrade)
+        # lint before run bump-version
+        version_bumper.lint_before_bump()
+        # only run bump-version if conditions are met
+        if version_bumper.can_run_bump_version(new_version, project_dir):
+            # only run "sanity" checker when the downgrade flag is not set
+            if not downgrade:
+                # if the check fails, ask the user for confirmation
+                if version_bumper.check_bump_range(version_bumper.CURRENT_VERSION.split('-')[0], new_version.split('-')[0]):
+                    version_bumper.bump_template_version(new_version, project_dir)
+                elif mlf_core_questionary_or_dot_mlf_core(function='confirm',
+                                                          question=f'Bumping from {version_bumper.CURRENT_VERSION} to {new_version} seems not reasonable.\n'
+                                                          f'Do you really want to bump the project version?',
+                                                          default='n'):
+                    print('\n')
+                    version_bumper.bump_template_version(new_version, project_dir)
+            else:
+                version_bumper.bump_template_version(new_version, project_dir)
+        else:
+            sys.exit(1)
 
 
 @mlf_core_cli.command(short_help='Configure your general settings and github credentials.', cls=CustomHelpSubcommand)

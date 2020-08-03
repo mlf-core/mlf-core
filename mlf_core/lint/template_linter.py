@@ -12,6 +12,8 @@ import rich.console
 from packaging import version
 from itertools import groupby
 
+from rich.style import Style
+
 from mlf_core.util.dir_util import pf
 
 
@@ -263,13 +265,13 @@ class TemplateLinter(object):
     def print_results(self):
         console = rich.console.Console()
         console.print()
-        console.rule("[bold blue] LINT RESULTS")
+        console.rule("[bold blue]LINT RESULTS")
         console.print()
         console.print(
             f'     [bold green][[\u2714]] {len(self.passed):>4} tests passed\n     [bold yellow][[!]] {len(self.warned):>4} tests had warnings\n'
             f'     [bold red][[\u2717]] {len(self.failed):>4} tests failed',
             overflow="ellipsis",
-            highlight=False,
+            highlight=False
         )
 
         # Helper function to format test links nicely
@@ -328,6 +330,7 @@ def files_exist_linting(self,
     :param files_warn: list of files which should exist or linting will warn
     :param files_warn_ifexists: list of files which should exist or linting will warn
     :param is_subclass_calling: indicates whether the subclass of TemplateLinter called the linting (specific) or itw as the general linting
+    :param handle: template handle or general if not template specific
     """
     # Files that cause an error if they don't exist
     all_exists = True

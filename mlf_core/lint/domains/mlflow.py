@@ -1,5 +1,6 @@
 import os
 
+from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.lint.template_linter import TemplateLinter, files_exist_linting, GetLintingFunctionsMeta
 
 CWD = os.getcwd()
@@ -53,6 +54,31 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-pytorch')
+
+    def check_conda_environment(self) -> None:
+        passed_conda_check = True
+        conda_env = load_yaml_file(f'{self.path}/environment.yml')
+
+        # Verify that the structure is somewhat reasonable
+        for section in ['name', 'channels', 'dependencies']:
+            if not section in conda_env:
+                passed_conda_check = False
+                self.failed.append(('mlflow-pytorch-2', f'Section {section} missing from environment.yml file!'))
+
+        # Verify that all Conda dependencies have a pinned version number
+        conda_only = list(filter(lambda dependency: '::' in dependency, conda_env['dependencies']))
+        for dependency in conda_only:
+            split = dependency.split('=')
+            if not split[1]:
+                passed_conda_check = False
+                self.failed.append(('mlflow-pytorch-2', f'Dependency {dependency} does not have a pinned version!'))
+
+        # Verify that all Conda dependencies are up to date
+        for dependency in conda_only:
+            pass
+
+        if passed_conda_check:
+            self.passed.append(('mlflow-pytorch-2', 'Passed conda environment checks.'))
 
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):

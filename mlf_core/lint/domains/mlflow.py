@@ -61,7 +61,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         # Verify that the structure is somewhat reasonable
         for section in ['name', 'channels', 'dependencies']:
-            if not section in conda_env:
+            if section not in conda_env:
                 passed_conda_check = False
                 self.failed.append(('mlflow-pytorch-2', f'Section {section} missing from environment.yml file!'))
 

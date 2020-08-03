@@ -12,8 +12,6 @@ import rich.console
 from packaging import version
 from itertools import groupby
 
-from rich.style import Style
-
 from mlf_core.util.dir_util import pf
 
 

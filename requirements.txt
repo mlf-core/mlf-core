@@ -3,12 +3,13 @@ click==7.1.2
 ruamel.yaml==0.16.10
 pygithub==1.52
 GitPython==3.1.7
-autopep8==1.5.4
+autopep8>=1.5.4
 cffi==1.14.1
 cryptography==3.0
-requests==2.24.0
+requests>=2.24.0
 rich==5.0.0
 packaging==20.4
 appdirs==1.4.4
 questionary==1.5.2
 pynacl==1.4.0
+mlflow

@@ -1,16 +1,10 @@
 import click
 import xgboost as xgb
-import numpy as np
 import mlflow
 import mlflow.xgboost
 import time
-import random
-import os
-import tempfile
-import subprocess
 
 
-from system_intelligence.query import query_and_export
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from data_loading.data_loader import load_train_test_data
 
@@ -24,14 +18,14 @@ from data_loading.data_loader import load_train_test_data
 @click.option('--single_precision_histogram', default=True, help='Enable or disable single precision histogram calculation.')
 def start_training(epochs, general_seed, xgboost_seed, cuda, dataset, single_precision_histogram):
     use_cuda = True if cuda == 'True' else False
-    
+
     with mlflow.start_run():
         # Fetch and prepare data
         dtrain, dtest = load_train_test_data(dataset)
-            
+
         # Enable the logging of all parameters, metrics and models to mlflow
         mlflow.xgboost.autolog()
-        
+
         # Set XGBoost parameters
         if dataset == 'boston':
             param = {}
@@ -44,7 +38,7 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, dataset, single_pre
         param['subsample'] = 0.5
         param['colsample_bytree'] = 0.5
         param['colsample_bylevel'] = 0.5
-        
+
         # Set random seeds
         set_general_random_seeds(general_seed)
         set_xgboost_random_seeds(xgboost_seed, param)
@@ -62,7 +56,7 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, dataset, single_pre
         device = 'GPU' if use_cuda else 'CPU'
         if use_cuda:
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
-            
+
         # Log hardware and software
         log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
 

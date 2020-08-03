@@ -1,4 +1,4 @@
-name: mlf-core lint
+name: Create mlflow_pytorch Template
 
 on: [push]
 
@@ -19,10 +19,11 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install mlf-core
+      - name: Build mlf-core
         run: |
-          pip install mlf-core
+          make install
 
-      - name: Run mlf-core lint
+      - name: Create mlflow_pytorch Template
         run: |
-          mlf-core lint .
+          cd ..
+          echo -e "\n\033[B\n\n\n\nn\n\n\n\nn" | mlf-core create

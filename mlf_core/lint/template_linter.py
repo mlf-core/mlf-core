@@ -263,7 +263,7 @@ class TemplateLinter(object):
     def print_results(self):
         console = rich.console.Console()
         console.print()
-        console.rule("[bold green] LINT RESULTS")
+        console.rule("[bold blue] LINT RESULTS")
         console.print()
         console.print(
             f'     [bold green][[\u2714]] {len(self.passed):>4} tests passed\n     [bold yellow][[!]] {len(self.warned):>4} tests had warnings\n'

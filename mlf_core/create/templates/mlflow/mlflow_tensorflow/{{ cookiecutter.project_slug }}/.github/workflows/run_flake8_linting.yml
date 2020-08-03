@@ -1,4 +1,4 @@
-name: mlf-core lint
+name: Run flake8 linting
 
 on: [push]
 
@@ -6,9 +6,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3.7, 3.8]
 
     steps:
       - uses: actions/checkout@v2
@@ -17,12 +14,12 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python }}
+          python-version: 3.8
 
-      - name: Install mlf-core
+      - name: Install flake8
         run: |
-          pip install mlf-core
+            pip install flake8
 
-      - name: Run mlf-core lint
+      - name: Lint with flake8
         run: |
-          mlf-core lint .
+            flake8 .

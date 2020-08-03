@@ -3,7 +3,7 @@ from pathlib import Path
 from ruamel.yaml import YAML
 from rich import print
 
-from mlf_core.lint.domains.mlflow import MlflowPytorchLint
+from mlf_core.lint.domains.mlflow import MlflowPytorchLint, MlflowTensorflowLint
 from mlf_core.lint.template_linter import TemplateLinter
 
 
@@ -17,7 +17,8 @@ def lint_project(project_dir: str) -> TemplateLinter:
     template_handle = get_template_handle(project_dir)
 
     switcher = {
-        'mlflow-pytorch': MlflowPytorchLint
+        'mlflow-pytorch': MlflowPytorchLint,
+        'mlflow-tensorflow': MlflowTensorflowLint
     }
 
     try:

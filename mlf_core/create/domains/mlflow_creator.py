@@ -28,6 +28,7 @@ class MlflowCreator(TemplateCreator):
 
         '"" TEMPLATE VERSIONS ""'
         self.MLFLOW_PYTORCH_TEMPLATE_VERSION = load_ct_template_version('mlflow-pytorch', self.AVAILABLE_TEMPLATES_PATH)
+        self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION = load_ct_template_version('mlflow-tensorflow', self.AVAILABLE_TEMPLATES_PATH)
 
     def create_template(self, dot_mlf_core: dict or None):
         """
@@ -36,7 +37,7 @@ class MlflowCreator(TemplateCreator):
 
         self.cli_struct.language = mlf_core_questionary_or_dot_mlf_core(function='select',
                                                                         question='Choose the project\'s primary framework',
-                                                                        choices=['pytorch'],
+                                                                        choices=['pytorch', 'tensorflow'],
                                                                         default='pytorch',
                                                                         dot_mlf_core=dot_mlf_core,
                                                                         to_get_property='language')
@@ -47,6 +48,7 @@ class MlflowCreator(TemplateCreator):
         # switch case statement to prompt the user to fetch template specific configurations
         switcher = {
             'pytorch': self.mlflow_pytorch_options,
+            'tensorflow': self.mlflow_tensorflow_options
         }
         switcher.get(self.cli_struct.language)(dot_mlf_core)
 
@@ -64,6 +66,7 @@ class MlflowCreator(TemplateCreator):
         # switch case statement to fetch the template version
         switcher_version = {
             'pytorch': self.MLFLOW_PYTORCH_TEMPLATE_VERSION,
+            'tensorflow': self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION
         }
         self.cli_struct.template_version, self.cli_struct.template_handle = switcher_version.get(
             self.cli_struct.language), f'mlflow-{self.cli_struct.language.lower()}'
@@ -72,5 +75,9 @@ class MlflowCreator(TemplateCreator):
         super().process_common_operations(domain='mlflow', language=self.cli_struct.language, dot_mlf_core=dot_mlf_core)
 
     def mlflow_pytorch_options(self, dot_mlf_core: dict or None):
-        """ Prompts for cli-python specific options and saves them into the MlflowTemplateStruct """
+        """ Prompts for mlflow-pytorch specific options and saves them into the MlflowTemplateStruct """
+        pass
+
+    def mlflow_tensorflow_options(self, dot_mlf_core: dict or None):
+        """ Prompts for mlflow-tensorflow specific options and saves them into the MlflowTemplateStruct """
         pass

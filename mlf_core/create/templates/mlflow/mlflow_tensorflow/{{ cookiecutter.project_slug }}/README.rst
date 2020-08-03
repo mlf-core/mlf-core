@@ -23,8 +23,9 @@
 Features
 --------
 
-* Fully reproducible mlf-core Pytorch model
+* Fully reproducible mlf-core Tensorflow model
 * MLF-CORE TODO: Write features here
+
 
 Credits
 -------

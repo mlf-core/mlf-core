@@ -191,7 +191,7 @@ class TemplateCreator:
                                                                              question='Project name',
                                                                              default='Exploding Springfield',
                                                                              dot_mlf_core=dot_mlf_core,
-                                                                             to_get_property='project_name')
+                                                                             to_get_property='project_name').lower()
 
         # check if the project name is already taken on readthedocs.io
         # lower the string, since mlflow doesn't play with uppercase docker container names

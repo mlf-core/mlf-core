@@ -1,6 +1,5 @@
 import os
 
-from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.lint.template_linter import TemplateLinter, files_exist_linting, GetLintingFunctionsMeta
 
 CWD = os.getcwd()
@@ -54,48 +53,6 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-pytorch')
-
-    def check_conda_environment(self) -> None:
-        passed_conda_check = True
-        conda_env = load_yaml_file(f'{self.path}/environment.yml')
-
-        # Verify that the structure is somewhat reasonable
-        for section in ['name', 'channels', 'dependencies']:
-            if section not in conda_env:
-                passed_conda_check = False
-                self.failed.append(('mlflow-pytorch-2', f'Section {section} missing from environment.yml file!'))
-
-        conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
-
-        # Verify that all Conda dependencies have a pinned version number
-        for dependency in conda_only:
-            # after an = sign there should be a specified version
-            split = dependency.split('=')
-            if len(split) < 2:
-                passed_conda_check = False
-                self.failed.append(('mlflow-pytorch-2', f'Dependency {dependency} does not have a pinned version!'))
-
-        # Verify that all Conda dependencies are up to date
-        for dependency in conda_only:
-            self._check_anaconda_package(dependency, conda_env)
-
-        # all pip dependencies are inside a dict
-        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
-
-        # Verify that all PyPI/pip dependencies have a pinned version number
-        for dependency in pip_only:
-            # after an = sign there should be a specified version
-            split = dependency.split('==')
-            if len(split) < 2:
-                passed_conda_check = False
-                self.failed.append(('mlflow-pytorch-2', f'Dependency {dependency} does not have a pinned version!'))
-
-        # Verify that all PyPI dependencies are up to date
-        for dependency in pip_only:
-            self._check_pip_package(dependency)
-
-        if passed_conda_check:
-            self.passed.append(('mlflow-pytorch-2', 'Passed conda environment checks.'))
 
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):

@@ -15,6 +15,7 @@ from rich import print
 from packaging import version
 from itertools import groupby
 
+from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dir_util import pf
 
 
@@ -54,6 +55,9 @@ class TemplateLinter(object):
             check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
             # Remove internal functions
             check_functions = list(set(check_functions).difference({'lint_project'}))
+            # Remove mlflow specific linting functions if not applicable
+            if 'mlflow' not in self.__class__.__name__.lower():
+                check_functions = list(filter(lambda func: not func.startswith('mlflow'), check_functions))
 
         progress = rich.progress.Progress(
             "[bold green]{task.description}",
@@ -61,9 +65,7 @@ class TemplateLinter(object):
             "[bold yellow]{task.completed} of {task.total}[reset] [bold green]{task.fields[func_name]}",
         )
         with progress:
-            lint_progress = progress.add_task(
-                "Running lint checks", total=len(check_functions), func_name=check_functions
-            )
+            lint_progress = progress.add_task('Running lint checks', total=len(check_functions), func_name=check_functions)
             for fun_name in check_functions:
                 progress.update(lint_progress, advance=1, func_name=fun_name)
                 if fun_name == 'check_files_exist':
@@ -258,6 +260,48 @@ class TemplateLinter(object):
                             corrected_line = re.sub(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', version, line)
                             self.failed.append(('general-5', f'Version number don´t match in\n {path}: \n {line.strip()} should be {corrected_line.strip()}'))
 
+    def mlflow_check_conda_environment(self) -> None:
+        passed_conda_check = True
+        conda_env = load_yaml_file(f'{self.path}/environment.yml')
+
+        # Verify that the structure is somewhat reasonable
+        for section in ['name', 'channels', 'dependencies']:
+            if section not in conda_env:
+                passed_conda_check = False
+                self.failed.append(('general-7', f'Section {section} missing from environment.yml file!'))
+
+        conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
+
+        # Verify that all Conda dependencies have a pinned version number
+        for dependency in conda_only:
+            # after an = sign there should be a specified version
+            split = dependency.split('=')
+            if len(split) < 2:
+                passed_conda_check = False
+                self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+
+        # Verify that all Conda dependencies are up to date
+        for dependency in conda_only:
+            self._check_anaconda_package(dependency, conda_env)
+
+        # all pip dependencies are inside a dict
+        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
+
+        # Verify that all PyPI/pip dependencies have a pinned version number
+        for dependency in pip_only:
+            # after an = sign there should be a specified version
+            split = dependency.split('==')
+            if len(split) < 2:
+                passed_conda_check = False
+                self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+
+        # Verify that all PyPI dependencies are up to date
+        for dependency in pip_only:
+            self._check_pip_package(dependency)
+
+        if passed_conda_check:
+            self.passed.append(('general-7', 'Passed conda environment checks.'))
+
     def _check_anaconda_package(self, dependency, conda_environment):
         """Query conda package information.
         Sends a HTTP GET request to the Anaconda remote API.
@@ -402,7 +446,7 @@ def files_exist_linting(self,
         if not any([os.path.isfile(pf(self, f)) for f in files]):
             all_exists = False
             self.failed.append(('{handle}-1', f'File not found: {self._wrap_quotes(files)}'))
-    # flag that indiactes whether all required files exist or not
+    # flag that indicates whether all required files exist or not
     if all_exists:
         # called linting from a specific template linter
         if is_subclass_calling:
@@ -423,15 +467,11 @@ def files_exist_linting(self,
     for file in files_fail_ifexists:
         if os.path.isfile(pf(self, file)):
             self.failed.append((f'{handle}-1', f'File must be removed: {self._wrap_quotes(file)}'))
-        else:
-            self.passed.append((f'{handle}-1', f'File not found check: {self._wrap_quotes(file)}'))
 
     # Files that cause a warning if they exist
     for file in files_warn_ifexists:
         if os.path.isfile(pf(self, file)):
             self.warned.append((f'{handle}-1', f'File should be removed: {self._wrap_quotes(file)}'))
-        else:
-            self.passed.append((f'{handle}-1', f'File not found check: {self._wrap_quotes(file)}'))
 
 
 class GetLintingFunctionsMeta(type):

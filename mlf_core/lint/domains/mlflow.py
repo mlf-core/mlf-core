@@ -90,6 +90,10 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 passed_conda_check = False
                 self.failed.append(('mlflow-pytorch-2', f'Dependency {dependency} does not have a pinned version!'))
 
+        # Verify that all PyPI dependencies are up to date
+        for dependency in pip_only:
+            self._check_pip_package(dependency)
+
         if passed_conda_check:
             self.passed.append(('mlflow-pytorch-2', 'Passed conda environment checks.'))
 

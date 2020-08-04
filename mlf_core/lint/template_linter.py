@@ -12,7 +12,6 @@ import rich.console
 from pkg_resources import parse_version
 from rich import print
 
-
 from packaging import version
 from itertools import groupby
 
@@ -259,14 +258,11 @@ class TemplateLinter(object):
                             corrected_line = re.sub(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', version, line)
                             self.failed.append(('general-5', f'Version number don´t match in\n {path}: \n {line.strip()} should be {corrected_line.strip()}'))
 
-
     def _check_anaconda_package(self, dependency, conda_environment):
         """Query conda package information.
         Sends a HTTP GET request to the Anaconda remote API.
-        Args:
-            dependency (str): A conda package name.
-        Raises:
-            A ValueError, if the package name can not be resolved.
+        :param dependency: A conda package name.
+        :param conda_environment: A dictionary of the read in environment.yml
         """
         # Check if each dependency is the latest available version
         dependency_name, dependency_version = dependency.split('=', 1)
@@ -310,10 +306,7 @@ class TemplateLinter(object):
     def _check_pip_package(self, dependency):
         """Query PyPi package information.
         Sends a HTTP GET request to the PyPi remote API.
-        Args:
-            dependency (str): A PyPi package name.
-        Raises:
-            A ValueError, if the package name can not be resolved or the connection timed out.
+        :param dependency: A PyPi package name.
         """
         pip_dependency_name, pip_dependency_version = dependency.split('==')
         pip_api_url = "https://pypi.python.org/pypi/{}/json".format(pip_dependency_name)
@@ -382,7 +375,6 @@ class TemplateLinter(object):
         ansi_escape = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
         return ansi_escape.sub(replace_with, string)
-
 
 
 def files_exist_linting(self,

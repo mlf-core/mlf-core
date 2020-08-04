@@ -22,7 +22,7 @@ from mlf_core.util.dir_util import pf
 class TemplateLinter(object):
     """Object to hold linting information and results.
     Attributes:
-        files (list): A list of files found during the linting process.
+        files (list): A list of files found sduring the linting process.
         path (str): Path to the project directory.
         failed (list): A list of tuples of the form: `(<error no>, <reason>)`
         passed (list): A list of tuples of the form: `(<passed no>, <reason>)`
@@ -46,7 +46,6 @@ class TemplateLinter(object):
 
         :param calling_class: The class that calls the function -> used to get the class methods, which are the linting methods
         :param check_functions: List of functions of the calling class that should be checked. If not set, the default TemplateLinter check functions are called
-        :param custom_check_files: Set to true if TemplateLinter check_files_exist should not be run
         :param is_subclass_calling: Indicates whether a domain specific linter calls the linting or not
         """
         # Called on its own, so not from a subclass -> run general linting

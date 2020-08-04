@@ -1,6 +1,7 @@
 import os
 
 from mlf_core.lint.template_linter import TemplateLinter, files_exist_linting, GetLintingFunctionsMeta
+from mlf_core.util.dir_util import find_filepath_in_dir
 
 CWD = os.getcwd()
 
@@ -17,10 +18,8 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         Checks a given project directory for required files.
         Iterates through the templates's directory content and checkmarks files for presence.
         Files that **must** be present::
-            'setup.py',
-            'setup.cfg',
-            'MANIFEST.in',
-            'tox.ini',
+            'MLproject',
+            'environment.yml',
         Files that *should* be present::
             '.github/workflows/build_package.yml',
             '.github/workflows/publish_package.yml',
@@ -37,7 +36,9 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
+            [find_filepath_in_dir('mlf_core.py', os.getcwd(), default='mlf_core/mlf_core.py')]
         ]
+
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
             [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],

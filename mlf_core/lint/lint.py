@@ -36,7 +36,7 @@ def lint_project(project_dir: str) -> TemplateLinter:
         lint_obj.lint_project(super(lint_obj.__class__, lint_obj), is_subclass_calling=False)
 
         # Run the project specific linting
-        print('[bold blue]Running {template_handle} linting')
+        print(f'[bold blue]Running {template_handle} linting')
 
         lint_obj.lint()
     except AssertionError as e:

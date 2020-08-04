@@ -36,7 +36,7 @@ class TemplateLinter(object):
         self.warned = []
         self.failed = []
 
-    def lint_project(self, calling_class, check_functions: list = None, custom_check_files: bool = False, is_subclass_calling=True) -> None:
+    def lint_project(self, calling_class, check_functions: list = None, is_subclass_calling=True) -> None:
         """Main linting function.
         Takes the template directory as the primary input and iterates through
         the different linting checks in order. Collects any warnings or errors
@@ -55,11 +55,6 @@ class TemplateLinter(object):
             check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
             # Remove internal functions
             check_functions = list(set(check_functions).difference({'lint_project'}))
-        # Some templates (e.g. latex based) do not adhere to the common programming based templates and therefore do not need to check for e.g. docs
-        # or lint changelog
-        if custom_check_files:
-            check_functions.remove('check_files_exist')
-            check_functions.remove('lint_changelog')
 
         progress = rich.progress.Progress(
             "[bold green]{task.description}",
@@ -359,7 +354,7 @@ class TemplateLinter(object):
                     print(f'[red]Could not find {dependency} in conda channel {ch}')
         else:
             # We have looped through each channel and had a 404 response code on everything
-            self.failed.append(('general-7', f'Could not find Conda dependency using the Anaconda API: {dependency}'))
+            self.failed.append(('general-7', f'Could not find Conda dependency {dependency} using the Anaconda API'))
 
     def _check_pip_package(self, dep):
         """Query PyPi package information.

@@ -444,7 +444,7 @@ def files_exist_linting(self,
     for files in files_fail:
         if not any([os.path.isfile(pf(self, f)) for f in files]):
             all_exists = False
-            self.failed.append(('{handle}-1', f'File not found: {self._wrap_quotes(files)}'))
+            self.failed.append((f'{handle}-1', f'File not found: {self._wrap_quotes(files)}'))
     # flag that indicates whether all required files exist or not
     if all_exists:
         # called linting from a specific template linter

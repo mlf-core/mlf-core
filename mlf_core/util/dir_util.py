@@ -43,7 +43,7 @@ def find_filepath_in_dir(file_name: str, path: str, default: str = None) -> str:
     for root, dirs, files in os.walk(path):
         for file in files:
             if file_name in file:
-                result = os.path.join(root, file)
+                return os.path.join(root, file)
 
     if not result:
         return default

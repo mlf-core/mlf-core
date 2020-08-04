@@ -239,7 +239,7 @@ class VersionBumper:
         changelog_linter.lint_changelog()
         changelog_linter.check_version_consistent()
         print()
-        changelog_linter.print_results()
+        changelog_linter._print_results()
         print()
         # if any failed linting tests, ask user for confirmation of proceeding with bump (which results in undefined behavior)
         if len(changelog_linter.failed) > 0 or len(changelog_linter.warned) > 0:

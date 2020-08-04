@@ -46,7 +46,7 @@ def lint_project(project_dir: str) -> TemplateLinter:
         return lint_obj
 
     # Print the results
-    lint_obj.print_results()
+    lint_obj._print_results()
 
     # Exit code
     if len(lint_obj.failed) > 0:

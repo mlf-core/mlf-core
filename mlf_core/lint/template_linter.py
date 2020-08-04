@@ -4,10 +4,14 @@ import re
 
 import configparser
 
+import requests
 import rich.progress
 import rich.markdown
 import rich.panel
 import rich.console
+from pkg_resources import parse_version
+from rich import print
+
 
 from packaging import version
 from itertools import groupby
@@ -50,7 +54,7 @@ class TemplateLinter(object):
             # Fetch all general linting functions
             check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
             # Remove internal functions
-            check_functions = list(set(check_functions).difference({'lint_project', 'print_results', 'check_version_match'}))
+            check_functions = list(set(check_functions).difference({'lint_project'}))
         # Some templates (e.g. latex based) do not adhere to the common programming based templates and therefore do not need to check for e.g. docs
         # or lint changelog
         if custom_check_files:
@@ -235,13 +239,13 @@ class TemplateLinter(object):
         # check if the version matches current version in each listed file (depending on whitelisted or blacklisted)
         for section in sections:
             for file, path in parser.items(section):
-                self.check_version_match(path, current_version, section)
+                self._check_version_match(path, current_version, section)
         os.chdir(cwd)
         # Pass message if there weren't any inconsistencies within the version numbers
         if not any('general-5' in tup[0] for tup in self.failed):
             self.passed.append(('general-5', 'Versions were consistent over all files'))
 
-    def check_version_match(self, path: str, version: str, section: str) -> None:
+    def _check_version_match(self, path: str, version: str, section: str) -> None:
         """
         Check if the versions in a file are consistent with the current version in the mlf_core.cfg
         :param path: The current file-path to check
@@ -260,7 +264,7 @@ class TemplateLinter(object):
                             corrected_line = re.sub(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', version, line)
                             self.failed.append(('general-5', f'Version number don´t match in\n {path}: \n {line.strip()} should be {corrected_line.strip()}'))
 
-    def print_results(self):
+    def _print_results(self):
         console = rich.console.Console()
         console.print()
         console.rule("[bold blue]LINT RESULTS")
@@ -309,6 +313,77 @@ class TemplateLinter(object):
         ansi_escape = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
         return ansi_escape.sub(replace_with, string)
+
+    def _check_anaconda_package(self, dependency, conda_environment):
+        """Query conda package information.
+        Sends a HTTP GET request to the Anaconda remote API.
+        Args:
+            dependency (str): A conda package name.
+        Raises:
+            A ValueError, if the package name can not be resolved.
+        """
+        # Check if each dependency is the latest available version
+        dependency_name, dependency_version = dependency.split('=', 1)
+        dep_channels = conda_environment.get('channels', [])
+
+        if '::' in dependency_name:
+            dep_channels = [dependency_name.split('::')[0]]
+            dependency_name = dependency_name.split('::')[1]
+
+        # 'defaults' isn't actually a channel name. See https://docs.anaconda.com/anaconda/user-guide/tasks/using-repositories/
+        if 'defaults' in dep_channels:
+            dep_channels.remove('defaults')
+            dep_channels.extend(['main', 'anaconda', 'r', 'free', 'archive', 'anaconda-extras'])
+        for ch in dep_channels:
+            anaconda_api_url = f'https://api.anaconda.org/package/{ch}/{dependency_name}'
+            try:
+                response = requests.get(anaconda_api_url, timeout=10)
+            except requests.exceptions.Timeout:
+                self.warned.append(('general-7', f'Anaconda API timed out: {anaconda_api_url}'))
+            except requests.exceptions.ConnectionError:
+                self.warned.append(('general-7', 'Could not connect to Anaconda API'))
+            else:
+                if response.status_code == 200:
+                    dep_json = response.json()
+                    latest_dependency_version = dep_json['latest_version']
+                    latest_dependency_version = latest_dependency_version.split('=')[0]
+                    dependency_version = dependency_version.split('=')[0]
+                    if parse_version(dependency_version) < parse_version(latest_dependency_version):
+                        self.warned.append(('general-7', f'Version {dependency_version} of {dependency_name}'
+                                                         f' is not the latest available: {latest_dependency_version}'))
+                    return
+                elif response.status_code != 404:
+                    self.warned.append(('general-7', f'Anaconda API returned unexpected response code `{response.status_code}`'
+                                                     f' for: {anaconda_api_url}\n{response}'))
+                elif response.status_code == 404:
+                    print(f'[red]Could not find {dependency} in conda channel {ch}')
+        else:
+            # We have looped through each channel and had a 404 response code on everything
+            self.failed.append(('general-7', f'Could not find Conda dependency using the Anaconda API: {dependency}'))
+
+    def _check_pip_package(self, dep):
+        """Query PyPi package information.
+        Sends a HTTP GET request to the PyPi remote API.
+        Args:
+            dep (str): A PyPi package name.
+        Raises:
+            A ValueError, if the package name can not be resolved or the connection timed out.
+        """
+        pip_depname, pip_depver = dep.split('=', 1)
+        pip_api_url = "https://pypi.python.org/pypi/{}/json".format(pip_depname)
+        try:
+            response = requests.get(pip_api_url, timeout=10)
+        except (requests.exceptions.Timeout):
+            self.warned.append(('general-7', "PyPi API timed out: {}".format(pip_api_url)))
+        except (requests.exceptions.ConnectionError):
+            self.warned.append(('general-7', "PyPi API Connection error: {}".format(pip_api_url)))
+        else:
+            if response.status_code == 200:
+                pip_dep_json = response.json()
+                self.conda_package_info[dep] = pip_dep_json
+            else:
+                self.failed.append(('general-7', "Could not find pip dependency using the PyPi API: {}".format(dep)))
+                raise ValueError
 
 
 def files_exist_linting(self,

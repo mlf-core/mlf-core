@@ -68,14 +68,14 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         # Verify that all Conda dependencies have a pinned version number
         conda_only = list(filter(lambda dependency: '::' in dependency, conda_env['dependencies']))
         for dependency in conda_only:
-            split = dependency.split('=')
-            if not split[1]:
+            dependency_name, dependency_version = dependency.split('=')[:2]
+            if not dependency_version:
                 passed_conda_check = False
                 self.failed.append(('mlflow-pytorch-2', f'Dependency {dependency} does not have a pinned version!'))
 
         # Verify that all Conda dependencies are up to date
         for dependency in conda_only:
-            pass
+            self._check_anaconda_package(dependency, conda_env)
 
         if passed_conda_check:
             self.passed.append(('mlflow-pytorch-2', 'Passed conda environment checks.'))

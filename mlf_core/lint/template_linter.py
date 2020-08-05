@@ -379,7 +379,8 @@ class TemplateLinter(object):
             self.failed.append(('mlflow-general-8', 'mlf_core.py could not be found!'))
             return
 
-        with open(mlf_core_py_path) as f: mlf_core_py_content = f.readlines()
+        with open(mlf_core_py_path) as f:
+            mlf_core_py_content = f.readlines()
         mlf_core_py_content = list(map(lambda line: line.strip(), mlf_core_py_content))
 
         # Verify that general_random_seeds is complete
@@ -399,7 +400,7 @@ class TemplateLinter(object):
                                                'mlflow.log_artifact(f\'{reports_output_dir}/{framework}_env.yml\', artifact_path=\'reports\')']
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
-            if not expected_line in mlf_core_py_content:
+            if expected_line not in mlf_core_py_content:
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):

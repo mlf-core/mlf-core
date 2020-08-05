@@ -16,7 +16,7 @@ from packaging import version
 from itertools import groupby
 
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dir_util import pf
+from mlf_core.util.dir_util import pf, find_filepath_in_dir
 
 
 class TemplateLinter(object):
@@ -368,6 +368,39 @@ class TemplateLinter(object):
                                                      f' is not the latest available: {latest_dependency_version}'))
             else:
                 self.failed.append(('general-7', f'Could not find pip dependency using the PyPi API: {dependency}'))
+
+    def mlflow_mlf_core_py_complete(self) -> None:
+        """
+        Verifies that the random_seed method exists and
+
+        """
+        mlf_core_py_path = find_filepath_in_dir('mlf_core.py', os.getcwd())
+        if not mlf_core_py_path:
+            self.failed.append(('mlflow-general-8', 'mlf_core.py could not be found!'))
+            return
+
+        with open(mlf_core_py_path) as f: mlf_core_py_content = f.readlines()
+        mlf_core_py_content = list(map(lambda line: line.strip(), mlf_core_py_content))
+
+        # Verify that general_random_seeds is complete
+        expected_lines_general_random_seeds = ['def set_general_random_seeds(seed):',
+                                               'os.environ[\'PYTHONHASHSEED\'] = str(seed)  # Python general',
+                                               'np.random.seed(seed)  # Numpy random',
+                                               'random.seed(seed)  # Python random']
+
+        # Verify that system-intelligence and conda environment logging are intact
+        expected_lines_sys_intell_conda_env = ['def log_sys_intel_conda_env(framework: str):',
+                                               'reports_output_dir = tempfile.mkdtemp()',
+                                               'log_system_intelligence(reports_output_dir)',
+                                               'log_conda_environment(reports_output_dir, framework)',
+                                               'query_and_export(query_scope=list((\'all\',)),',
+                                               'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
+                                               'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', f\'{framework}\'], stdout=conda_env_filehandler)',
+                                               'mlflow.log_artifact(f\'{reports_output_dir}/{framework}_env.yml\', artifact_path=\'reports\')']
+
+        for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
+            if not expected_line in mlf_core_py_content:
+                self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):
         console = rich.console.Console()

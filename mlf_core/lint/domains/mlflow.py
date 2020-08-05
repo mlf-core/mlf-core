@@ -20,6 +20,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         Files that **must** be present::
             'MLproject',
             'environment.yml',
+            'project_slug/'
         Files that *should* be present::
             '.github/workflows/build_package.yml',
             '.github/workflows/publish_package.yml',

@@ -16,8 +16,7 @@ dependencies:
     - conda-forge::tensorboardx=2.1
     - pip
     - pip:
-        # 2.2.0 is not yet on Conda! See here: https://github.com/tensorflow/tensorflow/issues/35754#issuecomment-626728072
-      - tensorflow==2.3.0
-      - tensorflow_datasets==3.1.0
+      - tensorflow==2.3.0  # not yet on Conda with full GPU support
+      - tensorflow_datasets==3.2.1
       - pycuda==2019.1.2  # not on Conda
       - system-intelligence==1.2.2  # not yet on Conda

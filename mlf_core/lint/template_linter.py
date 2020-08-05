@@ -272,31 +272,47 @@ class TemplateLinter(object):
         conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
 
         # Verify that all Conda dependencies have a pinned version number
-        for dependency in conda_only:
-            # after an = sign there should be a specified version
-            split = dependency.split('=')
-            if len(split) < 2:
-                passed_conda_check = False
-                self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+        for idx, dependency in enumerate(conda_only):
+            comment_token = conda_env['dependencies'].ca.items.get(idx)
+            if comment_token:
+                if 'MLF-CORE IGNORE' not in comment_token[0].value:
+                    # after an = sign there should be a specified version
+                    split = dependency.split('=')
+                    if len(split) < 2:
+                        passed_conda_check = False
+                        self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
 
         # Verify that all Conda dependencies are up to date
-        for dependency in conda_only:
-            self._check_anaconda_package(dependency, conda_env)
+        for idx, dependency in enumerate(conda_only):
+            comment_token = conda_env['dependencies'].ca.items.get(idx)
+            if comment_token:
+                if 'MLF-CORE IGNORE' not in comment_token[0].value:
+                    self._check_anaconda_package(dependency, conda_env)
+            else:
+                self._check_anaconda_package(dependency, conda_env)
 
         # all pip dependencies are inside a dict
         pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
 
         # Verify that all PyPI/pip dependencies have a pinned version number
-        for dependency in pip_only:
-            # after an = sign there should be a specified version
-            split = dependency.split('==')
-            if len(split) < 2:
-                passed_conda_check = False
-                self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+        for idx, dependency in enumerate(pip_only):
+            comment_token = pip_only.ca.items.get(idx)
+            if comment_token:
+                if 'MLF-CORE IGNORE' not in comment_token[0].value:
+                    # after an = sign there should be a specified version
+                    split = dependency.split('==')
+                    if len(split) < 2:
+                        passed_conda_check = False
+                        self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
 
         # Verify that all PyPI dependencies are up to date
-        for dependency in pip_only:
-            self._check_pip_package(dependency)
+        for idx, dependency in enumerate(pip_only):
+            comment_token = pip_only.ca.items.get(idx)
+            if comment_token:
+                if 'MLF-CORE IGNORE' not in comment_token[0].value:
+                    self._check_pip_package(dependency)
+            else:
+                self._check_pip_package(dependency)
 
         if passed_conda_check:
             self.passed.append(('general-7', 'Passed conda environment checks.'))

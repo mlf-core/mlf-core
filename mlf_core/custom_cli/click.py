@@ -90,7 +90,7 @@ class HelpErrorHandling(click.Group):
             formatter.write_text("$ mlf-core create")
             formatter.write_text("$ mlf-core bump-version 1.0.0 .")
             formatter.write_text("$ mlf-core config all")
-            formatter.write_text("$ mlf-core info python")
+            formatter.write_text("$ mlf-core info mlflow")
 
         with formatter.section(self.get_rich_value("Learn more")):
             formatter.write_text("Use mlf-core <command> --help for more information about a command. You may also want to take a look at our docs at "

@@ -32,6 +32,7 @@ class TemplateLinter(object):
     def __init__(self, path='.'):
         self.path = path
         self.files = []
+        self.project_slug = load_yaml_file(f'{path}/.mlf_core.yml')['project_slug']
         self.passed = []
         self.warned = []
         self.failed = []
@@ -396,8 +397,7 @@ class TemplateLinter(object):
             return
 
         with open(mlf_core_py_path) as f:
-            mlf_core_py_content = f.readlines()
-        mlf_core_py_content = list(map(lambda line: line.strip(), mlf_core_py_content))
+            mlf_core_py_content = list(map(lambda line: line.strip(), f.readlines()))
 
         # Verify that general_random_seeds is complete
         expected_lines_general_random_seeds = ['def set_general_random_seeds(seed):',

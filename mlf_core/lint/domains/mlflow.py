@@ -37,7 +37,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
-            [find_filepath_in_dir('mlf_core.py', os.getcwd(), default='mlf_core/mlf_core.py')]
+            [f'{self.project_slug}/mlf_core/mlf_core.py']
         ]
 
         files_warn = [
@@ -55,6 +55,33 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-pytorch')
+
+    def reproducibility_settings_enabled(self) -> None:
+        """
+        Verifies that all CPU and GPU reproducibility settings for Pytorch are enabled
+        Required are:
+        def set_pytorch_random_seeds(seed, use_cuda):
+            torch.manual_seed(seed)
+            if use_cuda:
+                torch.cuda.manual_seed(seed)
+                torch.cuda.manual_seed_all(seed)  # For multiGPU
+                torch.backends.cudnn.deterministic = True
+                torch.backends.cudnn.benchmark = False
+        """
+        entry_point_file_path = f'{self.project_slug}/{self.project_slug}.py'
+        with open(entry_point_file_path) as f:
+            project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
+
+        expected_lines_pytorch_reproducibiblity = ['def set_pytorch_random_seeds(seed, use_cuda):',
+                                                   'torch.manual_seed(seed)',
+                                                   'torch.cuda.manual_seed(seed)',
+                                                   'torch.cuda.manual_seed_all(seed)  # For multiGPU',
+                                                   'torch.backends.cudnn.deterministic = True',
+                                                   'torch.backends.cudnn.benchmark = False']
+
+        for expected_line in expected_lines_pytorch_reproducibiblity:
+            if expected_line not in project_slug_entry_point_content:
+                self.failed.append(('mlflow-pytorch-2', f'{expected_line} not found in {entry_point_file_path}'))
 
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
@@ -89,6 +116,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
+            [f'{self.project_slug}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
@@ -139,6 +167,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
+            [f'{self.project_slug}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
@@ -189,6 +218,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
+            [f'{self.project_slug}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],

@@ -1,7 +1,6 @@
 import os
 
 from mlf_core.lint.template_linter import TemplateLinter, files_exist_linting, GetLintingFunctionsMeta
-from mlf_core.util.dir_util import find_filepath_in_dir
 
 CWD = os.getcwd()
 
@@ -56,7 +55,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-pytorch')
 
-    def reproducibility_settings_enabled(self) -> None:
+    def pytorch_reproducibility_seeds(self) -> None:
         """
         Verifies that all CPU and GPU reproducibility settings for Pytorch are enabled
         Required are:
@@ -68,7 +67,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.deterministic = True
                 torch.backends.cudnn.benchmark = False
         """
-        entry_point_file_path = f'{self.project_slug}/{self.project_slug}.py'
+        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
@@ -77,7 +76,9 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                    'torch.cuda.manual_seed(seed)',
                                                    'torch.cuda.manual_seed_all(seed)  # For multiGPU',
                                                    'torch.backends.cudnn.deterministic = True',
-                                                   'torch.backends.cudnn.benchmark = False']
+                                                   'torch.backends.cudnn.benchmark = False',
+                                                   'set_general_random_seeds(general_seed)'
+                                                   'set_pytorch_random_seeds(pytorch_seed, use_cuda=use_cuda)']
 
         for expected_line in expected_lines_pytorch_reproducibiblity:
             if expected_line not in project_slug_entry_point_content:

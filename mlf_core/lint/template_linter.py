@@ -325,7 +325,7 @@ class TemplateLinter(object):
         :param conda_environment: A dictionary of the read in environment.yml
         """
         # Check if each dependency is the latest available version
-        dependency_name, dependency_version = dependency.split('=', 1)
+        dependency_name, dependency_version = dependency.split('==', 1)
         dep_channels = conda_environment.get('channels', [])
 
         if '::' in dependency_name:
@@ -349,7 +349,7 @@ class TemplateLinter(object):
                     conda_dep_json = response.json()
                     latest_dependency_version = conda_dep_json['latest_version']
                     latest_dependency_version = latest_dependency_version.split('=')[0]
-                    dependency_version = dependency_version.split('=')[0]
+                    dependency_version = dependency_version.split('==')[0]
                     if parse_version(dependency_version) < parse_version(latest_dependency_version):
                         self.warned.append(('general-7', f'Version {dependency_version} of {dependency_name}'
                                                          f' is not the latest available: {latest_dependency_version}'))

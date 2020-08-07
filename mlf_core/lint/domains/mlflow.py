@@ -344,10 +344,10 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
+        expected_lines_xgboost_reproducibility = ['def set_xgboost_dask_random_seeds(seed, param):',
                                                   'param[\'seed\'] = seed',
                                                   'set_general_random_seeds(general_seed)',
-                                                  'set_xgboost_random_seeds(xgboost_seed, param)',
+                                                  'set_xgboost_dask_random_seeds(xgboost_seed, param)',
                                                   f'log_sys_intel_conda_env(\'{self.project_slug}\')']
 
         for expected_line in expected_lines_xgboost_reproducibility:

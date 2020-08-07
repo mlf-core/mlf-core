@@ -10,9 +10,9 @@ dependencies:
     - conda-forge::mlflow=1.10.0
     - conda-forge::dask==2.14.0
     - conda-forge::dask-ml==1.4.0
-    - conda-forge::scikit-learn==0.22.1
-    - conda-forge::matplotlib==3.2.1
-    - rapidsai::dask-cuda==0.13.0
+    - conda-forge::scikit-learn==0.23.2
+    - conda-forge::matplotlib==3.3.0
+    - rapidsai::dask-cuda==0.14.1
     - pip
     - pip:
       - xgboost==1.1.1 # xgboost on Conda is not yet built with GPU support!

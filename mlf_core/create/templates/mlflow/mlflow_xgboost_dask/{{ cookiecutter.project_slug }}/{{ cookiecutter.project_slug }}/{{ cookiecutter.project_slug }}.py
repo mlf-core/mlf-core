@@ -54,7 +54,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, dataset,
 
                 # Set random seeds
                 set_general_random_seeds(general_seed)
-                set_xgboost_dask_random_seed(xgboost_seed, param)
+                set_xgboost_dask_random_seeds(xgboost_seed, param)
 
                 # Set CPU or GPU as training device
                 if not use_cuda:
@@ -99,7 +99,7 @@ def load_train_test_data(client, dataset: str):
     return dtrain, dtest
 
 
-def set_xgboost_dask_random_seed(seed, param):
+def set_xgboost_dask_random_seeds(seed, param):
     param['seed'] = seed
 
 

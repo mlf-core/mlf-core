@@ -326,3 +326,53 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-xgboost_dask')
+
+    def xgboost_reproducibility_seeds(self) -> None:
+        """
+        Verifies that all CPU and GPU reproducibility settings for XGBoost are enabled
+        Required are:
+        def set_pytorch_random_seeds(seed, use_cuda):
+            torch.manual_seed(seed)
+            if use_cuda:
+                torch.cuda.manual_seed(seed)
+                torch.cuda.manual_seed_all(seed)  # For multiGPU
+                torch.backends.cudnn.deterministic = True
+                torch.backends.cudnn.benchmark = False
+        """
+        passed_xgboost_reproducibility_seeds = True
+        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
+        with open(entry_point_file_path) as f:
+            project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
+
+        expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
+                                                  'param[\'seed\'] = seed',
+                                                  'set_general_random_seeds(general_seed)',
+                                                  'set_xgboost_random_seeds(xgboost_seed, param)',
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
+
+        for expected_line in expected_lines_xgboost_reproducibility:
+            if expected_line not in project_slug_entry_point_content:
+                passed_xgboost_reproducibility_seeds = False
+                self.failed.append(('mlflow-xgboost-2', f'{expected_line} not found in {entry_point_file_path}'))
+
+        # Verify that XGBoost version is greater than 1.1.0
+        conda_env = load_yaml_file(f'{self.path}/environment.yml')
+        conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
+        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
+
+        for dependency in conda_only:
+            if 'xgboost' in dependency:
+                split = dependency.split('==')
+                current_version = parse_version(split[-1])
+                if current_version < parse_version('1.1.0'):
+                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
+
+        for dependency in pip_only:
+            if 'xgboost' in dependency:
+                split = dependency.split('==')
+                current_version = parse_version(split[-1])
+                if current_version < parse_version('1.1.0'):
+                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
+
+        if passed_xgboost_reproducibility_seeds:
+            self.passed.append(('mlflow-xgboost-2', 'All required reproducibility settings enabled.'))

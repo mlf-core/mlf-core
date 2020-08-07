@@ -272,47 +272,39 @@ class TemplateLinter(object):
 
         conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
 
-        # Verify that all Conda dependencies have a pinned version number
+        # Verify that all Conda dependencies have a pinned version number and are up to date
         for idx, dependency in enumerate(conda_only):
             comment_token = conda_env['dependencies'].ca.items.get(idx)
-            if comment_token:
-                if 'MLF-CORE IGNORE' not in comment_token[0].value:
-                    # after an = sign there should be a specified version
-                    split = dependency.split('=')
-                    if len(split) < 2:
-                        passed_conda_check = False
-                        self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
-
-        # Verify that all Conda dependencies are up to date
-        for idx, dependency in enumerate(conda_only):
-            comment_token = conda_env['dependencies'].ca.items.get(idx)
-            if comment_token:
-                if 'MLF-CORE IGNORE' not in comment_token[0].value:
-                    self._check_anaconda_package(dependency, conda_env)
+            check_dependency = True
+            if comment_token and 'MLF-CORE IGNORE' in comment_token[0].value:
+                check_dependency = False
             else:
+                # after an = sign there should be a specified version
+                split = dependency.split('==') if '==' in dependency else dependency.split('=')
+                if len(split) < 2:
+                    passed_conda_check = False
+                    check_dependency = False
+                    self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+            if check_dependency:
                 self._check_anaconda_package(dependency, conda_env)
 
         # all pip dependencies are inside a dict
         pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
 
-        # Verify that all PyPI/pip dependencies have a pinned version number
+        # Verify that all PyPI/pip dependencies have a pinned version number and are up to date
         for idx, dependency in enumerate(pip_only):
             comment_token = pip_only.ca.items.get(idx)
-            if comment_token:
-                if 'MLF-CORE IGNORE' not in comment_token[0].value:
-                    # after an = sign there should be a specified version
-                    split = dependency.split('==')
-                    if len(split) < 2:
-                        passed_conda_check = False
-                        self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
-
-        # Verify that all PyPI dependencies are up to date
-        for idx, dependency in enumerate(pip_only):
-            comment_token = pip_only.ca.items.get(idx)
-            if comment_token:
-                if 'MLF-CORE IGNORE' not in comment_token[0].value:
-                    self._check_pip_package(dependency)
+            check_dependency = True
+            if comment_token and 'MLF-CORE IGNORE' in comment_token[0].value:
+                check_dependency = False
             else:
+                # after an = sign there should be a specified version
+                split = dependency.split('==') if '==' in dependency else dependency.split('=')
+                if len(split) < 2:
+                    passed_conda_check = False
+                    check_dependency = False
+                    self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+            if check_dependency:
                 self._check_pip_package(dependency)
 
         if passed_conda_check:
@@ -325,7 +317,7 @@ class TemplateLinter(object):
         :param conda_environment: A dictionary of the read in environment.yml
         """
         # Check if each dependency is the latest available version
-        dependency_name, dependency_version = dependency.split('==', 1)
+        dependency_name, dependency_version = dependency.split('==', 1) if '==' in dependency else dependency.split('=', 1)
         dep_channels = conda_environment.get('channels', [])
 
         if '::' in dependency_name:

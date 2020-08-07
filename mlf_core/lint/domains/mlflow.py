@@ -80,7 +80,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'torch.backends.cudnn.benchmark = False',
                                                   'set_general_random_seeds(general_seed)',
                                                   'set_pytorch_random_seeds(pytorch_seed, use_cuda=use_cuda)',
-                                                  'log_sys_intel_conda_env(\'pytorch\')']
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
 
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -163,7 +163,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'os.environ[\'TF_DETERMINISTIC_OPS\'] = \'1\'',
                                                   'set_general_random_seeds(general_seed)',
                                                   'set_tensorflow_random_seeds(tensorflow_seed)',
-                                                  'log_sys_intel_conda_env(\'tensorflow\')']
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
 
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:

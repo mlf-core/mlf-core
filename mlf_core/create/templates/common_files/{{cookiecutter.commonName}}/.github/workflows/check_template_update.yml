@@ -24,7 +24,7 @@ jobs:
           if: env.UPDATE_AVAILABLE == 'true'
           name: Create Issue if Update available
           env:
-             GITHUB_TOKEN: ${{ secrets.MLF_CORE_SYNC_TOKEN }}
+             GITHUB_TOKEN: {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %}
           with:
             filename: .github/ISSUE_TEMPLATE/sync_notify.md
 

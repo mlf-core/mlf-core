@@ -23,18 +23,18 @@ def load_ct_template_version(handle: str, yaml_path: str) -> str:
 
 def load_project_template_version_and_handle(project_dir: Path) -> (str, str):
     """
-    Load the template version when the user synced its project with cookietemple the last time.
-    If no sync has been done so far, its the version of the cookietemple template the user created the project initially with.
+    Load the template version when the user synced its project with mlf-core the last time.
+    If no sync has been done so far, its the version of the mlf-core template the user created the project initially with.
     NOTE: This is NOT the projects current version (they are independent from each other)!!!
 
     :param project_dir: Top level directory of the users project.
-    :return: The version number of the cookietemple template when the user created the project and the projects template handle.
+    :return: The version number of the mlf-core template when the user created the project and the projects template handle.
     """
     project_dir = str(project_dir)
     try:
-        ct_meta = load_yaml_file(f'{project_dir}/.cookietemple.yml')
-        # split the template version at first space to omit the cookietemple bump-version tag and return it and the the handle
+        ct_meta = load_yaml_file(f'{project_dir}/.mlf_core.yml')
+        # split the template version at first space to omit the mlf-core bump-version tag and return it and the the handle
         return ct_meta['template_version'].split(" ", 1)[0], ct_meta['template_handle']
     except FileNotFoundError:
-        print('[bold red]No .cookietemple.yml found at {project_dir}. Is this a cookietemple project?')
+        print(f'[bold red]No .mlf_core.yml found at {project_dir}. Is this a mlf-core project?')
         sys.exit(1)

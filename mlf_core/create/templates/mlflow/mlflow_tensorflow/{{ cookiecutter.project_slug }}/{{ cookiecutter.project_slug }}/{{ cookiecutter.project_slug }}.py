@@ -64,7 +64,7 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
 
 def set_tensorflow_random_seeds(seed):
     tf.random.set_seed(seed)
-    tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only -> https://github.com/NVIDIA/tensorflow-determinism
+    tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
     tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
     os.environ['TF_DETERMINISTIC_OPS'] = '1'
 

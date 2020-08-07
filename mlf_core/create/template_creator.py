@@ -184,8 +184,12 @@ class TemplateCreator:
             yaml = YAML(typ='safe')
             settings = yaml.load(path)
             # set full name and mail
-            self.creator_ctx.full_name = settings['full_name']
-            self.creator_ctx.email = settings['email']
+            if dot_mlf_core:
+                self.creator_ctx.full_name = dot_mlf_core['full_name']
+                self.creator_ctx.email = dot_mlf_core['email']
+            else:
+                self.creator_ctx.full_name = settings['full_name']
+                self.creator_ctx.email = settings['email']
 
         self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                              question='Project name',
@@ -237,7 +241,10 @@ class TemplateCreator:
                                                                         dot_mlf_core=dot_mlf_core,
                                                                         to_get_property='license')
 
-        self.creator_ctx.github_username = load_github_username()
+        if dot_mlf_core:
+            self.creator_ctx.github_username = dot_mlf_core['github_username']
+        else:
+            self.creator_ctx.github_username = load_github_username()
 
     def create_common_files(self) -> None:
         """

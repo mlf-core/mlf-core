@@ -1,3 +1,9 @@
+.. image:: https://user-images.githubusercontent.com/21954664/84388841-84b4cc80-abf5-11ea-83f3-b8ce8de36e25.png
+    :target: https://mlf-core.com
+    :alt: mlf-core logo
+
+|
+
 ========
 mlf-core
 ========
@@ -34,12 +40,16 @@ Reproducible machine learning pipelines using mlflow.
 Features
 --------
 
-* TODO
+* Jumpstart your machine learning project with a fully fledged mlflow project template
+* mlflow templates are fully GPU deterministic with system-intelligence
+* Conda and Docker support out of the box
+* Pytorch, Tensorflow, XGBoost supported
 
 Credits
 -------
 
 This package was created with `cookietemple`_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
+Idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
 
 .. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter

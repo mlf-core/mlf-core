@@ -20,6 +20,9 @@ mlf-core
         :target: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
 
+.. image:: https://img.shields.io/discord/742367395196305489?color=passing
+        :target: https://discord.gg/Mv8sAcq
+        :alt: Discord
 
 .. image:: https://readthedocs.org/projects/mlf-core/badge/?version=latest
         :target: https://mlf-core.readthedocs.io/en/latest/?badge=latest
@@ -48,8 +51,8 @@ Features
 Credits
 -------
 
+Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
 This package was created with `cookietemple`_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
-Idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
 
 .. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter

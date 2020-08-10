@@ -8,6 +8,7 @@
   "license": "MIT",
   "project_short_description" : "A cookietemple template",
   "language": "Language",
-  "domain": "domain"
+  "domain": "domain",
+  "github_username": "github_user"
 }
 

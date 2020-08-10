@@ -76,7 +76,7 @@ class HelpErrorHandling(click.Group):
             formatter.write_text(
                 f"{self.commands.get('upgrade').name}\t\t{self.commands.get('upgrade').get_short_help_str(limit=150)}")
 
-        with formatter.section(self.get_rich_value("Commands for mlf-core project")):
+        with formatter.section(self.get_rich_value("Commands for mlf-core projects")):
             formatter.write_text(
                 f"{self.commands.get('create').name}\t\t{self.commands.get('create').get_short_help_str(limit=150)}")
             formatter.write_text(

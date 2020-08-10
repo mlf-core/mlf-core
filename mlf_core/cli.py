@@ -18,6 +18,7 @@ from mlf_core.info.info import TemplateInfo
 from mlf_core.lint.lint import lint_project
 from mlf_core.list.list import TemplateLister
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.sync.sync import TemplateSync
 from mlf_core.upgrade.upgrade import UpgradeCommand
 
 WD = os.path.dirname(__file__)
@@ -126,28 +127,40 @@ def info(ctx, handle: str) -> None:
 def sync(project_dir, pat, username, check_update) -> None:
     """
     Sync your project with the latest template release.
-
     mlf-core regularly updates its templates.
     To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing) or, in case of a minor
     change, create an issue in your Github repository (if exists).
     If no repository exists the TEMPLATE branch will be updated and you can merge manually.
     """
-    # project_dir_path = Path(f'{Path.cwd()}/{project_dir}')
-    # syncer = Sync(pat, username, project_dir_path)
-    # # if user wants to check for new template updates
-    # if check_update:
-    #     is_version_outdated, ct_template_version, proj_template_version = syncer.has_major_minor_template_version_changed(project_dir_path)
-    #     # a template update has been released by mlf-core
-    #     if is_version_outdated:
-    #         click.echo(click.style(f'Your templates version received an update from {proj_template_version} to {ct_template_version}!\n Use ', fg='blue') +
-    #                    click.style('mlf-core sync', fg='green') + click.style('to sync your project and create a pull request with changes.', fg='blue'))
-    #     # no updates were found
-    #     else:
-    #         click.echo(click.style('Congrats, you are using the latest template version for your project. No sync is needed.', fg='blue'))
-    #     sys.exit(0)
-    # # sync the project
-    # # TODO: ADD CHECK IF VERSION CHANGED (AS A SANITY CHECK, BUT DO THIS AFTER DEVELOPMENT FINISHED)
-    # syncer.sync()
+    project_dir_path = Path(f'{Path.cwd()}/{project_dir}') if not str(project_dir).startswith(str(Path.cwd())) else Path(project_dir)
+    syncer = TemplateSync(project_dir=project_dir_path, gh_username=username, token=pat)
+    # check for template version updates
+    major_change, minor_change, patch_change, ct_template_version, proj_template_version = syncer.has_template_version_changed(project_dir_path)
+    # check for user without actually syncing
+    if check_update:
+        # a template update has been released by mlf-core
+        if any(change for change in (major_change, minor_change, patch_change)):
+            print(f'[bold blue]Your templates version received an update from {proj_template_version} to {ct_template_version}!\n'
+                  f' Use [green]mlf-core sync [blue]to sync your project')
+        # no updates were found
+        else:
+            click.echo(click.style('Congrats, you are using the latest template version for your project. No sync is needed.', fg='blue'))
+        # exit without syncing
+        sys.exit(0)
+    # set sync flags indicating a major, minor or patch update
+    syncer.major_update = major_change
+    syncer.minor_update = minor_change
+    syncer.patch_update = patch_change
+    # sync the project if any changes
+    if any(change for change in (major_change, minor_change, patch_change)):
+        if syncer.check_sync_level():
+            # check if a pull request should be created according to set level constraints
+            syncer.sync()
+        else:
+            print('[bold red]Aborting sync due to set level constraints. You can set the level any time in your mlf_core.cfg in the sync_level section and'
+                  ' sync again.')
+    else:
+        print('[bold blue]No changes detected. Your template is up to date.')
 
 
 @mlf_core_cli.command('bump-version', short_help='Bump the version of an existing mlf-core project.', cls=CustomHelpSubcommand)

@@ -1,0 +1,33 @@
+mlflow:
+    pytorch:
+        name: Pytorch
+        handle: mlflow-pytorch
+        version: 1.0.0
+        available libraries: Pytorch
+        short description: Fully GPU reproducible MLflow based Pytorch template with Tensorboard support.
+        long description: A fully GPU reproducible MLflow based Pytorch template with CPU, multi-GPU (Dataparallel API),
+                        system-intelligence and Tensorboard support. The initialized project contains a MNIST example.
+    tensorflow:
+        name: Tensorflow
+        handle: mlflow-tensorflow
+        version: 1.0.0
+        available libraries: Tensorflow
+        short description: Fully GPU reproducible MLflow based Tensorflow template with tensorboard support.
+        long description: A fully GPU reproducible MLflow based Tensorflow template with CPU, multi-GPU (Mirrored Strategy API),
+                        system-intelligence and Tensorboard support. The initialized project contains a MNIST example.
+    xgboost:
+        name: XGBoost
+        handle: mlflow-xgboost
+        version: 1.0.0
+        available libraries: XGBoost
+        short description: Fully GPU reproducible MLflow based XGBoost template.
+        long description: A fully GPU reproducible MLflow based XGBoost template with CPU, single-GPU and
+                        system-intelligence support. The initialized project contains a Covertype example.
+    xgboost_dask:
+        name: XGBoost-Dask
+        handle: mlflow-xgboost_dask
+        version: 1.0.0
+        available libraries: XGBoost, Dask
+        short description: Fully GPU reproducible MLflow and Dask based XGBoost template.
+        long description: A fully GPU reproducible MLflow based XGBoost template with CPU, single-GPU, multi-GPU and
+                        system-intelligence support. The initialized project contains a Covertype example.

@@ -1,0 +1,28 @@
+# Author: {{ cookiecutter.full_name }}
+# Email: {{ cookiecutter.email }}
+# Version: {{ cookiecutter.version }}
+# License: {{ cookiecutter.license }}
+
+name: {{ cookiecutter.project_slug }}
+
+# conda_env: environment.yml
+docker_env:
+  image: mlfcore/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }}
+
+entry_points:
+  main:
+    parameters:
+      cuda: {type: string, default: 'True'}
+      n_workers: {type: int, default: 2}
+      epochs: {type: int, default: 25}
+      general_seed: {type: int, default: 0}
+      xgboost_seed: {type: int, default: 0}
+      single_precision_histogram: {type: string, default: 'True'}
+    command: |
+          python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
+            --cuda {cuda} \
+            --n-workers {n_workers} \
+            --epochs {epochs} \
+            --general_seed {general_seed} \
+            --xgboost_seed {xgboost_seed} \
+            --single_precision_histogram {single_precision_histogram} 

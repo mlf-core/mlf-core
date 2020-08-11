@@ -1,0 +1,28 @@
+name: mlf-core lint
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.7, 3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out source-code repository
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: {% raw %}${{ matrix.python }}{% endraw %}
+
+      - name: Install mlf-core
+        run: |
+          pip install mlf-core
+
+      - name: Run mlf-core lint
+        run: |
+          mlf-core lint .

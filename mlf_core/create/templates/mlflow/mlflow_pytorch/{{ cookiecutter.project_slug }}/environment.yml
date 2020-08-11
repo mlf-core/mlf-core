@@ -1,0 +1,17 @@
+name: {{ cookiecutter.project_slug }}
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - defaults::cudatoolkit=10.1
+  - defaults::python=3.7
+  - defaults::click=7.1.2
+  - conda-forge::mlflow=1.10.0
+  - conda-forge::tensorboardx=2.1
+  - pytorch::pytorch=1.6.0=py3.7_cuda10.1.243_cudnn7.6.3_0
+  - pytorch::torchvision=0.7.0=py37_cu101
+  - pip
+  - pip:
+    - pycuda==2019.1.2  # not on Conda
+    - system-intelligence==1.2.2  # not yet on Conda

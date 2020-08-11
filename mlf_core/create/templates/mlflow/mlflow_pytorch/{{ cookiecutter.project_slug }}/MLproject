@@ -1,0 +1,33 @@
+# Author: {{ cookiecutter.full_name }}
+# Email: {{ cookiecutter.email }}
+# Version: {{ cookiecutter.version }}
+# License: {{ cookiecutter.license }}
+
+
+name: {{ cookiecutter.project_slug }}
+
+# conda_env: environment.yml
+docker_env:
+  image: mlfcore/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }}
+
+entry_points:
+  main:
+    parameters:
+      cuda: {type: string, default: 'True'}
+      epochs: {type: int, default: 5}
+      general_seed: {type: int, default: 0}
+      pytorch_seed: {type: int, default: 0}
+      training_batch-size: {type: int, default: 64}
+      test-batch-size: {type: int, default: 1000}
+      learning-rate: {type: float, default: 0.01}
+      log-interval: {type: int, default: 100}
+    command: |
+          python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
+            --cuda {cuda} \
+            --epochs {epochs} \
+            --general_seed {general_seed} \
+            --pytorch_seed {pytorch_seed} \
+            --training_batch-size {training_batch-size} \
+            --test-batch-size {test-batch-size} \
+            --learning-rate {learning-rate} \
+            --log-interval {log-interval}

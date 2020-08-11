@@ -1,4 +1,4 @@
-name: Build mlf_core Package
+name: Build mlf-core Package
 
 on: [push]
 

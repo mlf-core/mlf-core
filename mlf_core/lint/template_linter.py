@@ -317,7 +317,8 @@ class TemplateLinter(object):
         :param conda_environment: A dictionary of the read in environment.yml
         """
         # Check if each dependency is the latest available version
-        dependency_name, dependency_version = dependency.split('==', 1) if '==' in dependency else dependency.split('=', 1)
+        dependency_split = dependency.split('==') if '==' in dependency else dependency.split('=')
+        dependency_name, dependency_version = dependency_split[0], dependency_split[1]
         dep_channels = conda_environment.get('channels', [])
 
         if '::' in dependency_name:

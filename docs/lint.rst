@@ -130,14 +130,14 @@ mlflow-tensorflow
 ^^^^^^^^^^^^^^^^^^^^^
 
 mlflow-tensorflow-1
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 | File not found. This error occurs when your project does not include all of mlflow-tensorflow's expected files.
 | Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
   at the time of the project creation using mlf-core this file should not have been missing!
 
 mlflow-tensorflow-2
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.
 | Currently, mlflow-tensorflow expects:

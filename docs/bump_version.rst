@@ -6,7 +6,7 @@ Bumping the version of an existing project
 
 | Increasing the version of an already existing project is often times a cumbersome and error prone process, since the version has to be changed in multiple places.
 | To facilitate this process, mlf-core provides a :code:`bump-version` command, which conveniently increases the version across several files.
-| Additionally, always adding new sections to the changelog is an annoying process. bump-version therefore inserts a new section into the changelog using the specified new version.
+| Additionally, :code:`bump-version` inserts a new section into the changelog using the specified new version.
 
 .. code::
 

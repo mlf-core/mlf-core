@@ -5,6 +5,20 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
+1.0.1 (2020-08-11)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Sync workflow now uses the correct secret
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.0.0 (2020-08-11)
 ------------------
 

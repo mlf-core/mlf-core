@@ -23,7 +23,7 @@ jobs:
           with:
                name: '{{ cookiecutter.github_username }}'
                email: '{{ cookiecutter.email }}'
-               actor: '${{ github.actor }}
+               actor: '${{ github.actor }}'
                token: '${{ secrets.CT_SYNC_TOKEN}}'
 
         - name: Sync project

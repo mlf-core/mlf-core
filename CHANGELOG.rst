@@ -12,6 +12,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Sync workflow now uses the correct secret
+
 **Dependencies**
 
 **Deprecated**

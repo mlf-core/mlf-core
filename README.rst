@@ -17,8 +17,8 @@ mlf-core
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
-        :target: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
+        :alt: PyPI
 
 .. image:: https://img.shields.io/discord/742367395196305489?color=passing
         :target: https://discord.gg/Mv8sAcq

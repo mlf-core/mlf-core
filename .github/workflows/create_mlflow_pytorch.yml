@@ -37,6 +37,7 @@ jobs:
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:
+          dockerfile: ../exploding_springfield
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false

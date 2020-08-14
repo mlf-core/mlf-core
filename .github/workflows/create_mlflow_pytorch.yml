@@ -27,12 +27,13 @@ jobs:
         run: |
           cd ..
           echo -e "\n\n\n\n\nn\n\n\n\nn" | mlf-core create
-          pwd
-          ls -la
+
+      - defaults:
+        run:
+            working-directory: ../exploding_springfield
 
       - name: debug
         run: |
-          cd ../exploding_springfield
           pwd
           ls -la
 

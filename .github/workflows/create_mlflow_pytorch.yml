@@ -31,13 +31,16 @@ jobs:
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:
-          dockerfile: exploding_springfield/Dockerfile
+          dockerfile: Dockerfile
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
+          path: exploding_springfield
 
       - name: Install mlflow
         run: pip install mlflow
 
       - name: Train on the CPU
-        run: mlflow run exploding_springfield
+        run: |
+          cd exploding_springfield
+          mlflow run exploding_springfield

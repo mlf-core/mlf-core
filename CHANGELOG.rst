@@ -10,6 +10,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Publish Docker workflow
+
 **Fixed**
 
 **Dependencies**

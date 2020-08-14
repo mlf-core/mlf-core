@@ -30,18 +30,15 @@ jobs:
 
       - name: debug
         run: |
-          cd ..
-          pwd
-          ls -la
+          cp ../exploding_springfield/Dockerfile .
+          cp ../exploding_springfield/environment.yml
 
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:
-          dockerfile: ../exploding_springfield/Dockerfile
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
-          path: ../exploding_springfield
 
       - name: Install mlflow
         run: pip install mlflow

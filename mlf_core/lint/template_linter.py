@@ -432,8 +432,8 @@ class TemplateLinter(object):
             """
             results = []
             for eid, msg in test_results:
-                results.append(f"1. [https://mlf-core.readthedocs.io/en/latest/lint.html#error-{eid}]"
-                               f"(https://mlf-core.readthedocs.io/en/latest/lint.html#error-{eid}): {msg}")
+                results.append(f"1. [https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}]"
+                               f"(https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}) : {msg}")
             return rich.markdown.Markdown("\n".join(results))
 
         if len(self.passed) > 0:

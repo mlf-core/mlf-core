@@ -144,7 +144,7 @@ def sync(project_dir, pat, username, check_update) -> None:
                   f' Use [green]mlf-core sync [blue]to sync your project')
         # no updates were found
         else:
-            click.echo(click.style('Congrats, you are using the latest template version for your project. No sync is needed.', fg='blue'))
+            print('[bold blue]Using the latest template version. No sync required.')
         # exit without syncing
         sys.exit(0)
     # set sync flags indicating a major, minor or patch update

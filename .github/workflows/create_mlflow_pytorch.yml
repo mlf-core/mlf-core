@@ -31,7 +31,7 @@ jobs:
       - name: debug
         run: |
           cp ../exploding_springfield/Dockerfile .
-          cp ../exploding_springfield/environment.yml
+          cp ../exploding_springfield/environment.yml .
 
       - name: Build Docker container
         uses: docker/build-push-action@v1

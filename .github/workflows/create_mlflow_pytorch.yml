@@ -6,9 +6,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-        run:
-          working-directory: ./exploding_springfield
     strategy:
       matrix:
         python: [3.7, 3.8]
@@ -16,8 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Check out source-code repository
-        with:
-            path: ../
 
       - name: Setup Python
         uses: actions/setup-python@v1
@@ -26,15 +21,16 @@ jobs:
 
       - name: Build mlf-core
         run: |
-          cd ../mlf_core
           make install
 
       - name: Create mlflow-pytorch Template
         run: |
+          cd ..
           echo -e "\n\n\n\n\nn\n\n\n\nn" | mlf-core create
 
       - name: debug
         run: |
+          cd ..
           pwd
           ls -la
 
@@ -44,6 +40,7 @@ jobs:
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
+          path: ../exploding_springfield
 
       - name: Install mlflow
         run: pip install mlflow

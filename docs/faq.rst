@@ -18,7 +18,7 @@ I need help with mlf-core. How can I get in contact with the developers?
 You can `open an issue <https://github.com/mlf-core/mlf-core/issues>`_ or `join our Discord channel <https://discord.gg/Mv8sAcq>`_.
 
 I am looking for a template for domain x and language/framework y, but it does not exist yet!
-------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 We are always looking to add new templates to mlf-core. Please `open an issue <https://github.com/mlf-core/mlf-core/issues>`_ or `join our Discord channel <https://discord.gg/Mv8sAcq>`_.
 Even better if you already have a draft for the template and/or could add it yourself!

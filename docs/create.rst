@@ -15,7 +15,7 @@ The creation of a new project can be invoked by
 
 which will guide you through the creation process of your (customized) project via prompts. If you do not have a mlf-core config yet, you will be asked to create one first.
 The full name, email and possibly more information set during the configuration process is required when creating the project. For more details please visit :ref:`config`.
-The prompts follow the pattern of domain (e.g. cli, gui, ...), subdomain (if applicable, e.g. website), language (e.g. Python) followed by template specific prompts (e.g. testing frameworks, ...).
+The prompts follow the pattern of domain (e.g. mlflow), subdomain (if applicable, e.g. machine_learning), language/framework (e.g. pytorch) followed by template specific prompts (e.g. Dask).
 | The template will be created at the current working directory, where mlf-core has been called.
 
 It is also possible to directly create a specific template using its handle

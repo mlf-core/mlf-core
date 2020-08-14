@@ -19,10 +19,10 @@ from data_loading.data_loader import load_train_test_data
 @click.command()
 @click.option('--cuda', type=click.Choice(['True', 'False']), default='True', help='Enable or disable CUDA support.')
 @click.option('--epochs', type=int, default=5, help='Number of epochs to train')
-@click.option('--general_seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--pytorch_seed', type=int, default=0, help='Pytorch specific random seed.')
+@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
+@click.option('--pytorch-seed', type=int, default=0, help='Pytorch specific random seed.')
 @click.option('--log-interval', type=int, default=100, help='Number of batches before logging training status')
-@click.option('--training_batch-size', type=int, default=64, help='Input batch size for training')
+@click.option('--training-batch-size', type=int, default=64, help='Input batch size for training')
 @click.option('--test-batch-size', type=int, default=1000, help='Input batch size for testing')
 @click.option('--learning-rate', type=float, default=0.01, help='Learning rate')
 def start_training(cuda, epochs, general_seed, pytorch_seed, log_interval,

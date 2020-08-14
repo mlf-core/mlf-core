@@ -8,7 +8,7 @@ Overview
 -------------
 
 mlf-core uses `GitPython <https://gitpython.readthedocs.io/en/stable/>`_ and `PyGithub <https://pygithub.readthedocs.io/en/latest/introduction.html>`_ to automatically create a repository, add, commit and push all files.
-Moreover, issue labels, a development and a TEMPLATE branch are created. The TEMPLATE branch is required for :ref:`sync` to work and should not be touched manually.
+Moreover, issue labels, a ``development`` and a ``TEMPLATE`` branch are created. The ``TEMPLATE`` branch is required for :ref:`sync` to work and should not be touched manually.
 
 Branches
 --------------
@@ -55,11 +55,11 @@ pr_to_master_from_patch_release_only workflow
 
 All templates feature a workflow called ``pr_to_master_from_patch_release_only.yml``.
 This workflow runs everytime a PR to your projects master branch is created. It fails, if the PR to the ``master`` branch
-origins from a branch that does not contain ``PATCH`` or ``release`` in its branch name.
+origins from a branch that does not contain ``patch`` or ``release`` in its branch name.
 If development code is written on a branch called ``development``and a new release of the project is to be made,
 one should create a ``release`` branch only for this purpose and then merge it into ``master`` branch.
 This ensures that new developments can already be merged into ``development``, while the release is finally prepared.
-The :code:``PATCH`` branch should be used for required :code:`hotfixes` (checked out directly from :code:`master` branch) because, in the meantime, there might
+The ``patch`` branch should be used for required ``hotfixes`` (checked out directly from ``master`` branch) because, in the meantime, there might
 multiple developments going on at ``development`` branch and you dont want to interfere with them.
 
 sync.yml
@@ -72,12 +72,12 @@ Secrets
 Github secrets are what their name suggests: Encrypted secret values in a repository or an organisation; once they are set their value can be used for sensible data in
 a project or an organisation but their raw value can never be seen again even by an administrator (but it can be updated).
 
-mlf-core uses a secret called :code:`MLF_CORE_SYNC_TOKEN` for its syncing feature. This secret is automatically created during the repo creation process, if you choose to create a GitHub repo.
+mlf-core uses a secret called ``MLF_CORE_SYNC_TOKEN`` for its syncing feature. This secret is automatically created during the repository creation process, if you choose to create a GitHub repo.
 The secret contains your encrypted personal access token as its value. Note that this will have no effect on how to login or any other activity in your project.
 If you remove the secret or change its value (even with another personal access token of you) the syncing feature will no longer work.
 In case you are creating an organisation repository, the secret will also be stored as a repository secret, only usable for your specific project.
 
-Error Handling due to failed Github repo creation
+Error handling during Github repository creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Errors during the create process due to a failed Github repo creation may occur due to a vast amount of reasons:
 Some common error sources are:
@@ -93,5 +93,18 @@ A detailed error message may help you finding the issue.
 
 Creation fails, ok: But how can I then access the full features of mlf-core?
 You can try to fix the issue (or wait some time on case, for example, when Github is down) and then process to create a Github repo manually.
-After this, make sure to create a secret named :code:`MLF_CORE_SYNC_TOKEN` for your repository. See `the Github docs <https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets>`_
+After this, make sure to create a secret named ``MLF_CORE_SYNC_TOKEN`` for your repository. See `the Github docs <https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets>`_
 for info on how to create a secret.
+
+publish_docker.yml
+~~~~~~~~~~~~~~~~~~~~~
+All templates featuring Docker containers feature this workflow.
+Any time you push to the ``development`` branch or create a release, a Docker container is built and released to `Github Packages <https://github.com/features/packages>`_.
+You should ensure that all of your pushes to the development branch are ``*-SNAPSHOT`` versions and only when releasing a non-SNAPSHOT version is built.
+The workflow uses your Github PAT to write and overwrite (=delete) packages. You need to ensure that you provide your PAT with sufficient rights.
+mlf-core requires ``full repo`` (not repo delete!), ``write:packages`` and ``delete:packages`` rights.
+
+If you want to push to a different registry, then you need to adapt the workflow manually.
+
+1. Replace ``registry: docker.pkg.github.com`` with your registry of choice.
+2. Replace the username and password accordingly. It is **strongly** recommended to replace the password with a secret.

@@ -219,7 +219,7 @@ class TemplateCreator:
                                                                                           to_get_property='project_short_description')
         poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                          question='Initial version of your project',
-                                                         default='0.1.0',
+                                                         default='0.1.0-SNAPSHOT',
                                                          dot_mlf_core=dot_mlf_core,
                                                          to_get_property='version')
 
@@ -229,7 +229,7 @@ class TemplateCreator:
                   'Please enter the version in the format [number].[number].[number]!')
             poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                              question='Initial version of your project',
-                                                             default='0.1.0')
+                                                             default='0.1.0-SNAPSHOT')
         self.creator_ctx.version = poss_vers
 
         self.creator_ctx.license = mlf_core_questionary_or_dot_mlf_core(function='select',

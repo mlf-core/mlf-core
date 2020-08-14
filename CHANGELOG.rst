@@ -14,6 +14,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Default project version from 0.1.0 to 0.1.0-SNAPSHOT
+
 **Dependencies**
 
 **Deprecated**

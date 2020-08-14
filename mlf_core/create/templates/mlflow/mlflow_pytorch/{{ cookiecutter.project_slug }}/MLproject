@@ -15,9 +15,9 @@ entry_points:
     parameters:
       cuda: {type: string, default: 'True'}
       epochs: {type: int, default: 5}
-      general_seed: {type: int, default: 0}
-      pytorch_seed: {type: int, default: 0}
-      training_batch-size: {type: int, default: 64}
+      general-seed: {type: int, default: 0}
+      pytorch-seed: {type: int, default: 0}
+      training-batch-size: {type: int, default: 64}
       test-batch-size: {type: int, default: 1000}
       learning-rate: {type: float, default: 0.01}
       log-interval: {type: int, default: 100}
@@ -25,9 +25,9 @@ entry_points:
           python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
             --cuda {cuda} \
             --epochs {epochs} \
-            --general_seed {general_seed} \
-            --pytorch_seed {pytorch_seed} \
-            --training_batch-size {training_batch-size} \
+            --general-seed {general-seed} \
+            --pytorch-seed {pytorch-seed} \
+            --training-batch-size {training-batch-size} \
             --test-batch-size {test-batch-size} \
             --learning-rate {learning-rate} \
             --log-interval {log-interval}

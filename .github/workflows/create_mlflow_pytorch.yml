@@ -37,7 +37,7 @@ jobs:
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
-          path: exploding_springfield
+          path: /home/runner/work/mlf-core/exploding_springfield
 
       - name: Install mlflow
         run: pip install mlflow

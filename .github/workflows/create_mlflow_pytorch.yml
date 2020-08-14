@@ -32,6 +32,7 @@ jobs:
 
       - name: debug
         run: |
+          cd ../exploding_springfield
           pwd
           ls -la
 

@@ -31,12 +31,12 @@ jobs:
           ls -la
 
       - name: Build Docker container
-        working-directory: ./exploding_springfield
         uses: docker/build-push-action@v1
         with:
           repository: mlfcore/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
+          path: ./exploding_springfield
 
       - name: Install mlflow
         run: pip install mlflow

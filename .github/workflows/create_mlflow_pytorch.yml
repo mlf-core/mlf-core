@@ -30,6 +30,11 @@ jobs:
           pwd
           ls -la
 
+      - name: debug
+        run: |
+          pwd
+          ls -la
+          
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:

@@ -11,29 +11,25 @@ from data_loading.data_loader import load_train_test_data
 
 @click.command()
 @click.option('--epochs', type=int, default=5, help='Number of epochs to train')
-@click.option('--general_seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--xgboost_seed', type=int, default=0, help='XGBoost specific random seed.')
+@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
+@click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--cuda', type=click.Choice(['True', 'False']), help='Enable or disable CUDA support.')
-@click.option('--dataset', type=click.Choice(['boston', 'covertype']), default='covertype', help='Dataset to train on')
-@click.option('--single_precision_histogram', default=True, help='Enable or disable single precision histogram calculation.')
-def start_training(epochs, general_seed, xgboost_seed, cuda, dataset, single_precision_histogram):
+@click.option('--single-precision_histogram', default=True, help='Enable or disable single precision histogram calculation.')
+def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_histogram):
     use_cuda = True if cuda == 'True' else False
 
     with mlflow.start_run():
         # Fetch and prepare data
-        dtrain, dtest = load_train_test_data(dataset)
+        dtrain, dtest = load_train_test_data()
 
         # Enable the logging of all parameters, metrics and models to mlflow
         mlflow.xgboost.autolog()
 
         # Set XGBoost parameters
-        if dataset == 'boston':
-            param = {}
-        elif dataset == 'covertype':
-            param = {
-                'objective': 'multi:softmax',
-                'num_class': 8,
-            }
+        param = {
+            'objective': 'multi:softmax',
+            'num_class': 8,
+        }
         param['single_precision_histogram'] = True if single_precision_histogram == 'True' else False
         param['subsample'] = 0.5
         param['colsample_bytree'] = 0.5

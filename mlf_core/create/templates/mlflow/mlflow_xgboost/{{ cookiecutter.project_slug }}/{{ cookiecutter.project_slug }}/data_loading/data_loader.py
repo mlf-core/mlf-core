@@ -4,12 +4,9 @@ from sklearn.datasets import fetch_covtype, load_boston
 from sklearn.model_selection import train_test_split
 
 
-def load_train_test_data(dataset: str):
+def load_train_test_data():
     # Fetch dataset using sklearn
-    if dataset == 'boston':
-        dataset = load_boston()
-    elif dataset == 'covertype':
-        dataset = fetch_covtype()
+    dataset = fetch_covtype()
     X = dataset.data
     y = dataset.target
 

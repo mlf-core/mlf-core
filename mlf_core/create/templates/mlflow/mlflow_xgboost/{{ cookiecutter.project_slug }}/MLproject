@@ -16,7 +16,7 @@ entry_points:
       epochs: {type: int, default: 25}
       general-seed: {type: int, default: 0}
       xgboost-seed: {type: int, default: 0}
-      single-precision_histogram: {type: string, default: 'True'}
+      single-precision-histogram: {type: string, default: 'True'}
     command: |
           python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
             --cuda {cuda} \

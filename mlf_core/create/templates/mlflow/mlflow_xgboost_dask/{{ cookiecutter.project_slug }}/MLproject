@@ -25,4 +25,4 @@ entry_points:
             --epochs {epochs} \
             --general-seed {general-seed} \
             --xgboost-seed {xgboost-seed} \
-            --single-precision_histogram {single_precision_histogram}
+            --single-precision-histogram {single-precision-histogram}

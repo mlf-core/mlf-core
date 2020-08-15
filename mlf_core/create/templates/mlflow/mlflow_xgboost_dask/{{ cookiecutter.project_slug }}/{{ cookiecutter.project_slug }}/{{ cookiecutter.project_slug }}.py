@@ -76,11 +76,8 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
 
 
-def load_train_test_data(client, dataset: str):
-    if dataset == 'boston':
-        dataset = load_boston()
-    elif dataset == 'covertype':
-        dataset = fetch_covtype()
+def load_train_test_data(client):
+    dataset = fetch_covtype()
 
     # Rechunking is required for the covertype dataset
     X = da.from_array(dataset.data, chunks=1000)

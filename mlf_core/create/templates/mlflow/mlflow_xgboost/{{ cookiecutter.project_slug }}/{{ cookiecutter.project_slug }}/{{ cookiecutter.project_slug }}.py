@@ -14,7 +14,7 @@ from data_loading.data_loader import load_train_test_data
 @click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
 @click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--cuda', type=click.Choice(['True', 'False']), help='Enable or disable CUDA support.')
-@click.option('--single-precision_histogram', default=True, help='Enable or disable single precision histogram calculation.')
+@click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
 def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_histogram):
     use_cuda = True if cuda == 'True' else False
 

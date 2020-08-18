@@ -9,6 +9,7 @@ import time
 import tempfile
 
 from tensorboardX import SummaryWriter
+from rich import traceback
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from model.model import create_model
@@ -89,6 +90,7 @@ def set_pytorch_random_seeds(seed, use_cuda):
 
 
 if __name__ == '__main__':
+    traceback.install()
     click.echo(click.style(f'Num GPUs Available: {torch.cuda.device_count()}', fg='blue'))
 
     start_training()

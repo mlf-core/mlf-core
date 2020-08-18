@@ -5,6 +5,8 @@ import mlflow.tensorflow
 import os
 import time
 
+from rich import traceback
+
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from data_loading.data_loader import load_train_test_data
 from model.model import create_model
@@ -70,6 +72,7 @@ def set_tensorflow_random_seeds(seed):
 
 
 if __name__ == '__main__':
+    traceback.install()
     print(f'Num GPUs Available: {len(tf.config.experimental.list_physical_devices("GPU"))}')
 
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Filtering out any Warnings messages

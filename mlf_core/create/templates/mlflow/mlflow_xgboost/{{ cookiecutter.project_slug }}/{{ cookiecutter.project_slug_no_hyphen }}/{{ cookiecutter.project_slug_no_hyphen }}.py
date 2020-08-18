@@ -4,6 +4,7 @@ import mlflow
 import mlflow.xgboost
 import time
 
+from rich import traceback
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from data_loading.data_loader import load_train_test_data
@@ -62,4 +63,5 @@ def set_xgboost_random_seeds(seed, param):
 
 
 if __name__ == '__main__':
+    traceback.install()
     start_training()

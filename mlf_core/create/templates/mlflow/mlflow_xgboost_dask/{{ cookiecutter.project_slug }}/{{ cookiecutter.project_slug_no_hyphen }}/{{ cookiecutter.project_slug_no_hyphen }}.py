@@ -12,6 +12,8 @@ from sklearn.datasets import fetch_covtype, load_boston
 from dask_ml.model_selection import train_test_split
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 
+from rich import traceback
+
 
 @click.command()
 @click.option('--cuda', type=click.Choice(['True', 'False']), help='Enable or disable CUDA support.')
@@ -97,4 +99,5 @@ def set_xgboost_dask_random_seeds(seed, param):
 
 
 if __name__ == '__main__':
+    traceback.install()
     start_training()

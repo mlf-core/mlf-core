@@ -186,6 +186,12 @@ mlflow-xgboost-2
 
 | Line 2 fixes the seed of XGBoost
 
+mlflow-xgboost-3
+~~~~~~~~~~~~~~~~~~
+
+| The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
+| Refrain from using versions older than 1.1.0, especially when making use of GPUs.
+
 mlflow-xgboost_dask
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -203,6 +209,14 @@ mlflow-xgboost_dask-2
 | Currently, mlflow-xgboost_dask expects:
 
 .. code-block::
-
+    :linesos:
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
+
+| Line 2 fixes the seed of XGBoost
+
+mlflow-xgboost_dask-3
+~~~~~~~~~~~~~~~~~~
+
+| The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
+| Refrain from using versions older than 1.1.0, especially when making use of GPUs.

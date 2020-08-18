@@ -54,7 +54,7 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_hi
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
 
         # Log hardware and software
-        log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
+        log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
 
 
 def set_xgboost_random_seeds(seed, param):

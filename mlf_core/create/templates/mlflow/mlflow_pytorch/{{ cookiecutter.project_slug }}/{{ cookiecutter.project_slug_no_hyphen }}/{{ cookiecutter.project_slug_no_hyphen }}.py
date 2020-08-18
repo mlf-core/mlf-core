@@ -70,7 +70,7 @@ def start_training(cuda, epochs, general_seed, pytorch_seed, log_interval,
         mlflow.pytorch.log_model(model, 'models')
 
         # Log hardware and software
-        log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
+        log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
 
         # Upload the TensorBoard event logs as a run artifact
         click.echo(click.style('Uploading TensorBoard events as a run artifact...', fg='blue'))

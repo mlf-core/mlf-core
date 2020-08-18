@@ -73,7 +73,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                     click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
 
                 # Log hardware and software
-                log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
+                log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
 
 
 def load_train_test_data(client):

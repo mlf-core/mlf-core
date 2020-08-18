@@ -22,7 +22,7 @@ entry_points:
       learning-rate: {type: float, default: 0.01}
       log-interval: {type: int, default: 100}
     command: |
-          python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
+          python {{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}.py \
             --cuda {cuda} \
             --epochs {epochs} \
             --general-seed {general-seed} \

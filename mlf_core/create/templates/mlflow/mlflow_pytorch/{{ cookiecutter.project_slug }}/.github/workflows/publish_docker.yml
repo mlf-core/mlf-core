@@ -18,7 +18,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}
+        name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}
         username: {{ cookiecutter.github_username }}
         password: {% raw %}'${{ secrets.MLF_CORE_SYNC_TOKEN}}'{% endraw %}
         registry: docker.pkg.github.com

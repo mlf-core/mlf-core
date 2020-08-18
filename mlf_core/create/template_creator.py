@@ -210,7 +210,8 @@ class TemplateCreator:
             # break if the project should be named anyways
             else:
                 break
-        self.creator_ctx.project_slug = self.creator_ctx.project_name.replace(' ', '_').replace('-', '_')
+        self.creator_ctx.project_slug = self.creator_ctx.project_name.replace(' ', '_')
+        self.creator_ctx.project_slug_no_hyphen = self.creator_ctx.project_slug.replace('-', '_')
         self.creator_ctx.project_short_description = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                                           question='Short description of your project',
                                                                                           default=f'{self.creator_ctx.project_name}'

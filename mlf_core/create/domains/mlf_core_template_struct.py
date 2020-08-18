@@ -10,6 +10,7 @@ class MlfcoreTemplateStruct:
     domain: str = ''  # Domain of the template
     language: str = ''  # Primary language
     project_slug: str = ''  # Project name mlf-core uses for almost all further processing
+    project_slug_no_hyphen: str = ''  # Project name mlf-core uses for almost all further processing without hyphens
     template_version: str = ''  # Version of the provided mlf-core template
     template_handle: str = ''  # Handle of the specific template, indicating which template is currently used
     github_username: str = ''  # Github username

@@ -71,7 +71,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.benchmark = False
         """
         passed_pytorch_reproducibility_seeds = True
-        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
+        entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
@@ -155,7 +155,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             os.environ['TF_DETERMINISTIC_OPS'] = '1'
         """
         passed_tensorflow_reproducibility_seeds = True
-        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
+        entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
@@ -166,7 +166,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'os.environ[\'TF_DETERMINISTIC_OPS\'] = \'1\'',
                                                   'set_general_random_seeds(general_seed)',
                                                   'set_tensorflow_random_seeds(tensorflow_seed)',
-                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug_no_hyphen}\')']
 
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -241,7 +241,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.benchmark = False
         """
         passed_xgboost_reproducibility_seeds = True
-        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
+        entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
@@ -249,7 +249,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'param[\'seed\'] = seed',
                                                   'set_general_random_seeds(general_seed)',
                                                   'set_xgboost_random_seeds(xgboost_seed, param)',
-                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug_no_hyphen}\')']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -340,7 +340,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.benchmark = False
         """
         passed_xgboost_reproducibility_seeds = True
-        entry_point_file_path = f'{self.path}/{self.project_slug}/{self.project_slug}.py'
+        entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
@@ -348,7 +348,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'param[\'seed\'] = seed',
                                                   'set_general_random_seeds(general_seed)',
                                                   'set_xgboost_dask_random_seeds(xgboost_seed, param)',
-                                                  f'log_sys_intel_conda_env(\'{self.project_slug}\')']
+                                                  f'log_sys_intel_conda_env(\'{self.project_slug_no_hyphen}\')']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:

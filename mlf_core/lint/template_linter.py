@@ -33,6 +33,7 @@ class TemplateLinter(object):
         self.path = path
         self.files = []
         self.project_slug = load_yaml_file(f'{path}/.mlf_core.yml')['project_slug']
+        self.project_slug_no_hyphen = load_yaml_file(f'{path}/.mlf_core.yml')['project_slug_no_hyphen']
         self.passed = []
         self.warned = []
         self.failed = []

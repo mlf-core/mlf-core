@@ -256,6 +256,13 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 passed_xgboost_reproducibility_seeds = False
                 self.failed.append(('mlflow-xgboost-2', f'{expected_line} not found in {entry_point_file_path}'))
 
+        if passed_xgboost_reproducibility_seeds:
+            self.passed.append(('mlflow-xgboost-2', 'All required reproducibility settings enabled.'))
+
+    def xgboost_version(self) -> None:
+        """
+        Verifies that the XGBoost version is at least 1.1.0, since reproducibility cannot be guaranteed elsewise.
+        """
         # Verify that XGBoost version is greater than 1.1.0
         conda_env = load_yaml_file(f'{self.path}/environment.yml')
         conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
@@ -266,17 +273,16 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 split = dependency.split('==')
                 current_version = parse_version(split[-1])
                 if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
+                    self.failed.append(('mlflow-xgboost-3',
+                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
 
         for dependency in pip_only:
             if 'xgboost' in dependency:
                 split = dependency.split('==')
                 current_version = parse_version(split[-1])
                 if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
-
-        if passed_xgboost_reproducibility_seeds:
-            self.passed.append(('mlflow-xgboost-2', 'All required reproducibility settings enabled.'))
+                    self.failed.append(('mlflow-xgboost-3',
+                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
 
 
 class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
@@ -286,7 +292,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def lint(self):
         super().lint_project(self, self.methods)
 
-    def tensorflow_files_exist(self) -> None:
+    def xgboost_dask_files_exist(self) -> None:
         """
         Checks a given project directory for required files.
         Iterates through the templates's directory content and checkmarks files for presence.
@@ -353,8 +359,15 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:
                 passed_xgboost_reproducibility_seeds = False
-                self.failed.append(('mlflow-xgboost-2', f'{expected_line} not found in {entry_point_file_path}'))
+                self.failed.append(('mlflow-xgboost_dask-2', f'{expected_line} not found in {entry_point_file_path}'))
 
+        if passed_xgboost_reproducibility_seeds:
+            self.passed.append(('mlflow-xgboost_dask-2', 'All required reproducibility settings enabled.'))
+
+    def xgboost_version(self) -> None:
+        """
+        Verifies that the XGBoost version is at least 1.1.0, since reproducibility cannot be guaranteed elsewise.
+        """
         # Verify that XGBoost version is greater than 1.1.0
         conda_env = load_yaml_file(f'{self.path}/environment.yml')
         conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
@@ -365,14 +378,13 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 split = dependency.split('==')
                 current_version = parse_version(split[-1])
                 if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
+                    self.failed.append(('mlflow-xgboost_dask-3',
+                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
 
         for dependency in pip_only:
             if 'xgboost' in dependency:
                 split = dependency.split('==')
                 current_version = parse_version(split[-1])
                 if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost-2', f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
-
-        if passed_xgboost_reproducibility_seeds:
-            self.passed.append(('mlflow-xgboost-2', 'All required reproducibility settings enabled.'))
+                    self.failed.append(('mlflow-xgboost_dask-3',
+                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))

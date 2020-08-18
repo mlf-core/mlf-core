@@ -24,7 +24,7 @@ Bumping the version of an existing project
 bump-version will verify that your new version adheres to `semantic versioning <https://semver.org/>`_ and that you are not trying to update it unreasonably.
 It is for example not allowed to bump from 2.0.0 to 7.1.2, since in a normal development workflow only 2.0.1, 2.1.0 or 3.0.0 adhere to consecutive `semantic versioning <https://semver.org/>`_.
 Note that SNAPSHOT versions are allowed! Hence, :code:`mlf-core bump-version 1.2.5-SNAPSHOT` is allowed. However, it must still follow `semantic versioning <https://semver.org/>`_.
-Version 1.2.5 therefore cannot be the predecesor of 1.2.5-SNAPSHOT, but only 1.2.4.
+Version 1.2.5 therefore cannot be the predecessor of 1.2.5-SNAPSHOT, but only 1.2.4.
 
 Usage
 ---------
@@ -73,7 +73,7 @@ Whitelisted files are listed below a ``[bumpversion_files_whitelisted]`` section
 | All files, which are whitelisted are searched for patterns matching ``X.X.X``, which are updated to the specified new versions.
 | Any lines, which contain the string :code:`<<MLF_CORE_NO_BUMP>>` will be ignored.
 
-If files like Maven pom.xml files, contain many version patterns matching ``X.X.X``, it may be a better idea to blacklist them (section ``[bumpversion_files_blacklisted]``) and enable only specific lines to be updated::
+If files, like Maven pom.xml files, contain many version patterns matching ``X.X.X``, it may be a better idea to blacklist them (section ``[bumpversion_files_blacklisted]``) and enable only specific lines to be updated::
 
     [bumpversion_files_blacklisted]
     pom = pom.xml

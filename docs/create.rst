@@ -27,6 +27,5 @@ It is also possible to directly create a specific template using its handle
 | After the template has been created, linting (see :ref:`lint`) is automatically performed to verify that the template creation process was successful.
 | You may already be made aware of any TODOs, which you should examine before coding your project.
 | Finally, you will be asked whether or not you want to automatically push your new project to Github. For more details about the Github support please visit :ref:`github_support`.
-| Note that in order to use the automatic Github repo creation feature, you need to set a personal access token (for login, since a login via password will be deprecated in Autumn 2020) via :code:`mlf-core config pat` (if not already done). This token is also used for mlf-core's sync feature.
-| In order to use the sync feature, make sure to tick at least the :code:`repo` scope when creating the token. To use sync even for organisation repos, you will also need to tick the :code:`admin:org` scope.
+| Note that in order to use the automatic Github repo creation feature, you need to set a personal access token via :code:`mlf-core config pat` (if not already done). This token is also used for mlf-core's sync feature.
 | Take a look at `the Github docs <https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token>`_ to see, how to create a personal access token for your Github account.

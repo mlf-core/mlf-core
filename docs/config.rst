@@ -33,8 +33,8 @@ mlf-core's Github support requires access to your Github repositories to create 
 Github manages these access rights through Personal Access Tokens (PAT).
 If you are using mlf-core's Github support for the first time ```mlf-core config pat`` will be run and you will be prompted for your Github PAT.
 Please refer to the `official documentation <https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line>`_ on how to create one.
-mlf-core requires ``repo`` access, ``write:packages`` **and** ``delete:packages``. However, if you want to use mlf-core's sync feature on organisation repositories,
-you also need to tick ``admin:org``. You don't need to provide any additional permissions besides the ones mentioned. This ensures that your PAT would not even allow for the deletion of repositories.
+mlf-core requires ``repo`` access, ``write:packages`` **and** ``delete:packages``. You don't need to provide any additional permissions besides the ones mentioned.
+This ensures that your PAT would not even allow for the deletion of repositories.
 mlf-core then encrypts the Personal Access Token, adds the encrypted token to the ``mlf_core_conf.cfg`` file (OS dependent stored) and saves the key locally in a hidden place.
 This is safer than Github's official way, which recommends the usage of environment variables or Github Credentials, which both save the token in plaintext.
 It is still strongly adviced to secure your personal computer and not allow any foe to get access.

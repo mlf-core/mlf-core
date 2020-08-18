@@ -85,7 +85,6 @@ def set_pytorch_random_seeds(seed, use_cuda):
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)  # For multiGPU
         torch.backends.cudnn.deterministic = True
-        # Disable cudnn.benchmark to turn off search for optimal algorithm for the underlying hardware -> non deterministic
         torch.backends.cudnn.benchmark = False
 
 

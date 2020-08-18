@@ -5,7 +5,7 @@ Linting your project
 =====================
 
 `Linting <https://en.wikipedia.org/wiki/Lint_(software)>`_ is the process of statically analyzing code to find code style violations and to detect errors.
-mlf-core implements a custom linting system, but depending on the template external tools linting tools may be additionally be called.
+mlf-core implements a custom linting system, but depending on the template external tools linting tools may additionally be called.
 
 mlf-core linting
 -----------------------
@@ -54,7 +54,7 @@ Linting codes
 -----------------
 
 The following error numbers correspond to errors found during linting.
-If you are not sure why a specific linting error has occured you may find more information using the respective error code.
+If you are not sure why a specific linting error has occurred you may find more information using the respective error code.
 
 General
 ^^^^^^^^^
@@ -80,9 +80,8 @@ general-3
 general-4
 ~~~~~~~~~
 
-| Cookiecutter String found. This error occurs if something went wrong at the project creation stage. After a project has been created using mlf-core
-  there should not be any jinja2 syntax statements left. Web development templates may pose exceptions. However, ``{{ *cookiecutter* }}`` statements
-  should definitely not be present anymore.
+| Cookiecutter string found. This error occurs if something went wrong at the project creation stage. After a project has been created using mlf-core
+  there should not be any jinja2 syntax left.
 
 general-5
 ~~~~~~~~~~
@@ -115,6 +114,7 @@ mlflow-pytorch-2
 | Currently, mlflow-pytorch expects:
 
 .. code-block::
+    :linenos:
 
     def set_pytorch_random_seeds(seed, use_cuda):
     torch.manual_seed(seed)
@@ -122,8 +122,14 @@ mlflow-pytorch-2
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)  # For multiGPU
         torch.backends.cudnn.deterministic = True
-        # Disable cudnn.benchmark to turn off search for optimal algorithm for the underlying hardware -> non deterministic
         torch.backends.cudnn.benchmark = False
+
+| Line 2 fixes the seed of Pytorch.
+| Given that CUDA support is enabled:
+| Line 4 fixes the Pytorch CUDA seed.
+| Line 5 fixes the Pytorch CUDA seed for all CUDA devices.
+| Line 6 enables deterministic cuDNN operations
+| Line 7 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.
 
 
 mlflow-tensorflow
@@ -143,12 +149,18 @@ mlflow-tensorflow-2
 | Currently, mlflow-tensorflow expects:
 
 .. code-block::
+    :linenos:
 
     def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
+
+| Line 2 fixes the seed of Tensorflow
+| Line 3 sets the number of threads within an individual operation for parallelism to 1
+| Line 4 sets the number of threads between independent operations for parallelism to 1
+| Line 5 enables and forces all deterministic operations
 
 mlflow-xgboost
 ^^^^^^^^^^^^^^^^^
@@ -167,9 +179,12 @@ mlflow-xgboost-2
 | Currently, mlflow-xgboost expects:
 
 .. code-block::
+    :linenos:
 
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
+
+| Line 2 fixes the seed of XGBoost
 
 mlflow-xgboost_dask
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

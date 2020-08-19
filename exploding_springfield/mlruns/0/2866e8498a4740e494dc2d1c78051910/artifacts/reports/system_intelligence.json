@@ -1,0 +1,104 @@
+{
+  "cpu": {
+    "vendor_id_raw": "GenuineIntel",
+    "hardware_raw": null,
+    "brand_raw": "Intel(R) Core(TM) i5-7300HQ CPU @ 2.50GHz",
+    "arch": "X86_64",
+    "logical_cores": "4",
+    "physical_cores": "4",
+    "clock": "1968.6609999999998 MHz",
+    "clock_min": "800.0 MHz",
+    "clock_max": "3500.0 MHz",
+    "cache": "{1: '33.55 MHz', 2: '268.44 MHz', 3: '6.44 GHz'}"
+  },
+  "gpus": [
+    {
+      "architecture": "Pascal",
+      "brand": "GeForce GTX 1050",
+      "compute_capability": "6.1",
+      "memory": "3.95 GB",
+      "memory_clock": "3.5 MHz",
+      "clock": "1.49 MHz",
+      "multiprocessors": "5",
+      "cores": "640",
+      "warp_size": "32"
+    }
+  ],
+  "ram": {
+    "total": 16668311552,
+    "banks": {},
+    "cache": {}
+  },
+  "host": "05319197e386",
+  "os": "Linux-5.8.1-arch1-1-x86_64-with-debian-buster-sid",
+  "hdd": {
+    "model": {
+      "/dev/sda": {
+        "size": 1025610768,
+        "model": "Crucial_CT525MX3"
+      }
+    },
+    "usage": {
+      "/dev/sda6": {
+        "total": "235.23 GB",
+        "used": "131.33 GB",
+        "free": "91.88 GB",
+        "percentage": "58.8",
+        "fstype": "ext4",
+        "mountpoint": "/usr/lib/x86_64-linux-gnu/libnvidia-compiler.so.450.57"
+      }
+    }
+  },
+  "swap": 0,
+  "network": {
+    "lo": {
+      "isup": "True",
+      "duplex": "NicDuplex.NIC_DUPLEX_UNKNOWN",
+      "speed": "0",
+      "mtu": "65536"
+    },
+    "eth0": {
+      "isup": "True",
+      "duplex": "NicDuplex.NIC_DUPLEX_FULL",
+      "speed": "10000",
+      "mtu": "1500"
+    }
+  },
+  "software": {
+    "gcc": {
+      "path": "/usr/bin/gcc",
+      "version": "gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
+    },
+    "g++": {
+      "path": "/usr/bin/g++",
+      "version": "g++ (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0"
+    },
+    "python": {
+      "path": "/home/user/miniconda/envs/exploding_springfield/bin/python",
+      "version": "Python 3.7.7",
+      "packages": {
+        "numpy": {
+          "version": "numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1596233707986/work"
+        },
+        "pandas": {
+          "version": "pandas @ file:///tmp/build/80754af9/pandas_1596825853503/work"
+        },
+        "pycuda": {
+          "version": "pycuda==2019.1.2"
+        }
+      }
+    },
+    "pip": {
+      "path": "/home/user/miniconda/envs/exploding_springfield/bin/pip",
+      "version": "pip 20.2.2 from /home/user/miniconda/envs/exploding_springfield/lib/python3.7/site-packages/pip (python 3.7)"
+    },
+    "nvcc": {
+      "path": "/usr/local/cuda/bin/nvcc",
+      "version": "Cuda compilation tools, release 10.2, V10.2.89"
+    },
+    "mkl": {
+      "path": null,
+      "version": "Intel(R) Math Kernel Library Version 2020.0.1 Product Build 20200208 for Intel(R) 64 architecture applications"
+    }
+  }
+}

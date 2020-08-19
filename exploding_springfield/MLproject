@@ -1,0 +1,33 @@
+# Author: Lukas Heumos
+# Email: lukas.heumos@posteo.net
+# Version: 0.1.0-SNAPSHOT
+# License: MIT
+
+
+name: exploding_springfield
+
+# conda_env: environment.yml
+docker_env:
+  image: mlfcore/exploding_springfield:0.1.0-SNAPSHOT
+
+entry_points:
+  main:
+    parameters:
+      cuda: {type: string, default: 'True'}
+      epochs: {type: int, default: 5}
+      general-seed: {type: int, default: 0}
+      pytorch-seed: {type: int, default: 0}
+      training-batch-size: {type: int, default: 64}
+      test-batch-size: {type: int, default: 1000}
+      learning-rate: {type: float, default: 0.01}
+      log-interval: {type: int, default: 100}
+    command: |
+          python exploding_springfield/exploding_springfield.py \
+            --cuda {cuda} \
+            --epochs {epochs} \
+            --general-seed {general-seed} \
+            --pytorch-seed {pytorch-seed} \
+            --training-batch-size {training-batch-size} \
+            --test-batch-size {test-batch-size} \
+            --learning-rate {learning-rate} \
+            --log-interval {log-interval}

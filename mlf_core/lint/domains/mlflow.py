@@ -24,9 +24,9 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'environment.yml',
             'project_slug/'
         Files that *should* be present::
-            '.github/workflows/build_package.yml',
-            '.github/workflows/publish_package.yml',
-            '.github/workflows/tox_testsuite.yml',
+            '.github/workflows/train_cpu.yml',
+            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/run_bandit.yml',
             '.github/workflows/flake8.yml',
         Files that *must not* be present::
             none
@@ -39,7 +39,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
-            [f'{self.project_slug}/mlf_core/mlf_core.py']
+            [f'{self.project_slug_no_hyphen}/mlf_core/mlf_core.py']
         ]
 
         files_warn = [
@@ -93,6 +93,46 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         if passed_pytorch_reproducibility_seeds:
             self.passed.append(('mlflow-pytorch-2', 'All required reproducibility settings enabled.'))
 
+    def pytorch_no_atomic_operations(self) -> None:
+        """
+        Verifies that the project does not use any of the potentially non-deterministic atomicAdd functions.
+
+        There are some PyTorch functions that use CUDA functions that can be a source of nondeterminism.
+        One class of such CUDA functions are atomic operations, in particular atomicAdd, which can lead to the order of additions being nondetermnistic.
+        Because floating-point addition is not perfectly associative for floating-point operands,
+        atomicAdd with floating-point operands can introduce different floating-point rounding errors on each evaluation, which introduces a source of nondeterministic variance (aka noise) in the result.
+        PyTorch functions that use atomicAdd in the forward kernels include torch.Tensor.index_add_(), torch.Tensor.scatter_add_(), torch.bincount().
+        A number of operations have backwards kernels that use atomicAdd, including torch.nn.functional.embedding_bag(),
+        torch.nn.functional.ctc_loss(), torch.nn.functional.interpolate(), and many forms of pooling, padding, and sampling.
+        There is currently no simple way of avoiding nondeterminism in these functions.
+        Additionally, the backward path for repeat_interleave() operates nondeterministically on the CUDA backend because repeat_interleave() is implemented
+        using index_select(), the backward path for which is implemented using index_add_(), which is known to operate nondeterministically (in the forward direction) on the CUDA backend (see above).
+
+        Source: https://pytorch.org/docs/stable/notes/randomness.html
+        """
+        atomic_add_functions = [
+            'index_add',
+            'scatter_add',
+            'bincount',
+            'embedding_bag',
+            'ctc_loss',
+            'interpolate',
+            'repeat_interleave',
+            'index_select'
+        ]
+
+        # We should only expect those functions in all *.py files, so only read those
+        for root, dirs, files in os.walk(f'{self.path}/{self.project_slug_no_hyphen}'):
+            for file in files:
+                if file.endswith(".py"):
+                    with open(os.path.join(root, file)) as f:
+                        content_stripped = list(map(lambda line: line.strip(), f.readlines()))
+                        for function in atomic_add_functions:
+                            if any(function in line_code for line_code in content_stripped):
+                                self.failed.append(('mlflow-pytorch-3', f'Function {function} may operate non-deterministically, since it uses non-deterministic atomic_add.'))
+
+        # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
+
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def __init__(self, path):
@@ -106,15 +146,13 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         Checks a given project directory for required files.
         Iterates through the templates's directory content and checkmarks files for presence.
         Files that **must** be present::
-            'setup.py',
-            'setup.cfg',
-            'MANIFEST.in',
-            'tox.ini',
+            'MLproject,
+            'environment.yml',
+            'project_slug_no_hyphen/mlf_core/mlf_core.py',
         Files that *should* be present::
-            '.github/workflows/build_package.yml',
-            '.github/workflows/publish_package.yml',
-            '.github/workflows/tox_testsuite.yml',
-            '.github/workflows/flake8.yml',
+            '.github/workflows/train_cpu.yml',
+            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/run_bandit.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -126,7 +164,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
-            [f'{self.project_slug}/mlf_core/mlf_core.py']
+            [f'{self.project_slug_no_hyphen}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
@@ -210,7 +248,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
-            [f'{self.project_slug}/mlf_core/mlf_core.py']
+            [f'{self.project_slug_no_hyphen}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
@@ -315,7 +353,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         files_fail = [
             ['MLproject'],
             ['environment.yml'],
-            [f'{self.project_slug}/mlf_core/mlf_core.py']
+            [f'{self.project_slug_no_hyphen}/mlf_core/mlf_core.py']
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],

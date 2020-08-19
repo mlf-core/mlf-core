@@ -51,9 +51,9 @@ Credits
 -------
 
 Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
-This package was created with cookietemple_ based on a modified audreyr/cookiecutter-pypackage_ project template using Cookiecutter_.
+This package was created with cookietemple_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
 
 .. _MLflow: https://mlflow.org
 .. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _audreyr/cookiecutter-pypackage: https://github.com/audreyr/cookiecutter-pypackage
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

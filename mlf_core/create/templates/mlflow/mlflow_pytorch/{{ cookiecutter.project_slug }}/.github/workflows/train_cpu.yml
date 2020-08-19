@@ -1,4 +1,4 @@
-name: Train {{ cookiecutter.project_slug }} using CPU
+name: Train {{ cookiecutter.project_slug_no_hyphen }} using CPU
 
 on: [push, pull_request]
 
@@ -17,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           dockerfile: Dockerfile
-          repository: mlfcore/{{ cookiecutter.project_slug }}
+          repository: mlfcore/{{ cookiecutter.project_slug_no_hyphen }}
           tags: {{ cookiecutter.version }}
           push: false
 

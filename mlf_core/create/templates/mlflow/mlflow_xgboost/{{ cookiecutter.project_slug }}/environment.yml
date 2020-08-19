@@ -7,6 +7,7 @@ dependencies:
     - defaults::cudatoolkit=10.1
     - defaults::python=3.7
     - defaults::click=7.1.2
+    - conda-forge::rich=5.2.0
     - conda-forge::mlflow=1.10.0
     - conda-forge::scikit-learn=0.23.2
     - conda-forge::matplotlib=3.3.0
@@ -15,4 +16,4 @@ dependencies:
     - pip:
       - xgboost==1.1.1  # xgboost on Conda is not yet built with GPU support!
       - pycuda==2019.1.2  # not on Conda
-      - system-intelligence==1.2.2  # not yet on Conda
+      - system-intelligence==1.2.3  # not yet on Conda

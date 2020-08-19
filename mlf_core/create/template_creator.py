@@ -72,12 +72,12 @@ class TemplateCreator:
 
         if subdomain:
             print()
-            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates.html#{domain}-{subdomain}-{language} ' +
-                  'for more information about how to use your chosen template.')
+            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
+                  f'#{domain}-{subdomain}-{language} for more information about how to use your chosen template.')
         else:
             print()
-            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates.html#{domain}-{language} ' +
-                  'for more information about how to use your chosen template.')
+            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
+                  f'#{domain}-{language} for more information about how to use your chosen template.')
 
     def create_template_without_subdomain(self, domain_path: str) -> None:
         """
@@ -210,7 +210,8 @@ class TemplateCreator:
             # break if the project should be named anyways
             else:
                 break
-        self.creator_ctx.project_slug = self.creator_ctx.project_name.replace(' ', '_').replace('-', '_')
+        self.creator_ctx.project_slug = self.creator_ctx.project_name.replace(' ', '_')
+        self.creator_ctx.project_slug_no_hyphen = self.creator_ctx.project_slug.replace('-', '_')
         self.creator_ctx.project_short_description = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                                           question='Short description of your project',
                                                                                           default=f'{self.creator_ctx.project_name}'
@@ -219,7 +220,7 @@ class TemplateCreator:
                                                                                           to_get_property='project_short_description')
         poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                          question='Initial version of your project',
-                                                         default='0.1.0',
+                                                         default='0.1.0-SNAPSHOT',
                                                          dot_mlf_core=dot_mlf_core,
                                                          to_get_property='version')
 
@@ -229,7 +230,7 @@ class TemplateCreator:
                   'Please enter the version in the format [number].[number].[number]!')
             poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                              question='Initial version of your project',
-                                                             default='0.1.0')
+                                                             default='0.1.0-SNAPSHOT')
         self.creator_ctx.version = poss_vers
 
         self.creator_ctx.license = mlf_core_questionary_or_dot_mlf_core(function='select',

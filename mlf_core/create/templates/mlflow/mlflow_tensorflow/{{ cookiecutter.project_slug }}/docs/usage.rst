@@ -39,6 +39,11 @@ You can replace ``all`` with specific GPU ids (e.g. 0) if desired.
 Parameters
 +++++++++++++++
 
-- epochs: Number of epochs to train [5]
+- cuda:                       Whether to train with CUDA support (=GPU)                ['True': string]
+- epochs:                     Number of epochs to train                                [5:         int]
+- general-seed:               Python, Random, Numpy seed                               [0:         int]
+- tensorflow-seed:            Tensorflow specific seed                                 [0:         int]
+- batch-size:                 Batch size for training and testing batches              [64:        int]
+- learning-rate:              Learning rate of the optimizer                           [0.01:    float]
 
 TODO MLF-CORE: Write your usage and parameter documentation here.

@@ -33,8 +33,7 @@ mlf-core
         :alt: Dependabot Enabled
 
 
-Reproducible machine learning pipelines using mlflow.
-
+Fully GPU deterministic machine learning project templates using MLflow_.
 
 * Free software: Apache2.0
 * Documentation: https://mlf-core.readthedocs.io.
@@ -43,17 +42,18 @@ Reproducible machine learning pipelines using mlflow.
 Features
 --------
 
-* Jumpstart your machine learning project with a fully fledged mlflow project template
+* Jumpstart your machine learning project with fully fledged, multi GPU enabled mlflow project templates
+* Pytorch, Tensorflow, XGBoost supported
 * mlflow templates are fully GPU deterministic with system-intelligence
 * Conda and Docker support out of the box
-* Pytorch, Tensorflow, XGBoost supported
 
 Credits
 -------
 
 Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
-This package was created with `cookietemple`_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
+This package was created with cookietemple_ based on a modified audreyr/cookiecutter-pypackage_ project template using Cookiecutter_.
 
+.. _MLflow: https://mlflow.org
 .. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _audreyr/cookiecutter-pypackage: https://github.com/audreyr/cookiecutter-pypackage

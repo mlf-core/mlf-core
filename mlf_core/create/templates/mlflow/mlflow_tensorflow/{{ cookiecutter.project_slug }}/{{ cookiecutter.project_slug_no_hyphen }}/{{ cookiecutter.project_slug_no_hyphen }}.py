@@ -5,6 +5,8 @@ import mlflow.tensorflow
 import os
 import time
 
+from rich import traceback
+
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from data_loading.data_loader import load_train_test_data
 from model.model import create_model
@@ -14,8 +16,8 @@ from training.train import train, test
 @click.command()
 @click.option('--cuda', type=bool, default=True, help='Enable or disable CUDA support')
 @click.option('--epochs', type=int, default=10, help='Number of epochs to train')
-@click.option('--general_seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--tensorflow_seed', type=int, default=0, help='Tensorflow specific random seed.')
+@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
+@click.option('--tensorflow-seed', type=int, default=0, help='Tensorflow specific random seed.')
 @click.option('--batch-size', type=int, default=64, help='Input batch size for training and testing')
 @click.option('--buffer-size', type=int, default=10000, help='Buffer size for Mirrored Training')
 @click.option('--learning-rate', type=float, default=0.01, help='Learning rate')
@@ -56,7 +58,7 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
 
             # Log hardware and software
-            log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
+            log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
 
             click.echo(click.style(f'\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}',
                                    fg='blue'))
@@ -70,6 +72,7 @@ def set_tensorflow_random_seeds(seed):
 
 
 if __name__ == '__main__':
+    traceback.install()
     print(f'Num GPUs Available: {len(tf.config.experimental.list_physical_devices("GPU"))}')
 
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Filtering out any Warnings messages

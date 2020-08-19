@@ -27,7 +27,7 @@ Training on the CPU
 +++++++++++++++++++++++
 
 Set your desired environment in the MLproject file. Start training using ``mlflow run .``.
-No further parameters are required.
+You need to disable CUDA to train on the CPU! See :ref:`parameters`.
 
 Training using GPUs
 +++++++++++++++++++++++
@@ -39,6 +39,10 @@ You can replace ``all`` with specific GPU ids (e.g. 0) if desired.
 Parameters
 +++++++++++++++
 
-- epochs: Number of epochs to train [5]
+- cuda:                       Whether to train with CUDA support (=GPU)                   ['True': string]
+- epochs:                     Number of epochs to train                                   [25:        int]
+- general-seed:               Python, Random, Numpy seed                                  [0:         int]
+- xgboost-seed:               XGBoost specific seed                                       [0:         int]
+- single-precision-histogram  Whether to enable `single precision for histogram building <https://xgboost.readthedocs.io/en/latest/parameter.html#additional-parameters-for-hist-and-gpu-hist-tree-method>`_ ['True': string]
 
 TODO MLF-CORE: Write your usage and parameter documentation here.

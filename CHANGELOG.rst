@@ -1,8 +1,36 @@
+.. _changelog_f:
+
 ==========
 Changelog
 ==========
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
+
+
+1.1.0 (2020-08-14)
+------------------
+
+**Added**
+
+* Publish Docker workflow. Publishes to Github Packages per default, but can be configured.
+* Linting function, which checks mlflow-pytorch for any used atomic_add functions.
+* system-intelligence 1.2.2 -> 1.2.3
+* Support for both, MLF-CORE TODO: and TODO MLF-CORE: statements
+
+**Fixed**
+
+* Default project version from 0.1.0 to 0.1.0-SNAPSHOT.
+* Outdated screenshots
+* Nightly versions now warn instead of wrongly complaining about outdated versions.
+* Sync actor, but not yet completely for organizations
+* A LOT of documentation
+* Now using project_slug_no_hyphen to facilitate the creation of repositories with - characters.
+* Removed boston dataset from XGBoost and XGBoost_dask
+* Renamed all parameters to use hyphens instead of underscores
+
+**Dependencies**
+
+**Deprecated**
 
 
 1.0.1 (2020-08-11)

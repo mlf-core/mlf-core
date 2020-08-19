@@ -5,7 +5,7 @@ Linting your project
 =====================
 
 `Linting <https://en.wikipedia.org/wiki/Lint_(software)>`_ is the process of statically analyzing code to find code style violations and to detect errors.
-mlf-core implements a custom linting system, but depending on the template external tools linting tools may be additionally be called.
+mlf-core implements a custom linting system, but depending on the template external tools linting tools may additionally be called.
 
 mlf-core linting
 -----------------------
@@ -53,8 +53,8 @@ To examine the reason for a failed linting test please follow the URL. All reaso
 Linting codes
 -----------------
 
-The following error numbers correspond to errors found during linting.
-If you are not sure why a specific linting error has occured you may find more information using the respective error code.
+The following error or warning numbers correspond to errors found during linting.
+If you are not sure why a specific linting error has occurred you may find more information using the respective error code.
 
 General
 ^^^^^^^^^
@@ -74,15 +74,14 @@ general-2
 general-3
 ~~~~~~~~~
 
-| TODO String found. The origin of this error are ``mlf-core TODO`` strings in the respective files. Usually, they point to things that should be
+| TODO String found. The origin of this warning are ``mlf-core TODO:`` ``TODO mlf-core:`` or strings in the respective files. Usually, they point to things that should be
   manually configured or require other attention. You may remove them if there is no task for you to be solved.
 
 general-4
 ~~~~~~~~~
 
-| Cookiecutter String found. This error occurs if something went wrong at the project creation stage. After a project has been created using mlf-core
-  there should not be any jinja2 syntax statements left. Web development templates may pose exceptions. However, ``{{ *cookiecutter* }}`` statements
-  should definitely not be present anymore.
+| Cookiecutter string found. This error occurs if something went wrong at the project creation stage. After a project has been created using mlf-core
+  there should not be any jinja2 syntax left.
 
 general-5
 ~~~~~~~~~~
@@ -115,6 +114,7 @@ mlflow-pytorch-2
 | Currently, mlflow-pytorch expects:
 
 .. code-block::
+    :linenos:
 
     def set_pytorch_random_seeds(seed, use_cuda):
     torch.manual_seed(seed)
@@ -122,8 +122,14 @@ mlflow-pytorch-2
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)  # For multiGPU
         torch.backends.cudnn.deterministic = True
-        # Disable cudnn.benchmark to turn off search for optimal algorithm for the underlying hardware -> non deterministic
         torch.backends.cudnn.benchmark = False
+
+| Line 2 fixes the seed of Pytorch.
+| Given that CUDA support is enabled:
+| Line 4 fixes the Pytorch CUDA seed.
+| Line 5 fixes the Pytorch CUDA seed for all CUDA devices.
+| Line 6 enables deterministic cuDNN operations
+| Line 7 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.
 
 
 mlflow-tensorflow
@@ -143,12 +149,18 @@ mlflow-tensorflow-2
 | Currently, mlflow-tensorflow expects:
 
 .. code-block::
+    :linenos:
 
     def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
+
+| Line 2 fixes the seed of Tensorflow
+| Line 3 sets the number of threads within an individual operation for parallelism to 1
+| Line 4 sets the number of threads between independent operations for parallelism to 1
+| Line 5 enables and forces all deterministic operations
 
 mlflow-xgboost
 ^^^^^^^^^^^^^^^^^
@@ -167,9 +179,18 @@ mlflow-xgboost-2
 | Currently, mlflow-xgboost expects:
 
 .. code-block::
+    :linenos:
 
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
+
+| Line 2 fixes the seed of XGBoost
+
+mlflow-xgboost-3
+~~~~~~~~~~~~~~~~~~
+
+| The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
+| Refrain from using versions older than 1.1.0, especially when making use of GPUs.
 
 mlflow-xgboost_dask
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,6 +209,15 @@ mlflow-xgboost_dask-2
 | Currently, mlflow-xgboost_dask expects:
 
 .. code-block::
+    :linenos:
 
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
+
+| Line 2 fixes the seed of XGBoost
+
+mlflow-xgboost_dask-3
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+| The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
+| Refrain from using versions older than 1.1.0, especially when making use of GPUs.

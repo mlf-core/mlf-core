@@ -1,4 +1,4 @@
-name: Run bandit
+name: cookietemple lint
 
 on: [push]
 
@@ -16,8 +16,10 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install bandit
-        run: pip install bandit
+      - name: Install cookietemple
+        run: |
+          pip install cookietemple
 
-      - name: Run bandit
-        run: bandit -r {{ cookiecutter.project_slug_no_hyphen }} -c .bandit.yml
+      - name: Run cookietemple lint
+        run: |
+          cookietemple lint .

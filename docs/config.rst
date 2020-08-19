@@ -31,11 +31,11 @@ mlf-core config pat
 
 mlf-core's Github support requires access to your Github repositories to create repositories, add issues labels and set branch protection rules.
 Github manages these access rights through Personal Access Tokens (PAT).
-If you are using mlf-core's Github support for the first time :code:`mlf-core config pat` will be run and you will be prompted for your Github PAT.
+If you are using mlf-core's Github support for the first time ```mlf-core config pat`` will be run and you will be prompted for your Github PAT.
 Please refer to the `official documentation <https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line>`_ on how to create one.
-mlf-core only requires ``repo`` access, so you only need to tick this box. However, if you want to use mlf-core's sync feature on organisation repositories,
-you also need to tick :code:`admin:org`. This ensures that your PAT would not even allow for the deletion of repositories.
-mlf-core then encrypts the Personal Access Token, adds the encrypted token to the :code:`mlf_core_conf.cfg` file (OS dependent stored) and saves the key locally in a hidden place.
+mlf-core requires ``repo`` access, ``write:packages`` **and** ``delete:packages``. You don't need to provide any additional permissions besides the ones mentioned.
+This ensures that your PAT would not even allow for the deletion of repositories.
+mlf-core then encrypts the Personal Access Token, adds the encrypted token to the ``mlf_core_conf.cfg`` file (OS dependent stored) and saves the key locally in a hidden place.
 This is safer than Github's official way, which recommends the usage of environment variables or Github Credentials, which both save the token in plaintext.
 It is still strongly adviced to secure your personal computer and not allow any foe to get access.
 If you create a second project using mlf-core at a later stage, you will not be prompted again for your Github username, nor your Personal Access Token.
@@ -43,7 +43,7 @@ If you create a second project using mlf-core at a later stage, you will not be 
 Updating a personal access token
 ------------------------------------
 
-If you for any reason need to regenerate your PAT rerun :code:`mlf-core config pat`. Ensure that your Github username still matches.
-If not you should also update your Github username *via* :code:`mlf-core config general`.
+If you for any reason need to regenerate your PAT rerun ``mlf-core config pat``. Ensure that your Github username still matches.
+If not you should also update your Github username *via* ``mlf-core config general``.
 Additionally, any of your already created projects may still feature your old PAT and you may therefore run into issues when attempting to push.
 Hence, you must also `update your remote URL <https://help.github.com/en/github/using-git/changing-a-remotes-url>`_ for those projects!

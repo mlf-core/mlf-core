@@ -9,6 +9,7 @@ import time
 import tempfile
 
 from tensorboardX import SummaryWriter
+from rich import traceback
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from model.model import create_model
@@ -19,10 +20,10 @@ from data_loading.data_loader import load_train_test_data
 @click.command()
 @click.option('--cuda', type=click.Choice(['True', 'False']), default='True', help='Enable or disable CUDA support.')
 @click.option('--epochs', type=int, default=5, help='Number of epochs to train')
-@click.option('--general_seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--pytorch_seed', type=int, default=0, help='Pytorch specific random seed.')
+@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
+@click.option('--pytorch-seed', type=int, default=0, help='Pytorch specific random seed.')
 @click.option('--log-interval', type=int, default=100, help='Number of batches before logging training status')
-@click.option('--training_batch-size', type=int, default=64, help='Input batch size for training')
+@click.option('--training-batch-size', type=int, default=64, help='Input batch size for training')
 @click.option('--test-batch-size', type=int, default=1000, help='Input batch size for testing')
 @click.option('--learning-rate', type=float, default=0.01, help='Learning rate')
 def start_training(cuda, epochs, general_seed, pytorch_seed, log_interval,
@@ -70,7 +71,7 @@ def start_training(cuda, epochs, general_seed, pytorch_seed, log_interval,
         mlflow.pytorch.log_model(model, 'models')
 
         # Log hardware and software
-        log_sys_intel_conda_env('{{ cookiecutter.project_slug }}')
+        log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
 
         # Upload the TensorBoard event logs as a run artifact
         click.echo(click.style('Uploading TensorBoard events as a run artifact...', fg='blue'))
@@ -84,11 +85,11 @@ def set_pytorch_random_seeds(seed, use_cuda):
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)  # For multiGPU
         torch.backends.cudnn.deterministic = True
-        # Disable cudnn.benchmark to turn off search for optimal algorithm for the underlying hardware -> non deterministic
         torch.backends.cudnn.benchmark = False
 
 
 if __name__ == '__main__':
+    traceback.install()
     click.echo(click.style(f'Num GPUs Available: {torch.cuda.device_count()}', fg='blue'))
 
     start_training()

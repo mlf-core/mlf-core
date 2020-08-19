@@ -11,7 +11,7 @@ Due to the tight coupling of our templates with all mlf-core commands such as :c
 new templates require the modification of several files.
 
 mlf-core uses `cookiecutter <https://cookiecutter.readthedocs.io/en/1.7.2/>`_ to create all templates.
-You need to familiarize yourself beforehand with cookiecutter to able to write templates, but don't worry, it's pretty easy and you usually get by with very few cookiecutter variables.
+You need to familiarize yourself beforehand with cookiecutter to able to write templates, but don't worry, it's pretty easy and you usually get by with very few cookiecutter (jinja2) variables.
 You can start with your `very first cookiecutter template <https://cookiecutter.readthedocs.io/en/1.7.2/first_steps.html>`_ and then simply see how the other existing mlf-core templates are made and copy what you need.
 
 The following sections will line out the requirements for new templates and guide you through the process of adding new templates step by step.
@@ -47,7 +47,7 @@ Step by step guide to adding new templates
 
 Let's assume that we are planning to add a new commandline `Brainfuck <https://en.wikipedia.org/wiki/Brainfuck>`_ template to mlf-core.
 We discussed our design at length with the core team and they approved our plan. For the sake of this tutorial **we assume that the path / always points to /mlf_core**.
-Hence, at this level we see ``mlf_core.py`` and a folder per CLI command.
+Hence, at this level we see ``cli.py`` and a folder per CLI command.
 
 1. Let's add our brainfuck template information to ``/create/templates/available_templates.yml`` below the ``cli`` section.
 
@@ -132,11 +132,11 @@ The file tree of the template should resemble
             """
 
             self.cli_struct.language = mlf_core_questionary_or_dot_mlf_core(function='select',
-                                                                                    question='Choose the project\'s primary language',
-                                                                                    choices=['brainfuck'],
-                                                                                    default='python',
-                                                                                    dot_mlf_core=dot_mlf_core,
-                                                                                    to_get_property='language')
+                                                                            question='Choose the project\'s primary language',
+                                                                            choices=['brainfuck'],
+                                                                            default='python',
+                                                                            dot_mlf_core=dot_mlf_core,
+                                                                            to_get_property='language')
 
             # prompt the user to fetch general template configurations
             super().prompt_general_template_configuration(dot_mlf_core)
@@ -288,7 +288,7 @@ Our shiny new CliBrainfuckLinter is now ready for action!
 
           - name: Create cli-brainfuck Template
             run: |
-              echo -e "\n\nHomer\nhomer.simpson@hotmail.com\nExplodingSpringfield\ndescription\nhomergithub\nn" | mlf-core create
+              echo -e "\n\n\n\n\nn\n\n\n\nn" | mlf-core create
 
           - name: Build Package
             uses: fabasoad/setup-brainfuck-action@master
@@ -296,7 +296,7 @@ Our shiny new CliBrainfuckLinter is now ready for action!
               version: 0.1.dev1
           - name: Hello World
             run: |
-              brainfucky --file ExplodingSpringfield/hello.bf
+              brainfucky --file Exploding_Springfield/hello.bf
 
 
    We were pleasently surprised to see that someone already made a Github Action for brainfuck.

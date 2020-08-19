@@ -39,6 +39,13 @@ You can replace ``all`` with specific GPU ids (e.g. 0) if desired.
 Parameters
 +++++++++++++++
 
-- epochs: Number of epochs to train [5]
+- cuda:                       Whether to train with CUDA support (=GPU)                ['True': string]
+- epochs:                     Number of epochs to train                                [5:         int]
+- general-seed:               Python, Random, Numpy seed                               [0:         int]
+- pytorch-seed:               Pytorch specific seed                                    [0:         int]
+- training-batch-size:        Batch size for training batches                          [64:        int]
+- test-batch-size:            Batch size for test batches                              [1000:      int]
+- learning-rate:              Learning rate of the optimizer                           [0.01:    float]
+- log-interval:               Number of batches to train for before logging            [100:       int]
 
 TODO MLF-CORE: Write your usage and parameter documentation here.

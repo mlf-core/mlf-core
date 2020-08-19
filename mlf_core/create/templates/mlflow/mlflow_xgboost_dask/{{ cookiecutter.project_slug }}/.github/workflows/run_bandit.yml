@@ -20,4 +20,4 @@ jobs:
         run: pip install bandit
 
       - name: Run bandit
-        run: bandit -r {{ cookiecutter.project_slug }} -c .bandit.yml
+        run: bandit -r {{ cookiecutter.project_slug_no_hyphen }} -c .bandit.yml

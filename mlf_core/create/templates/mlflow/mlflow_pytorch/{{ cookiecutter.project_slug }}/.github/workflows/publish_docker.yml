@@ -1,0 +1,26 @@
+name: Publish Container to Docker Packages
+
+# Documentation on the primary Action used here: https://github.com/marketplace/actions/publish-docker
+# TODO MLF-CORE: Adapt the username, password and registry if you do not want to publish to Github Packages.
+# Github Packages currently have the limitation that people who pull need to be logged in: https://github.community/t/docker-pull-from-public-github-package-registry-fail-with-no-basic-auth-credentials-error/16358/2
+
+on:
+  release:
+      types: [published]
+  push:
+      branches:
+        - development
+jobs:
+  publish_release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}
+        username: {{ cookiecutter.github_username }}
+        password: {% raw %}'${{ secrets.MLF_CORE_SYNC_TOKEN}}'{% endraw %}
+        registry: docker.pkg.github.com
+        tags: "latest,{{ cookiecutter.version }}"
+

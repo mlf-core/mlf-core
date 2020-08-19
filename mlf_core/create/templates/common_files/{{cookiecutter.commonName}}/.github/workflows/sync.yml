@@ -23,8 +23,8 @@ jobs:
           with:
                name: '{{ cookiecutter.github_username }}'
                email: '{{ cookiecutter.email }}'
-               actor: '{% raw %}${{ github.actor }}{% endraw %}'
+               actor: '{{ cookiecutter.github_username }}'
                token: '{% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN}}{% endraw %}'
 
         - name: Sync project
-          run: mlf-core sync . {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %} {% raw %}${{ github.repository_owner }}{% endraw %}
+          run: mlf-core sync . {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %} {{ cookiecutter.github_username }}

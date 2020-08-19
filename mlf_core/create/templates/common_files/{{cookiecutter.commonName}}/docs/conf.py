@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# {{ cookiecutter.project_slug }} documentation build configuration file
+# {{ cookiecutter.project_slug_no_hyphen }} documentation build configuration file
 #
 #
 # Note that not all possible configuration values are present in this
@@ -125,7 +125,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '{{ cookiecutter.project_slug }}.tex',
+    (master_doc, '{{ cookiecutter.project_slug_no_hyphen }}.tex',
      '{{ cookiecutter.project_name }} Documentation',
      '{{ cookiecutter.full_name }}', 'manual'),
 ]
@@ -136,7 +136,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, '{{ cookiecutter.project_slug }}',
+    (master_doc, '{{ cookiecutter.project_slug_no_hyphen }}',
      '{{ cookiecutter.project_name }} Documentation',
      [author], 1)
 ]
@@ -148,10 +148,10 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, '{{ cookiecutter.project_slug }}',
+    (master_doc, '{{ cookiecutter.project_slug_no_hyphen }}',
      '{{ cookiecutter.project_name }} Documentation',
      author,
-     '{{ cookiecutter.project_slug }}',
+     '{{ cookiecutter.project_slug_no_hyphen }}',
      'One line description of project.',
      'Miscellaneous'),
 ]

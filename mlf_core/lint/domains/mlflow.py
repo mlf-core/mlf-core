@@ -100,13 +100,15 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         There are some PyTorch functions that use CUDA functions that can be a source of nondeterminism.
         One class of such CUDA functions are atomic operations, in particular atomicAdd, which can lead to the order of additions being nondetermnistic.
         Because floating-point addition is not perfectly associative for floating-point operands,
-        atomicAdd with floating-point operands can introduce different floating-point rounding errors on each evaluation, which introduces a source of nondeterministic variance (aka noise) in the result.
+        atomicAdd with floating-point operands can introduce different floating-point rounding errors on each evaluation,
+        which introduces a source of nondeterministic variance (aka noise) in the result.
         PyTorch functions that use atomicAdd in the forward kernels include torch.Tensor.index_add_(), torch.Tensor.scatter_add_(), torch.bincount().
         A number of operations have backwards kernels that use atomicAdd, including torch.nn.functional.embedding_bag(),
         torch.nn.functional.ctc_loss(), torch.nn.functional.interpolate(), and many forms of pooling, padding, and sampling.
         There is currently no simple way of avoiding nondeterminism in these functions.
         Additionally, the backward path for repeat_interleave() operates nondeterministically on the CUDA backend because repeat_interleave() is implemented
-        using index_select(), the backward path for which is implemented using index_add_(), which is known to operate nondeterministically (in the forward direction) on the CUDA backend (see above).
+        using index_select(), the backward path for which is implemented using index_add_(), which is known to operate
+        nondeterministically (in the forward direction) on the CUDA backend (see above).
 
         Source: https://pytorch.org/docs/stable/notes/randomness.html
         """
@@ -129,7 +131,8 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                         content_stripped = list(map(lambda line: line.strip(), f.readlines()))
                         for function in atomic_add_functions:
                             if any(function in line_code for line_code in content_stripped):
-                                self.failed.append(('mlflow-pytorch-3', f'Function {function} may operate non-deterministically, since it uses non-deterministic atomic_add.'))
+                                self.failed.append(('mlflow-pytorch-3',
+                                                    f'Function {function} may operate non-deterministically, since it uses non-deterministic atomic_add.'))
 
         # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
 

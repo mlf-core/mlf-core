@@ -22,6 +22,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Outdated screenshots
 * Nightly versions now warn instead of wrongly complaining about outdated versions.
 * Sync actor, but not yet completely for organizations
+* A LOT of documentation
+* Now using project_slug_no_hyphen to facilitate the creation of repositories with - characters.
 
 **Dependencies**
 

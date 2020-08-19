@@ -15,6 +15,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Publish Docker workflow. Publishes to Github Packages per default, but can be configured.
 * Linting function, which checks mlflow-pytorch for any used atomic_add functions.
 * system-intelligence 1.2.2 -> 1.2.3
+* Support for both, MLF-CORE TODO: and TODO MLF-CORE: statements
 
 **Fixed**
 

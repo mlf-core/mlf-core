@@ -180,7 +180,7 @@ class TemplateLinter(object):
 
     def check_mlf_core_todos(self) -> None:
         """
-        Go through all template files looking for the string 'TODO MLF-CORE:'
+        Go through all template files looking for the string 'TODO MLF-CORE:' or 'MLF-CORE TODO:'
         """
         ignore = ['.git']
         if os.path.isfile(os.path.join(self.path, '.gitignore')):
@@ -197,12 +197,16 @@ class TemplateLinter(object):
             for fname in files:
                 with io.open(os.path.join(root, fname), 'rt', encoding='latin1') as file:
                     for line in file:
-                        if 'TODO MLF-CORE:' in line:
+                        if any(todostring in line for todostring in ['TODO MLF-CORE:', 'MLF-CORE TODO:']):
                             line = line.replace('<!--', '') \
                                 .replace('-->', '') \
                                 .replace('# TODO MLF-CORE: ', '') \
                                 .replace('// TODO MLF-CORE: ', '') \
-                                .replace('TODO MLF-CORE: ', '').strip()
+                                .replace('TODO MLF-CORE: ', '') \
+                                .replace('# MLF-CORE TODO: ', '') \
+                                .replace('// MLF-CORE TODO: ', '') \
+                                .replace('MLF-CORE TODO: ', '') \
+                                .strip()
                             self.warned.append(('general-3', f'TODO string found in {self._wrap_quotes(fname)}: {line}'))
 
     def check_no_cookiecutter_strings(self) -> None:

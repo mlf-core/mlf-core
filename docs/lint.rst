@@ -53,7 +53,7 @@ To examine the reason for a failed linting test please follow the URL. All reaso
 Linting codes
 -----------------
 
-The following error numbers correspond to errors found during linting.
+The following error or warning numbers correspond to errors found during linting.
 If you are not sure why a specific linting error has occurred you may find more information using the respective error code.
 
 General
@@ -74,7 +74,7 @@ general-2
 general-3
 ~~~~~~~~~
 
-| TODO String found. The origin of this error are ``mlf-core TODO`` strings in the respective files. Usually, they point to things that should be
+| TODO String found. The origin of this warning are ``mlf-core TODO:`` ``TODO mlf-core:`` or strings in the respective files. Usually, they point to things that should be
   manually configured or require other attention. You may remove them if there is no task for you to be solved.
 
 general-4

@@ -12,11 +12,16 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
-* Publish Docker workflow
+* Publish Docker workflow. Publishes to Github Packages per default, but can be configured.
+* Linting function, which checks mlflow-pytorch for any used atomic_add functions.
+* system-intelligence 1.2.1 -> 1.2.2
 
 **Fixed**
 
-* Default project version from 0.1.0 to 0.1.0-SNAPSHOT
+* Default project version from 0.1.0 to 0.1.0-SNAPSHOT.
+* Outdated screenshots
+* Nightly versions now warn instead of wrongly complaining about outdated versions.
+* Sync actor, but not yet completely for organizations
 
 **Dependencies**
 

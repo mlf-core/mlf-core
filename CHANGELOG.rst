@@ -14,7 +14,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 * Publish Docker workflow. Publishes to Github Packages per default, but can be configured.
 * Linting function, which checks mlflow-pytorch for any used atomic_add functions.
-* system-intelligence 1.2.1 -> 1.2.2
+* system-intelligence 1.2.2 -> 1.2.3
 
 **Fixed**
 
@@ -24,6 +24,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Sync actor, but not yet completely for organizations
 * A LOT of documentation
 * Now using project_slug_no_hyphen to facilitate the creation of repositories with - characters.
+* Removed boston dataset from XGBoost and XGBoost_dask
+* Renamed all parameters to use hyphens instead of underscores
 
 **Dependencies**
 

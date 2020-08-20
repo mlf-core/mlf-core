@@ -12,7 +12,7 @@ from tensorboardX import SummaryWriter
 from rich import traceback
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
-from model.model import create_model
+from model.model import create_model, create_parallel_model
 from training.train import train, test
 from data_loading.data_loader import load_train_test_data
 
@@ -42,9 +42,10 @@ def start_training(cuda, epochs, general_seed, pytorch_seed, log_interval,
     train_loader, test_loader = load_train_test_data(training_batch_size, test_batch_size)
 
     # Define model, device and optimizer
-    model = create_model()
     if torch.cuda.device_count() > 1:
-        model = nn.DataParallel(model)
+        model = create_parallel_model()
+    else:
+        model = create_model()
     model.to(device)
     optimizer = optim.Adam(model.parameters())
     optimizer.step()

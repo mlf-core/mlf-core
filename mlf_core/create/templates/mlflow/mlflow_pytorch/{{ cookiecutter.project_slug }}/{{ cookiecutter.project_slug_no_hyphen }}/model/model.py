@@ -6,6 +6,8 @@ import torch.nn.functional as F
 def create_model():
     return Net()
 
+def create_parallel_model():
+    return DataParallelPassthrough(Net())
 
 class Net(nn.Module):
     def __init__(self):
@@ -38,3 +40,15 @@ class Net(nn.Module):
         writer.add_histogram('weights/fc1/bias', self.fc1.bias.data, step)
         writer.add_histogram('weights/fc2/weight', self.fc2.weight.data, step)
         writer.add_histogram('weights/fc2/bias', self.fc2.bias.data, step)
+
+class DataParallelPassthrough(torch.nn.DataParallel):
+    """
+    This class solves https://github.com/pytorch/pytorch/issues/16885
+    Basically, to allow the access of a model wrapped under DataParallel one needs to always
+    access the underlying attributes with .module (e.g. model.module.someattr)
+    """
+    def __getattr__(self, name):
+        try:
+            return super().__getattr__(name)
+        except AttributeError:
+            return getattr(self.module, name)

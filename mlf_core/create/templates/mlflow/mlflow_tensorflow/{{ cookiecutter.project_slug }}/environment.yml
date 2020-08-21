@@ -20,4 +20,4 @@ dependencies:
       - tensorflow==2.3.0  # not yet on Conda with full GPU support
       - tensorflow_datasets==3.2.1
       - pycuda==2019.1.2  # not on Conda
-      - system-intelligence==1.2.3  # not yet on Conda
+      - system-intelligence==1.2.4  # not yet on Conda

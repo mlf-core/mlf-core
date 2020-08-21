@@ -244,8 +244,10 @@ class TemplateCreator:
 
         if dot_mlf_core:
             self.creator_ctx.github_username = dot_mlf_core['github_username']
+            self.creator_ctx.creator_github_username = dot_mlf_core['creator_github_username']
         else:
             self.creator_ctx.github_username = load_github_username()
+            self.creator_ctx.creator_github_username = self.creator_ctx. github_username
 
     def create_common_files(self) -> None:
         """
@@ -265,7 +267,9 @@ class TemplateCreator:
                                     'project_slug': self.creator_ctx.project_slug,
                                     'version': self.creator_ctx.version,
                                     'license': self.creator_ctx.license,
-                                    'project_short_description': self.creator_ctx.project_short_description},
+                                    'project_short_description': self.creator_ctx.project_short_description,
+                                    'github_username': self.creator_ctx.github_username,
+                                    'creator_github_username': self.creator_ctx.creator_github_username},
                      no_input=True,
                      overwrite_if_exists=True)
 

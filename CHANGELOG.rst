@@ -7,7 +7,24 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
-1.1.0 (2020-08-14)
+1.2.0 (2020-08-21)
+------------------
+
+**Added**
+
+* Option --view to config to view the current configuration
+* Option --set_token to sync to set the sync token again
+
+**Fixed**
+
+* #41 https://github.com/mlf-core/mlf-core/issues/41 -> mlflow-pytorch multi GPU Support
+
+**Dependencies**
+
+**Deprecated**
+
+
+1.1.0 (2020-08-19)
 ------------------
 
 **Added**

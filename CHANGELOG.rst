@@ -14,6 +14,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* A couple of parameters were not with hyphen -> now default behavior
+
 **Dependencies**
 
 **Deprecated**

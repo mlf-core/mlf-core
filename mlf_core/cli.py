@@ -122,10 +122,10 @@ def info(ctx, handle: str) -> None:
 @mlf_core_cli.command(short_help='Sync your project with the latest template release.', cls=CustomHelpSubcommand)
 @click.argument('project_dir', type=str, default=Path(f'{Path.cwd()}'), helpmsg='The projects top level directory you would like to sync. Default is current '
                                                                                 'working directory.', cls=CustomArg)
-@click.option('--set_token', '-st', is_flag=True, help='Set sync token to a new personal access token of the current repo owner.')
+@click.option('--set-token', '-st', is_flag=True, help='Set sync token to a new personal access token of the current repo owner.')
 @click.argument('pat', type=str, required=False, helpmsg='Personal access token. Not needed for manual, local syncing!', cls=CustomArg)
 @click.argument('username', type=str, required=False, helpmsg='Github username. Not needed for manual, local syncing!', cls=CustomArg)
-@click.option('--check_update', '-ch', is_flag=True, help='Check whether a new template version is available for your project.')
+@click.option('--check-update', '-ch', is_flag=True, help='Check whether a new template version is available for your project.')
 def sync(project_dir, set_token, pat, username, check_update) -> None:
     """
     Sync your project with the latest template release.
@@ -154,14 +154,15 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
             sys.exit(1)
         sys.exit(0)
 
-    syncer = TemplateSync(project_dir=project_dir_path, gh_username=username, token=pat)
+    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat)
     # check for template version updates
-    major_change, minor_change, patch_change, ct_template_version, proj_template_version = syncer.has_template_version_changed(project_dir_path)
+    major_change, minor_change, patch_change, proj_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
+    syncer.new_template_version = mlf_core_template_version
     # check for user without actually syncing
     if check_update:
         # a template update has been released by mlf-core
         if any(change for change in (major_change, minor_change, patch_change)):
-            print(f'[bold blue]Your templates version received an update from {proj_template_version} to {ct_template_version}!\n'
+            print(f'[bold blue]Your templates version received an update from {proj_template_version} to {mlf_core_template_version}!\n'
                   f' Use [green]mlf-core sync [blue]to sync your project')
         # no updates were found
         else:
@@ -186,9 +187,9 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
 
 @mlf_core_cli.command('bump-version', short_help='Bump the version of an existing mlf-core project.', cls=CustomHelpSubcommand)
 @click.argument('new_version', type=str, required=False, helpmsg='New project version in a valid format.', cls=CustomArg)
-@click.argument('project_dir', type=click.Path(), default=Path(f'{Path.cwd()}'), helpmsg='Relative path to the projects directory.', cls=CustomArg)
+@click.argument('project-dir', type=click.Path(), default=Path(f'{Path.cwd()}'), helpmsg='Relative path to the projects directory.', cls=CustomArg)
 @click.option('--downgrade', '-d', is_flag=True, help='Set this flag to downgrade a version.')
-@click.option('--project_version', is_flag=True, callback=print_project_version, expose_value=False, is_eager=True, help='Print your projects version and exit')
+@click.option('--project-version', is_flag=True, callback=print_project_version, expose_value=False, is_eager=True, help='Print your projects version and exit')
 @click.pass_context
 def bump_version(ctx, new_version, project_dir, downgrade) -> None:
     """

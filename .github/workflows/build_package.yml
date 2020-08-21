@@ -23,7 +23,7 @@ jobs:
         run: pip install .
 
       - name: Install required twine packaging dependencies
-        run: pip install setuptools wheel
+        run: pip install setuptools wheel twine
 
       - name: Build twine package
         run: python setup.py sdist bdist_wheel

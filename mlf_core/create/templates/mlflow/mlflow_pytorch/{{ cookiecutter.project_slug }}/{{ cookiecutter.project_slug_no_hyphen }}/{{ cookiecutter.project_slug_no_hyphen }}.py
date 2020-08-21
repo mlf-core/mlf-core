@@ -4,7 +4,6 @@ import mlflow.pytorch
 import click
 import torch
 import torch.optim as optim
-import torch.nn as nn
 import time
 import tempfile
 

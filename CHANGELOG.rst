@@ -14,6 +14,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* flake8 for mlflow-pytorch
+
 **Dependencies**
 
 **Deprecated**

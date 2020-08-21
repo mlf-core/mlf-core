@@ -7,7 +7,19 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
-1.1.0 (2020-08-14)
+1.2.0 (2020-08-21)
+------------------
+
+**Added**
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
+1.1.0 (2020-08-19)
 ------------------
 
 **Added**

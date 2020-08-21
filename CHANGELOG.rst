@@ -7,6 +7,20 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
+1.2.2 (2020-08-21)
+------------------
+
+**Added**
+
+**Fixed**
+
+* A couple of parameters were not with hyphen -> now default behavior
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.2.1 (2020-08-21)
 ------------------
 

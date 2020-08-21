@@ -37,10 +37,10 @@ Note that you never need to run ``mlf-core sync`` manually with the workflow, bu
 
 What command line options are available?
 -----------------------------------------
-The basic sync command syntax is: ``$ mlf-core sync [PROJECT_DIR] --SET_TOKEN ([PAT] [GITHUB_USERNAME]) --CHECK_UPDATE``
+The basic sync command syntax is: ``$ mlf-core sync [PROJECT_DIR] --set-token ([PAT] [GITHUB_USERNAME]) --check-update``
 
 Running sync manually on an active mlf-core project with a Github repo, you should never ever have to set the ``PAT`` or ``GITHUB_USERNAME``. These
-are options that are only required for the ``sync_project`` workflow for automatic sycning.
+are options that are only required for the ``sync_project`` workflow for automatic syncing.
 So: **You never need to care about these parameters when calling mlf-core sync manually**.
 
 An important parameter is ``PROJECT_DIR``. This parameter contains the (relative) path to the mlf-core projects top level directory, you would like to sync.
@@ -48,10 +48,10 @@ Per default, this one is set to the current working directory. So, for example, 
 your project named ``ExplodingSpringfield`` located in ``/home/homersimpson/projects`` you need to call ``$ mlf-core sync ExplodingSpringfield/``.
 This one should be always set (unless your current working directory is the top level directory of the project you'd like to sync).
 
-Next, ``sync`` provides two flags: ``$ mlf-core sync [PROJECT_DIR] --set_token`` can be used to update your ``CT_SYNC_TOKEN``, which mlf-core uses
+Next, ``sync`` provides two flags: ``$ mlf-core sync [PROJECT_DIR] --set-token`` can be used to update your ``MLF_CORE_SYNC_TOKEN``, which mlf-core uses
 to sync your project (especially when syncing with the workflow). This could be useful, for example, when the ownership of a repo had changed.
 
-The ``--check_update`` flag, called via ``$ mlf-core sync [PROJECT_DIR] --check_update``, can be used for manually checking whether a new version for your template has been released by mlf-core.
+The ``--check_update`` flag, called via ``$ mlf-core sync [PROJECT_DIR] --check-update``, can be used for manually checking whether a new version for your template has been released by mlf-core.
 Note that when you call ``$ mlf-core sync [PROJECT_DIR]`` mlf-core also runs this check, but then process with syncing rather than exiting.
 
 What happens when my project gets synced?

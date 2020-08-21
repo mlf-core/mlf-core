@@ -20,4 +20,10 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Build mlf-core
-        run: python setup.py clean --all install
+        run: pip install .
+
+      - name: Build twine package
+        run: python setup.py sdist bdist_wheel
+
+      - name: Check twine package
+        run: twine check dist/*

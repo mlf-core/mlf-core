@@ -12,10 +12,16 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+<<<<<<< HEAD
 * Option --view to config to view the current configuration
 * Option --set_token to sync to set the sync token again
 
 **Fixed**
+
+=======
+**Fixed**
+
+* #41 https://github.com/mlf-core/mlf-core/issues/41 -> mlflow-pytorch multi GPU Support
 
 **Dependencies**
 

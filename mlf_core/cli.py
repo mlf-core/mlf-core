@@ -20,6 +20,7 @@ from mlf_core.list.list import TemplateLister
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.sync.sync import TemplateSync
 from mlf_core.upgrade.upgrade import UpgradeCommand
+from mlf_core.common.load_yaml import load_yaml_file
 
 WD = os.path.dirname(__file__)
 
@@ -121,18 +122,38 @@ def info(ctx, handle: str) -> None:
 @mlf_core_cli.command(short_help='Sync your project with the latest template release.', cls=CustomHelpSubcommand)
 @click.argument('project_dir', type=str, default=Path(f'{Path.cwd()}'), helpmsg='The projects top level directory you would like to sync. Default is current '
                                                                                 'working directory.', cls=CustomArg)
+@click.option('--set_token', '-st', is_flag=True, help='Set sync token to a new personal access token of the current repo owner.')
 @click.argument('pat', type=str, required=False, helpmsg='Personal access token. Not needed for manual, local syncing!', cls=CustomArg)
 @click.argument('username', type=str, required=False, helpmsg='Github username. Not needed for manual, local syncing!', cls=CustomArg)
 @click.option('--check_update', '-ch', is_flag=True, help='Check whether a new template version is available for your project.')
-def sync(project_dir, pat, username, check_update) -> None:
+def sync(project_dir, set_token, pat, username, check_update) -> None:
     """
     Sync your project with the latest template release.
+
     mlf-core regularly updates its templates.
-    To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing) or, in case of a minor
-    change, create an issue in your Github repository (if exists).
+    To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing).
     If no repository exists the TEMPLATE branch will be updated and you can merge manually.
     """
     project_dir_path = Path(f'{Path.cwd()}/{project_dir}') if not str(project_dir).startswith(str(Path.cwd())) else Path(project_dir)
+    # if set_token flag is set, update the sync token value and exit
+    if set_token:
+        try:
+            project_data = load_yaml_file(f'{project_dir}/.mlf_core.yml')
+            # if project is an orga repo, pass orga name as username
+            if project_data['is_github_repo'] and project_data['is_github_orga']:
+                TemplateSync.update_sync_token(project_name=project_data['project_slug'], gh_username=project_data['github_orga'])
+            # if not, use default username
+            elif project_data['is_github_repo']:
+                TemplateSync.update_sync_token(project_name=project_data['project_slug'])
+            else:
+                print('[bold red]Your current project does not seem to have a Github repository!')
+                sys.exit(1)
+        except (FileNotFoundError, KeyError):
+            print(f'[bold red]Your token value is not a valid personal access token for your account or there exists no .mlf_core.yml file at '
+                  f'{project_dir_path}. Is this a mlf-core project?')
+            sys.exit(1)
+        sys.exit(0)
+
     syncer = TemplateSync(project_dir=project_dir_path, gh_username=username, token=pat)
     # check for template version updates
     major_change, minor_change, patch_change, ct_template_version, proj_template_version = syncer.has_template_version_changed(project_dir_path)
@@ -157,7 +178,7 @@ def sync(project_dir, pat, username, check_update) -> None:
             # check if a pull request should be created according to set level constraints
             syncer.sync()
         else:
-            print('[bold red]Aborting sync due to set level constraints. You can set the level any time in your mlf_core.cfg in the sync_level section and'
+            print('[bold red]Aborting sync due to set level constraints. You can set the level any time in your cookietemple.cfg in the sync_level section and'
                   ' sync again.')
     else:
         print('[bold blue]No changes detected. Your template is up to date.')
@@ -167,7 +188,7 @@ def sync(project_dir, pat, username, check_update) -> None:
 @click.argument('new_version', type=str, required=False, helpmsg='New project version in a valid format.', cls=CustomArg)
 @click.argument('project_dir', type=click.Path(), default=Path(f'{Path.cwd()}'), helpmsg='Relative path to the projects directory.', cls=CustomArg)
 @click.option('--downgrade', '-d', is_flag=True, help='Set this flag to downgrade a version.')
-@click.option('--project-version', is_flag=True, callback=print_project_version, expose_value=False, is_eager=True, help='Print your projects version and exit')
+@click.option('--project_version', is_flag=True, callback=print_project_version, expose_value=False, is_eager=True, help='Print your projects version and exit')
 @click.pass_context
 def bump_version(ctx, new_version, project_dir, downgrade) -> None:
     """
@@ -212,9 +233,10 @@ def bump_version(ctx, new_version, project_dir, downgrade) -> None:
 
 
 @mlf_core_cli.command(short_help='Configure your general settings and github credentials.', cls=CustomHelpSubcommand)
+@click.option('--view', '-v', is_flag=True, help='View the current mlf-core configuration.')
 @click.argument('section', type=str, required=False, helpmsg='Section to configure (all, general or pat)', cls=CustomArg)
 @click.pass_context
-def config(ctx, section: str) -> None:
+def config(ctx, view: bool, section: str) -> None:
     """
     Configure your general settings and Github credentials for reuse.
     Available options (sections) are:
@@ -224,6 +246,9 @@ def config(ctx, section: str) -> None:
     - pat: set your Github personal access token for Github repository creation
     - all: calls general and pat
     """
+    if view:
+        ConfigCommand.view_current_config()
+        sys.exit(0)
     if section == 'general':
         # set the full_name and email for reuse in the creation process
         ConfigCommand.config_general_settings()

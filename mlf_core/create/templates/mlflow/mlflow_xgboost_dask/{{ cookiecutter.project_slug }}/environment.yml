@@ -18,4 +18,4 @@ dependencies:
     - pip:
       - xgboost==1.1.1 # xgboost on Conda is not yet built with GPU support!
       - pycuda==2019.1.2  # not on Conda
-      - system-intelligence==1.2.3  # not yet on Conda
+      - system-intelligence==1.2.4  # not yet on Conda

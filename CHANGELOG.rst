@@ -12,6 +12,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Option --view to config to view the current configuration
+* Option --set_token to sync to set the sync token again
+
 **Fixed**
 
 **Dependencies**

@@ -120,8 +120,8 @@ def info(ctx, handle: str) -> None:
 
 
 @mlf_core_cli.command(short_help='Sync your project with the latest template release.', cls=CustomHelpSubcommand)
-@click.argument('project_dir', type=str, default=Path(f'{Path.cwd()}'), helpmsg='The projects top level directory you would like to sync. Default is current '
-                                                                                'working directory.', cls=CustomArg)
+@click.argument('project_dir', type=str, default=Path(f'{Path.cwd()}'),
+                helpmsg='The projects top level directory you would like to sync. Default is current ''working directory.', cls=CustomArg)
 @click.option('--set-token', '-st', is_flag=True, help='Set sync token to a new personal access token of the current repo owner.')
 @click.argument('pat', type=str, required=False, helpmsg='Personal access token. Not needed for manual, local syncing!', cls=CustomArg)
 @click.argument('username', type=str, required=False, helpmsg='Github username. Not needed for manual, local syncing!', cls=CustomArg)

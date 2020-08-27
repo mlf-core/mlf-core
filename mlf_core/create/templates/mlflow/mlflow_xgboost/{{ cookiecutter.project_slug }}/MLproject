@@ -8,6 +8,7 @@ name: {{ cookiecutter.project_slug }}
 # conda_env: environment.yml
 docker_env:
   image: mlfcore/{{ cookiecutter.project_slug }}:{{ cookiecutter.version }}
+  volumes: ["${PWD}/data:/data"]
 
 entry_points:
   main:

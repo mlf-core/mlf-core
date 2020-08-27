@@ -12,6 +12,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* automatically mounting /data now in all mlflow templates (#56)
+
 **Fixed**
 
 * mlf_core.py now uses project_slug; adapted linter accordingly (#55)

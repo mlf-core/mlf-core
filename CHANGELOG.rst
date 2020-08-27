@@ -13,10 +13,12 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Added**
 
 * automatically mounting /data now in all mlflow templates (#56)
+* mlflow-xgboost xgboost from 1.1.1 to 1.2.0
 
 **Fixed**
 
 * mlf_core.py now uses project_slug; adapted linter accordingly (#55)
+* Removed dask-cuda from mlflow-xgboost
 
 **Dependencies**
 

@@ -7,6 +7,24 @@ Changelog
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 
+1.3.0 (2020-08-27)
+------------------
+
+**Added**
+
+* automatically mounting /data now in all mlflow templates (#56)
+* mlflow-xgboost xgboost from 1.1.1 to 1.2.0
+
+**Fixed**
+
+* mlf_core.py now uses project_slug; adapted linter accordingly (#55)
+* Removed dask-cuda from mlflow-xgboost
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.2.2 (2020-08-21)
 ------------------
 

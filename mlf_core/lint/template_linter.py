@@ -404,14 +404,16 @@ class TemplateLinter(object):
                                                'random.seed(seed)  # Python random']
 
         # Verify that system-intelligence and conda environment logging are intact
-        expected_lines_sys_intell_conda_env = ['def log_sys_intel_conda_env(framework: str):',
-                                               'reports_output_dir = tempfile.mkdtemp()',
-                                               'log_system_intelligence(reports_output_dir)',
-                                               'log_conda_environment(reports_output_dir, framework)',
-                                               'query_and_export(query_scope=list((\'all\',)),',
-                                               'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
-                                               'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', f\'{framework}\'], stdout=conda_env_filehandler)',
-                                               'mlflow.log_artifact(f\'{reports_output_dir}/{framework}_env.yml\', artifact_path=\'reports\')']
+        expected_lines_sys_intell_conda_env = [
+            'def log_sys_intel_conda_env():',
+            'reports_output_dir = tempfile.mkdtemp()',
+            'log_system_intelligence(reports_output_dir)',
+            'log_conda_environment(reports_output_dir)',
+            'query_and_export(query_scope=list((\'all\',)),',
+            'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
+            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug}\'], stdout=conda_env_filehandler)',
+            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug}_conda_environment.yml\', artifact_path=\'reports\')'
+        ]
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
             if expected_line not in mlf_core_py_content:

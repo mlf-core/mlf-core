@@ -9,11 +9,12 @@ is_github_repo: true
 is_repo_private: false
 is_github_orga: true
 github_orga: mlf-core
+creator_github_username: zethson
 full_name: Lukas Heumos
 email: lukas.heumos@posteo.net
 project_name: mlf-core
 project_short_description: Reproducible machine learning pipelines using mlflow.
-version: 1.2.2
+version: 1.3.0
 license: Apache2.0
 command_line_interface: Click
 testing_library: pytest

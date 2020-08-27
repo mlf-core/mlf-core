@@ -25,6 +25,11 @@ It is recommended to use the sidebar to navigate this documentation, since it is
 Shared FAQ
 ----------------------
 
+How do I access my data when running inside a Docker container?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+mlf-core projects by default mount ``/data`` to ``/data`` inside the Docker container. Hence, add a ``/data`` folder and access the files by assuming that the files are in ``/data``.
+
 How do I setup Read the Docs?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

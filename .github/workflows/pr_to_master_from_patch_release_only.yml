@@ -1,4 +1,4 @@
-name: PR to master branch from PATCH/release branch only
+name: PR to master branch from patch/release branch only
 
 on:
   pull_request:

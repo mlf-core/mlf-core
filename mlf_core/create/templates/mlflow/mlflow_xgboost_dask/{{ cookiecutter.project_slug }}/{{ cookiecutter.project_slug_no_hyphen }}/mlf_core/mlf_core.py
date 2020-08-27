@@ -13,10 +13,10 @@ def set_general_random_seeds(seed):
     random.seed(seed)  # Python random
 
 
-def log_sys_intel_conda_env(framework: str):
+def log_sys_intel_conda_env():
     reports_output_dir = tempfile.mkdtemp()
     log_system_intelligence(reports_output_dir)
-    log_conda_environment(reports_output_dir, framework)
+    log_conda_environment(reports_output_dir)
 
 
 def log_system_intelligence(reports_output_dir: str):
@@ -34,9 +34,9 @@ def log_system_intelligence(reports_output_dir: str):
     mlflow.log_artifacts(reports_output_dir, artifact_path='reports')
 
 
-def log_conda_environment(reports_output_dir: str, framework: str):
+def log_conda_environment(reports_output_dir: str):
     click.echo(click.style('Exporting conda environment...', fg='blue'))
-    conda_env_filehandler = open(f'{reports_output_dir}/{framework}_env.yml', "w")
-    subprocess.call(['conda', 'env', 'export', '--name', f'{framework}'], stdout=conda_env_filehandler)
+    conda_env_filehandler = open(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', "w")
+    subprocess.call(['conda', 'env', 'export', '--name', '{{ cookiecutter.project_slug_no_hyphen }}'], stdout=conda_env_filehandler)
     click.echo(click.style('Uploading conda environment report as a run artifact...', fg='blue'))
-    mlflow.log_artifact(f'{reports_output_dir}/{framework}_env.yml', artifact_path='reports')
+    mlflow.log_artifact(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', artifact_path='reports')

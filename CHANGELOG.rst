@@ -14,6 +14,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* mlf_core.py now uses project_slug; adapted linter accordingly (#55)
+
 **Dependencies**
 
 **Deprecated**

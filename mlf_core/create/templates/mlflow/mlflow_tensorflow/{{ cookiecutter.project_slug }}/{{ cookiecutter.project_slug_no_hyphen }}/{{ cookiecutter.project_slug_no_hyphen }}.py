@@ -58,7 +58,7 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
 
             # Log hardware and software
-            log_sys_intel_conda_env('{{ cookiecutter.project_slug_no_hyphen }}')
+            log_sys_intel_conda_env()
 
             click.echo(click.style(f'\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}',
                                    fg='blue'))

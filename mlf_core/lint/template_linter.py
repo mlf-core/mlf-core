@@ -417,6 +417,7 @@ class TemplateLinter(object):
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
             if expected_line not in mlf_core_py_content:
+                print(expected_line)
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):

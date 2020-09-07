@@ -6,6 +6,8 @@ import os
 import sys
 import click
 from pathlib import Path
+
+import rich.logging
 from rich import traceback
 from rich import print
 
@@ -23,17 +25,18 @@ from mlf_core.upgrade.upgrade import UpgradeCommand
 from mlf_core.common.load_yaml import load_yaml_file
 
 WD = os.path.dirname(__file__)
+log = logging.getLogger()
 
 
 def main():
     traceback.install(width=200, word_wrap=True)
     print(r"""[bold blue]
-                .__   _____
-          _____ |  |_/ ____\          ____  ___________   ____
-         /     \|  |\   __\  ______ _/ ___\/  _ \_  __ \_/ __ \
-        |  Y Y  \  |_|  |   /_____/ \  \__(  <_> )  | \/\  ___/
-        |__|_|  /____/__|            \___  >____/|__|    \___  >
-              \/                         \/                  \/
+███    ███ ██      ███████      ██████  ██████  ██████  ███████ 
+████  ████ ██      ██          ██      ██    ██ ██   ██ ██      
+██ ████ ██ ██      █████ █████ ██      ██    ██ ██████  █████ 
+██  ██  ██ ██      ██          ██      ██    ██ ██   ██ ██    
+██      ██ ███████ ██           ██████  ██████  ██   ██ ███████ 
+                                                               
         """)
 
     print('[bold blue]Run [green]mlf-core --help [blue]for an overview of all commands\n')
@@ -47,15 +50,31 @@ def main():
 @click.group(cls=HelpErrorHandling)
 @click.version_option(mlf_core.__version__, message=click.style(f'mlf-core Version: {mlf_core.__version__}', fg='blue'))
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Enable verbose output (print debug statements).')
+@click.option("-l", "--log-file", help="Save a verbose log to a file.")
 @click.pass_context
-def mlf_core_cli(ctx, verbose):
+def mlf_core_cli(ctx, verbose, log_file):
     """
     Create state of the art projects from production ready templates.
     """
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG, format='\n%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    else:
-        logging.basicConfig(level=logging.INFO, format='\n%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # Set the base logger to output DEBUG
+    log.setLevel(logging.DEBUG)
+
+    # Set up logs to the console
+    log.addHandler(
+        rich.logging.RichHandler(
+            level=logging.DEBUG if verbose else logging.INFO,
+            console=rich.console.Console(file=sys.stderr),
+            show_time=True,
+            markup=True,
+        )
+    )
+
+    # Set up logs to a file if we asked for one
+    if log_file:
+        log_fh = logging.FileHandler(log_file, encoding="utf-8")
+        log_fh.setLevel(logging.DEBUG)
+        log_fh.setFormatter(logging.Formatter("[%(asctime)s] %(name)-20s [%(levelname)-7s]  %(message)s"))
+        log.addHandler(log_fh)
 
 
 @mlf_core_cli.command(short_help='Create a new project using one of our templates.', cls=CustomHelpSubcommand)

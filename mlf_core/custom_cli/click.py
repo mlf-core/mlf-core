@@ -98,7 +98,7 @@ class HelpErrorHandling(click.Group):
 
         with formatter.section(self.get_rich_value("Feedback")):
             formatter.write_text("We are always curious about your opinion on mlf-core. Join our Discord at "
-                                 "https://discord.gg/Mv8sAcq and drop us message: cookies await you.")
+                                 "https://discord.gg/Mv8sAcq and drop us a message.")
 
     def get_command(self, ctx, cmd_name):
         """

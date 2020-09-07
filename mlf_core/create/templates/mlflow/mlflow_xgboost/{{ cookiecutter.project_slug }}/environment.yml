@@ -8,7 +8,7 @@ dependencies:
     - defaults::python=3.7
     - defaults::click=7.1.2
     - conda-forge::rich=5.2.0
-    - conda-forge::mlflow=1.10.0
+    - conda-forge::mlflow=1.11.0
     - conda-forge::scikit-learn=0.23.2
     - conda-forge::matplotlib=3.3.0
     - pip

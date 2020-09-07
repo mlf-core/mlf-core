@@ -13,12 +13,12 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Added**
 
 * model.rst documentation for all templates
+* added support for verbose output
 
 **Fixed**
 
 * Publish Docker workflows now use the new Github registry
 * Default Docker container names are now   ```image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}```
-
 
 **Dependencies**
 

@@ -46,7 +46,7 @@ class ConfigCommand:
                                                      default='homer.simpson@example.com')
         github_username = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                question='Github username',
-                                                               default='HomerGithub')
+                                                               default='HomerGithub').lower()
 
         # if the configs exist, just update them
         if os.path.exists(ConfigCommand.CONF_FILE_PATH):

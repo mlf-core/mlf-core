@@ -17,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           dockerfile: Dockerfile
-          repository: mlfcore/{{ cookiecutter.project_slug_no_hyphen }}
+          repository: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
           tags: {{ cookiecutter.version }}
           push: false
 

@@ -6,6 +6,19 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.4.1 (2020-09-10)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Github username must now always be lowercase, since Docker does not like uppercase letters
+* Fixed train_cpu workflows to use the correct containers
+
+**Dependencies**
+
+**Deprecated**
 
 1.4.0 (2020-08-28)
 ------------------

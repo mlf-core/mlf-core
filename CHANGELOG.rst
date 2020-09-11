@@ -13,6 +13,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Accidentally left a - in the train_cpu.yml of mlflow-pytorch
+* mlflow-pytorch and mlflow-tensorflow now only train for 2 epochs on train_cpu.yml
+
 **Dependencies**
 
 **Deprecated**

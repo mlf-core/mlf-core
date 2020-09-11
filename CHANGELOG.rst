@@ -6,6 +6,21 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.4.2 (2020-09-11)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Accidentally left a - in the train_cpu.yml of mlflow-pytorch
+* mlflow-pytorch and mlflow-tensorflow now only train for 2 epochs on train_cpu.yml
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.4.1 (2020-09-10)
 ------------------
 

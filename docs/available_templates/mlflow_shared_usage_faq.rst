@@ -1,13 +1,16 @@
 Usage
 ^^^^^^^^
-It is strongly adviced to use Docker to run mlf-core models, since support for other OS besides Linux is limited and dependency management is greatly simplified.
+It is strongly advised to use Docker to run mlf-core models, since support for other OS besides Linux is limited and dependency management is greatly simplified.
 
 Building the Docker container
 +++++++++++++++++++++++++++++++++
 
 The name (=tag) of the Docker Container is specified in the MLproject file in ``image:``.
-Hence, if the Docker Container is not available in any known registry it will have to build locally.
-Run: ``docker build -t mlfcore/project_slug:version .``, where ``project_slug`` are your project's name and ``version`` the current project version.
+If you created your project with mlf-core's Github support your Docker container should automatically be building in your Github Container Registry.
+Furthermore, it should match the name specified in the MLproject file.
+If the Docker container is not available in your Github Container Registry for any reason you must build it locally.
+Run: ``docker build -t ghcr.io/GITHUB_USERNAME/PROJECT_SLUG:version .``, where ``PROJECT_SLUG`` is your project's name and ``version`` the current project version.
+The MLproject file can always be examined to determine the required Docker container tag.
 
 Running the project with Docker
 +++++++++++++++++++++++++++++++++
@@ -22,7 +25,7 @@ Running the project with Conda
 +++++++++++++++++++++++++++++++++
 
 Running the project using Conda is possible, but discouraged, since `system-intelligence <https://github.com/mlf-core/system-intelligence>`_ currently only really supports Linux.
-Outcomment ``docker_env`` and comment in ``conda_env``. Now run the project using e.g. ``mlflow run .``.
+Comment out ``docker_env`` and comment in ``conda_env``. Now run the project using e.g. ``mlflow run .``.
 GPUs will be automatically be detected and used.
 
 FAQ

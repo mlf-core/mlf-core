@@ -13,6 +13,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Internal Github workflows
+* Docker documentation
+
 **Dependencies**
 
 **Deprecated**

@@ -126,12 +126,14 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         for root, dirs, files in os.walk(f'{self.path}/{self.project_slug_no_hyphen}'):
             for file in files:
                 if file.endswith(".py"):
-                    with open(os.path.join(root, file)) as f:
+                    file_to_check_full_path = os.path.join(root, file)
+                    with open(file_to_check_full_path) as f:
                         content_stripped = list(map(lambda line: line.strip(), f.readlines()))
                         for function in atomic_add_functions:
-                            if any(function in line_code for line_code in content_stripped):
-                                self.failed.append(('mlflow-pytorch-3',
-                                                    f'Function {function} may operate non-deterministically, since it uses non-deterministic atomic_add.'))
+                            for line_code in content_stripped:
+                                if function in line_code:
+                                    self.failed.append(('mlflow-pytorch-3',
+                                                        f'{function} found in {file_to_check_full_path} operates non-deterministically.'))
 
         # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
 

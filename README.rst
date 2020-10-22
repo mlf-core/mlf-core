@@ -38,6 +38,9 @@ Fully GPU deterministic machine learning project templates using MLflow_.
 * Free software: Apache2.0
 * Documentation: https://mlf-core.readthedocs.io.
 
+.. image:: https://user-images.githubusercontent.com/21954664/94257992-7a140e00-ff2c-11ea-8059-216a31c62ef1.gif
+    :target: https://user-images.githubusercontent.com/21954664/94257992-7a140e00-ff2c-11ea-8059-216a31c62ef1.gif
+    :alt: mlf-core create gif
 
 Features
 --------

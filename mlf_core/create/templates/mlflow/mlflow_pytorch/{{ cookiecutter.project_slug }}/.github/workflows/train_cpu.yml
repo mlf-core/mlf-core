@@ -1,4 +1,4 @@
-name: Train {{ cookiecutter.project_slug_no_hyphen }} using CPU
+name: Train {{ cookiecutter.project_slug }} using CPU
 
 on: [push, pull_request]
 

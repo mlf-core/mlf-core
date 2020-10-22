@@ -411,13 +411,12 @@ class TemplateLinter(object):
             'log_conda_environment(reports_output_dir)',
             'query_and_export(query_scope=list((\'all\',)),',
             'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
-            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug}\'], stdout=conda_env_filehandler)',
-            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug}_conda_environment.yml\', artifact_path=\'reports\')'
+            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
+            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
         ]
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
             if expected_line not in mlf_core_py_content:
-                print(expected_line)
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):
@@ -447,15 +446,15 @@ class TemplateLinter(object):
         if len(self.passed) > 0:
             console.print()
             console.rule("[bold green][[\u2714]] Tests Passed", style="green")
-            console.print(rich.panel.Panel(format_result(self.passed), style="green"), no_wrap=True, overflow="ellipsis")
+            console.print(rich.panel.Panel(format_result(self.passed), style="green"), overflow="ellipsis")
         if len(self.warned) > 0:
             console.print()
             console.rule("[bold yellow][[!]] Test Warnings", style="yellow")
-            console.print(rich.panel.Panel(format_result(self.warned), style="yellow"), no_wrap=True, overflow="ellipsis")
+            console.print(rich.panel.Panel(format_result(self.warned), style="yellow"), overflow="ellipsis")
         if len(self.failed) > 0:
             console.print()
             console.rule("[bold red][[\u2717]] Test Failures", style="red")
-            console.print(rich.panel.Panel(format_result(self.failed), style="red"), no_wrap=True, overflow="ellipsis")
+            console.print(rich.panel.Panel(format_result(self.failed), style="red"), overflow="ellipsis")
 
     def _wrap_quotes(self, files):
         if not isinstance(files, list):

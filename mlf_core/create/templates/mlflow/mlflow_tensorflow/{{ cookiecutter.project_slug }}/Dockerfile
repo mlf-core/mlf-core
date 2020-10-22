@@ -5,7 +5,7 @@ COPY environment.yml .
 RUN conda env create -f environment.yml && conda clean -a
 
 # Activate the environment
-RUN echo "source activate {{ cookiecutter.project_slug }}" >> ~/.bashrc
+RUN echo "source activate {{ cookiecutter.project_slug_no_hyphen }}" >> ~/.bashrc
 ENV PATH /home/user/miniconda/envs/{{ cookiecutter.project_slug }}/bin:$PATH
 
 # Dump the details of the installed packages to a file for posterity

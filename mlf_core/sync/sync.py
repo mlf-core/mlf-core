@@ -22,32 +22,32 @@ from mlf_core.config.config import ConfigCommand
 from mlf_core.create.github_support import decrypt_pat, load_github_username, create_sync_secret
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.create.create import choose_domain
-from mlf_core.common.version import load_project_template_version_and_handle, load_ct_template_version
+from mlf_core.common.version import load_project_template_version_and_handle, load_mlf_core_template_version
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 
 class TemplateSync:
     """
     Hold syncing information and results.
-
     project_dir (str): The path to the mlf-core project root directory
     from_branch (str): Original branch
-    gh_username (str): GitHub username
     project_dir (str): Path to target project directory
     from_branch (str): Original branch
     original_branch (str): Repo branch that was checked out before we started.
     made_changes (bool): Whether making the new template project introduced any changes
+    gh_username (str): GitHub username
+    repo_owner (str): Owner of the repo (either organization name or personal github username)
     patch_update (bool): Whether a patch update was found for the template or not
     minor_update (bool): Whether a minor update was found for the template or not
     major_update (bool): Whether a major update was found for the template or not
-    repo_owner (str): Owner of the repo (either orga name or personal github username)
     """
 
     def __init__(self, project_dir,
+                 new_template_version,
                  from_branch=None,
-                 new_template_version=None,
                  gh_username=None,
                  token=None,
+                 repo_owner=None,
                  major_update=False,
                  minor_update=False,
                  patch_update=False):
@@ -61,8 +61,8 @@ class TemplateSync:
         self.patch_update = patch_update
         self.gh_username = gh_username if gh_username else load_github_username()
         self.token = token if token else decrypt_pat()
+        self.repo_owner = repo_owner if repo_owner else gh_username
         self.dot_mlf_core = {}
-        self.repo_owner = self.gh_username
         self.new_template_version = new_template_version
 
     def sync(self):
@@ -92,12 +92,12 @@ class TemplateSync:
 
     def inspect_sync_dir(self):
         """
-        Examines target directory to sync, verifies that it is a git repository and ensures that there are no uncommitted changes.
+        Examines target directory to sync, verifies that it's a git repository and ensures that there are no uncommitted changes.
         """
         if not os.path.exists(os.path.join(str(self.project_dir), '.mlf_core.yml')):
             print(f'[bold red]{self.project_dir} does not appear to contain a .mlf_core.yml file. Did you delete it?')
             sys.exit(1)
-        # store .mlf_core.yml content for later reuse in the dry create run
+            # store .mlf_core.yml content for later reuse in the dry create run
         self.dot_mlf_core = load_yaml_file(os.path.join(str(self.project_dir), '.mlf_core.yml'))
         # Check that the project_dir is a git repo
         try:
@@ -159,13 +159,12 @@ class TemplateSync:
         Delete all files and make a fresh template.
         """
         print('[bold blue]Creating a new template project.')
-        # dry create run from dot_mlf_core in tmp directory
+        # dry create run from mlf-core in tmp directory
         with tempfile.TemporaryDirectory() as tmpdirname:
-            # TODO REFACTOR THIS BY PASSING A PATH PARAM TO CHOOSE DOMAIN WHICH DEFAULTS TO CWD WHEN NOT PASSED (INITIAL CREATE)
+            # COOKIETEMPLE TODO: Refactor this by passing a path param to the create and choose_domain functions, which default to PWD if not passed
             old_cwd = str(Path.cwd())
             os.chdir(tmpdirname)
             choose_domain(domain=None, dot_mlf_core=self.dot_mlf_core)
-            os.remove(f'{tmpdirname}/{self.dot_mlf_core["project_slug"]}/.github/workflows/sync_project.yml')
             # copy into the cleaned TEMPLATE branch's project directory
             copy_tree(os.path.join(tmpdirname, self.dot_mlf_core['project_slug']), str(self.project_dir))
             os.chdir(old_cwd)
@@ -192,8 +191,7 @@ class TemplateSync:
                 blacklisted_changed_files += fnmatch.filter(changed_files, pattern)
             print('[bold blue]Committing changes of non blacklisted files.')
             files_to_commit = [file for file in changed_files if file not in blacklisted_changed_files]
-            Popen(['git', 'commit', '-m', 'mlf_core sync', *files_to_commit], stdout=PIPE, stderr=PIPE, universal_newlines=True)
-            # Stashing all blacklisted files, since they should not be part of any commit.
+            Popen(['git', 'commit', '-m', 'mlf-core sync', *files_to_commit], stdout=PIPE, stderr=PIPE, universal_newlines=True)
             print('[bold blue] Stashing and saving TEMPLATE branch changes!')
             Popen(['git', 'stash'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
             self.made_changes = True
@@ -212,7 +210,7 @@ class TemplateSync:
         try:
             origin = self.repo.remote('origin')
             self.repo.head.ref.set_tracking_branch(origin.refs.TEMPLATE)
-            self.repo.git.push()
+            self.repo.git.push(force=True)
         except git.exc.GitCommandError as e:
             print(f'Could not push TEMPLATE branch:\n{e}')
             sys.exit(1)
@@ -246,7 +244,7 @@ class TemplateSync:
             'body': pr_body_text,
             'maintainer_can_modify': True,
             'head': 'TEMPLATE',
-            'base': self.from_branch,
+            'base': 'development',
         }
 
         r = requests.post(
@@ -261,26 +259,25 @@ class TemplateSync:
             self.gh_pr_returned_data = r.content
             returned_data_prettyprint = r.content
 
-        # PR successful
+        # PR worked
         if r.status_code == 201:
             print('[bold blue]Successfully created PR!')
 
         # Something went wrong
         else:
-            print(f'[bold red]GitHub API returned code {r.status_code}: \n{returned_data_prettyprint}')
+            print(f'[bold red]GitHub API returned code {r.status_code}')
+            print(returned_data_prettyprint)
             sys.exit(1)
 
     def check_pull_request_exists(self) -> bool:
         """
         Check, if a mlf-core sync PR is already pending. If so, just push changes and do not create a new PR!
-
         :return Whether a mlf-core sync PR is already open or not
         """
-        state = {'state': 'open'}
-        query_url = f'https://api.github.com/repos/{self.repo_owner}/{self.dot_mlf_core["project_slug"]}/pulls'
+        query_url = f'https://api.github.com/repos/{self.repo_owner}/{self.dot_mlf_core["project_slug"]}/pulls?state=open'
         headers = {'Authorization': f'token {self.token}'}
         # query all open PRs
-        r = requests.get(query_url, headers=headers, data=json.dumps(state))
+        r = requests.get(query_url, headers=headers)
         query_data = r.json()
         # iterate over the open PRs of the repo to check if a mlf-core sync PR is open
         for pull_request in query_data:
@@ -304,8 +301,8 @@ class TemplateSync:
             # check for proper configuration if the sync_level section (only one item named ct_sync_level with valid levels major or minor
             if len(level_item) != 1 or 'ct_sync_level' not in level_item[0][0] or not any(level_item[0][1] == valid_lvl for valid_lvl in
                                                                                           ['major', 'minor', 'patch']):
-                print('[bold red]Your sync_level section is miss configured. '
-                      'Make sure that it only contains one item named ct_sync_level with only valid levels patch, minor or major!')
+                print('[bold red]Your sync_level section is missconfigured. Make sure that it only contains one item named mlf_core_sync_level'
+                      ' with only valid levels patch, minor or major!')
                 sys.exit(1)
             # check in case of minor update that level is not set to major (major case must not be handled as level is a lower bound)
             if self.patch_update:
@@ -316,8 +313,7 @@ class TemplateSync:
                 return True
         # mlf_core.cfg file was not found or has no section sync_level
         except NoSectionError:
-            print('[bold red]Could not read from mlf_core.cfg file. Make sure your specified path contains a mlf_core.cfg file and has a sync_level '
-                  'section!')
+            print('[bold red]Could not read from mlf_core.cfg file. Make sure your specified path contains a mlf_core.cfg file and has a sync_level section!')
             sys.exit(1)
 
     def get_blacklisted_sync_globs(self) -> list:
@@ -333,8 +329,8 @@ class TemplateSync:
 
         # mlf_core.cfg file was not found or has no section called sync_files_blacklisted
         except NoSectionError:
-            print('[bold red]Could not read from mlf_core.cfg file. Make sure your specified path contains a mlf_core.cfg file and has a '
-                  'sync_files_blacklisted section!')
+            print('[bold red]Could not read from mlf_core.cfg file. '
+                  'Make sure your specified path contains a mlf_core.cfg file and has a sync_files_blacklisted section!')
             sys.exit(1)
 
     def reset_target_dir(self):
@@ -349,17 +345,15 @@ class TemplateSync:
             sys.exit(1)
 
     @staticmethod
-    def update_sync_token(project_name: str, gh_username='') -> None:
+    def update_sync_token(project_name: str, gh_username: str = '') -> None:
         """
         Update the sync token secret for the repository.
         :param project_name Name of the users project
-        :param gh_username The Github username (only gets passed, if the repo is an orga repo)
+        :param gh_username The Github username (only gets passed, if the repo is an organization repo)
         """
-        gh_username = load_yaml_file(ConfigCommand.CONF_FILE_PATH)[
-            'github_username'] if not gh_username else gh_username
-        # get the personal access token for user authentification
-        updated_sync_token = mlf_core_questionary_or_dot_mlf_core(function='password',
-                                                                  question='Please enter your updated sync token value')
+        gh_username = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['github_username'] if not gh_username else gh_username
+        # get the personal access token for user authentication
+        updated_sync_token = mlf_core_questionary_or_dot_mlf_core('password', 'Please enter your updated sync token value')
         print(f'[bold blue]\nUpdating sync secret for project {project_name}.')
         create_sync_secret(gh_username, project_name, updated_sync_token)
         print(f'[bold blue]\nSuccessfully updated sync secret for project {project_name}.')
@@ -367,13 +361,12 @@ class TemplateSync:
     def has_template_version_changed(self, project_dir: Path) -> (bool, bool, bool, str, str):
         """
         Check, if the mlf-core template has been updated since last check/sync of the user.
-
         :return: Both false if no versions changed or a micro change happened (for ex. 1.2.3 to 1.2.4). Return is_major_update True if a major version release
         happened for the mlf-core template (for example 1.2.3 to 2.0.0). Return is_minor_update True if a minor change happened (1.2.3 to 1.3.0).
         Return is_patch_update True if its a micro update (for example 1.2.3 to 1.2.4).
         mlf-core will use this to decide which syncing strategy to apply. Also return both versions.
         """
-        template_version_last_sync, template_handle = load_project_template_version_and_handle(project_dir)
+        template_version_last_sync, template_handle = self.sync_load_project_template_version_and_handle(project_dir)
         template_version_last_sync = version.parse(template_version_last_sync)
         current_ct_template_version = version.parse(self.sync_load_template_version(template_handle))
         is_major_update, is_minor_update, is_patch_update = False, False, False
@@ -392,19 +385,17 @@ class TemplateSync:
     def sync_load_template_version(self, handle: str) -> str:
         """
         Load the version of the template available from mlf-core specified by the handler for syncing.
-
         :param handle: The template handle
         :return: The actual version number of the template in mlf-core
         """
         top_path = f'{os.path.dirname(__file__)}/..'
         available_templates_path = f'{str(top_path)}/create/templates/available_templates.yml'
 
-        return load_ct_template_version(handle, available_templates_path)
+        return load_mlf_core_template_version(handle, available_templates_path)
 
     def sync_load_project_template_version_and_handle(self, project_dir: Path) -> str:
         """
         Return the project template version since last sync for user (if no sync happened, return initial create version of the template)
-
         :param project_dir: Top level path to users project directory
         """
         return load_project_template_version_and_handle(project_dir)

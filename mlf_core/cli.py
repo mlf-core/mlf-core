@@ -148,58 +148,56 @@ def info(ctx, handle: str) -> None:
 def sync(project_dir, set_token, pat, username, check_update) -> None:
     """
     Sync your project with the latest template release.
-
-    mlf-core regularly updates its templates.
+    mlf_core regularly updates its templates.
     To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing).
     If no repository exists the TEMPLATE branch will be updated and you can merge manually.
     """
     project_dir_path = Path(f'{Path.cwd()}/{project_dir}') if not str(project_dir).startswith(str(Path.cwd())) else Path(project_dir)
+    project_data = load_yaml_file(f'{project_dir}/.mlf_core.yml')
+
     # if set_token flag is set, update the sync token value and exit
     if set_token:
         try:
-            project_data = load_yaml_file(f'{project_dir}/.mlf_core.yml')
-            # if project is an orga repo, pass orga name as username
-            if project_data['is_github_repo'] and project_data['is_github_orga']:
-                TemplateSync.update_sync_token(project_name=project_data['project_slug'], gh_username=project_data['github_orga'])
-            # if not, use default username
-            elif project_data['is_github_repo']:
-                TemplateSync.update_sync_token(project_name=project_data['project_slug'])
+            if project_data['is_github_repo']:
+                TemplateSync.update_sync_token(project_name=project_data['project_slug'], gh_username=project_data['github_username'])
             else:
                 print('[bold red]Your current project does not seem to have a Github repository!')
                 sys.exit(1)
-        except (FileNotFoundError, KeyError):
-            print(f'[bold red]Your token value is not a valid personal access token for your account or there exists no .mlf_core.yml file at '
-                  f'{project_dir_path}. Is this a mlf-core project?')
+        except FileNotFoundError:
+            print(f'[bold red]There exists no .mlf_core.yml file at {project_dir_path}. Is this a mlf-core project?')
+        except KeyError:
+            print('[bold red]Your token value is not a valid personal access token for your account.')
             sys.exit(1)
         sys.exit(0)
 
-    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat)
+    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat, repo_owner=project_data['github_username'])
     # check for template version updates
-    major_change, minor_change, patch_change, proj_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
+    major_change, minor_change, patch_change, project_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
     syncer.new_template_version = mlf_core_template_version
     # check for user without actually syncing
     if check_update:
-        # a template update has been released by mlf-core
+        # a template update has been released by mlf_core
         if any(change for change in (major_change, minor_change, patch_change)):
-            print(f'[bold blue]Your templates version received an update from {proj_template_version} to {mlf_core_template_version}!\n'
+            print(f'[bold blue]Your templates version received an update from {project_template_version} to {mlf_core_template_version}!\n'
                   f' Use [green]mlf-core sync [blue]to sync your project')
-        # no updates were found
         else:
             print('[bold blue]Using the latest template version. No sync required.')
         # exit without syncing
         sys.exit(0)
+
     # set sync flags indicating a major, minor or patch update
     syncer.major_update = major_change
     syncer.minor_update = minor_change
     syncer.patch_update = patch_change
-    # sync the project if any changes
+
+    # sync the project if any changes were detected
     if any(change for change in (major_change, minor_change, patch_change)):
+        # If required sync level is set -> sync
         if syncer.check_sync_level():
-            # check if a pull request should be created according to set level constraints
             syncer.sync()
         else:
-            print('[bold red]Aborting sync due to set level constraints. You can set the level any time in your cookietemple.cfg in the sync_level section and'
-                  ' sync again.')
+            print('[bold red]Aborting sync due to set level constraints. '
+                  'You can set the level any time in your mlf_core.cfg in the sync_level section and sync again.')
     else:
         print('[bold blue]No changes detected. Your template is up to date.')
 

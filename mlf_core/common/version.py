@@ -5,7 +5,7 @@ from rich import print
 from mlf_core.common.load_yaml import load_yaml_file
 
 
-def load_ct_template_version(handle: str, yaml_path: str) -> str:
+def load_mlf_core_template_version(handle: str, yaml_path: str) -> str:
     """
     Load the version of the template specified by the handler from the given yaml file path.
 

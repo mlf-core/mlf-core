@@ -92,12 +92,12 @@ class TemplateSync:
 
     def inspect_sync_dir(self):
         """
-        Examines target directory to sync, verifies that it's a git repository and ensures that there are no uncommitted changes.
+        Examines target directory to sync, verifies that it is a git repository and ensures that there are no uncommitted changes.
         """
         if not os.path.exists(os.path.join(str(self.project_dir), '.mlf_core.yml')):
             print(f'[bold red]{self.project_dir} does not appear to contain a .mlf_core.yml file. Did you delete it?')
             sys.exit(1)
-            # store .mlf_core.yml content for later reuse in the dry create run
+        # store .mlf_core.yml content for later reuse in the dry create run
         self.dot_mlf_core = load_yaml_file(os.path.join(str(self.project_dir), '.mlf_core.yml'))
         # Check that the project_dir is a git repo
         try:
@@ -259,7 +259,7 @@ class TemplateSync:
             self.gh_pr_returned_data = r.content
             returned_data_prettyprint = r.content
 
-        # PR worked
+        # PR successful
         if r.status_code == 201:
             print('[bold blue]Successfully created PR!')
 

@@ -176,7 +176,7 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
     syncer.new_template_version = mlf_core_template_version
     # check for user without actually syncing
     if check_update:
-        # a template update has been released by mlf_core
+        # a template update has been released by mlf-core
         if any(change for change in (major_change, minor_change, patch_change)):
             print(f'[bold blue]Your templates version received an update from {project_template_version} to {mlf_core_template_version}!\n'
                   f' Use [green]mlf-core sync [blue]to sync your project')

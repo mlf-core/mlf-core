@@ -3,6 +3,7 @@ name: Sync mlf-core project
 on:
   schedule:
     - cron: '0 1 * * *' # 1 am UTC
+  workflow_dispatch:
 
 jobs:
   build:

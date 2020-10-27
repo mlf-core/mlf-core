@@ -171,9 +171,8 @@ class TemplateLinter(object):
             content = fh.read()
 
         # Implicitly also checks if empty.
-        if 'FROM ' in content:
+        if 'FROM mlfcore' in content:
             self.passed.append(('general-2', 'Dockerfile check passed'))
-            self.dockerfile = [line.strip() for line in content.splitlines()]
             return
 
         self.failed.append((2, 'Dockerfile check failed'))

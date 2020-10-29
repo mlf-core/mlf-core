@@ -224,10 +224,15 @@ class TemplateCreator:
                                                          dot_mlf_core=dot_mlf_core,
                                                          to_get_property='version')
 
+        def suffix_check(version: str) -> bool:
+            if len(version) > 6 and '-SNAPSHOT' not in version:
+                return False
+            return True
+
         # make sure that the version has the right format
-        while not re.match(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', poss_vers) and not dot_mlf_core:
+        while not (re.match(r'(?<!\.)\d+(?:\.\d+){2}(-SNAPSHOT)?(?!\.)', poss_vers) and suffix_check(poss_vers)) and not dot_mlf_core:
             print('[bold red]The version number entered does not match semantic versioning.\n' +
-                  'Please enter the version in the format [number].[number].[number]!')
+                  'Please enter the version in the format \[number].\[number].\[number](-SNAPSHOT)!')  # noqa: W605
             poss_vers = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                              question='Initial version of your project',
                                                              default='0.1.0-SNAPSHOT')
@@ -247,7 +252,7 @@ class TemplateCreator:
             self.creator_ctx.creator_github_username = dot_mlf_core['creator_github_username']
         else:
             self.creator_ctx.github_username = load_github_username()
-            self.creator_ctx.creator_github_username = self.creator_ctx. github_username
+            self.creator_ctx.creator_github_username = self.creator_ctx.github_username
 
     def create_common_files(self) -> None:
         """

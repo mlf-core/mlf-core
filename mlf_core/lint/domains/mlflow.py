@@ -122,18 +122,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'index_select'
         ]
 
-        # We should only expect those functions in all *.py files, so only read those
-        for root, dirs, files in os.walk(f'{self.path}/{self.project_slug_no_hyphen}'):
-            for file in files:
-                if file.endswith(".py"):
-                    file_to_check_full_path = os.path.join(root, file)
-                    with open(file_to_check_full_path) as f:
-                        content_stripped = list(map(lambda line: line.strip(), f.readlines()))
-                        for function in atomic_add_functions:
-                            for line_code in content_stripped:
-                                if function in line_code:
-                                    self.failed.append(('mlflow-pytorch-3',
-                                                        f'{function} found in {file_to_check_full_path} operates non-deterministically.'))
+        verify_method_not_present(self, atomic_add_functions, 'mlflow-pytorch-3')
 
         # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
 
@@ -219,6 +208,15 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         # TODO COOKIETEMPLE: Investigate whether there is a reasonable way of linting for
         # train_dataset = mnist_train.map(scale).cache().shuffle(buffer_size, seed=tensorflow_seed, reshuffle_each_iteration=False).batch(BATCH_SIZE)
+
+    def tensorflow_non_deterministic_functions(self) -> None:
+        """
+        Verifies that no non-deterministic functions of Tensorflow are used.
+        """
+        non_deterministic_tf_functions = ['softmax_cross_entropy_with_logits',
+                                          'sparse_softmax_cross_entropy_with_logits']
+
+        verify_method_not_present(self, non_deterministic_tf_functions, 'mlflow-tensorflow-3')
 
 
 class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
@@ -324,6 +322,14 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                     self.failed.append(('mlflow-xgboost-3',
                                         f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
 
+    def xgboost_no_all_reduce(self) -> None:
+        """
+        Verifies that all_reduce is not used.
+        https://github.com/dmlc/xgboost/issues/5023
+        """
+        all_reduce_functions = ['all_reduce']
+        verify_method_not_present(self, all_reduce_functions, 'mlflow-xgboost-4')
+
 
 class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def __init__(self, path):
@@ -427,3 +433,32 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 if current_version < parse_version('1.1.0'):
                     self.failed.append(('mlflow-xgboost_dask-3',
                                         f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
+
+    def xgboost_no_all_reduce(self) -> None:
+        """
+        Verifies that all_reduce is not used.
+        https://github.com/dmlc/xgboost/issues/5023
+        """
+        all_reduce_functions = ['all_reduce']
+        verify_method_not_present(self, all_reduce_functions, 'mlflow-xgboost-4')
+
+
+def verify_method_not_present(calling_class: TemplateLinter, functions_to_check: list, linting_code: str):
+    """
+    Checks all Python files for a list of strings/functions, which should not be present.
+    :param calling_class: The TemplateLinter subclass. Required to append the found errors correctly.
+    :param functions_to_check: The list of functions, which are not allowed to be present in any Python file
+    :param linting_code: A linting code build from the handle and the error code e.g. mlflow-pytorch-1
+    """
+    # We should only expect those functions in all *.py files, so only read those
+    for root, dirs, files in os.walk(f'{calling_class.path}/{calling_class.project_slug_no_hyphen}'):
+        for file in files:
+            if file.endswith(".py"):
+                file_to_check_full_path = os.path.join(root, file)
+                with open(file_to_check_full_path) as f:
+                    content_stripped = list(map(lambda line: line.strip(), f.readlines()))
+                    for function in functions_to_check:
+                        for line_code in content_stripped:
+                            if function in line_code:
+                                calling_class.failed.append((linting_code,
+                                                             f'{function} found in {file_to_check_full_path} operates non-deterministically.'))

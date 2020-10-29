@@ -6,12 +6,34 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.5.0 (2020-10-29)
+------------------
+
+**Added**
+
+* Check for non-deterministic functions for mlflow-tensorflow linter
+* Check for all_reduce for mlflow-xgboost templates
+* Check for OS for system-intelligence runs. If not Linux -> don't run system-intelligence
+* .gitattributes to templates, which ignores mlruns
+* Documentation on creating releases
+
+**Fixed**
+
+* Sync now operates correctly with the correct PR URL
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.4.4 (2020-10-22)
 ------------------
 
 **Added**
 
 **Fixed**
+
+* Conda report generation
 
 **Dependencies**
 

@@ -6,7 +6,7 @@ from mlf_core.create.github_support import prompt_github_repo
 from mlf_core.create.template_creator import TemplateCreator
 from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
-from mlf_core.common.version import load_ct_template_version
+from mlf_core.common.version import load_mlf_core_template_version
 
 
 @dataclass
@@ -27,10 +27,10 @@ class MlflowCreator(TemplateCreator):
         self.TEMPLATES_MLFLOW_PATH = f'{self.WD_Path.parent}/templates/mlflow'
 
         '"" TEMPLATE VERSIONS ""'
-        self.MLFLOW_PYTORCH_TEMPLATE_VERSION = load_ct_template_version('mlflow-pytorch', self.AVAILABLE_TEMPLATES_PATH)
-        self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION = load_ct_template_version('mlflow-tensorflow', self.AVAILABLE_TEMPLATES_PATH)
-        self.MLFLOW_XGBOOST_TEMPLATE_VERSION = load_ct_template_version('mlflow-xgboost', self.AVAILABLE_TEMPLATES_PATH)
-        self.MLFLOW_XGBOOST_DASK_TEMPLATE_VERSION = load_ct_template_version('mlflow-xgboost_dask', self.AVAILABLE_TEMPLATES_PATH)
+        self.MLFLOW_PYTORCH_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-pytorch', self.AVAILABLE_TEMPLATES_PATH)
+        self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-tensorflow', self.AVAILABLE_TEMPLATES_PATH)
+        self.MLFLOW_XGBOOST_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-xgboost', self.AVAILABLE_TEMPLATES_PATH)
+        self.MLFLOW_XGBOOST_DASK_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-xgboost_dask', self.AVAILABLE_TEMPLATES_PATH)
 
     def create_template(self, dot_mlf_core: dict or None):
         """

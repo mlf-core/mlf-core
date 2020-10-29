@@ -60,6 +60,7 @@ As required a MLproject file serves as entry point and parameter definition.
     │       ├── run_flake8_linting.yml
     │       ├── sync.yml
     │       └── train_cpu.yml
+    │       └── publish_docker.yml
     ├── .gitignore
     ├── LICENSE
     ├── mlf_core.cfg
@@ -85,6 +86,7 @@ Included frameworks/libraries
   5. ``sync.yml``, which checks whether a new version of mlflow-pytorch is available and submits a pull request if so.
   6. ``run_mlf_core_lint.yml``, which runs ``mlf-core lint`` to verify that the project adheres to all mlf-core standards.
   7. ``run_bandit.yml``, which runs `Bandit <https://pypi.org/project/bandit/>`_ to find any security issues.
+  8. ``publish_docker.yml``, which builds and pushes a Docker container to Github Packages
 
 
 .. include:: mlflow_shared_usage_faq.rst

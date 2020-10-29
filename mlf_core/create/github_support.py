@@ -69,7 +69,7 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         # Copy files which should be included in the initial commit -> basically the template
         copy_tree(f'{repository}', project_path)
 
-        # the created projct repository with the copied .git directory
+        # the created project repository with the copied .git directory
         cloned_repo = Repo(path=project_path)
 
         # git add
@@ -77,7 +77,7 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         cloned_repo.git.add(A=True)
 
         # git commit
-        cloned_repo.index.commit(f'Created {creator_ctx.project_slug} with {creator_ctx.template_handle}'
+        cloned_repo.index.commit(f'Created {creator_ctx.project_slug} with {creator_ctx.template_handle} '
                                  f'template of version {creator_ctx.template_version} using mlf-core.')
 
         print('[bold blue]Pushing template to Github origin master')
@@ -85,10 +85,11 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
 
         # set branch protection (all WF must pass, dismiss stale PR reviews) only when repo is public
         if not creator_ctx.is_repo_private and not creator_ctx.is_github_orga:
-            master_branch = authenticated_github_user.get_user().get_repo(name=creator_ctx.project_slug).get_branch("master")
+            master_branch = authenticated_github_user.get_user().get_repo(name=creator_ctx.project_slug).get_branch(
+                "master")
             master_branch.edit_protection(dismiss_stale_reviews=True)
         else:
-            print('[bold blue]Cannot set branch protection rules due to your repository being private or an orga repo!\n'
+            print('[bold yellow]Cannot set branch protection rules due to your repository being private or an organization repository!\n'
                   'You can set it manually later on.')
 
         # git create development branch
@@ -103,16 +104,12 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         print('[bold blue]Creating TEMPLATE branch.')
         cloned_repo.git.checkout('-b', 'TEMPLATE')
 
-        # git push to TEMPLATE branch
+        # git push to origin TEMPLATE
         print('[bold blue]Pushing template to Github origin TEMPLATE.')
         cloned_repo.remotes.origin.push(refspec='TEMPLATE:TEMPLATE')
 
-        # checkout to development branch again
-        print('[bold blue]Checking out development branch.')
-        cloned_repo.git.checkout('development')
-
-        # did any errors occur?
-        print(f'[bold green]Successfully created a Github repository at https://github.com/{creator_ctx.github_username}/{creator_ctx.project_slug}')
+        print(f'[bold green]Successfully created a Github repository at '
+              f'https://github.com/{creator_ctx.github_username}/{creator_ctx.project_slug}')
 
     except (GithubException, ConnectionError) as e:
         handle_failed_github_repo_creation(e)
@@ -138,7 +135,7 @@ def handle_pat_authentification() -> str:
             print('[bold red]Could not find encrypted personal access token!\n')
             print('[bold blue]Please navigate to Github -> Your profile -> Settings -> Developer Settings -> Personal access token -> Generate a new Token')
             print('[bold blue]Only tick \'repo\'. The token is a hidden input to mlf-core and stored encrypted locally on your machine.')
-            print('[bold blue]For more information please read' +
+            print('[bold blue]For more information please read '
                   'https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line\n\n')
             print('[bold blue]Lets move on to set your personal access token for your mlf-core project!')
             # set the PAT
@@ -183,7 +180,7 @@ def prompt_github_repo(dot_mlf_core: OrderedDict or None) -> (bool, bool, bool, 
                                                              default='No')
         github_org = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                           question='Please enter the name of the Github organization',
-                                                          default='SpringfieldNuclearPowerPlant') if is_github_org else ''
+                                                          default='mlf-core') if is_github_org else ''
         private = mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                                        question='Do you want your repository to be private?',
                                                        default='No')
@@ -220,13 +217,13 @@ def get_repo_public_key(username: str, repo_name: str, token: str) -> dict:
     query_url = f'https://api.github.com/repos/{username}/{repo_name}/actions/secrets/public-key'
     headers = {'Authorization': f'token {token}'}
     r = requests.get(query_url, headers=headers)
+
     return r.json()
 
 
 def create_secret(username: str, repo_name: str, token: str, public_key_value: str, public_key_id: str) -> None:
     """
-    Create the secret named MLF_CORE_SYNC_TOKEN using a PUT request via the Github API.
-    This request needs a PAT with the repo scope for authentication purposes.
+    Create the secret named CT_SYNC_TOKEN using a PUT request via the Github API. This request needs a PAT with the repo scope for authentification purposes.
     Using PyNacl, a Python binding for Javascripts LibSodium, it encrypts the secret value, which is required by the Github API.
 
     :param username: The user's github username
@@ -241,7 +238,7 @@ def create_secret(username: str, repo_name: str, token: str, public_key_value: s
         "encrypted_value": encrypted_value,
         "key_id": public_key_id
     }
-    # the authentification header
+    # the authentication header
     headers = {'Authorization': f'token {token}'}
     # the url used for PUT
     put_url = f'https://api.github.com/repos/{username}/{repo_name}/actions/secrets/MLF_CORE_SYNC_TOKEN'
@@ -260,6 +257,7 @@ def encrypt_sync_secret(public_key: str, token: str) -> str:
     public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
     sealed_box = public.SealedBox(public_key)
     encrypted = sealed_box.encrypt(token.encode("utf-8"))
+
     return b64encode(encrypted).decode("utf-8")
 
 
@@ -312,12 +310,14 @@ def format_github_exception(data: dict) -> None:
 
     :param data: The exceptions data as a dict
     """
-    for k, v in data.items():
-        if not isinstance(v, list):
-            print(f'[bold red]{k.capitalize()}: {v}')
+    for section, description in data.items():
+        if not isinstance(description, list):
+            print(f'[bold red]{section.capitalize()}: {description}')
         else:
-            print(f'[bold red]{k.upper()}: ')
-            messages = [val if not isinstance(val, dict) and not isinstance(val, set) else github_exception_dict_repr(val) for val in v]
+            print(f'[bold red]{section.upper()}: ')
+            messages = [
+                val if not isinstance(val, dict) and not isinstance(val, set) else github_exception_dict_repr(val) for
+                val in description]
             print('[bold red]\n'.join(msg for msg in messages))
 
 
@@ -327,7 +327,7 @@ def github_exception_dict_repr(messages: dict) -> str:
 
     :param messages: The messages as a dict
     """
-    return '\n'.join(f'    {k.capitalize()}: {v}' for k, v in messages.items())
+    return '\n'.join(f'    {section.capitalize()}: {description}' for section, description in messages.items())
 
 
 def is_git_accessible() -> bool:

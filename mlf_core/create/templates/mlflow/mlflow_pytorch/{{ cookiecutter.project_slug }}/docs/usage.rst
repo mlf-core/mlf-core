@@ -6,7 +6,7 @@ Setup
 
 mlf-core based mlflow projects require either Conda or Docker to be installed.
 The usage of Docker is highly preferred, since it ensures that system-intelligence can fetch all required and accessible hardware.
-This cannot be guaranteed for Mac let alone Windows environments.
+This cannot be guaranteed for MacOS let alone Windows environments.
 
 Conda
 +++++++
@@ -17,7 +17,8 @@ mlflow will create a new environment for every run.
 Docker
 ++++++++
 
-If you use Docker you need to build the Docker container, whose name is specified in the MLproject file (e.g. mlfcore/pytorch:1.0.0).
+If you use Docker you should not need to build the Docker container manually, since it should be available on Github Packages or another registry.
+However, if you want to build it manually for e.g. development purposes, ensure that the names matches the defined name in the ``MLproject``file.
 This is sufficient to train on the CPU. If you want to train using the GPU you need to have the `NVIDIA Container Toolkit <https://github.com/NVIDIA/nvidia-docker>`_ installed.
 
 Training

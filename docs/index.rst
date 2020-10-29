@@ -16,6 +16,7 @@ Welcome to mlf-core's documentation!
    upgrade
    available_templates/available_templates
    github_support
+   creating_releases
    contributing
    adding_new_templates
    faq

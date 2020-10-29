@@ -104,7 +104,7 @@ Some common error sources are:
 3. A repository with the same name already exists in your account/your organisation.
 
 Creation fails, ok: But how can I then access the full features of mlf-core?
-You can try to fix the issue (or wait some time on case, for example, when Github is down) and then process to create a Github repository manually.
+Try to fix the issue (or wait some time on case, for example, when Github is down) and then process to create a Github repository manually.
 After this, make sure to create a secret named ``MLF_CORE_SYNC_TOKEN`` with the value of your PAT for your repository.
 See `the Github docs <https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets>`_
 for more information on how to create a secret.

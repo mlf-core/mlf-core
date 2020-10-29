@@ -209,6 +209,15 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         # TODO COOKIETEMPLE: Investigate whether there is a reasonable way of linting for
         # train_dataset = mnist_train.map(scale).cache().shuffle(buffer_size, seed=tensorflow_seed, reshuffle_each_iteration=False).batch(BATCH_SIZE)
 
+    def tensorflow_non_deterministic_functions(self) -> None:
+        """
+        Verifies that no non-deterministic functions of Tensorflow are used.
+        """
+        non_deterministic_tf_functions = ['softmax_cross_entropy_with_logits',
+                                          'sparse_softmax_cross_entropy_with_logits']
+
+        verify_method_not_present(self, non_deterministic_tf_functions, 'mlflow-tensorflow-3')
+
 
 class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def __init__(self, path):

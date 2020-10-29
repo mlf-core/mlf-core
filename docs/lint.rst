@@ -182,6 +182,18 @@ mlflow-tensorflow-2
 | Line 4 sets the number of threads between independent operations for parallelism to 1
 | Line 5 enables and forces all deterministic operations
 
+mlflow-tensorflow-3
+~~~~~~~~~~~~~~~~~~~~
+
+| Function operates non-deterministically.
+| There are a couple of functions left in Tensorflow, which are known to be operating non-deterministically. They are not allowed to be used.
+
+.. code-block::
+    :lineos:
+
+    'softmax_cross_entropy_with_logits',
+    'sparse_softmax_cross_entropy_with_logits'
+
 mlflow-xgboost
 ^^^^^^^^^^^^^^^^^
 

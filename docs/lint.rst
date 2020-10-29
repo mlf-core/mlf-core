@@ -140,7 +140,7 @@ mlflow-pytorch-3
 | Currently mlflow-pytorch reports:
 
 .. code-block::
-    :lineos:
+    :linenos:
 
     'index_add',
     'scatter_add',
@@ -189,7 +189,7 @@ mlflow-tensorflow-3
 | There are a couple of functions left in Tensorflow, which are known to be operating non-deterministically. They are not allowed to be used.
 
 .. code-block::
-    :lineos:
+    :linenos:
 
     'softmax_cross_entropy_with_logits',
     'sparse_softmax_cross_entropy_with_logits'
@@ -227,7 +227,7 @@ mlflow-xgboost-3
 mlflow-xgboost-4
 ~~~~~~~~~~~~~~~~~~~
 
-| The all_reduce algorithm in XGBoost may not operate deterministically.
+| The ``all_reduce`` algorithm in XGBoost may not operate deterministically.
 | Source: https://github.com/dmlc/xgboost/issues/5023
 
 mlflow-xgboost_dask
@@ -263,5 +263,5 @@ mlflow-xgboost_dask-3
 mlflow-xgboost-4
 ~~~~~~~~~~~~~~~~~~~
 
-| The all_reduce algorithm in XGBoost may not operate deterministically.
+| The ``all_reduce`` algorithm in XGBoost may not operate deterministically.
 | Source: https://github.com/dmlc/xgboost/issues/5023

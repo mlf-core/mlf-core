@@ -15,6 +15,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Check for all_reduce for mlflow-xgboost templates
 * Check for OS for system-intelligence runs. If not Linux -> don't run system-intelligence
 * .gitattributes to templates, which ignores mlruns
+* Documentation on creating releases
 
 **Fixed**
 

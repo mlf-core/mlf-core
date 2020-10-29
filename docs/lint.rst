@@ -131,6 +131,26 @@ mlflow-pytorch-2
 | Line 6 enables deterministic cuDNN operations
 | Line 7 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.
 
+mlflow-pytorch-3
+~~~~~~~~~~~~~~~~~~~
+
+| Function operates non-deterministically.
+| Several functions and algorithms available in Pytorch are still based on atomic add or other non-deterministic operators. Hence, these functions are not allowed to be used.
+| Source: https://pytorch.org/docs/stable/notes/randomness.html
+| Currently mlflow-pytorch reports:
+
+.. code-block::
+    :lineos:
+
+    'index_add',
+    'scatter_add',
+    'bincount',
+    'embedding_bag',
+    'ctc_loss',
+    'interpolate',
+    'repeat_interleave',
+    'index_select'
+
 
 mlflow-tensorflow
 ^^^^^^^^^^^^^^^^^^^^^
@@ -192,6 +212,12 @@ mlflow-xgboost-3
 | The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
 | Refrain from using versions older than 1.1.0, especially when making use of GPUs.
 
+mlflow-xgboost-4
+~~~~~~~~~~~~~~~~~~~
+
+| The all_reduce algorithm in XGBoost may not operate deterministically.
+| Source: https://github.com/dmlc/xgboost/issues/5023
+
 mlflow-xgboost_dask
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -221,3 +247,9 @@ mlflow-xgboost_dask-3
 
 | The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.
 | Refrain from using versions older than 1.1.0, especially when making use of GPUs.
+
+mlflow-xgboost-4
+~~~~~~~~~~~~~~~~~~~
+
+| The all_reduce algorithm in XGBoost may not operate deterministically.
+| Source: https://github.com/dmlc/xgboost/issues/5023

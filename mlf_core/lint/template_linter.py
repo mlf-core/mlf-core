@@ -254,7 +254,7 @@ class TemplateLinter(object):
         """
         with open(path) as file:
             for line in file:
-                # if a tag is found and (depending on wether its a white or blacklisted file) check if the versions are matching
+                # if a tag is found and (depending on whether its a white or blacklisted file) check if the versions are matching
                 if ('<<MLF-CORE_NO_BUMP>>' not in line and not section == 'bumpversion_files_blacklisted') or '<<MLF-CORE_FORCE_BUMP>>' in line:
                     line_version = re.search(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', line)
                     if line_version:

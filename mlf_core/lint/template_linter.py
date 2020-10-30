@@ -116,7 +116,6 @@ class TemplateLinter(object):
             [os.path.join('docs', 'index.rst')],
             [os.path.join('docs', 'readme.rst')],
             [os.path.join('docs', 'changelog.rst')],
-            [os.path.join('docs', 'model.rst')],
             [os.path.join('docs', 'usage.rst')],
         ]
 
@@ -171,7 +170,7 @@ class TemplateLinter(object):
             content = fh.read()
 
         # Implicitly also checks if empty.
-        if 'FROM mlfcore' in content:
+        if 'FROM' in content:
             self.passed.append(('general-2', 'Dockerfile check passed'))
             return
 

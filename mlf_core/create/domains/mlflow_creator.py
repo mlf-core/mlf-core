@@ -34,7 +34,7 @@ class MlflowCreator(TemplateCreator):
 
     def create_template(self, dot_mlf_core: dict or None):
         """
-        Handles the CLI domain. Prompts the user for the language, general and domain specific options.
+        Handles the mlflow domain. Prompts the user for the language, general and domain specific options.
         """
 
         self.cli_struct.language = mlf_core_questionary_or_dot_mlf_core(function='select',

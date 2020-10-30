@@ -6,8 +6,9 @@ Welcome to {{ cookiecutter.project_name }}'s documentation!
    :caption: Contents:
 
    readme
+   {% if cookiecutter.domain == 'package' -%}installation.rst{% endif %}
    usage
-   model
+   {% if cookiecutter.domain == 'mlflow' -%}model{% endif %}
    authors
    changelog
    code_of_conduct

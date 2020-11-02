@@ -63,7 +63,7 @@ setup(
     description="{{ cookiecutter.project_short_description }}",
     entry_points={
         'console_scripts': [
-            '{{ cookiecutter.project_name }}={{ cookiecutter.project_slug|replace('-', '_') }}.cli:main',
+            '{{ cookiecutter.project_name }}={{ cookiecutter.project_slug|replace('-', '_') }}.cli_{% if cookiecutter.framework == 'pytorch' -%}pytorch{% elif cookiecutter.framework == 'tensorflow' -%}tensorflow{% elif cookiecutter.framework == 'xgboost' -%}xgboost{% endif %}:main',
         ],
     },
     install_requires=requirements,

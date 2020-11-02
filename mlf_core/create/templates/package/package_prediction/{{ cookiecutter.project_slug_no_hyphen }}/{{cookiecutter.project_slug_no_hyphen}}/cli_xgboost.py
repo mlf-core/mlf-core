@@ -19,6 +19,7 @@ WD = os.path.dirname(__file__)
 @click.option('-o', '--output', type=str, help='Path to write the output to')
 def main(input: str, model: str, cuda: bool, output: str):
     """Command-line interface for {{ cookiecutter.project_name }}"""
+
     print(r"""[bold blue]
         {{ cookiecutter.project_name }}
         """)

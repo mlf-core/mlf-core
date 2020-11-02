@@ -211,14 +211,14 @@ class TemplateLinter(object):
         """
         Verifies that no cookiecutter strings are in any of the files
         """
-
         for root, dirs, files in os.walk(self.path):
             for fname in files:
                 with io.open(os.path.join(root, fname), 'rt', encoding='latin1') as file:
+                    if file.name.endswith('.pyc'):
+                        continue
                     for line in file:
-                        # TODO We should also add some of the more advanced cookiecutter if statements, raw statements etc
-                        regex = re.compile('{{ cookiecutter.* }}')
-                        if regex.match(line):
+                        regex = re.compile(r'{\s?.* cookiecutter.*\s?}')  # noqa W605
+                        if regex.search(line):
                             line = f'{line[:50 - len(fname)]}..'
                             self.warned.append(('general-4', f'Cookiecutter string found in \'{fname}\': {line}'))
 

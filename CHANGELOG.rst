@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* New package templates (package-prediction) for Pytorch, Tensorflow and XGBoost
+
 **Fixed**
 
 **Dependencies**

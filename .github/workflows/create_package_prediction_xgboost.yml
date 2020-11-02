@@ -26,7 +26,7 @@ jobs:
       - name: Create package-prediction XGboost Template
         run: |
           cd ..
-          echo -e "\033[B\n\n\n\n\nn\n\n\033[B\033[B\nn" | mlf-core create
+          echo -e "\033[B\n\n\n\n\nn\n\n\n\n\033[B\033[B\nn" | mlf-core create
 
       - name: Build package-prediction XGboost
         run: |

@@ -9,9 +9,9 @@ def remove(filepath):
         shutil.rmtree(filepath)
 
 
-xgboost_files = ['{{ cookiecutter.project_slug_no_hyphen/cookiecutter.project_slug_no_hyphen/cli_xgboost.py }}',
-                 '{{ cookiecutter.project_slug_no_hyphen }}/data/xgboost_test_data.tsv',
-                 '{{ cookiecutter.project_slug_no_hyphen }}/models/xgboost_test_model.xgb']
+xgboost_files = ['{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}/cli_xgboost.py',
+                 '{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}/data/xgboost_test_data.tsv',
+                 '{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}/models/xgboost_test_model.xgb']
 
 is_pytorch = '{{ cookiecutter.framework }}' == 'pytorch'
 is_tensorflow = '{{ cookiecutter.framework }}' == 'tensorflow'

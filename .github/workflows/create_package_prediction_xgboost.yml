@@ -31,5 +31,5 @@ jobs:
       - name: Build package-prediction XGboost
         run: |
           cd ..
-          cd exploding_springfifeld
+          cd exploding_springfield
           make install

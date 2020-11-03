@@ -9,7 +9,7 @@ def remove(filepath):
         shutil.rmtree(filepath)
 
 
-cli_path = '{{ cookiecutter.project_slug_no_hyphen/cookiecutter.project_slug_no_hyphen'
+cli_path = '{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}'
 
 pytorch_files = [f'{cli_path}/cli_pytorch.py']
 

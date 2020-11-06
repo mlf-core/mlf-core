@@ -116,7 +116,6 @@ class TemplateLinter(object):
             [os.path.join('docs', 'index.rst')],
             [os.path.join('docs', 'readme.rst')],
             [os.path.join('docs', 'changelog.rst')],
-            [os.path.join('docs', 'model.rst')],
             [os.path.join('docs', 'usage.rst')],
         ]
 
@@ -171,7 +170,7 @@ class TemplateLinter(object):
             content = fh.read()
 
         # Implicitly also checks if empty.
-        if 'FROM mlfcore' in content:
+        if 'FROM' in content:
             self.passed.append(('general-2', 'Dockerfile check passed'))
             return
 
@@ -212,14 +211,14 @@ class TemplateLinter(object):
         """
         Verifies that no cookiecutter strings are in any of the files
         """
-
         for root, dirs, files in os.walk(self.path):
             for fname in files:
                 with io.open(os.path.join(root, fname), 'rt', encoding='latin1') as file:
+                    if file.name.endswith('.pyc'):
+                        continue
                     for line in file:
-                        # TODO We should also add some of the more advanced cookiecutter if statements, raw statements etc
-                        regex = re.compile('{{ cookiecutter.* }}')
-                        if regex.match(line):
+                        regex = re.compile(r'{\s?.* cookiecutter.*\s?}')  # noqa W605
+                        if regex.search(line):
                             line = f'{line[:50 - len(fname)]}..'
                             self.warned.append(('general-4', f'Cookiecutter string found in \'{fname}\': {line}'))
 
@@ -254,7 +253,7 @@ class TemplateLinter(object):
         """
         with open(path) as file:
             for line in file:
-                # if a tag is found and (depending on wether its a white or blacklisted file) check if the versions are matching
+                # if a tag is found and (depending on whether its a white or blacklisted file) check if the versions are matching
                 if ('<<MLF-CORE_NO_BUMP>>' not in line and not section == 'bumpversion_files_blacklisted') or '<<MLF-CORE_FORCE_BUMP>>' in line:
                     line_version = re.search(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', line)
                     if line_version:

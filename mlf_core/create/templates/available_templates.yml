@@ -32,3 +32,13 @@ mlflow:
         long description: A MLflow based XGBoost template with CPU, single-GPU, multi-GPU and
                         system-intelligence support. The initialized project contains a Covertype example.
                         Due to Dask's non deterministic shuffling the template may not always be reproducible!
+package:
+    prediction:
+        name: Prediction
+        handle: package-prediction
+        version: 1.0.0
+        available libraries: Pytorch, Tensorflow, XGBoost
+        short description: Python package offering loading and prediction of models with simple PyPI deployment.
+        long description: A Python package offering a command-line interfaces for predictions for custom models.
+            Depending on the chosen library/framework the template offers the appropriate way of loading the model.
+            The Python package is trivially distributed via PyPI.

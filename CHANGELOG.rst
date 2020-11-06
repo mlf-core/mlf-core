@@ -6,6 +6,35 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.6.1 (2020-11-06)
+------------------
+
+**Added**
+
+* Workflows for package-prediction
+* Documentation for package-prediction
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
+1.6.0 (2020-11-02)
+------------------
+
+**Added**
+
+* New package templates (package-prediction) for Pytorch, Tensorflow and XGBoost
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.5.0 (2020-10-29)
 ------------------
 

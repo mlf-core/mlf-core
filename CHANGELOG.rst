@@ -11,6 +11,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Workflows for package-prediction
+* Documentation for package-prediction
+
 **Fixed**
 
 **Dependencies**

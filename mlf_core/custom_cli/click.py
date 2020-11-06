@@ -67,24 +67,17 @@ class HelpErrorHandling(click.Group):
         formatter.width = 120
 
         with formatter.section(self.get_rich_value("General Commands")):
-            formatter.write_text(
-                f"{self.commands.get('list').name}\t\t{self.commands.get('list').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('info').name}\t\t{self.commands.get('info').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('config').name}\t\t{self.commands.get('config').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('upgrade').name}\t\t{self.commands.get('upgrade').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('list').name}\t\t\t{self.commands.get('list').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('info').name}\t\t\t{self.commands.get('info').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('config').name}\t\t\t{self.commands.get('config').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('upgrade').name}\t\t\t{self.commands.get('upgrade').get_short_help_str(limit=150)}")
 
         with formatter.section(self.get_rich_value("Commands for mlf-core projects")):
-            formatter.write_text(
-                f"{self.commands.get('create').name}\t\t{self.commands.get('create').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('lint').name}\t\t{self.commands.get('lint').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('bump-version').name}\t{self.commands.get('bump-version').get_short_help_str(limit=150)}")
-            formatter.write_text(
-                f"{self.commands.get('sync').name}\t\t{self.commands.get('sync').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('create').name}\t\t\t{self.commands.get('create').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('lint').name}\t\t\t{self.commands.get('lint').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('fix-artifact-paths').name}\t{self.commands.get('fix-artifact-paths').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('bump-version').name}\t\t{self.commands.get('bump-version').get_short_help_str(limit=150)}")
+            formatter.write_text(f"{self.commands.get('sync').name}\t\t\t{self.commands.get('sync').get_short_help_str(limit=150)}")
 
         with formatter.section(self.get_rich_value("Examples")):
             formatter.write_text("$ mlf-core create")

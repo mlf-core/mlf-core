@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* fix-artifact-paths which replaces the artifact paths with the paths of the current system
+
 **Fixed**
 
 **Dependencies**

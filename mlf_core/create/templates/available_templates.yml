@@ -18,7 +18,7 @@ mlflow:
     xgboost:
         name: XGBoost
         handle: mlflow-xgboost
-        version: 1.1.0
+        version: 1.2.0
         available libraries: XGBoost
         short description: Fully CPU and GPU reproducible MLflow based XGBoost template.
         long description: A fully CPU and GPU reproducible MLflow based XGBoost template with CPU, single-GPU and

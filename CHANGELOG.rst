@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Removed redundant print in xgboost
+
 **Dependencies**
 
 **Deprecated**

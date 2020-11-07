@@ -10,6 +10,7 @@ Welcome to mlf-core's documentation!
    create
    list_info
    lint
+   fix_artifact_paths
    bump_version
    sync
    config

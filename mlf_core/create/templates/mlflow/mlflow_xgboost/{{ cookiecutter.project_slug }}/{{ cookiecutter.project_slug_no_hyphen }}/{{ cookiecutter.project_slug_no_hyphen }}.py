@@ -49,7 +49,6 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_hi
             param['tree_method'] = 'gpu_hist'
         else:
             param['tree_method'] = 'hist'
-        print(param['tree_method'])
 
         # Train on the chosen device
         results = {}

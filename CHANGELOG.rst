@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.2 (2020-11-07)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Removed redundant print in xgboost
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.1 (2020-11-07)
 ------------------
 

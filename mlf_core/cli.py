@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """Entry point for mlf-core."""
-import glob
 import logging
 import os
 import sys
@@ -292,7 +291,7 @@ def fix_artifact_paths(ctx, path: str) -> None:
     """
     """
     for meta_yaml in Path(f'{path}/mlruns').rglob('meta.yaml'):
-        if not 'file' in meta_yaml.absolute():
+        if 'file' not in meta_yaml.absolute():
             print(f'[bold yellow] Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
         print(f'[bold blue] Fixing path for: {meta_yaml.absolute()}')
         with open(meta_yaml.absolute()) as meta_yaml_file:

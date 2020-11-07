@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* mlf-core sync does now correctly find attributes
+
 **Dependencies**
 
 **Deprecated**

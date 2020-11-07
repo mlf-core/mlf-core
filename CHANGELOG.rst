@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.1 (2020-11-07)
+------------------
+
+**Added**
+
+**Fixed**
+
+* mlf-core sync does now correctly find attributes
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.0 (2020-11-06)
 ------------------
 

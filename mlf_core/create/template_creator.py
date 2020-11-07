@@ -170,9 +170,13 @@ class TemplateCreator:
         Options are saved in the creator context manager object.
         """
         try:
-            # try to read name and email from existing config file
-            self.creator_ctx.full_name = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['full_name']
-            self.creator_ctx.email = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['email']
+            if dot_mlf_core:
+                # try to read name and email from existing config file
+                self.creator_ctx.full_name = dot_mlf_core['full_name']
+                self.creator_ctx.email = dot_mlf_core['email']
+            else:
+                self.creator_ctx.full_name = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['full_name']
+                self.creator_ctx.email = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['email']
         except FileNotFoundError:
             # style and automatic use config
             print('[bold red]Cannot find a mlf_core config file. Is this your first time using mlf-core?')

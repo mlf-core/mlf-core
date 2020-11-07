@@ -2,6 +2,7 @@ import click
 import xgboost as xgb
 import time
 import mlflow
+import GPUtil
 import mlflow.xgboost
 
 from dask_cuda import LocalCUDACluster
@@ -16,14 +17,17 @@ from rich import traceback
 
 
 @click.command()
-@click.option('--cuda', type=click.Choice(['True', 'False']), help='Enable or disable CUDA support.')
+@click.option('--cuda', type=click.Choice(['True', 'False']), default=True, help='Enable or disable CUDA support.')
 @click.option('--n-workers', type=int, default=2, help='Number of workers. Equivalent to number of GPUs.')
 @click.option('--epochs', type=int, default=5, help='Number of epochs to train')
 @click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
 @click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
 def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_precision_histogram):
-    use_cuda = True if cuda == 'True' else False
+    avail_gpus = GPUtil.getGPUs()
+    use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
+    if use_cuda:
+        click.echo(click.style(f'Using {len(avail_gpus)} GPUs!', fg='blue'))
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard

@@ -12,8 +12,11 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Added**
 
 * fix-artifact-paths which replaces the artifact paths with the paths of the current system
+* More structured documentation
 
 **Fixed**
+
+* Now using GPUs by default only when GPUs are available for XGBoost templates
 
 **Dependencies**
 

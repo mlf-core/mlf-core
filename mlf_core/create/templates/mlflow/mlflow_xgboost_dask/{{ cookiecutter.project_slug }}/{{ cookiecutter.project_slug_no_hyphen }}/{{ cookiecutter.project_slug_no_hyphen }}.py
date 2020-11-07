@@ -2,6 +2,7 @@ import click
 import xgboost as xgb
 import time
 import mlflow
+import GPUtil
 import mlflow.xgboost
 
 from dask_cuda import LocalCUDACluster
@@ -16,14 +17,17 @@ from rich import traceback
 
 
 @click.command()
-@click.option('--cuda', type=click.Choice(['True', 'False']), help='Enable or disable CUDA support.')
+@click.option('--cuda', type=click.Choice(['True', 'False']), default=True, help='Enable or disable CUDA support.')
 @click.option('--n-workers', type=int, default=2, help='Number of workers. Equivalent to number of GPUs.')
 @click.option('--epochs', type=int, default=5, help='Number of epochs to train')
 @click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
 @click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
 def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_precision_histogram):
-    use_cuda = True if cuda == 'True' else False
+    avail_gpus = GPUtil.getGPUs()
+    use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
+    if use_cuda:
+        click.echo(click.style(f'Using {len(avail_gpus)} GPUs!', fg='blue'))
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
@@ -40,25 +44,23 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 dtrain, dtest = load_train_test_data(client)
 
                 # Set XGBoost parameters
-                param = {
-                    'objective': 'multi:softmax',
-                    'num_class': 8,
-                }
-                param['single_precision_histogram'] = True if single_precision_histogram == 'True' else False
-                param['subsample'] = 0.5
-                param['colsample_bytree'] = 0.5
-                param['colsample_bylevel'] = 0.5
-                param['verbosity'] = 2
+                param = {'objective': 'multi:softmax',
+                         'num_class': 8,
+                         'single_precision_histogram': True if single_precision_histogram == 'True' else False,
+                         'subsample': 0.5,
+                         'colsample_bytree': 0.5,
+                         'colsample_bylevel': 0.5,
+                         'verbosity': 2}
 
                 # Set random seeds
                 set_general_random_seeds(general_seed)
                 set_xgboost_dask_random_seeds(xgboost_seed, param)
 
                 # Set CPU or GPU as training device
-                if not use_cuda:
-                    param['tree_method'] = 'hist'
-                else:
+                if use_cuda:
                     param['tree_method'] = 'gpu_hist'
+                else:
+                    param['tree_method'] = 'hist'
 
                 runtime = time.time()
                 trained_xgboost_model = xgb.dask.train(client,
@@ -67,7 +69,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                                                        num_boost_round=epochs,
                                                        evals=[(dtest, 'test')])
                 mlflow.xgboost.log_model(trained_xgboost_model['booster'], 'model')
-                mlflow.log_metric('test merror', trained_xgboost_model['history']['test']['merror'][:-1][0])
+                mlflow.log_metric('test merror', trained_xgboost_model['history']['test']['merror'][-1])
                 click.echo(trained_xgboost_model['history'])
 
                 device = 'GPU' if use_cuda else 'CPU'

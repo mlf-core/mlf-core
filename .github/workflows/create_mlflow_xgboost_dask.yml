@@ -47,4 +47,4 @@ jobs:
       - name: Train on the CPU
         run: |
           cd ../exploding_springfield
-          mlflow run . -P cuda=False
+          mlflow run . -P epochs=1

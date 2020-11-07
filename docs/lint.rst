@@ -7,7 +7,7 @@ Linting your project
 `Linting <https://en.wikipedia.org/wiki/Lint_(software)>`_ is the process of statically analyzing code to find code style violations and to detect errors.
 mlf-core implements a custom linting system, but depending on the template external tools linting tools may additionally be called.
 
-mlf-core linting
+Usage
 -----------------------
 
 mlf-core lint can be invoked on an existing project using
@@ -44,7 +44,7 @@ If any of the checks failed linting stops and returns an error code.
    :scale: 100 %
    :alt: Linting example
 
-   Linting applied to a newly created cli-java project.
+   Linting applied to a newly created mlflow-pytorch project.
 
 To examine the reason for a failed linting test please follow the URL. All reasons are explained in the section :ref:`linting_codes`.
 

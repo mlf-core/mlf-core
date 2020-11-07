@@ -6,6 +6,23 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.0 (2020-11-06)
+------------------
+
+**Added**
+
+* fix-artifact-paths which replaces the artifact paths with the paths of the current system
+* More structured documentation
+
+**Fixed**
+
+* Now using GPUs by default only when GPUs are available for XGBoost templates
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.6.1 (2020-11-06)
 ------------------
 

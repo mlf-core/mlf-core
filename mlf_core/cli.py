@@ -284,6 +284,27 @@ def config(ctx, view: bool, section: str) -> None:
         ConfigCommand.similar_handle(section)
 
 
+@mlf_core_cli.command(short_help='Fix artifact location path for local all mlruns.', cls=CustomHelpSubcommand)
+@click.argument('path', type=str, default='.', required=False, helpmsg='Path to the root of the mlruns folder.', cls=CustomArg)
+@click.pass_context
+def fix_artifact_paths(ctx, path: str) -> None:
+    """
+    """
+    for meta_yaml in Path(f'{path}/mlruns').rglob('meta.yaml'):
+        if 'file' not in meta_yaml.absolute():
+            print(f'[bold yellow] Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
+        print(f'[bold blue] Fixing path for: {meta_yaml.absolute()}')
+        with open(meta_yaml.absolute()) as meta_yaml_file:
+            content = meta_yaml_file.readlines()
+            if 'artifact_location' in content[0]:
+                content[0] = f'artifact_location: file://{meta_yaml.absolute().__str__()[:-10]}\n'
+            else:
+                content[0] = f'artifact_uri: file://{meta_yaml.absolute().__str__()[:-10]}/artifacts\n'
+
+        with open(meta_yaml.absolute(), 'w') as meta_yaml_file:
+            meta_yaml_file.writelines(content)
+
+
 @mlf_core_cli.command(short_help='Check for a newer version of mlf-core and upgrade if required.', cls=CustomHelpSubcommand)
 def upgrade() -> None:
     """

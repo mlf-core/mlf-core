@@ -44,25 +44,23 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 dtrain, dtest = load_train_test_data(client)
 
                 # Set XGBoost parameters
-                param = {
-                    'objective': 'multi:softmax',
-                    'num_class': 8,
-                }
-                param['single_precision_histogram'] = True if single_precision_histogram == 'True' else False
-                param['subsample'] = 0.5
-                param['colsample_bytree'] = 0.5
-                param['colsample_bylevel'] = 0.5
-                param['verbosity'] = 2
+                param = {'objective': 'multi:softmax',
+                         'num_class': 8,
+                         'single_precision_histogram': True if single_precision_histogram == 'True' else False,
+                         'subsample': 0.5,
+                         'colsample_bytree': 0.5,
+                         'colsample_bylevel': 0.5,
+                         'verbosity': 2}
 
                 # Set random seeds
                 set_general_random_seeds(general_seed)
                 set_xgboost_dask_random_seeds(xgboost_seed, param)
 
                 # Set CPU or GPU as training device
-                if not use_cuda:
-                    param['tree_method'] = 'hist'
-                else:
+                if use_cuda:
                     param['tree_method'] = 'gpu_hist'
+                else:
+                    param['tree_method'] = 'hist'
 
                 runtime = time.time()
                 trained_xgboost_model = xgb.dask.train(client,
@@ -71,7 +69,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                                                        num_boost_round=epochs,
                                                        evals=[(dtest, 'test')])
                 mlflow.xgboost.log_model(trained_xgboost_model['booster'], 'model')
-                mlflow.log_metric('test merror', trained_xgboost_model['history']['test']['merror'][:-1][0])
+                mlflow.log_metric('test merror', trained_xgboost_model['history']['test']['merror'][-1])
                 click.echo(trained_xgboost_model['history'])
 
                 device = 'GPU' if use_cuda else 'CPU'

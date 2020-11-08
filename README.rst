@@ -50,6 +50,12 @@ Features
 * mlflow templates are fully GPU deterministic with system-intelligence
 * Conda and Docker support out of the box
 
+.. figure:: images/mlf_core_summary.png
+   :scale: 100 %
+   :alt: mlf-core summary
+
+   This is the caption of the figure (a simple paragraph).
+
 Credits
 -------
 

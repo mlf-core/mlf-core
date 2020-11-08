@@ -50,11 +50,13 @@ Features
 * mlflow templates are fully GPU deterministic with system-intelligence
 * Conda and Docker support out of the box
 
-.. figure:: images/mlf_core_summary.png
+.. figure:: https://user-images.githubusercontent.com/21954664/98472352-c2dd0900-21f2-11eb-9fe3-929b2a21bd4c.png
    :scale: 100 %
    :alt: mlf-core summary
 
-   This is the caption of the figure (a simple paragraph).
+   mlf-core enables deterministic machine learning. MLflow and a provided Read the Docs setup ensure that all hyperparameters, metrics and model details are well documented.
+   Reproducible environments are provided with the use of Conda and Docker. Finally, the mlf-core ecosystem ensures that all library specific settings required for determinism are enabled,
+   no non-deterministic algorithms are used and that the used hardware is tracked.
 
 Credits
 -------

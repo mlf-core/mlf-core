@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.3 (2020-11-09)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Added CHANGELOG.rst to blacklisted files
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.2 (2020-11-07)
 ------------------
 

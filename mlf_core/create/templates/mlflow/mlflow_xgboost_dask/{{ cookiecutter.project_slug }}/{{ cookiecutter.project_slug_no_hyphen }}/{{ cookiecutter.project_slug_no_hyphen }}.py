@@ -28,6 +28,8 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
     use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
     if use_cuda:
         click.echo(click.style(f'Using {len(avail_gpus)} GPUs!', fg='blue'))
+    else:
+        click.echo(click.style('No GPUs detected. Running on the CPU', fg='blue'))
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard

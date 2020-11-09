@@ -25,7 +25,7 @@ def log_system_intelligence(reports_output_dir: str):
     current_platform = platform.system()
     if current_platform != 'Linux':
         click.echo(click.style(f'Running on {current_platform} which is not supported by system-intelligence. Skipping hardware report.', fg='red'))
-        click.echo(click.style(f'Run MLflow with Docker to enforce a Linux environment.', fg='blue'))
+        click.echo(click.style('Run MLflow with Docker to enforce a Linux environment.', fg='blue'))
         return
 
     # Scoped import to prevent issues like RuntimeError: Numba cannot operate on non-primary CUDA context

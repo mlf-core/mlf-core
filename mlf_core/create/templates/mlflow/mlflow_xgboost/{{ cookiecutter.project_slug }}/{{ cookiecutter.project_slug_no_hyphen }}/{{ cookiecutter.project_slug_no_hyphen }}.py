@@ -23,7 +23,7 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_hi
     if use_cuda:
         click.echo(click.style(f'Using {len(avail_gpus)} GPUs!', fg='blue'))
     else:
-        click.echo(click.style(f'No GPUs detected. Running on the CPU', fg='blue'))
+        click.echo(click.style('No GPUs detected. Running on the CPU', fg='blue'))
 
     with mlflow.start_run():
         # Fetch and prepare data

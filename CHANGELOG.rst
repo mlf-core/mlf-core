@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Sync now compares against the development branch and not the master branch.
+
 **Dependencies**
 
 **Deprecated**

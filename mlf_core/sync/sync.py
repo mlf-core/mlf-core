@@ -192,7 +192,7 @@ class TemplateSync:
             print('[bold blue]Committing changes of non blacklisted files.')
             files_to_commit = [file for file in changed_files if file not in blacklisted_changed_files]
             Popen(['git', 'commit', '-m', 'mlf-core sync', *files_to_commit], stdout=PIPE, stderr=PIPE, universal_newlines=True)
-            print('[bold blue] Stashing and saving TEMPLATE branch changes!')
+            print('[bold blue]Stashing and saving TEMPLATE branch changes!')
             Popen(['git', 'stash'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
             self.made_changes = True
             print('[bold blue]Committed changes to TEMPLATE branch')
@@ -366,6 +366,19 @@ class TemplateSync:
         Return is_patch_update True if its a micro update (for example 1.2.3 to 1.2.4).
         mlf-core will use this to decide which syncing strategy to apply. Also return both versions.
         """
+        # Try to compare against the development branch, since it is the most up to date (usually).
+        # If a development branch does not exist compare against master.
+        repo = git.Repo(self.project_dir)
+        try:
+            repo.git.checkout('development')
+        except git.exc.GitCommandError:
+            print('[bold red]Could not checkout development branch. Trying to checkout master...')
+            try:
+                repo.git.checkout('master')
+            except git.exc.GitCommandError as e:
+                print(f'[bold red]Could not checkout master branch.\n{e}')
+                sys.exit(1)
+
         template_version_last_sync, template_handle = self.sync_load_project_template_version_and_handle(project_dir)
         template_version_last_sync = version.parse(template_version_last_sync)
         current_ct_template_version = version.parse(self.sync_load_template_version(template_handle))

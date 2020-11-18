@@ -72,6 +72,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/mlf-core/mlf-core',
-    version='1.7.4',
+    version='1.7.5',
     zip_safe=False,
 )

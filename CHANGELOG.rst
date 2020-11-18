@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+sync workflow set-env
+
 **Dependencies**
 
 **Deprecated**

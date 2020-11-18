@@ -23,7 +23,7 @@ jobs:
               fetch-depth: 0
               token: {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %}
 
-        - uses: oleksiyrudenko/gha-git-credentials@v1
+        - uses: oleksiyrudenko/gha-git-credentials@v2
           with:
                name: '{{ cookiecutter.creator_github_username }}'
                email: '{{ cookiecutter.email }}'

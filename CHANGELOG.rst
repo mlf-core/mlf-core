@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.5 (2020-11-18)
+------------------
+
+**Added**
+
+**Fixed**
+
+sync workflow set-env
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.4 (2020-11-11)
 ------------------
 

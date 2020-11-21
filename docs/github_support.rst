@@ -74,7 +74,7 @@ All templates featuring Docker containers feature this workflow.
 Any time you push to the ``development`` branch or create a release, a Docker container is built and released to `Github Packages <https://github.com/features/packages>`_.
 You should ensure that all of your pushes to the development branch are ``*-SNAPSHOT`` versions and only when releasing a non-SNAPSHOT version is built.
 The workflow uses your Github PAT to write and overwrite (=delete) packages. You need to ensure that you provide your PAT with sufficient rights.
-mlf-core requires ``full repo`` (not repo delete!), ``write:packages`` and ``delete:packages`` rights.
+mlf-core requires ``full repo`` (not repo delete!), ``write:packages`` and ``delete:packages`` rights and ``workflow`` permissions!.
 
 If you want to push to a different registry, then you need to adapt the workflow manually.
 
@@ -102,6 +102,8 @@ Some common error sources are:
 `the Github status page <https://www.githubstatus.com/>`_.
 
 3. A repository with the same name already exists in your account/your organisation.
+
+4. The token does not have all repository and workflow permissions.
 
 Creation fails, ok: But how can I then access the full features of mlf-core?
 Try to fix the issue (or wait some time on case, for example, when Github is down) and then process to create a Github repository manually.

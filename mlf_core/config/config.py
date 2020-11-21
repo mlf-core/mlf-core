@@ -91,6 +91,7 @@ class ConfigCommand:
                                                 'You can still configure it later '
                                                 'by calling    mlf-core config pat',
                                                 default='Yes'):
+            print('[bold blue]mlf-core requires your Github Access token to have full repository, workflow and create/update packages permissions!')
             access_token = mlf_core_questionary_or_dot_mlf_core(function='password',
                                                                 question='Please enter your Github Access token')
             access_token_b = access_token.encode('utf-8')

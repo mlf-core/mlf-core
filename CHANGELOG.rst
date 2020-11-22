@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Github project creation support due to Github's new main branch
+
 **Dependencies**
 
 **Deprecated**

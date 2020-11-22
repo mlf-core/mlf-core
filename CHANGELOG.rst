@@ -6,6 +6,19 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.7.6 (2020-11-22)
+------------------
+
+**Added**
+
+**Fixed**
+
+* Github project creation support due to Github's new main branch
+
+**Dependencies**
+
+**Deprecated**
+
 1.7.5 (2020-11-18)
 ------------------
 

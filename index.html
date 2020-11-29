@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to mlf-core’s documentation! &mdash; mlf-core 1.7.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mlf-core" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> mlf-core
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">General Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_info.html">Getting information about available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lint.html">Linting your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fix_artifact_paths.html">Fixing the paths of locally saved MLflow runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bump_version.html">Bumping the version of an existing project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sync.html">Syncing your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configure mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_templates/available_templates.html">Available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_support.html">Github Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creating_releases.html">Creating Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adding_new_templates.html">Adding new templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">mlf-core</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Welcome to mlf-core’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-mlf-core-s-documentation">
+<h1>Welcome to mlf-core’s documentation!<a class="headerlink" href="#welcome-to-mlf-core-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">mlf-core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">General Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#create">create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#info">info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#lint">lint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#fix-artifact-paths">fix-artifact-paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#bump-version">bump-version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#sync">sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#config">config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#upgrade">upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#external-python-based-projects">External Python based projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="create.html">Create a project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="create.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create.html#flags">Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="list_info.html">Getting information about available templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="list_info.html#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="list_info.html#info">info</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lint.html">Linting your project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lint.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lint.html#linting-codes">Linting codes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fix_artifact_paths.html">Fixing the paths of locally saved MLflow runs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fix_artifact_paths.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bump_version.html">Bumping the version of an existing project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bump_version.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bump_version.html#flags">Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bump_version.html#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sync.html">Syncing your project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sync.html#requirements-for-sync">Requirements for sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync.html#flags">Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sync.html#configuring-sync">Configuring sync</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configure mlf-core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#flags">Flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#on-github-personal-access-tokens">On Github personal access tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade mlf-core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="upgrade.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="available_templates/available_templates.html">Available templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-pytorch">mlflow-pytorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-tensorflow">mlflow-tensorflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-xgboost">mlflow-xgboost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-xgboost-dask">mlflow-xgboost_dask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#package-prediction">package-prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#shared-faq">Shared FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="github_support.html">Github Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="github_support.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="github_support.html#branches">Branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="github_support.html#github-actions">Github Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="github_support.html#secrets">Secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="creating_releases.html">Creating Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#types-of-contributions">Types of Contributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="adding_new_templates.html">Adding new templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="adding_new_templates.html#template-requirements">Template requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_new_templates.html#step-by-step-guide-to-adding-new-templates">Step by step guide to adding new templates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-need-help-with-mlf-core-how-can-i-get-in-contact-with-the-developers">I need help with mlf-core. How can I get in contact with the developers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-am-looking-for-a-template-for-domain-x-and-language-framework-y-but-it-does-not-exist-yet">I am looking for a template for domain x and language/framework y, but it does not exist yet!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-you-claim-that-your-templates-are-gpu-deterministic">How can you claim that your templates are GPU deterministic?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">1.7.7 (2020-11-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.7.6 (2020-11-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.7.5 (2020-11-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.7.4 (2020-11-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.7.3 (2020-11-09)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.7.2 (2020-11-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.7.1 (2020-11-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.7.0 (2020-11-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.6.1 (2020-11-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.6.0 (2020-11-02)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.5.0 (2020-10-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.4.4 (2020-10-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">1.4.3 (2020-09-17)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">1.4.2 (2020-09-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">1.4.1 (2020-09-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id16">1.4.0 (2020-08-28)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">1.3.0 (2020-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id18">1.2.2 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id19">1.2.1 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">1.2.0 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id21">1.1.0 (2020-08-19)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">1.0.1 (2020-08-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id23">1.0.0 (2020-08-11)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#development-lead">Development Lead</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authors.html#contributors">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#our-pledge">Our Pledge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#our-standards">Our Standards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#our-responsibilities">Our Responsibilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#scope">Scope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#enforcement">Enforcement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html#attribution">Attribution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="readme.html" class="btn btn-neutral float-right" title="mlf-core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Lukas Heumos
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

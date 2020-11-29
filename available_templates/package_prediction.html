@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>package-prediction &mdash; mlf-core 1.7.7 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom_cookietemple.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> mlf-core
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.7.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">General Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../list_info.html">Getting information about available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lint.html">Linting your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fix_artifact_paths.html">Fixing the paths of locally saved MLflow runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bump_version.html">Bumping the version of an existing project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sync.html">Syncing your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configure mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../upgrade.html">Upgrade mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_templates.html">Available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../github_support.html">Github Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../creating_releases.html">Creating Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../adding_new_templates.html">Adding new templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mlf-core</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>package-prediction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/available_templates/package_prediction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="package-prediction">
+<h1>package-prediction<a class="headerlink" href="#package-prediction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+<p>package-prediction is a template designed to easily distribute <a class="reference external" href="https://pypi.org/">PyPI</a> packages of machine learning models.
+The template only provides the boilerplate code to load models and perform predictions. Data wrangling or model training should be done using the mlflow templates.</p>
+</div>
+<div class="section" id="design">
+<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
+<p>The package is closely related to <a class="reference external" href="cookietemple'shttps://github.com/cookiejar/cookietemple">cookietemple’shttps://github.com/cookiejar/cookietemple</a> <a class="reference external" href="https://cookietemple.readthedocs.io/en/latest/available_templates/available_templates.html#cli-python">cli-python</a> template.
+It is primarily based on setuptools to build the package and uses a Github workflow to easily upload the package to <a class="reference external" href="https://pypi.org/">PyPI</a>.
+Any prediction boiler code is machine learning library specific.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
+├── .bandit.yml
+├── CHANGELOG.rst
+├── CODE_OF_CONDUCT.rst
+├── .coveragerc
+├── Dockerfile
+├── docs
+│   ├── authors.rst
+│   ├── changelog.rst
+│   ├── code_of_conduct.rst
+│   ├── conf.py
+│   ├── index.rst
+│   ├── installation.rst
+│   ├── make.bat
+│   ├── Makefile
+│   ├── readme.rst
+│   ├── requirements.txt
+│   ├── _static
+│   │   └── custom_cookietemple.css
+│   └── usage.rst
+├── .editorconfig
+├── exploding_springfield
+│   ├── cli_pytorch.py
+│   ├── cli_tensorflow.py
+│   ├── cli_xgboost.py
+│   ├── data
+│   │   └── xgboost_test_data.tsv
+│   ├── __init__.py
+│   ├── models
+│   │   └── xgboost_test_model.xgb
+├── .gitattributes
+├── .github
+│   ├── dependabot.yml
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   ├── feature_request.md
+│   │   └── general_question.md
+│   ├── pull_request_template.md
+│   └── workflows
+│       ├── build_docs.yml
+│       ├── build_package.yml
+│       ├── pr_to_master_from_patch_release_only.yml
+│       ├── publish_package.yml
+│       ├── run_bandit.yml
+│       ├── run_flake8_linting.yml
+│       ├── run_mlf_core_lint.yml
+│       └── sync.yml
+├── .gitignore
+├── LICENSE
+├── Makefile
+├── makefiles
+│   ├── Linux.mk
+│   └── Windows.mk
+├── MANIFEST.in
+├── mlf_core.cfg
+├── .mlf_core.yml
+├── README.rst
+├── .readthedocs.yml
+├── requirements_dev.txt
+├── requirements.txt
+├── setup.cfg
+└── setup.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="included-frameworks-libraries">
+<h2>Included frameworks/libraries<a class="headerlink" href="#included-frameworks-libraries" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://setuptools.readthedocs.io/en/latest/">setuptools</a> for code packaging</p></li>
+<li><p><a class="reference external" href="https://click.palletsprojects.com/">click</a> for the command line interface</p></li>
+<li><p>One of <a class="reference external" href="https://pytorch.org/">Pytorch</a>, <a class="reference external" href="https://www.tensorflow.org/">Tensorflow</a> or <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/">XGBoost</a>,</p></li>
+<li><p>Preconfigured <a class="reference external" href="https://readthedocs.org/">readthedocs</a></p></li>
+<li><p>Six Github workflows:</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build_docs.yml</span></code>, which builds the readthedocs documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_package.yml</span></code>, which builds the cli-python package.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run_flake8_linting.yml</span></code>, which runs <a class="reference external" href="https://flake8.pycqa.org/en/latest/">flake8</a> linting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">publish_package.yml</span></code>, which publishes the package to PyPi. Note that it only runs on Github release and requires PyPi secrets to be set up.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run_bandit</span></code>, run <a class="reference external" href="https://github.com/PyCQA/bandit">bandit</a> to discover security issues in your python code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pr_to_master_from_patch_release_only</span></code>: Please read <a class="reference internal" href="../github_support.html#pr-master-workflow-docs"><span class="std std-ref">pr_to_master_from_patch_release_only workflow</span></a>.</p></li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="publishing-the-package-to-pypi">
+<h2>Publishing the package to PyPI<a class="headerlink" href="#publishing-the-package-to-pypi" title="Permalink to this headline">¶</a></h2>
+<p>Ensure that your package builds and passes any twine checks. The <code class="docutils literal notranslate"><span class="pre">build_package.yml</span></code> workflow verifies both.
+If the workflow passes you should open a pull request to <code class="docutils literal notranslate"><span class="pre">master</span></code> and merge it after reviews.
+The only thing left to do now is to create a release on Github.
+<strong>Ensure that your PyPI secrets are set.</strong> Follow the instructions on <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/reference/encrypted-secrets">Encrypted Secrets</a> if required.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Lukas Heumos
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

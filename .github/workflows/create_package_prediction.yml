@@ -33,10 +33,10 @@ jobs:
         run: |
           cd ..
           rm -rf exploding_springfield
-          echo -e "\033[B\n\n\n\n\n\033[B\nn" | mlf-core create
+          echo -e "\033[B\n\n\n\n\n\n\033[B\nn" | mlf-core create
 
       - name: Create package-prediction XGBoost Template
         run: |
           cd ..
           rm -rf exploding_springfield
-          echo -e "\033[B\n\n\n\n\n\033[B\033[B\nn" | mlf-core create
+          echo -e "\033[B\n\n\n\n\n\n\033[B\033[B\nn" | mlf-core create

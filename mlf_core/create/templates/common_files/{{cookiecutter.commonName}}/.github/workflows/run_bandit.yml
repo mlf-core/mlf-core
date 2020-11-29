@@ -1,9 +1,6 @@
 name: Run bandit
 
-on:
-  push:
-    paths:
-      - "**/*.py"
+on: [push, pull_request]
 
 jobs:
   build:

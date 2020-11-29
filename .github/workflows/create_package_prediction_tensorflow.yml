@@ -1,6 +1,6 @@
 name: Create package-prediction Tensorflow Template
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:

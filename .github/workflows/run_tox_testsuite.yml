@@ -1,6 +1,6 @@
 name: Run mlf-core Tox Test Suite
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:

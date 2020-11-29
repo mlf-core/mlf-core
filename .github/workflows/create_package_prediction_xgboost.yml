@@ -1,6 +1,6 @@
 name: Create package-prediction XGBoost Template
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:

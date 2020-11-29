@@ -1,6 +1,6 @@
 name: Create package-prediction Pytorch Template
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:

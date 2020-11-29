@@ -1,6 +1,6 @@
 name: Create mlflow_pytorch Template
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:

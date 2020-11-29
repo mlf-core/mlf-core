@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* A super fancy new feature the world has not seen before
+
 **Fixed**
 
 * Github project creation support due to Github's new main branch

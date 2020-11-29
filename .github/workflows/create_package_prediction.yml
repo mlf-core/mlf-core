@@ -23,29 +23,19 @@ jobs:
         run: |
           make install
 
-      - name: Install flake8
-        run: pip install flake8
-
       - name: Create package-prediction Pytorch Template
         run: |
           cd ..
           echo -e "\033[B\n\n\n\n\nn\n\n\n\n\nn" | mlf-core create
-          cd exploding_springfield
-          flake8
 
-        # mlf-core is now already configured so need to do it again
       - name: Create package-prediction Tensorflow Template
         run: |
           cd ..
           rm -rf exploding_springfield
-          echo -e "\033[B\n\n\n\n\n\n\033[B\nn" | mlf-core create
-          cd exploding_springfield
-          flake8
+          echo -e "\033[B\n\n\n\n\nn\n\n\n\n\033[B\nn" | mlf-core create
 
-      - name: Create package-prediction XGBoost Template
+      - name: Create package-prediction XGboost Template
         run: |
           cd ..
           rm -rf exploding_springfield
-          echo -e "\033[B\n\n\n\n\n\n\033[B\033[B\nn" | mlf-core create
-          cd exploding_springfield
-          flake8
+          echo -e "\033[B\n\n\n\n\nn\n\n\n\n\033[B\033[B\nn" | mlf-core create

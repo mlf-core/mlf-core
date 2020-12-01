@@ -48,7 +48,7 @@ Github Pages
 +++++++++++++++
 
 Your documentation is automatically pushed to the ``gh-pages`` branch. Follow the documentation on
-``configuring a publishing source for your Github pages site <https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_
+`configuring a publishing source for your Github pages site <https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_
 and select the gh-pages branch. Your documentation will then be available on ``https://username.github.io/repositoryname``.
 
 What is Dependabot and how do I set it up?

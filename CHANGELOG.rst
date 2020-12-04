@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Instructions to make Docker container public
+
 **Fixed**
 
 **Dependencies**

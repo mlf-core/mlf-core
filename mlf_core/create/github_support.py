@@ -118,6 +118,9 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         print(f'[bold green]Successfully created a Github repository at '
               f'https://github.com/{creator_ctx.github_username}/{creator_ctx.project_slug}')
 
+        print('[bold blue]Do not forget to make your Docker container Github Package public!')
+        print('[bold blue]Read https://bit.ly/2VDwMKw for instructions.')
+
     except (GithubException, ConnectionError) as e:
         handle_failed_github_repo_creation(e)
 

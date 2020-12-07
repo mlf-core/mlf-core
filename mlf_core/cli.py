@@ -1,11 +1,7 @@
-<<<<<<< HEAD
-"""Console script for mlf-core."""
-=======
 # -*- coding: utf-8 -*-
 
 """Entry point for mlf-core."""
 import logging
->>>>>>> development
 import os
 import sys
 import click
@@ -27,8 +23,6 @@ from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.sync.sync import TemplateSync
 from mlf_core.upgrade.upgrade import UpgradeCommand
 from mlf_core.common.load_yaml import load_yaml_file
-
-from rich import traceback
 
 WD = os.path.dirname(__file__)
 log = logging.getLogger()
@@ -191,17 +185,6 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
         # exit without syncing
         sys.exit(0)
 
-<<<<<<< HEAD
-@click.command()
-def main(args=None):
-    """Console script for mlf-core."""
-    read_included_file('test.txt')
-
-    click.echo("Replace this message by putting your code into "
-               "mlf-core.cli.main")
-    click.echo("See click documentation at https://click.palletsprojects.com/")
-    return 0
-=======
     # set sync flags indicating a major, minor or patch update
     syncer.major_update = major_change
     syncer.minor_update = minor_change
@@ -228,7 +211,6 @@ def main(args=None):
 def bump_version(ctx, new_version, project_dir, downgrade) -> None:
     """
     Bump the version of an existing mlf-core project.
->>>>>>> development
 
     INFO on valid versions: All versions must match the format like 1.0.0 or 1.1.0-SNAPSHOT; these are the only valid
     version formats mlf-core allows. A valid version therefore contains a three digits (in the range from 0 to however large it will grow)
@@ -332,10 +314,6 @@ def upgrade() -> None:
     UpgradeCommand.check_upgrade_mlf_core()
 
 
-<<<<<<< HEAD
 if __name__ == "__main__":
     traceback.install()
-=======
-if __name__ == '__main__':
->>>>>>> development
     sys.exit(main())  # pragma: no cover

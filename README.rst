@@ -13,11 +13,7 @@ mlf-core
         :alt: Github Workflow Build mlf-core Status
 
 .. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
-<<<<<<< HEAD
         :target: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
-=======
-        :target: https://github.com/mlf-core/mlf_core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
->>>>>>> development
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg

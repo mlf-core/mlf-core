@@ -1,0 +1,11 @@
+{
+    "full_name": "Homer Simpson",
+    "email": "homer.simpson@example.com",
+    "github_username": "homersimpson",
+    "project_name": "XGBoost Dask Covertype",
+    "project_slug": "xgboost_dask_covertype_slug",
+    "project_slug_no_hyphen": "pytorch_mnist_slug",
+    "project_short_description": "mlf-core mlflow based XGBoost Dask Covertype project.",
+    "version": "0.1.0",
+    "license": ["MIT", "Not open source"]
+  }

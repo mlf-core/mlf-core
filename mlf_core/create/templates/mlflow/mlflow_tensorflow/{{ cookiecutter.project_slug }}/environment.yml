@@ -1,0 +1,23 @@
+name: {{ cookiecutter.project_slug }}
+channels:
+    - defaults
+    - conda-forge
+dependencies:
+    - defaults::cudatoolkit=10.1
+    - defaults::python=3.7
+    - defaults::click=7.1.2
+    # We need to install tensorflow-gpu, since else we get:
+    # 2020-04-10 13:08:01.736473: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.87.1
+    # 2020-04-10 13:08:01.736534: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 440.82.0
+    # 2020-04-10 13:08:01.736556: E tensorflow/stream_executor/cuda/cuda_diagnostics.cc:313] kernel version 440.82.0 does not match DSO version 418.87.1 -- cannot find working devices in this configuration
+    # Also, see here: https://github.com/tensorflow/tensorflow/issues/35754#issuecomment-589170464
+    - defaults::tensorflow-gpu=2.1.0
+    - conda-forge::rich=6.0.0
+    - conda-forge::mlflow=1.11.0
+    - conda-forge::tensorboardx=2.1
+    - pip
+    - pip:
+      - tensorflow==2.3.0  # not yet on Conda with full GPU support
+      - tensorflow_datasets==3.2.1
+      - pycuda==2019.1.2  # not on Conda
+      - system-intelligence==1.2.4  # not yet on Conda

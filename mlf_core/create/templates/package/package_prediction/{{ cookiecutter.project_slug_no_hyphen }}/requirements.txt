@@ -1,0 +1,4 @@
+rich==9.1.0
+click==7.1.2
+{% if cookiecutter.framework == 'pytorch' -%}pytorch{% elif cookiecutter.framework == 'tensorflow' -%}tensorflow{% elif cookiecutter.framework == 'xgboost' -%}xgboost{% endif %}
+

@@ -1,0 +1,27 @@
+name: Publish Container to Docker Packages
+
+# Documentation on the primary Action used here: https://github.com/marketplace/actions/publish-docker
+# TODO MLF-CORE: Adapt the username, password and registry if you do not want to publish to Github Packages.
+# TODO MLF-CORE: Note that for organization repositories the Github Container Registry needs to be enabled
+# https://docs.github.com/en/packages/getting-started-with-github-container-registry/enabling-github-container-registry-for-your-organization
+
+on:
+  release:
+      types: [published]
+  push:
+      branches:
+        - development
+jobs:
+  publish_release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
+        username: {{ cookiecutter.github_username }}
+        password: {% raw %}'${{ secrets.MLF_CORE_SYNC_TOKEN}}'{% endraw %}
+        registry: ghcr.io
+        tags: "latest,{{ cookiecutter.version }}"
+

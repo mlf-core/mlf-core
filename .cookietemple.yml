@@ -11,6 +11,7 @@ is_github_repo: true
 is_repo_private: false
 is_github_orga: true
 github_orga: mlf-core
+creator_github_username: zethson
 full_name: Lukas Heumos
 email: lukas.heumos@posteo.net
 project_name: mlf-core

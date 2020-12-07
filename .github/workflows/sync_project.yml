@@ -12,7 +12,7 @@ jobs:
         - name: Setup Python
           uses: actions/setup-python@v1
           with:
-            python-version: 3.8
+            python-version: 3.9
 
         - name: Install cookietemple
           run: pip install cookietemple
@@ -28,7 +28,7 @@ jobs:
                name: 'zethson'
                email: 'lukas.heumos@posteo.net'
                actor: 'zethson'
-               token: '${{ secrets.CT_SYNC_TOKEN}}'
+               token: '${{ secrets.CT_SYNC_TOKEN }}'
 
         - name: Sync project
           run: cookietemple sync . ${{ secrets.CT_SYNC_TOKEN  }} zethson

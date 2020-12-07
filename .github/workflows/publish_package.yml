@@ -15,7 +15,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
+        python-version: '3.9'
 
     - name: Install pip, setuptools, wheel, twine
       run: |
@@ -25,7 +25,6 @@ jobs:
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        # TODO COOKIETEMPLE: Configure your secrets to enable automatic deployment to PyPi on releases
         # https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |

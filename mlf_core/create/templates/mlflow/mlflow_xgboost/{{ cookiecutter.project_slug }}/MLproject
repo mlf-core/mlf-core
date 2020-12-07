@@ -1,0 +1,27 @@
+# Author: {{ cookiecutter.full_name }}
+# Email: {{ cookiecutter.email }}
+# Version: {{ cookiecutter.version }}
+# License: {{ cookiecutter.license }}
+
+name: {{ cookiecutter.project_slug }}
+
+# conda_env: environment.yml
+docker_env:
+  image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}
+  volumes: ["${PWD}/data:/data"]
+
+entry_points:
+  main:
+    parameters:
+      cuda: {type: string, default: 'True'}
+      epochs: {type: int, default: 25}
+      general-seed: {type: int, default: 0}
+      xgboost-seed: {type: int, default: 0}
+      single-precision-histogram: {type: string, default: 'True'}
+    command: |
+          python {{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}.py \
+            --cuda {cuda} \
+            --epochs {epochs} \
+            --general-seed {general-seed} \
+            --xgboost-seed {xgboost-seed} \
+            --single-precision-histogram {single-precision-histogram}

@@ -1,0 +1,16 @@
+{
+  "commonName": "common_files_util",
+  "full_name": "mlf_coreusername",
+  "email": "mlf_core@dummy.com",
+  "project_name": "projectname",
+  "project_slug": "mlf_core_template",
+  "project_slug_no_hyphen": "mlf_core_template",
+  "version": "0.1.0",
+  "license": "MIT",
+  "project_short_description" : "A mlf_core template",
+  "language": "Language",
+  "domain": "domain",
+  "github_username": "HomerGithub",
+  "creator_github_username": "BartGithub"
+}
+

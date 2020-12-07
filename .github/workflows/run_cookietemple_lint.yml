@@ -1,9 +1,9 @@
 name: cookietemple lint
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
+  run:
 
     runs-on: ubuntu-latest
 

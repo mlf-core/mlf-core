@@ -1,0 +1,50 @@
+name: Create mlflow_xgboost_dask Template
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.7, 3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out source-code repository
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Build mlf-core
+        run: |
+          make install
+
+      - name: Create mlflow-xgboost_dask Template
+        run: |
+          cd ..
+          echo -e "\n\033[B\033[B\033[B\n\n\n\nn\n\n\n\nn" | mlf-core create
+
+      # https://github.com/docker/build-push-action/issues/90
+      - name: Copy workaround
+        run: |
+          cp ../exploding_springfield/Dockerfile .
+          cp ../exploding_springfield/environment.yml .
+
+      - name: Build Docker container
+        uses: docker/build-push-action@v1
+        with:
+          repository: ghcr.io/homergithub/exploding_springfield
+          tags: 0.1.0-SNAPSHOT
+          push: false
+
+      - name: Install mlflow
+        run: pip install mlflow
+
+      - name: Train on the CPU
+        run: |
+          cd ../exploding_springfield
+          mlflow run . -P epochs=1

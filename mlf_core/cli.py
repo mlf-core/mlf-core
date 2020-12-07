@@ -1,18 +1,20 @@
-"""Console script for mlf_core."""
+"""Console script for mlf-core."""
 import os
 import sys
 import click
+
+from rich import traceback
 
 WD = os.path.dirname(__file__)
 
 
 @click.command()
 def main(args=None):
-    """Console script for mlf_core."""
+    """Console script for mlf-core."""
     read_included_file('test.txt')
 
     click.echo("Replace this message by putting your code into "
-               "mlf_core.cli.main")
+               "mlf-core.cli.main")
     click.echo("See click documentation at https://click.palletsprojects.com/")
     return 0
 
@@ -31,4 +33,5 @@ def read_included_file(filename):
 
 
 if __name__ == "__main__":
+    traceback.install()
     sys.exit(main())  # pragma: no cover

@@ -2,17 +2,17 @@
 mlf-core
 ========
 
-.. image:: https://github.com/mlf-core/mlf_core/workflows/Build%20mlf_core%20Package/badge.svg
-        :target: https://github.com/mlf-core/mlf_core/workflows/Build%20mlf_core%20Package/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
+        :target: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
         :alt: Github Workflow Build mlf-core Status
 
-.. image:: https://github.com/mlf-core/mlf_core/workflows/Run%20mlf_core%20Tox%20Test%20Suite/badge.svg
-        :target: https://github.com/mlf-core/mlf_core/workflows/Run%20mlf_core%20Tox%20Test%20Suite/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
+        :target: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
-        :target: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
+        :alt: PyPI Status
 
 
 .. image:: https://readthedocs.org/projects/mlf-core/badge/?version=latest
@@ -39,8 +39,7 @@ Features
 Credits
 -------
 
-This package was created with `COOKIETEMPLE`_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
+This package was created with cookietemple_ using Cookiecutter_.
 
-.. _COOKIETEMPLE: https://cookietemple.com
+.. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

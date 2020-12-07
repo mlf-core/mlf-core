@@ -39,15 +39,13 @@ test_requirements = ['pytest>=3', ]
 setup(
     author="Lukas Heumos",
     author_email='lukas.heumos@posteo.net',
-    python_requires='>=3.5',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
@@ -61,7 +59,7 @@ setup(
     license="Apache2.0",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='mlf_core',
+    keywords='mlf-core',
     name='mlf-core',
     packages=find_packages(include=['mlf_core', 'mlf_core.*']),
     package_data={
@@ -73,7 +71,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/mlf-core/mlf_core',
-    version='0.1.0',
+    url='https://github.com/mlf-core/mlf-core',
+    version='1.7.8',
     zip_safe=False,
 )

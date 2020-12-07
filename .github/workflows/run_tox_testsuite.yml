@@ -1,10 +1,11 @@
-name: Run mlf_core Tox Test Suite
+name: Run mlf-core Tox Test Suite
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]

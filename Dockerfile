@@ -4,6 +4,6 @@ FROM python:3.8.1-alpine
 RUN apk update
 RUN apk add make automake gcc g++ git
 
-RUN pip install mlf_core
+RUN pip install mlf-core
 
-CMD mlf_core
+CMD mlf-core

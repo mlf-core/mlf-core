@@ -13,12 +13,12 @@ mlf-core
         :alt: Github Workflow Build mlf-core Status
 
 .. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
-        :target: https://github.com/mlf-core/mlf_core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
+        :target: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
-        :alt: PyPI
+        :alt: PyPI Status
 
 .. image:: https://img.shields.io/discord/742367395196305489?color=passing
         :target: https://discord.gg/Mv8sAcq

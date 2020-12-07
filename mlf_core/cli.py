@@ -314,5 +314,6 @@ def upgrade() -> None:
     UpgradeCommand.check_upgrade_mlf_core()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    traceback.install()
     sys.exit(main())  # pragma: no cover

@@ -1,11 +1,18 @@
 name: Run bandit
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - "**/*.py"
+  pull_request:
+    paths:
+      - "**/*.py"
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
       - uses: actions/checkout@v2
@@ -20,4 +27,4 @@ jobs:
         run: pip install bandit
 
       - name: Run bandit
-        run: bandit -r cookietemple -x cookietemple/create/templates -c .bandit.yml
+        run: bandit -r mlf-core -c .bandit.yml

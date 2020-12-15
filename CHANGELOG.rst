@@ -20,6 +20,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* fixed a bug causing the check upgrade version function to fail if local version is a SNAPSHOT version
+
 **Dependencies**
 
 **Deprecated**

@@ -78,7 +78,7 @@ class MlflowCreator(TemplateCreator):
             self.cli_struct.language), f'mlflow-{self.cli_struct.language.lower()}'
 
         # perform general operations like creating a GitHub repository and general linting
-        super().process_common_operations(path=path.resolve(), domain='mlflow', language=self.cli_struct.language, dot_mlf_core=dot_mlf_core)
+        super().process_common_operations(path=Path(path).resolve(), domain='mlflow', language=self.cli_struct.language, dot_mlf_core=dot_mlf_core)
 
     def mlflow_pytorch_options(self, dot_mlf_core: dict or None):
         """ Prompts for mlflow-pytorch specific options and saves them into the MlflowTemplateStruct """

@@ -181,6 +181,8 @@ def prompt_github_repo(dot_mlf_core: OrderedDict or None) -> (bool, bool, bool, 
 
     # No dot_mlf_core_dict was passed -> prompt whether to create a Github repository and the required settings
     create_git_repo, private, is_github_org, github_org = False, False, False, ''
+    print('[bold blue]Automatically creating a Github repository with mlf-core is strongly recommended. '
+          'Otherwise you will not be able to use all of mlf-core\'s features!\n')
     if mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                             question='Do you want to create a Github repository and push your template to it?',
                                             default='Yes'):

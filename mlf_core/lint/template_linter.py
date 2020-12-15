@@ -17,6 +17,7 @@ from itertools import groupby
 
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dir_util import pf, find_filepath_in_dir
+from mlf_core.util.rich import console
 
 
 class TemplateLinter(object):
@@ -418,7 +419,6 @@ class TemplateLinter(object):
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):
-        console = rich.console.Console()
         console.print()
         console.rule("[bold blue]LINT RESULTS")
         console.print()

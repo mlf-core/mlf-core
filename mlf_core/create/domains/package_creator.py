@@ -28,7 +28,7 @@ class PackageCreator(TemplateCreator):
         '"" TEMPLATE VERSIONS ""'
         self.PACKAGE_PREDICTION_TEMPLATE_VERSION = load_mlf_core_template_version('package-prediction', self.AVAILABLE_TEMPLATES_PATH)
 
-    def create_template(self, dot_mlf_core: dict or None):
+    def create_template(self, path: Path, dot_mlf_core: dict or None):
         """
         Handles the package domain. Prompts the user for the language, general and domain specific options.
         """
@@ -68,7 +68,7 @@ class PackageCreator(TemplateCreator):
             self.package_struct.language), f'package-{self.package_struct.language.lower()}'
 
         # perform general operations like creating a GitHub repository and general linting
-        super().process_common_operations(domain='package', language=self.package_struct.language, dot_mlf_core=dot_mlf_core)
+        super().process_common_operations(path=path.resolve(), domain='package', language=self.package_struct.language, dot_mlf_core=dot_mlf_core)
 
     def package_prediction_options(self, dot_mlf_core: dict or None):
         """ Prompts for package-prediction specific options and saves them into the PackageTemplateStruct """

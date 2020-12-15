@@ -161,10 +161,9 @@ class TemplateSync:
         print('[bold blue]Creating a new template project.')
         # dry create run from mlf-core in tmp directory
         with tempfile.TemporaryDirectory() as tmpdirname:
-            # COOKIETEMPLE TODO: Refactor this by passing a path param to the create and choose_domain functions, which default to PWD if not passed
             old_cwd = str(Path.cwd())
             os.chdir(tmpdirname)
-            choose_domain(domain=None, dot_mlf_core=self.dot_mlf_core)
+            choose_domain(path=Path.cwd(), domain=None, dot_mlf_core=self.dot_mlf_core)
             # copy into the cleaned TEMPLATE branch's project directory
             copy_tree(os.path.join(tmpdirname, self.dot_mlf_core['project_slug']), str(self.project_dir))
             os.chdir(old_cwd)

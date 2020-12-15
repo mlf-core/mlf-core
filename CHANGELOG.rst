@@ -11,6 +11,10 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* fixed sync command: blacklisted files now fully working
+
+* updated sync code to the latest version and added logging
+
 **Fixed**
 
 **Dependencies**

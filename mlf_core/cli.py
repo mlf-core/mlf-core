@@ -170,7 +170,7 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
             sys.exit(1)
         sys.exit(0)
 
-    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat, repo_owner=project_data['github_username'])
+    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat)
     # check for template version updates
     major_change, minor_change, patch_change, project_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
     syncer.new_template_version = mlf_core_template_version

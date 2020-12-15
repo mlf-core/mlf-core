@@ -15,7 +15,12 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 * updated sync code to the latest version and added logging
 
+* added a output-directory parameter option to create command, allowing users to specifify the
+  directory, where the project should be created
+
 **Fixed**
+
+* fixed a bug causing the check upgrade version function to fail if local version is a SNAPSHOT version
 
 **Dependencies**
 

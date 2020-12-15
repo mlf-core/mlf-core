@@ -15,9 +15,10 @@ The creation of a new project can be invoked by
 
 .. code-block:: console
 
-    $ mlf-core create
+    $ mlf-core create <<output-path>>
 
-which will guide you through the creation process of your (customized) project via prompts. If you do not have mlf-core configured yet, you will be asked to do so. For more details please visit :ref:`config`.
+which will guide you through the creation process of your (customized) project via prompts and creates your project in the specified directory (if none was given,
+ this will be the current working directory). If you do not have mlf-core configured yet, you will be asked to do so. For more details please visit :ref:`config`.
 
 
 The prompts follow the pattern of domain (e.g. mlflow, package, ...), subdomain (if applicable, e.g. website), framework (e.g. Pytorch) followed by template specific prompts (e.g. testing frameworks, ...).

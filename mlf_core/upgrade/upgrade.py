@@ -37,6 +37,7 @@ class UpgradeCommand:
         :return: True if locally version is the latest or PyPI is inaccessible, false otherwise
         """
         latest_local_version = mlf_core.__version__
+        sliced_local_version = latest_local_version[:-9] if latest_local_version.endswith('-SNAPSHOT') else latest_local_version
         try:
             # Retrieve info on latest version
             # Adding nosec (bandit) here, since we have a hardcoded https request
@@ -52,10 +53,10 @@ class UpgradeCommand:
             # Returning true by default, since this is not a serious issue
             return True
 
-        if parse_version(latest_local_version) > parse_version(latest_pypi_version):
+        if parse_version(sliced_local_version) > parse_version(latest_pypi_version):
             print(f'[bold yellow]Installed version {latest_local_version} of mlf-core is newer than the latest release {latest_pypi_version}!'
                   f' You are running a nightly version and features may break!')
-        elif parse_version(latest_local_version) == parse_version(latest_pypi_version):
+        elif parse_version(sliced_local_version) == parse_version(latest_pypi_version):
             return True
         else:
             print(f'[bold red]Installed version {latest_local_version} of mlf-core is outdated. Newest version is {latest_pypi_version}!')

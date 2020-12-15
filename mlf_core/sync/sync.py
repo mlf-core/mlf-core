@@ -175,7 +175,7 @@ class TemplateSync:
             os.chdir(tmpdirname)
             log.debug(f'Changed directory to {tmpdirname}.')
             log.debug(f'Calling choose_domain with {self.dot_mlf_core}.')
-            choose_domain(domain=None, dot_mlf_core=self.dot_mlf_core)
+            choose_domain(path=Path.cwd(), domain=None, dot_mlf_core=self.dot_mlf_core)
             # copy into the cleaned TEMPLATE branch's project directory
             log.debug(f'Copying created template into {self.project_dir}.')
             copy_tree(os.path.join(tmpdirname, self.dot_mlf_core['project_slug']), str(self.project_dir))

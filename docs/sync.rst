@@ -7,7 +7,8 @@ Syncing your project
 Syncing is supposed to integrate any changes to the mlf-core templates back into your already existing project.
 When ``mlf-core sync`` is invoked, mlf-core checks whether a new version of the corresponding template for the current project is available.
 If so, mlf-core creates a temporary project with the most recent template and pushes it to the ``TEMPLATE`` branch.
-Next, a pull request is submitted to the ``development`` branch.
+Next, a temporary sync branch is created to avoid pushing and manipulating the TEMPLATE branch (called ``mlf_core_sync_v_<<new-version>>`` with ``new-version`` being the
+updated templates version). Finally, a pull request is submitted to the ``development`` branch from this branch.
 
 
 The syncing process is configurable by setting the desired lower syncing boundary level and blacklisting files from syncing (see :ref:`sync_config`).

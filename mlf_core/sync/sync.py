@@ -168,7 +168,7 @@ class TemplateSync:
         Delete all files and make a fresh template.
         """
         print('[bold blue]Creating a new template project.')
-        # dry create run from dot_mlf_core in tmp directory
+        # dry create run from mlf-core in tmp directory
         with tempfile.TemporaryDirectory() as tmpdirname:
             old_cwd = str(Path.cwd())
             log.debug(f'Saving current working directory {old_cwd}.')
@@ -347,11 +347,11 @@ class TemplateSync:
             parser.read(f'{self.project_dir}/mlf_core.cfg')
             level_item = list(parser.items('sync_level'))
             log.debug(f'Parsing level constraint returned: {level_item}.')
-            # check for proper configuration if the sync_level section (only one item named ct_sync_level with valid levels major or minor
-            if len(level_item) != 1 or 'ct_sync_level' not in level_item[0][0] or not any(level_item[0][1] == valid_lvl for valid_lvl in
-                                                                                          ['major', 'minor', 'patch']):
-                print('[bold red]Your sync_level section is missconfigured. Make sure that it only contains one item named ct_sync_level with only valid levels'
-                      ' patch, minor or major!')
+            # check for proper configuration if the sync_level section (only one item named mlf_core_sync_level with valid levels major or minor
+            if len(level_item) != 1 or 'sync_level' not in level_item[0][0] or not any(level_item[0][1] == valid_lvl for valid_lvl in
+                                                                                       ['major', 'minor', 'patch']):
+                print('[bold red]Your mlf_core_sync_level section is missconfigured. Make sure that it only contains one item named mlf_core_sync_level '
+                      'with only valid levels patch, minor or major!')
                 sys.exit(1)
             # check in case of minor update that level is not set to major (major case must not be handled as level is a lower bound)
             if self.patch_update:
@@ -401,7 +401,7 @@ class TemplateSync:
             sys.exit(1)
 
     @staticmethod
-    def update_sync_token(project_name: str, gh_username='') -> None:
+    def update_sync_token(project_name: str, gh_username: str = '') -> None:
         """
         Update the sync token secret for the repository.
 

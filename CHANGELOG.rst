@@ -6,6 +6,22 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.8.0-SNAPSHOT (2020-12-15)
+---------------------------
+
+**Added**
+
+* fixed sync command: blacklisted files now fully working
+
+* updated sync code to the latest version and added logging
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.8 (2020-12-04)
 ------------------
 

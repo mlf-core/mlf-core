@@ -12,15 +12,12 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Added**
 
 * fixed sync command: blacklisted files now fully working
-
 * updated sync code to the latest version and added logging
-
 * added a output-directory parameter option to create command, allowing users to specifify the
   directory, where the project should be created
-
 * added a user information before the user is prompted to create a GitHub repo with mlf-core
-
 * [ALL TEMPLATES] added vscode files to .gitignore for templates
+* [ALL TEMPLATES] now feature a mlf-core lint workflow with colored linting result output
 
 **Fixed**
 

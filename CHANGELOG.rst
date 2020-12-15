@@ -18,6 +18,10 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * added a output-directory parameter option to create command, allowing users to specifify the
   directory, where the project should be created
 
+* added a user information before the user is prompted to create a GitHub repo with mlf-core
+
+* [ALL TEMPLATES] added vscode files to .gitignore for templates
+
 **Fixed**
 
 * fixed a bug causing the check upgrade version function to fail if local version is a SNAPSHOT version

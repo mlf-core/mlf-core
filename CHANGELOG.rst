@@ -17,8 +17,10 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
   directory, where the project should be created
 * added a user information before the user is prompted to create a GitHub repo with mlf-core
 * added flake8 linting for each create template workflow
+* GitHub workflow badges in README now link to the corresponding workflow
 * [ALL TEMPLATES] added vscode files to .gitignore for templates
 * [ALL TEMPLATES] now feature a mlf-core lint workflow with colored linting result output
+* [ALL TEMPLATES] renamed train_cpu workflows to use project_slug (was project_slug_no_hyphen)
 
 **Fixed**
 

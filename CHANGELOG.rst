@@ -21,8 +21,11 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * [ALL TEMPLATES] added vscode files to .gitignore for templates
 * [ALL TEMPLATES] now feature a mlf-core lint workflow with colored linting result output
 * [ALL TEMPLATES] renamed train_cpu workflows to use project_slug (was project_slug_no_hyphen)
+* config default values are now preconfigured values (if any)
 
 **Fixed**
+
+* fixed gh_pages setup for default branch main
 
 * fixed a bug causing the check upgrade version function to fail if local version is a SNAPSHOT version
 

@@ -40,7 +40,7 @@ class ConfigCommand:
         """
         already_configured = False
         settings = {}
-        if ConfigCommand.check_ct_config_dir_exists():
+        if ConfigCommand.check_ct_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ:
             already_configured = True
             settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
 

@@ -7,7 +7,7 @@ coverage==5.3
 Sphinx>=3.2.1
 sphinx-automodapi>=0.13
 twine==3.2.0
-pytest==6.2.0
+pytest==6.2.1
 pytest-runner==5.2
 pytest-mock==3.3.1
 -r requirements.txt

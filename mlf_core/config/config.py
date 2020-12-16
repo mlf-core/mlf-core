@@ -35,18 +35,24 @@ class ConfigCommand:
     @staticmethod
     def config_general_settings() -> None:
         """
-        Set full_name and email for reuse in any project created further on.
+        Set full_name, email and github username for reuse in any project created further on. Defaults for prompts
+        are set to the previous configured values (if any).
         """
-        ConfigCommand.check_ct_config_dir_exists()
+        already_configured = False
+        settings = {}
+        if ConfigCommand.check_ct_config_dir_exists():
+            already_configured = True
+            settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
+
         full_name = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                          question='Full name',
-                                                         default='Homer Simpson')
+                                                         default='Homer Simpson' if not already_configured else settings['full_name'])
         email = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                      question='Personal or work email',
-                                                     default='homer.simpson@example.com')
+                                                     default='homer.simpson@example.com' if not already_configured else settings['email'])
         github_username = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                                question='Github username',
-                                                               default='HomerGithub').lower()
+                                                               default='HomerGithub' if not already_configured else settings['github_username']).lower()
 
         # if the configs exist, just update them
         if os.path.exists(ConfigCommand.CONF_FILE_PATH):
@@ -123,7 +129,7 @@ class ConfigCommand:
     @staticmethod
     def view_current_config() -> None:
         """
-        Print the current users cookietemple configuration.
+        Print the current users mlf-core configuration.
         """
         # load current settings
         try:
@@ -175,12 +181,14 @@ class ConfigCommand:
             print('[bold red]Unknown handle. [green]See mlf-core --help [red]for more information on valid handles')
 
     @staticmethod
-    def check_ct_config_dir_exists() -> None:
+    def check_ct_config_dir_exists() -> bool:
         """
-        Check if the config directory for mlf-core exists. If not, create it.
+        Check whether the config directory for mlf-core exists. If not, create it.
         """
         if not os.path.exists(Path(ConfigCommand.CONF_FILE_PATH).parent):
             os.mkdir(Path(ConfigCommand.CONF_FILE_PATH).parent)
+            return False
+        return True
 
     @staticmethod
     def handle_switcher() -> dict:

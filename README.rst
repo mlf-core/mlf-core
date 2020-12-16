@@ -8,12 +8,12 @@
 mlf-core
 ========
 
-.. image:: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
-        :target: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg?branch=master
+        :target: https://github.com/mlf-core/mlf-core/actions?query=workflow%3A%22Build+mlf-core+Package%22
         :alt: Github Workflow Build mlf-core Status
 
-.. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
-        :target: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg?branch=master
+        :target: https://github.com/mlf-core/mlf-core/actions?query=workflow%3A%22Run+mlf-core+Tox+Test+Suite%22
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg

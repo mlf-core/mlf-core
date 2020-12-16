@@ -3,15 +3,15 @@
 {{ cookiecutter.project_name }}
 {% for _ in cookiecutter.project_name %}={% endfor %}
 
-.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/Train%20{{ cookiecutter.project_slug }}%20using%20CPU/badge.svg?branch=main
+.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/Train%20{{ cookiecutter.project_slug }}%20using%20CPU/badge.svg
         :target: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions?query=workflow%3A%22Train+{{ cookiecutter.project_slug }}+using+CPU%22
         :alt: Github Workflow CPU Training {{ cookiecutter.project_name }} Status
 
-.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/Publish%20Container%20to%20Docker%20Packages/badge.svg?branch=main
+.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/Publish%20Container%20to%20Docker%20Packages/badge.svg
         :target: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions?query=workflow%3A%22Publish+Container+to+Docker+Packages%22
         :alt: Publish Container to Docker Packages
 
-.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/mlf-core%20lint/badge.svg?branch=main
+.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/workflows/mlf-core%20lint/badge.svg
         :target: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions?query=workflow%3A%22mlf-core+lint%22
         :alt: mlf-core lint
 

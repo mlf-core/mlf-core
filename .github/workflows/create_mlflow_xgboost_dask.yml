@@ -31,6 +31,12 @@ jobs:
           cp ../exploding_springfield/Dockerfile .
           cp ../exploding_springfield/environment.yml .
 
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Lint project with flake8
+        run: flake8 ../exploding_springfield
+
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:

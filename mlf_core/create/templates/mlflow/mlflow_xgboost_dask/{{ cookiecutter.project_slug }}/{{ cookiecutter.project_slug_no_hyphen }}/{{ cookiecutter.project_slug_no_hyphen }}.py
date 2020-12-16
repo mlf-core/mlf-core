@@ -9,7 +9,7 @@ from dask_cuda import LocalCUDACluster
 from dask.distributed import LocalCluster, Client
 from dask import array as da
 from xgboost.dask import DaskDMatrix
-from sklearn.datasets import fetch_covtype, load_boston
+from sklearn.datasets import fetch_covtype
 from dask_ml.model_selection import train_test_split
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 

@@ -35,7 +35,8 @@ class TemplateCreator:
     def __init__(self, creator_ctx: MlfcoreTemplateStruct):
         self.WD = os.path.dirname(__file__)
         self.TEMPLATES_PATH = f'{self.WD}/templates'
-        self.COMMON_FILES_PATH = f'{self.TEMPLATES_PATH}/common_files'
+        self.COMMON_FILES_PATH = f'{self.TEMPLATES_PATH}/common_all_files'
+        self.COMMON_MLFLOW_FILES_PATH = f'{self.TEMPLATES_PATH}/common_mlflow_files'
         self.AVAILABLE_TEMPLATES_PATH = f'{self.TEMPLATES_PATH}/available_templates.yml'
         self.AVAILABLE_TEMPLATES = load_yaml_file(self.AVAILABLE_TEMPLATES_PATH)
         self.CWD = os.getcwd()
@@ -50,7 +51,10 @@ class TemplateCreator:
         """
         # create the common files and copy them into the templates directory (skip if flag is set)
         if not skip_common_files:
-            self.create_common_files()
+            self.create_common_files(domain='all', common_files_path=self.COMMON_FILES_PATH)
+            # if project is a mlflow project, copy all common files for mlflow projects
+            if self.creator_ctx.domain == 'mlflow':
+                self.create_common_files(domain='mlflow', common_files_path=self.COMMON_MLFLOW_FILES_PATH)
 
         self.create_dot_mlf_core(template_version=self.creator_ctx.template_version)
 
@@ -258,13 +262,13 @@ class TemplateCreator:
             self.creator_ctx.github_username = load_github_username()
             self.creator_ctx.creator_github_username = self.creator_ctx.github_username
 
-    def create_common_files(self) -> None:
+    def create_common_files(self, domain: str, common_files_path: str) -> None:
         """
-        This function creates a temporary directory for common files of all templates and applies cookiecutter on them.
+        Create a temporary directory for common files of a specified domain or all templates and apply cookiecutter on them.
         They are subsequently moved into the directory of the created template.
         """
         dirpath = tempfile.mkdtemp()
-        copy_tree(f'{self.COMMON_FILES_PATH}', dirpath)
+        copy_tree(common_files_path, dirpath)
         cwd_project = Path.cwd()
         os.chdir(dirpath)
         cookiecutter(dirpath,
@@ -278,16 +282,17 @@ class TemplateCreator:
                                     'license': self.creator_ctx.license,
                                     'project_short_description': self.creator_ctx.project_short_description,
                                     'github_username': self.creator_ctx.github_username,
-                                    'creator_github_username': self.creator_ctx.creator_github_username},
+                                    'creator_github_username': self.creator_ctx.creator_github_username,
+                                    'framework': self.creator_ctx.language.capitalize() if domain == 'mlflow' else ''},
                      no_input=True,
                      overwrite_if_exists=True)
 
-        # recursively copy the common files directory content to the created project
-        copy_tree(f'{os.getcwd()}/common_files_util', f'{cwd_project}/{self.creator_ctx.project_slug}')
+        # copy the common files directory content to the created project
+        copy_tree(f'{Path.cwd()}/common_{domain}_files', f'{cwd_project}/{self.creator_ctx.project_slug}')
         # delete the tmp cookiecuttered common files directory
-        delete_dir_tree(Path(f'{Path.cwd()}/common_files_util'))
+        delete_dir_tree(Path(f'{Path.cwd()}/common_{domain}_files'))
         shutil.rmtree(dirpath)
-        # change to recent cwd so lint etc can run properly
+        # change to recent cwd so lint can run properly
         os.chdir(str(cwd_project))
 
     def readthedocs_slug_already_exists(self, project_name: str) -> bool:

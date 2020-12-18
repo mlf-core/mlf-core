@@ -31,7 +31,7 @@
 Features
 --------
 
-* Fully reproducible mlf-core XGBoost model
+* Fully reproducible mlf-core {{ cookiecutter.framework }} model
 * MLF-CORE TODO: Write features here
 
 

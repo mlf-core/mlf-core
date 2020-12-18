@@ -1,5 +1,6 @@
 import os
 import sys
+import logging
 import appdirs
 from pathlib import Path
 from cryptography.fernet import Fernet
@@ -13,6 +14,8 @@ from rich.console import Console
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.common.load_yaml import load_yaml_file
+
+log = logging.getLogger(__name__)
 
 
 class ConfigCommand:
@@ -28,7 +31,7 @@ class ConfigCommand:
         """
         Set general settings and PAT.
         """
-        ConfigCommand.check_ct_config_dir_exists()
+        ConfigCommand.check_mlf_core_config_dir_exists()
         ConfigCommand.config_general_settings()
         ConfigCommand.config_pat()
 
@@ -40,7 +43,7 @@ class ConfigCommand:
         """
         already_configured = False
         settings = {}
-        if ConfigCommand.check_ct_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ:
+        if ConfigCommand.check_mlf_core_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ:
             already_configured = True
             settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
 
@@ -56,6 +59,7 @@ class ConfigCommand:
 
         # if the configs exist, just update them
         if os.path.exists(ConfigCommand.CONF_FILE_PATH):
+            log.debug(f'Configuration was found at {ConfigCommand.CONF_FILE_PATH}. Updating configuration...')
             path = Path(ConfigCommand.CONF_FILE_PATH)
             yaml = YAML()
             settings = yaml.load(path)
@@ -68,6 +72,7 @@ class ConfigCommand:
 
         # the configs don´t exist -> create them
         else:
+            log.debug(f'Configuration was not found at {ConfigCommand.CONF_FILE_PATH}. Creating a new configuration file.')
             settings = {'full_name': full_name, 'email': email, 'github_username': github_username}
             yaml = YAML()
             yaml.dump(settings, Path(ConfigCommand.CONF_FILE_PATH))
@@ -77,7 +82,7 @@ class ConfigCommand:
         """
         Set the personal access token (PAT) for automatic Github repo creation.
         """
-        ConfigCommand.check_ct_config_dir_exists()
+        ConfigCommand.check_mlf_core_config_dir_exists()
         try:
             path = Path(ConfigCommand.CONF_FILE_PATH)
             yaml = YAML()
@@ -111,8 +116,10 @@ class ConfigCommand:
 
             # encrypt the given PAT and save the encryption key and encrypted PAT in separate files
             print('[bold blue]Generating key for encryption.')
+            log.debug('Generating personal access key.')
             key = Fernet.generate_key()
             fer = Fernet(key)
+            log.debug('Encrypting personal access token. ')
             print('[bold blue]Encrypting personal access token.')
             encrypted_pat = fer.encrypt(access_token_b)
 
@@ -124,6 +131,7 @@ class ConfigCommand:
             yaml = YAML()
             settings = yaml.load(path)
             settings['pat'] = encrypted_pat
+            log.debug(f'Dumping configuration to {ConfigCommand.CONF_FILE_PATH}')
             yaml.dump(settings, Path(ConfigCommand.CONF_FILE_PATH))
 
     @staticmethod
@@ -133,7 +141,9 @@ class ConfigCommand:
         """
         # load current settings
         try:
+            log.debug(f'Fetching current cookietemple configuration at {ConfigCommand.CONF_FILE_PATH}.')
             settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
+            log.debug('Creating configuration table')
             # create the table and print
             table = Table(title="[bold]Your current configuration", title_style="blue", header_style=Style(color="blue", bold=True), box=HEAVY_HEAD)
             table.add_column('Name', style='green')
@@ -181,11 +191,13 @@ class ConfigCommand:
             print('[bold red]Unknown handle. [green]See mlf-core --help [red]for more information on valid handles')
 
     @staticmethod
-    def check_ct_config_dir_exists() -> bool:
+    def check_mlf_core_config_dir_exists() -> bool:
         """
         Check whether the config directory for mlf-core exists. If not, create it.
         """
+        log.debug(f'Checking whether a config directory already exists at {Path(ConfigCommand.CONF_FILE_PATH).parent}.')
         if not os.path.exists(Path(ConfigCommand.CONF_FILE_PATH).parent):
+            log.debug('Config directory did not exist. Creating it.')
             os.mkdir(Path(ConfigCommand.CONF_FILE_PATH).parent)
             return False
         return True

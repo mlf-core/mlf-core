@@ -1,9 +1,8 @@
 import io
 import os
 import re
-
+import logging
 import configparser
-
 import requests
 import rich.progress
 import rich.markdown
@@ -11,13 +10,14 @@ import rich.panel
 import rich.console
 from pkg_resources import parse_version
 from rich import print
-
 from packaging import version
 from itertools import groupby
 
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dir_util import pf, find_filepath_in_dir
 from mlf_core.util.rich import console
+
+log = logging.getLogger(__name__)
 
 
 class TemplateLinter(object):
@@ -57,6 +57,7 @@ class TemplateLinter(object):
             check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
             # Remove internal functions
             check_functions = list(set(check_functions).difference({'lint_project'}))
+            log.debug(f'Linting functions of general linting are:\n {check_functions}')
             # Remove mlflow specific linting functions if not applicable
             if 'mlflow' not in self.__class__.__name__.lower():
                 check_functions = list(filter(lambda func: not func.startswith('mlflow'), check_functions))
@@ -69,6 +70,7 @@ class TemplateLinter(object):
         with progress:
             lint_progress = progress.add_task('Running lint checks', total=len(check_functions), func_name=check_functions)
             for fun_name in check_functions:
+                log.debug(f'Running linting function: {fun_name}')
                 progress.update(lint_progress, advance=1, func_name=fun_name)
                 if fun_name == 'check_files_exist':
                     getattr(calling_class, fun_name)(is_subclass_calling)

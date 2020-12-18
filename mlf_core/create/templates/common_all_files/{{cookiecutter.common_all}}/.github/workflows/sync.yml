@@ -31,4 +31,4 @@ jobs:
                token: '{% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %}'
 
         - name: Sync project
-          run: mlf-core sync . {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %} {{ cookiecutter.creator_github_username }}
+          run: mlf-core --verbose sync . {% raw %}${{ secrets.MLF_CORE_SYNC_TOKEN }}{% endraw %} {{ cookiecutter.creator_github_username }}

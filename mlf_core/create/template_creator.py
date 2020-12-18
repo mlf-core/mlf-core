@@ -1,7 +1,7 @@
 import os
 import sys
+import logging
 from collections import OrderedDict
-
 import shutil
 import re
 import tempfile
@@ -23,6 +23,8 @@ from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStru
 from mlf_core.config.config import ConfigCommand
 from mlf_core.common.load_yaml import load_yaml_file
 from rich import print
+
+log = logging.getLogger(__name__)
 
 
 class TemplateCreator:
@@ -277,10 +279,12 @@ class TemplateCreator:
         Create a temporary directory for common files of a specified domain or all templates and apply cookiecutter on them.
         They are subsequently moved into the directory of the created template.
         """
+        log.debug('Creating common files.')
         dirpath = tempfile.mkdtemp()
         copy_tree(common_files_path, dirpath)
         cwd_project = Path.cwd()
         os.chdir(dirpath)
+        log.debug(f'Cookiecuttering common files at {dirpath}')
         cookiecutter(dirpath,
                      extra_context={'full_name': self.creator_ctx.full_name,
                                     'email': self.creator_ctx.email,
@@ -299,8 +303,10 @@ class TemplateCreator:
                      overwrite_if_exists=True)
 
         # copy the common files directory content to the created project
+        log.debug('Copying common files into the created project')
         copy_tree(f'{Path.cwd()}/common_{domain}_files', f'{cwd_project}/{self.creator_ctx.project_slug}')
         # delete the tmp cookiecuttered common files directory
+        log.debug('Delete common files directory.')
         delete_dir_tree(Path(f'{Path.cwd()}/common_{domain}_files'))
         shutil.rmtree(dirpath)
         # change to recent cwd so lint can run properly
@@ -341,6 +347,7 @@ class TemplateCreator:
 
         :param template_version: Version of the specific template
         """
+        log.debug('Creating .mlf_core.yml file.')
         self.creator_ctx.template_version = f'{template_version} # <<MLF-CORE_NO_BUMP>>'
         self.creator_ctx.mlf_core_version = f'{mlf_core.__version__} # <<MLF-CORE_NO_BUMP>>'
         with open(f'{self.creator_ctx.project_slug}/.mlf_core.yml', 'w') as f:

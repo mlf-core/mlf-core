@@ -52,9 +52,20 @@ class TemplateCreator:
         # create the common files and copy them into the templates directory (skip if flag is set)
         if not skip_common_files:
             self.create_common_files(domain='all', common_files_path=self.COMMON_FILES_PATH)
-            # if project is a mlflow project, copy all common files for mlflow projects
-            if self.creator_ctx.domain == 'mlflow':
-                self.create_common_files(domain='mlflow', common_files_path=self.COMMON_MLFLOW_FILES_PATH)
+            # key in the switcher indicates, whether there are domain specific files or not (None)
+            domain_switcher = {
+                'mlflow': 'mlflow',
+                'package': None
+            }
+            # if project is a project with domain specific files, copy all common files for the domain of this project
+            try:
+                domain_specific_files = domain_switcher[self.creator_ctx.domain]
+            # this should only be the case, if mlf-core is developed further and new domains are added, therefore the error message
+            except KeyError:
+                print(f'[bold red]Unknown domain {self.creator_ctx.domain}! This domain seems to be new and must be added into the domain switcher!')
+                sys.exit(1)
+            if domain_specific_files:
+                self.create_common_files(domain=domain_specific_files, common_files_path=self.COMMON_MLFLOW_FILES_PATH)
 
         self.create_dot_mlf_core(template_version=self.creator_ctx.template_version)
 
@@ -278,6 +289,7 @@ class TemplateCreator:
                                     'domain': self.creator_ctx.domain,
                                     'project_name': self.creator_ctx.project_name,
                                     'project_slug': self.creator_ctx.project_slug,
+                                    'project_slug_no_hyphen': self.creator_ctx.project_slug_no_hyphen,
                                     'version': self.creator_ctx.version,
                                     'license': self.creator_ctx.license,
                                     'project_short_description': self.creator_ctx.project_short_description,

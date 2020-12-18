@@ -174,10 +174,10 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
             sys.exit(1)
         sys.exit(0)
 
-    log.debug(f'Initializing syncer object.')
+    log.debug('Initializing syncer object.')
     syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat)
     # check for template version updates
-    log.debug(f'Checking for major/minor or patch version changes in cookietemple templates.')
+    log.debug('Checking for major/minor or patch version changes in mlf-core templates.')
     major_change, minor_change, patch_change, project_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
     syncer.new_template_version = mlf_core_template_version
     # check for user without actually syncing
@@ -197,7 +197,7 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
     syncer.minor_update = minor_change
     syncer.patch_update = patch_change
     log.debug('Major template update found.' if major_change else 'Minor template update found.' if minor_change else 'Patch template update found.' if
-    patch_change else 'No template update found.')
+              patch_change else 'No template update found.')
 
     # sync the project if any changes were detected
     if any(change for change in (major_change, minor_change, patch_change)):

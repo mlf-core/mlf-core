@@ -42,30 +42,29 @@ class TemplateCreator:
         self.CWD = os.getcwd()
         self.creator_ctx = creator_ctx
 
-    def process_common_operations(self, path: Path, skip_common_files=False, skip_fix_underline=False,
+    def process_common_operations(self, path: Path, skip_fix_underline=False,
                                   domain: str = None, subdomain: str = None, language: str = None,
                                   dot_mlf_core: OrderedDict = None) -> None:
         """
         Create all stuff that is common for mlf-core's template creation process; in detail those things are:
         create and copy common files, fix docs style, lint the project and ask whether the user wants to create a github repo.
         """
-        # create the common files and copy them into the templates directory (skip if flag is set)
-        if not skip_common_files:
-            self.create_common_files(domain='all', common_files_path=self.COMMON_FILES_PATH)
-            # key in the switcher indicates, whether there are domain specific files or not (None)
-            domain_switcher = {
-                'mlflow': 'mlflow',
-                'package': None
-            }
-            # if project is a project with domain specific files, copy all common files for the domain of this project
-            try:
-                domain_specific_files = domain_switcher[self.creator_ctx.domain]
-            # this should only be the case, if mlf-core is developed further and new domains are added, therefore the error message
-            except KeyError:
-                print(f'[bold red]Unknown domain {self.creator_ctx.domain}! This domain seems to be new and must be added into the domain switcher!')
-                sys.exit(1)
-            if domain_specific_files:
-                self.create_common_files(domain=domain_specific_files, common_files_path=self.COMMON_MLFLOW_FILES_PATH)
+        # create the common files and copy them into the templates directory
+        self.create_common_files(domain='all', common_files_path=self.COMMON_FILES_PATH)
+        # key in the switcher indicates, whether there are domain specific files or not (None)
+        domain_switcher = {
+            'mlflow': 'mlflow',
+            'package': None
+        }
+        # if project is a project with domain specific files, copy all common files for the domain of this project
+        try:
+            domain_specific_files = domain_switcher[self.creator_ctx.domain]
+        # this should only be the case, if mlf-core is developed further and new domains are added, therefore the error message
+        except KeyError:
+            print(f'[bold red]Unknown domain {self.creator_ctx.domain}! This domain seems to be new and must be added into the domain switcher!')
+            sys.exit(1)
+        if domain_specific_files:
+            self.create_common_files(domain=domain_specific_files, common_files_path=self.COMMON_MLFLOW_FILES_PATH)
 
         self.create_dot_mlf_core(template_version=self.creator_ctx.template_version)
 

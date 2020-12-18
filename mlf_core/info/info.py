@@ -1,5 +1,7 @@
 import os
+import logging
 import sys
+from rich import print
 from rich.style import Style
 from rich.console import Console
 from rich.table import Table
@@ -8,6 +10,8 @@ from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dict_util import is_nested_dictionary
 from mlf_core.common.suggest_similar_commands import load_available_handles
+
+log = logging.getLogger(__name__)
 
 
 class TemplateInfo:
@@ -37,12 +41,14 @@ class TemplateInfo:
 
         # only domain OR language specified
         if len(specifiers) == 1:
+            log.debug('Only domain or language was specified.')
             try:
                 template_info = available_templates[domain]
             except KeyError:
                 self.handle_domain_or_language_only(handle, available_templates)
         # domain, subdomain, language
         elif len(specifiers) > 2:
+            log.debug('A domain, subdomain and language was specified.')
             try:
                 sub_domain = specifiers[1]
                 language = specifiers[2]
@@ -51,6 +57,7 @@ class TemplateInfo:
                 self.handle_non_existing_command(handle, True)
         # domain, language OR domain, subdomain
         else:
+            log.debug('A domain and language OR domain and a subdomain was specified.')
             try:
                 second_specifier = specifiers[1]
                 template_info = available_templates[domain][second_specifier]
@@ -113,7 +120,7 @@ class TemplateInfo:
             template[2] = TemplateInfo.set_linebreaks(template[2])
 
         table = Table(title=f'[bold]Info on mlf-core´s {handle}', title_style="blue", header_style=Style(color="blue", bold=True), box=HEAVY_HEAD)
-
+        log.debug('Building info table.')
         table.add_column("Name", justify="left", style="green", no_wrap=True)
         table.add_column("Handle", justify="left")
         table.add_column("Long Description", justify="left")

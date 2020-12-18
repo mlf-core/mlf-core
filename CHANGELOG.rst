@@ -23,6 +23,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * [ALL TEMPLATES] renamed train_cpu workflows to use project_slug (was project_slug_no_hyphen)
 * [MLFLOW TEMPLATES] refactored the common files for all mlflow templates into a common files directory
 * config default values are now preconfigured values (if any)
+* added logging to all commands mlf-core offers
 
 **Fixed**
 

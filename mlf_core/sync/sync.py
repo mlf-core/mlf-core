@@ -289,7 +289,6 @@ class TemplateSync:
             'head': f'mlf_core_sync_v{self.new_template_version}',
             'base': 'development',
         }
-        log.debug(f'Trying to submit a sync PR to https://api.github.com/repos/{self.repo_owner}/{self.dot_mlf_core["project_slug"]}/pulls')
         r = requests.post(
             url=f'https://api.github.com/repos/{self.repo_owner}/{self.dot_mlf_core["project_slug"]}/pulls',
             data=json.dumps(pr_content),

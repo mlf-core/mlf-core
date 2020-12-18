@@ -35,22 +35,36 @@ class TemplateCreator:
     def __init__(self, creator_ctx: MlfcoreTemplateStruct):
         self.WD = os.path.dirname(__file__)
         self.TEMPLATES_PATH = f'{self.WD}/templates'
-        self.COMMON_FILES_PATH = f'{self.TEMPLATES_PATH}/common_files'
+        self.COMMON_FILES_PATH = f'{self.TEMPLATES_PATH}/common_all_files'
+        self.COMMON_MLFLOW_FILES_PATH = f'{self.TEMPLATES_PATH}/common_mlflow_files'
         self.AVAILABLE_TEMPLATES_PATH = f'{self.TEMPLATES_PATH}/available_templates.yml'
         self.AVAILABLE_TEMPLATES = load_yaml_file(self.AVAILABLE_TEMPLATES_PATH)
         self.CWD = os.getcwd()
         self.creator_ctx = creator_ctx
 
-    def process_common_operations(self, path: Path, skip_common_files=False, skip_fix_underline=False,
+    def process_common_operations(self, path: Path, skip_fix_underline=False,
                                   domain: str = None, subdomain: str = None, language: str = None,
                                   dot_mlf_core: OrderedDict = None) -> None:
         """
         Create all stuff that is common for mlf-core's template creation process; in detail those things are:
         create and copy common files, fix docs style, lint the project and ask whether the user wants to create a github repo.
         """
-        # create the common files and copy them into the templates directory (skip if flag is set)
-        if not skip_common_files:
-            self.create_common_files()
+        # create the common files and copy them into the templates directory
+        self.create_common_files(domain='all', common_files_path=self.COMMON_FILES_PATH)
+        # key in the switcher indicates, whether there are domain specific files or not (None)
+        domain_switcher = {
+            'mlflow': 'mlflow',
+            'package': None
+        }
+        # if project is a project with domain specific files, copy all common files for the domain of this project
+        try:
+            domain_specific_files = domain_switcher[self.creator_ctx.domain]
+        # this should only be the case, if mlf-core is developed further and new domains are added, therefore the error message
+        except KeyError:
+            print(f'[bold red]Unknown domain {self.creator_ctx.domain}! This domain seems to be new and must be added into the domain switcher!')
+            sys.exit(1)
+        if domain_specific_files:
+            self.create_common_files(domain=domain_specific_files, common_files_path=self.COMMON_MLFLOW_FILES_PATH)
 
         self.create_dot_mlf_core(template_version=self.creator_ctx.template_version)
 
@@ -258,13 +272,13 @@ class TemplateCreator:
             self.creator_ctx.github_username = load_github_username()
             self.creator_ctx.creator_github_username = self.creator_ctx.github_username
 
-    def create_common_files(self) -> None:
+    def create_common_files(self, domain: str, common_files_path: str) -> None:
         """
-        This function creates a temporary directory for common files of all templates and applies cookiecutter on them.
+        Create a temporary directory for common files of a specified domain or all templates and apply cookiecutter on them.
         They are subsequently moved into the directory of the created template.
         """
         dirpath = tempfile.mkdtemp()
-        copy_tree(f'{self.COMMON_FILES_PATH}', dirpath)
+        copy_tree(common_files_path, dirpath)
         cwd_project = Path.cwd()
         os.chdir(dirpath)
         cookiecutter(dirpath,
@@ -274,20 +288,22 @@ class TemplateCreator:
                                     'domain': self.creator_ctx.domain,
                                     'project_name': self.creator_ctx.project_name,
                                     'project_slug': self.creator_ctx.project_slug,
+                                    'project_slug_no_hyphen': self.creator_ctx.project_slug_no_hyphen,
                                     'version': self.creator_ctx.version,
                                     'license': self.creator_ctx.license,
                                     'project_short_description': self.creator_ctx.project_short_description,
                                     'github_username': self.creator_ctx.github_username,
-                                    'creator_github_username': self.creator_ctx.creator_github_username},
+                                    'creator_github_username': self.creator_ctx.creator_github_username,
+                                    'framework': self.creator_ctx.language.capitalize() if domain == 'mlflow' else ''},
                      no_input=True,
                      overwrite_if_exists=True)
 
-        # recursively copy the common files directory content to the created project
-        copy_tree(f'{os.getcwd()}/common_files_util', f'{cwd_project}/{self.creator_ctx.project_slug}')
+        # copy the common files directory content to the created project
+        copy_tree(f'{Path.cwd()}/common_{domain}_files', f'{cwd_project}/{self.creator_ctx.project_slug}')
         # delete the tmp cookiecuttered common files directory
-        delete_dir_tree(Path(f'{Path.cwd()}/common_files_util'))
+        delete_dir_tree(Path(f'{Path.cwd()}/common_{domain}_files'))
         shutil.rmtree(dirpath)
-        # change to recent cwd so lint etc can run properly
+        # change to recent cwd so lint can run properly
         os.chdir(str(cwd_project))
 
     def readthedocs_slug_already_exists(self, project_name: str) -> bool:

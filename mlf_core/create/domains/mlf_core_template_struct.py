@@ -21,7 +21,7 @@ class MlfcoreTemplateStruct:
     github_orga: str = ''  # Name of the GitHub organization
 
     """
-    This section contains some attributes common to cli, lib, gui, web
+    This section contains some common attributes
     """
     full_name: str = ''  # Name of the template creator/organization
     email: str = ''  # Email of the creator

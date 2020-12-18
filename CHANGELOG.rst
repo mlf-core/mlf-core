@@ -21,6 +21,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * [ALL TEMPLATES] added vscode files to .gitignore for templates
 * [ALL TEMPLATES] now feature a mlf-core lint workflow with colored linting result output
 * [ALL TEMPLATES] renamed train_cpu workflows to use project_slug (was project_slug_no_hyphen)
+* [MLFLOW TEMPLATES] refactored the common files for all mlflow templates into a common files directory
 * config default values are now preconfigured values (if any)
 
 **Fixed**

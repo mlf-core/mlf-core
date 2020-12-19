@@ -79,7 +79,7 @@ class VersionBumper:
             self.parser.write(configfile)
 
         # add a new changelog section when downgrade mode is disabled
-        self.add_changelog_section(project_dir, new_version)
+        self.add_changelog_section(new_version)
 
         # check if a project is a git repository and if so, commit bumped version changes
         if is_git_repo(project_dir):

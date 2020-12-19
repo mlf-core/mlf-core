@@ -263,10 +263,9 @@ class VersionBumper:
                                                         default='n'):
                 sys.exit(1)
 
-    def add_changelog_section(self, path: Path, new_version: str) -> None:
+    def add_changelog_section(self, new_version: str) -> None:
         """
         Each version bump will add a new section template to the CHANGELOG.rst
-        :param path: Path to top level project directory (where the CHANGELOG.rst file should lie)
         :param new_version: The new version
         """
         log.debug('Adding new changelog section.')
@@ -286,7 +285,7 @@ class VersionBumper:
 
                 self.insert_latest_version_section(old_changelog_file=f'{self.top_level_dir}/CHANGELOG.rst', section=section)
 
-    def replace_snapshot_header(self, source_file_path, new_version: str, date: str) -> None:
+    def replace_snapshot_header(self, source_file_path: str, new_version: str, date: str) -> None:
         """
         Replace the SNAPSHOT header section in CHANGELOG. The pattern (currently) cannot include any newline characters, therefore no multiline support!
         :param source_file_path: Path to source file (the path where CHANGELOG lies)

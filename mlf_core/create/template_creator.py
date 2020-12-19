@@ -5,8 +5,6 @@ from collections import OrderedDict
 import shutil
 import re
 import tempfile
-
-import mlf_core
 import requests
 from distutils.dir_util import copy_tree
 from pathlib import Path
@@ -14,6 +12,7 @@ from dataclasses import asdict
 from ruamel.yaml import YAML
 from cookiecutter.main import cookiecutter
 
+import mlf_core
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.util.dir_util import delete_dir_tree
 from mlf_core.create.github_support import create_push_github_repository, load_github_username, is_git_repo
@@ -41,7 +40,7 @@ class TemplateCreator:
         self.COMMON_MLFLOW_FILES_PATH = f'{self.TEMPLATES_PATH}/common_mlflow_files'
         self.AVAILABLE_TEMPLATES_PATH = f'{self.TEMPLATES_PATH}/available_templates.yml'
         self.AVAILABLE_TEMPLATES = load_yaml_file(self.AVAILABLE_TEMPLATES_PATH)
-        self.CWD = os.getcwd()
+        self.CWD = Path.cwd()
         self.creator_ctx = creator_ctx
 
     def process_common_operations(self, path: Path, skip_fix_underline=False,
@@ -87,18 +86,15 @@ class TemplateCreator:
             shutil.rmtree(tmp_project_path, ignore_errors=True)
 
         if subdomain:
-            print()
-            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
+            print(f'\n[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
                   f'#{domain}-{subdomain}-{language} for more information about how to use your chosen template.')
         else:
-            print()
-            print(f'[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
+            print(f'\n[bold blue]Please visit: https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html'
                   f'#{domain}-{language} for more information about how to use your chosen template.')
 
-        cwd = Path.cwd()
         # do not move if path is current working directory or a directory named like the project in the current working directory (second is default case)
-        if path != cwd and path != Path(cwd / self.creator_ctx.project_slug_no_hyphen):
-            shutil.move(f'{Path.cwd()}/{self.creator_ctx.project_slug_no_hyphen}', f'{path}/{self.creator_ctx.project_slug_no_hyphen}')
+        if path != self.CWD and path != Path(self.CWD / self.creator_ctx.project_slug_no_hyphen):
+            shutil.move(f'{self.CWD}/{self.creator_ctx.project_slug_no_hyphen}', f'{path}/{self.creator_ctx.project_slug_no_hyphen}')
 
     def create_template_without_subdomain(self, domain_path: str) -> None:
         """
@@ -108,7 +104,7 @@ class TemplateCreator:
         :param domain_path: Path to the template, which is still in cookiecutter format
         """
         # Target directory is already occupied -> overwrite?
-        occupied = os.path.isdir(f'{os.getcwd()}/{self.creator_ctx.project_slug}')
+        occupied = os.path.isdir(f'{self.CWD}/{self.creator_ctx.project_slug}')
         if occupied:
             self.directory_exists_warning()
 
@@ -135,13 +131,13 @@ class TemplateCreator:
         :param domain_path: Path to the template, which is still in cookiecutter format
         :param subdomain: Subdomain of the chosen template
         """
-        occupied = os.path.isdir(f'{os.getcwd()}/{self.creator_ctx.project_slug}')
+        occupied = os.path.isdir(f'{self.CWD}/{self.creator_ctx.project_slug}')
         if occupied:
             self.directory_exists_warning()
 
             # Confirm proceeding with overwriting existing directory
             if mlf_core_questionary_or_dot_mlf_core('confirm', 'Do you really want to continue?', default='Yes'):
-                delete_dir_tree(Path(f'{os.getcwd()}/{self.creator_ctx.project_slug}'))
+                delete_dir_tree(Path(f'{self.CWD}/{self.creator_ctx.project_slug}'))
                 cookiecutter(f'{domain_path}/{subdomain}_{self.creator_ctx.language.lower()}',
                              no_input=True,
                              overwrite_if_exists=True,
@@ -165,7 +161,7 @@ class TemplateCreator:
         :param subdomain: Subdomain of the chosen template
         :param framework: Chosen framework
         """
-        occupied = os.path.isdir(f'{os.getcwd()}/{self.creator_ctx.project_slug}')
+        occupied = os.path.isdir(f'{self.CWD}/{self.creator_ctx.project_slug}')
         if occupied:
             self.directory_exists_warning()
 
@@ -282,7 +278,7 @@ class TemplateCreator:
         log.debug('Creating common files.')
         dirpath = tempfile.mkdtemp()
         copy_tree(common_files_path, dirpath)
-        cwd_project = Path.cwd()
+        cwd_project = self.CWD
         os.chdir(dirpath)
         log.debug(f'Cookiecuttering common files at {dirpath}')
         cookiecutter(dirpath,
@@ -332,12 +328,12 @@ class TemplateCreator:
         If the directory is already a git directory within the same project, print error message and exit.
         Otherwise print a warning that a directory already exists and any further action on the directory will overwrite its contents.
         """
-        if is_git_repo(Path(f'{os.getcwd()}/{self.creator_ctx.project_slug}')):
-            print(f'[bold red]Error: A git project named {self.creator_ctx.project_slug} already exists at [green]{os.getcwd()}\n')
+        if is_git_repo(Path(f'{self.CWD}/{self.creator_ctx.project_slug}')):
+            print(f'[bold red]Error: A git project named {self.creator_ctx.project_slug} already exists at [green]{self.CWD}\n')
             print('[bold red]Aborting!')
             sys.exit(1)
         else:
-            print(f'[bold yellow]WARNING: [red]A directory named {self.creator_ctx.project_slug} already exists at [blue]{os.getcwd()}\n')
+            print(f'[bold yellow]WARNING: [red]A directory named {self.creator_ctx.project_slug} already exists at [blue]{self.CWD}\n')
             print('Proceeding now will overwrite this directory and its content!')
 
     def create_dot_mlf_core(self, template_version: str):

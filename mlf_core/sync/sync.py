@@ -67,6 +67,7 @@ class TemplateSync:
         self.dot_mlf_core = {}
         self.repo_owner = self.gh_username
         self.new_template_version = new_template_version
+        self.github = Github(self.token)
 
     def sync(self):
         """
@@ -269,19 +270,19 @@ class TemplateSync:
             'Please make sure to merge this pull-request as soon as possible. '
             'Once complete, make a new minor release of your Project.\n\n'
             'For more information on the actual changes, read the latest mlf-core changelog.')
-        log.debug(f'PR title is {pr_title} and PR body: {pr_body_text}')
+        log.debug(f'PR title is:\n{pr_title}')
+        log.debug(f'PR body is:\n{pr_body_text}')
 
         # Check, whether a mlf-core sync PR is already open
         self.check_pull_request_exists()
         # Submit the new pull request with the latest mlf-core sync changes
         self.submit_pull_request(pr_title, pr_body_text)
 
-    def submit_pull_request(self, pr_title, pr_body_text):
+    def submit_pull_request(self, pr_title: str, pr_body_text: str):
         """
         Create a new pull-request on GitHub
         """
-        g = Github(self.token)
-        repo = g.get_repo(f'{self.repo_owner}/{self.dot_mlf_core["project_slug"]}')
+        repo = self.github.get_repo(f'{self.repo_owner}/{self.dot_mlf_core["project_slug"]}')
         try:
             repo.create_pull(title=pr_title, body=pr_body_text, head=f'mlf_core_sync_v{self.new_template_version}', base='development',
                              maintainer_can_modify=True)
@@ -298,8 +299,7 @@ class TemplateSync:
 
         :return Whether a mlf-core sync PR is already open or not
         """
-        g = Github(self.token)
-        repo = g.get_repo(f'{self.repo_owner}/{self.dot_mlf_core["project_slug"]}')
+        repo = self.github.get_repo(f'{self.repo_owner}/{self.dot_mlf_core["project_slug"]}')
         # query all open PRs
         log.debug('Querying open PRs to check if a sync PR already exists.')
         # iterate over the open PRs of the repo to check if a mlf-core sync PR is open

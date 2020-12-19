@@ -42,9 +42,8 @@ Fully GPU deterministic machine learning project templates using MLflow_.
 Features
 --------
 
-* Jumpstart your machine learning project with fully fledged, multi GPU enabled mlflow project templates
+* Jumpstart your machine learning project with fully fledged, (multi) GPU deterministic mlflow project templates
 * Pytorch, Tensorflow, XGBoost supported
-* mlflow templates are fully GPU deterministic with system-intelligence
 * Conda and Docker support out of the box
 
 Installing
@@ -80,7 +79,7 @@ See `Get detailed template information <https://mlf_core.readthedocs.io/en/lates
 
 create
 ------
-Kickstart your customized project with one of mlf-core's templates in no time.
+Kickstart your deterministic machine laerning project with one of mlf-core's templates in no time.
 
 .. figure:: https://user-images.githubusercontent.com/31141763/102669143-1184a800-418e-11eb-853b-0deb0387efc6.gif
 
@@ -88,7 +87,7 @@ See `Create a project <https://mlf_core.readthedocs.io/en/latest/create.html>`_.
 
 lint
 ----
-Use advanced linting to ensure your project always adheres to mlf-core's standards.
+Use advanced linting to ensure your project always adheres to mlf-core's standards and stays deterministic.
 
 .. image:: https://user-images.githubusercontent.com/31141763/102668893-696edf00-418d-11eb-888e-822244a6f5dc.gif
 
@@ -96,7 +95,7 @@ See `Linting your project <https://mlf_core.readthedocs.io/en/latest/lint.html>`
 
 bump-version
 ------------
-Bump your project version with many configurable options.
+Bump your project version across several files.
 
 .. figure:: https://user-images.githubusercontent.com/31141763/102668987-aaff8a00-418d-11eb-9292-dc512f77f09b.gif
 

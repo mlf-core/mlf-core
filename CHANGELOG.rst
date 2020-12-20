@@ -24,6 +24,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * [MLFLOW TEMPLATES] refactored the common files for all mlflow templates into a common files directory
 * config default values are now preconfigured values (if any)
 * added logging to all commands mlf-core offers
+* refactored sync, bump-version and create code (added type hints, fixed some variable scoping)
 
 **Fixed**
 

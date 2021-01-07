@@ -7,10 +7,10 @@ dependencies:
   - defaults::cudatoolkit=10.1
   - defaults::python=3.7
   - defaults::click=7.1.2
-  - conda-forge::rich=9.6.1
+  - conda-forge::rich=9.3.0
   - conda-forge::mlflow=1.12.1
   - conda-forge::tensorboardx=2.1
-  - pytorch::pytorch=1.7.1=py3.7_cuda10.1.243_cudnn7.6.3_0
+  - pytorch::pytorch=1.6.0=py3.7_cuda10.1.243_cudnn7.6.3_0
   - pytorch::torchvision=0.7.0=py37_cu101
   - pip
   - pip:

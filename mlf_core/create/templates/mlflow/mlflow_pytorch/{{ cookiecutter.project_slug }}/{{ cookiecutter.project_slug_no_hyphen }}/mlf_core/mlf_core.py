@@ -33,7 +33,7 @@ def log_system_intelligence(reports_output_dir: str):
 
     click.echo(click.style(f'Writing reports locally to {reports_output_dir}\n', fg='blue'))
     click.echo(click.style('Running system-intelligence', fg='blue'))
-    query_and_export(query_scope=list(('all',)),
+    query_and_export(query_scope={'all'},
                      verbose=False,
                      export_format='json',
                      generate_html_table=True,

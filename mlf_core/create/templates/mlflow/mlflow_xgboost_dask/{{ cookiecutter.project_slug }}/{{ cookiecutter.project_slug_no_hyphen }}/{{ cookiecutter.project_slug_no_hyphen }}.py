@@ -71,7 +71,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                                                        num_boost_round=epochs,
                                                        evals=[(dtest, 'test')])
                 mlflow.xgboost.log_model(trained_xgboost_model['booster'], 'model')
-                mlflow.log_metric('test merror', trained_xgboost_model['history']['test']['merror'][-1])
+                mlflow.log_metric('test mlogloss', trained_xgboost_model['history']['test']['mlogloss'][-1])
                 click.echo(trained_xgboost_model['history'])
 
                 device = 'GPU' if use_cuda else 'CPU'

@@ -7,7 +7,7 @@ dependencies:
     - defaults::cudatoolkit=10.1
     - defaults::python=3.7
     - defaults::click=7.1.2
-    - conda-forge::rich=9.1.0
+    - conda-forge::rich=9.6.1
     - conda-forge::mlflow=1.12.1
     - conda-forge::dask=2.26.0
     - conda-forge::dask-ml=1.4.0

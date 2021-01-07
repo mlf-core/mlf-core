@@ -13,7 +13,7 @@ dependencies:
     - conda-forge::matplotlib=3.3.2
     - pip
     - pip:
-      - xgboost==1.2.1  # xgboost on Conda is not yet built with GPU support!
+      - xgboost==1.3.1  # xgboost on Conda is not yet built with GPU support!
       - pycuda==2019.1.2
-      - system-intelligence==1.2.4
+      - system-intelligence==2.0.1
       - gputil==1.4.0

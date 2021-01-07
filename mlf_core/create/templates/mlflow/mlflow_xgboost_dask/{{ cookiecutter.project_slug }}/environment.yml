@@ -8,7 +8,7 @@ dependencies:
     - defaults::python=3.7
     - defaults::click=7.1.2
     - conda-forge::rich=9.1.0
-    - conda-forge::mlflow=1.11.0
+    - conda-forge::mlflow=1.12.1
     - conda-forge::dask=2.26.0
     - conda-forge::dask-ml=1.4.0
     - conda-forge::scikit-learn=0.23.2

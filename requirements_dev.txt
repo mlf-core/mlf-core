@@ -9,5 +9,5 @@ sphinx-automodapi>=0.13
 twine==3.3.0
 pytest==6.2.1
 pytest-runner==5.2
-pytest-mock==3.5.0
+pytest-mock==3.5.1
 -r requirements.txt

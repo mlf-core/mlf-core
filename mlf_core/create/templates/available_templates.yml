@@ -10,7 +10,7 @@ mlflow:
     tensorflow:
         name: Tensorflow
         handle: mlflow-tensorflow
-        version: 1.0.2
+        version: 1.0.3
         available libraries: Tensorflow
         short description: Fully CPU and GPU reproducible MLflow based Tensorflow template with tensorboard support.
         long description: A fully CPU and GPU reproducible MLflow based Tensorflow template with CPU, multi-GPU (Mirrored Strategy API),
@@ -18,7 +18,7 @@ mlflow:
     xgboost:
         name: XGBoost
         handle: mlflow-xgboost
-        version: 1.3.1
+        version: 1.3.2
         available libraries: XGBoost
         short description: Fully CPU and GPU reproducible MLflow based XGBoost template.
         long description: A fully CPU and GPU reproducible MLflow based XGBoost template with CPU, single-GPU and
@@ -26,7 +26,7 @@ mlflow:
     xgboost_dask:
         name: XGBoost-Dask
         handle: mlflow-xgboost_dask
-        version: 1.2.1
+        version: 1.2.2
         available libraries: XGBoost, Dask
         short description: MLflow and Dask based XGBoost template.
         long description: A MLflow based XGBoost template with CPU, single-GPU, multi-GPU and
@@ -36,7 +36,7 @@ package:
     prediction:
         name: Prediction
         handle: package-prediction
-        version: 1.0.1
+        version: 1.0.2
         available libraries: Pytorch, Tensorflow, XGBoost
         short description: Python package offering loading and prediction of models with simple PyPI deployment.
         long description: A Python package offering a command-line interfaces for predictions for custom models.

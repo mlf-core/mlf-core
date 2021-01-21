@@ -312,19 +312,34 @@ class TemplateSync:
                 return True
         return False
 
-    def check_sync_level(self) -> bool:
+    def should_run_sync(self) -> bool:
         """
-        Check whether a pull request should be made according to the set level in the mlf_core.cfg file.
+        Check, whether sync should run. This depends on two things:
+        1.) First check, whether the user disabled sync in the mlf_core.cfg file with sync_enabled = False in the [sync] section
+        2.) Secondly, whether the configured level in the [sync_level] section does not restrict the sync.
         Possible levels are:
             - patch: Always create a pull request (lower bound)
             - minor: Create a pull request if it's a minor or major change
             - major: Create a pull request only if it's a major change
-        :return: Whether the changes level is equal to or smaller than the set sync level; whether a PR should be created or not
+        :return: Whether a sync should run determined by the rules above
         """
         log.debug(f'Checking sync level constraints using parsed results from {self.project_dir}/mlf_core.cfg')
         try:
             parser = ConfigParser()
             parser.read(f'{self.project_dir}/mlf_core.cfg')
+            sync_enabled = parser.items('sync')
+            # sync is enabled
+            if sync_enabled[0][1].lower() in {'yes', 'y', 'true'}:
+                pass
+            # sync is disabled
+            elif sync_enabled[0][1].lower() in {'no', 'n', 'false'}:
+                return False
+            # misconfigured sync_enabled with some unknown value
+            else:
+                print(f'[bold blue]Unknown value {sync_enabled[0][1]} for sync_enabled config.\nAllowed values are [bold green]Yes, yes, True, true, Y, y '
+                      f'[bold blue] or [bold green]No, no, False, false, N, n [bold blue]!')
+                return False
+            # now, check for the sync level
             level_item = list(parser.items('sync_level'))
             log.debug(f'Parsing level constraint returned: {level_item}.')
             # check for proper configuration if the sync_level section (only one item named mlf_core_sync_level with valid levels major or minor
@@ -346,7 +361,7 @@ class TemplateSync:
         # mlf_core.cfg file was not found or has no section sync_level
         except NoSectionError:
             print('[bold red]Could not read from mlf_core.cfg file. '
-                  'Make sure your specified path contains a mlf_core.cfg file and has a sync_level section!')
+                  'Make sure your specified path contains a mlf_core.cfg file and has a sync_level and sync section!')
             sys.exit(1)
 
     def get_blacklisted_sync_globs(self) -> list:

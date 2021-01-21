@@ -153,7 +153,7 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
     To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing).
     If no repository exists the TEMPLATE branch will be updated and you can merge manually.
     """
-    project_dir_path = Path(f'{Path.cwd()}/{project_dir}') if not str(project_dir).startswith(str(Path.cwd())) else Path(project_dir)
+    project_dir_path = Path(project_dir).resolve()
     log.debug(f'Loading project information from .mlf_core.yml file located at {project_dir}')
     project_data = load_yaml_file(f'{project_dir}/.mlf_core.yml')
     log.debug(f'Set project top level path to given path argument {project_dir_path}')
@@ -201,12 +201,12 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
 
     # sync the project if any changes were detected
     if any(change for change in (major_change, minor_change, patch_change)):
-        # If required sync level is set -> sync
-        if syncer.check_sync_level():
+        # If required sync level is set and sync is enabled -> sync
+        if syncer.should_run_sync():
             log.debug('Starting sync.')
             syncer.sync()
         else:
-            print('[bold red]Aborting sync due to set level constraints. '
+            print('[bold red]Aborting sync due to set level constraints or sync being disabled. '
                   'You can set the level any time in your mlf_core.cfg in the sync_level section and sync again.')
     else:
         print('[bold blue]No changes detected. Your template is up to date.')

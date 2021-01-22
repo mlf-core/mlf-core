@@ -127,10 +127,11 @@ See `<https://mlf_core.readthedocs.io/en/latest/upgrade.html>`_.
 Credits
 -------
 
-Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
-This package was created with cookietemple_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
+Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_. mlf-core is inspired by nf-core_.
+This package was created with cookietemple_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using cookiecutter_.
 
 .. _MLflow: https://mlflow.org
 .. _cookietemple: https://cookietemple.com
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _nf-core: https://nf-co.re

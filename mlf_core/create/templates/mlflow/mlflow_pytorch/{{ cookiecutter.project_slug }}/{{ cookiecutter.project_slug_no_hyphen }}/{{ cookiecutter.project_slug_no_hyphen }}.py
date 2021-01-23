@@ -84,3 +84,5 @@ if __name__ == "__main__":
     trainer.log_every_n_steps = dict_args['log_interval']
     trainer.fit(model, dm)
     trainer.test()
+    print(f'\n[bold blue]For tensorboard log, call [bold green]tensorboard --logdir='
+          f'{os.getcwd()}/lightning_logs/version_{trainer.logger.version}')

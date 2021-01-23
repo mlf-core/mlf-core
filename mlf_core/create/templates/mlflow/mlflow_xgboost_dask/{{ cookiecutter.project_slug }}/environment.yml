@@ -6,6 +6,7 @@ channels:
 dependencies:
     - defaults::cudatoolkit=10.1
     - defaults::python=3.8.2
+    - defaults::click=7.1.2
     - conda-forge::rich=9.6.1
     - conda-forge::mlflow=1.13.1
     - conda-forge::dask=2020.12.0

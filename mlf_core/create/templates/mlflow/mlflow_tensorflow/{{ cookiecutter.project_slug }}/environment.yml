@@ -5,7 +5,6 @@ channels:
 dependencies:
     - defaults::cudatoolkit=10.1
     - defaults::python=3.8.2
-    - defaults::click=7.1.2
     # We need to install tensorflow-gpu, since else we get:
     # 2020-04-10 13:08:01.736473: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.87.1
     # 2020-04-10 13:08:01.736534: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 440.82.0

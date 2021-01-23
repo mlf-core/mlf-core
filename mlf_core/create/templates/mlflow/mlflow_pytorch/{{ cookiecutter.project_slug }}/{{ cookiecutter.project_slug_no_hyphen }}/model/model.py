@@ -27,19 +27,9 @@ class LightningMNISTClassifier(pl.LightningModule):
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-
-        parser.add_argument(
-            "--num_workers",
-            type=int,
-            default=3,
-            metavar="N",
-            help="number of workers (default: 3)",
-        )
-        parser.add_argument(
-            "--lr", type=float, default=0.01, help="learning rate (default: 0.01)",
-        )
+        parser.add_argument("--num_workers", type=int, default=3, metavar="N", help="number of workers (default: 3)")
+        parser.add_argument("--lr", type=float, default=0.01, help="learning rate (default: 0.01)")
         parser.add_argument('--training-batch-size', type=int, default=64, help='Input batch size for training')
-
         parser.add_argument('--test-batch-size', type=int, default=1000, help='Input batch size for testing')
 
         return parser
@@ -87,14 +77,12 @@ class LightningMNISTClassifier(pl.LightningModule):
         """
         Bla
         """
-        train_avg_loss = torch.stack([x["loss"] for x in training_step_outputs]).mean()
+        train_avg_loss = torch.stack([train_output["loss"] for train_output in training_step_outputs]).mean()
         self.log("train_loss", train_avg_loss)
-
-    # do something with preds
 
     def test_step(self, test_batch, batch_idx):
         """
-        Performs test and computes the accuracy of the model
+        Predicts on the test dataset to compute the current accuracy of the model.
 
         :param test_batch: Batch data
         :param batch_idx: Batch indices
@@ -122,9 +110,9 @@ class LightningMNISTClassifier(pl.LightningModule):
 
         :return: output - average test loss
         """
-        avg_test_acc = torch.stack([x["test_acc"] for x in outputs]).mean()
-        avg_test_loss = sum([x["test_loss"] for x in outputs])/self.len_test_set
-        test_correct = sum([x["correct"] for x in outputs])
+        avg_test_acc = torch.stack([test_output["test_acc"] for test_output in outputs]).mean()
+        avg_test_loss = sum([test_output["test_loss"] for test_output in outputs])/self.len_test_set
+        test_correct = sum([test_output["correct"] for test_output in outputs])
         self.log("avg_test_acc", avg_test_acc, sync_dist=True)
         self.log("avg_test_loss", avg_test_loss, sync_dist=True)
         self.log("test_correct", test_correct, sync_dist=True)

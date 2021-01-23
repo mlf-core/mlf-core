@@ -1,13 +1,3 @@
-#
-# Trains an MNIST digit recognizer using PyTorch Lightning,
-# and uses Mlflow to log metrics, params and artifacts
-# NOTE: This example requires you to first install
-# pytorch-lightning (using pip install pytorch-lightning)
-#       and mlflow (using pip install mlflow).
-#
-# pylint: disable=arguments-differ
-# pylint: disable=unused-argument
-# pylint: disable=abstract-method
 import pytorch_lightning as pl
 import torch
 from argparse import ArgumentParser
@@ -61,9 +51,8 @@ if __name__ == "__main__":
     set_general_random_seeds(dict_args['general_seed'])
     set_pytorch_random_seeds(dict_args['pytorch_seed'], True)
 
-    if "accelerator" in dict_args:
-        if dict_args["accelerator"] == "None":
-            dict_args["accelerator"] = None
+    if "accelerator" in dict_args and dict_args["accelerator"] == "None":
+        dict_args["accelerator"] = None
 
     dm = MNISTDataModule(**dict_args)
 

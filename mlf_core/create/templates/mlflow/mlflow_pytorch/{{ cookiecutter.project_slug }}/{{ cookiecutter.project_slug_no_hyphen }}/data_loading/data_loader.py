@@ -6,7 +6,8 @@ from torch.utils.data import DataLoader
 class MNISTDataModule(pl.LightningDataModule):
     def __init__(self, **kwargs):
         """
-        Initialization of inherited lightning data module
+        Initialization of the data module with a train and test dataset, as well as a loader for each.
+        The dataset is th example MNIST dataset
         """
         super(MNISTDataModule, self).__init__()
         self.df_train = None

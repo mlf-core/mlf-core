@@ -1,21 +1,49 @@
-import torch
-
+import pytorch_lightning as pl
 from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
 
 
-def load_train_test_data(training_batch_size, test_batch_size, **kwargs):
-    train_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('data', train=True, download=True,
-                       transform=transforms.Compose([
-                           transforms.ToTensor(),
-                           transforms.Normalize((0.1307,), (0.3081,))
-                       ])),
-        batch_size=training_batch_size, shuffle=True, **kwargs)
-    test_loader = torch.utils.data.DataLoader(
-        datasets.MNIST('data', train=False, transform=transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
-        ])),
-        batch_size=test_batch_size, shuffle=True, **kwargs)
+class MNISTDataModule(pl.LightningDataModule):
+    def __init__(self, **kwargs):
+        """
+        Initialization of inherited lightning data module
+        """
+        super(MNISTDataModule, self).__init__()
+        self.df_train = None
+        self.df_test = None
+        self.train_data_loader = None
+        self.test_data_loader = None
+        self.args = kwargs
 
-    return train_loader, test_loader
+        # transforms for images
+        self.transform = transforms.Compose(
+            [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+        )
+
+    def setup(self, stage=None):
+        """
+        Downloads the data, parse it and split the data into train, test, validation data
+        :param stage: Stage - training or testing
+        """
+        self.df_train = datasets.MNIST(
+            "dataset", download=True, train=True, transform=self.transform
+        )
+        self.df_test = datasets.MNIST(
+            "dataset", download=True, train=False, transform=self.transform
+        )
+
+    def train_dataloader(self):
+        """
+        :return: output - Train data loader for the given input
+        """
+        return DataLoader(
+            self.df_train, batch_size=self.args['training_batch_size'], num_workers=self.args["num_workers"], shuffle=True
+        )
+
+    def test_dataloader(self):
+        """
+        :return: output - Test data loader for the given input
+        """
+        return DataLoader(
+            self.df_test, batch_size=self.args['test_batch_size'], num_workers=self.args["num_workers"], shuffle=False
+        )

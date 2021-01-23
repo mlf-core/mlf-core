@@ -14,21 +14,29 @@ docker_env:
 entry_points:
   main:
     parameters:
-      cuda: {type: string, default: 'True'}
-      epochs: {type: int, default: 5}
-      general-seed: {type: int, default: 0}
-      pytorch-seed: {type: int, default: 0}
+      max_epochs: {type: int, default: 5}
+      gpus: {type: int, default: 0}
+      accelerator: {type str, default: "None"}
       training-batch-size: {type: int, default: 64}
       test-batch-size: {type: int, default: 1000}
-      learning-rate: {type: float, default: 0.01}
+      num_workers: {type: int, default: 3}
+      lr: {type: float, default: 0.01}
+      patience: {type int, default: 3}
+      mode: {type str, default: 'min'}
+      verbose: {type bool, default: True}
+      monitor: {type str, default: 'train_loss'}
       log-interval: {type: int, default: 100}
+      general-seed: {type: int, default: 0}
+      pytorch-seed: {type: int, default: 0}
     command: |
           python {{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}.py \
-            --cuda {cuda} \
-            --epochs {epochs} \
-            --general-seed {general-seed} \
-            --pytorch-seed {pytorch-seed} \
+            --max_epochs {max_epochs} \
+            --gpus {gpus} \
+            --accelerator {accelerator} \
             --training-batch-size {training-batch-size} \
             --test-batch-size {test-batch-size} \
-            --learning-rate {learning-rate} \
+            --num_workers {num_workers} \
+            --lr {lr} \
+            --general-seed {general-seed} \
+            --pytorch-seed {pytorch-seed} \
             --log-interval {log-interval}

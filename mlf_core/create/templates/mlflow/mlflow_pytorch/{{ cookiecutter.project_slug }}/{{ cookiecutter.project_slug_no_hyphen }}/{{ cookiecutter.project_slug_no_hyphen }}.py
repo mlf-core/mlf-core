@@ -2,6 +2,7 @@ import pytorch_lightning as pl
 import torch
 from argparse import ArgumentParser
 from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import TensorBoardLogger
 import mlflow
 from data_loading.data_loader import MNISTDataModule
 from model.model import LightningMNISTClassifier

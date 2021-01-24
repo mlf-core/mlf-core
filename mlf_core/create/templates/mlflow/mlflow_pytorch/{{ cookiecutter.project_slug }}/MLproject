@@ -10,6 +10,7 @@ name: {{ cookiecutter.project_slug }}
 docker_env:
   image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}
   volumes: ["${PWD}/data:/data"]
+  environment: [["MLF_CORE_DOCKER_RUN", "TRUE"]]
 
 entry_points:
   main:

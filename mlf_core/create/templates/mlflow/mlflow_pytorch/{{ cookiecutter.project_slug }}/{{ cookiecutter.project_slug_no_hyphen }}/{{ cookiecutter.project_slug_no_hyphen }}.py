@@ -61,17 +61,24 @@ if __name__ == "__main__":
     model = LightningMNISTClassifier(len_test_set=len(dm.df_test), **dict_args)
     model.log_every_n_steps = dict_args['log_interval']
 
-    checkpoint_callback = ModelCheckpoint(
-        filepath=os.getcwd(), save_top_k=1, verbose=True, monitor="train_loss", mode="min", prefix="",
-    )
+    # check, whether the run is inside a Docker container or not
+    if 'MLF_CORE_DOCKER_RUN' in os.environ:
+        checkpoint_callback = ModelCheckpoint(
+            filepath='/mlflow/tmp/mlruns', save_top_k=1, verbose=True, monitor="train_loss", mode="min", prefix="",
+        )
+        trainer = pl.Trainer.from_argparse_args(args, checkpoint_callback=checkpoint_callback, default_root_dir='/data', logger=TensorBoardLogger('/data'))
+        tensorboard_output_path = f'data/default/version_{trainer.logger.version}'
+    else:
+        checkpoint_callback = ModelCheckpoint(
+            filepath=os.getcwd(), save_top_k=1, verbose=True, monitor="train_loss", mode="min", prefix="",
+        )
+        trainer = pl.Trainer.from_argparse_args(args, checkpoint_callback=checkpoint_callback)
+        tensorboard_output_path = f'{os.getcwd()}/lightning_logs/version_{trainer.logger.version}'
 
-    trainer = pl.Trainer.from_argparse_args(
-        args, checkpoint_callback=checkpoint_callback
-    )
     trainer.deterministic = True
     trainer.benchmark = False
     trainer.log_every_n_steps = dict_args['log_interval']
     trainer.fit(model, dm)
     trainer.test()
-    print(f'\n[bold blue]For tensorboard log, call [bold green]tensorboard --logdir='
-          f'{os.getcwd()}/lightning_logs/version_{trainer.logger.version}')
+    print(f'\n[bold blue]For tensorboard log, call [bold green]tensorboard --logdir={tensorboard_output_path}')
+

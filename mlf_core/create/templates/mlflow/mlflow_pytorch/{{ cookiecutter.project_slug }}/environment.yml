@@ -7,15 +7,15 @@ dependencies:
   - defaults::cudatoolkit=10.1
   - defaults::python=3.8.2
   - conda-forge::tensorboardx=2.1
-  - pytorch::pytorch=1.6.0=py3.7_cuda10.1.243_cudnn7.6.3_0
-  - pytorch::torchvision=0.7.0=py37_cu101
+  - conda-forge::mlflow=1.13.1
+  - conda-forge::rich=9.9.0
+  - pytorch::pytorch=1.6.0
+  - pytorch::torchvision=0.7.0
   - pytorch-lightning==1.0.2
   - torchvision=0.7.0
   - pip
   - pip:
     - pycuda==2019.1.2  # not on Conda
-    - mlflow==1.13.1
     - cloudpickle==1.6.0
     - boto3==1.16.58
-    - system-intelligence==2.0.1
-    - rich==9.6.1
+    - system-intelligence==2.0.2

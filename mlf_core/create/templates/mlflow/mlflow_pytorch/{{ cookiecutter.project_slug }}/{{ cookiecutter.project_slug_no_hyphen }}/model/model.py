@@ -113,9 +113,10 @@ class LightningMNISTClassifier(pl.LightningModule):
         avg_test_acc = torch.stack([test_output["test_acc"] for test_output in outputs]).mean()
         avg_test_loss = sum([test_output["test_loss"] for test_output in outputs])/self.len_test_set
         test_correct = sum([test_output["correct"] for test_output in outputs])
-        self.log("avg_test_acc", avg_test_acc, sync_dist=True)
-        self.log("avg_test_loss", avg_test_loss, sync_dist=True)
-        self.log("test_correct", test_correct, sync_dist=True)
+        # TODO: fix sync_dist; see https://github.com/PyTorchLightning/pytorch-lightning/issues/5641
+        self.log("avg_test_acc", avg_test_acc)
+        self.log("avg_test_loss", avg_test_loss)
+        self.log("test_correct", test_correct)
 
     def prepare_data(self):
         """

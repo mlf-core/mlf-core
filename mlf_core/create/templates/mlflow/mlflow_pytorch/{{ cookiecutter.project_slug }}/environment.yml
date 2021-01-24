@@ -11,7 +11,7 @@ dependencies:
   - conda-forge::rich=9.9.0
   - pytorch::pytorch=1.6.0
   - pytorch::torchvision=0.7.0
-  - pytorch-lightning==1.0.2
+  - pytorch-lightning==1.1.5
   - torchvision=0.7.0
   - pip
   - pip:

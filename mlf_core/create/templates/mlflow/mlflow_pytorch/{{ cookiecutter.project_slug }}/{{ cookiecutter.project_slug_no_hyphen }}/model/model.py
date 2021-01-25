@@ -23,6 +23,8 @@ class LightningMNISTClassifier(pl.LightningModule):
         self.fc2 = torch.nn.Linear(128, 10)
         self.args = kwargs
         self.len_test_set = len_test_set
+        self.train_acc = pl.metrics.Accuracy()
+        self.test_acc = pl.metrics.Accuracy()
 
     @staticmethod
     def add_model_specific_args(parent_parser):
@@ -71,16 +73,18 @@ class LightningMNISTClassifier(pl.LightningModule):
         x, y = train_batch
         logits = self.forward(x)
         loss = self.cross_entropy_loss(logits, y)
-        return {"loss": loss}
+        self.train_acc(logits, y)
+        self.log('train_acc', self.train_acc, on_step = True, on_epoch = True)
+        return {'loss': loss}
 
     def training_epoch_end(self, training_step_outputs):
         """
         Bla
         """
         train_avg_loss = torch.stack([train_output["loss"] for train_output in training_step_outputs]).mean()
-        self.log("train_loss", train_avg_loss)
+        self.log("train_avg_loss", train_avg_loss, sync_dist=True)
 
-    def test_step(self, test_batch, batch_idx):
+def test_step(self, test_batch, batch_idx):
         """
         Predicts on the test dataset to compute the current accuracy of the model.
 
@@ -93,14 +97,15 @@ class LightningMNISTClassifier(pl.LightningModule):
         x, y = test_batch
         output = self.forward(x)
         _, y_hat = torch.max(output, dim=1)
-        test_acc = accuracy(y_hat.cpu(), y.cpu())
+        self.test_acc(y_hat, y)
+        self.log('test_acc', self.test_acc, on_step=False, on_epoch=True)
         # sum up batch loss
         data, target = Variable(x), Variable(y)
         test_loss = F.nll_loss(output, target, reduction='sum').data.item()
         # get the index of the max log-probability
         pred = output.data.max(1)[1]
-        correct = pred.eq(target.data).cpu().sum().item()
-        return {"test_acc": test_acc, "test_loss": test_loss, "correct": correct}
+        correct = pred.eq(target.data).sum()
+        return {"test_loss": test_loss, "correct": correct}
 
     def test_epoch_end(self, outputs):
         """
@@ -110,13 +115,10 @@ class LightningMNISTClassifier(pl.LightningModule):
 
         :return: output - average test loss
         """
-        avg_test_acc = torch.stack([test_output["test_acc"] for test_output in outputs]).mean()
-        avg_test_loss = sum([test_output["test_loss"] for test_output in outputs])/self.len_test_set
-        test_correct = sum([test_output["correct"] for test_output in outputs])
-        # TODO: fix sync_dist; see https://github.com/PyTorchLightning/pytorch-lightning/issues/5641
-        self.log("avg_test_acc", avg_test_acc)
-        self.log("avg_test_loss", avg_test_loss)
-        self.log("test_correct", test_correct)
+        avg_test_loss = sum([test_output["test_loss"] for test_output in outputs]) / self.len_test_set
+        test_correct = float(sum([test_output["correct"] for test_output in outputs]))
+        self.log("avg_test_loss", avg_test_loss, sync_dist=True)
+        self.log("test_correct", test_correct, sync_dist=True)
 
     def prepare_data(self):
         """

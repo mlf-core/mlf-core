@@ -84,7 +84,7 @@ class LightningMNISTClassifier(pl.LightningModule):
         train_avg_loss = torch.stack([train_output["loss"] for train_output in training_step_outputs]).mean()
         self.log("train_avg_loss", train_avg_loss, sync_dist=True)
 
-def test_step(self, test_batch, batch_idx):
+    def test_step(self, test_batch, batch_idx):
         """
         Predicts on the test dataset to compute the current accuracy of the model.
 
@@ -132,5 +132,11 @@ def test_step(self, test_batch, batch_idx):
 
         :return: output - Initialized optimizer and scheduler
         """
-        self.optimizer = torch.optim.Adam(self.parameters())
-        return [self.optimizer]
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=self.args["lr"])
+        self.scheduler = {
+            "scheduler": torch.optim.lr_scheduler.ReduceLROnPlateau(
+                self.optimizer, mode="min", factor=0.2, patience=2, min_lr=1e-6, verbose=True,
+            ),
+            "monitor": "train_avg_loss",
+        }
+        return [self.optimizer], [self.scheduler]

@@ -137,6 +137,6 @@ class LightningMNISTClassifier(pl.LightningModule):
             "scheduler": torch.optim.lr_scheduler.ReduceLROnPlateau(
                 self.optimizer, mode="min", factor=0.2, patience=2, min_lr=1e-6, verbose=True,
             ),
-            "monitor": "train_avg_loss",
+            "monitor": "train_loss",
         }
         return [self.optimizer], [self.scheduler]

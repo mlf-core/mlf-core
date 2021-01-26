@@ -12,12 +12,12 @@ from data_loading.data_loader import load_train_test_data
 
 
 @click.command()
-@click.option('--epochs', type=int, default=5, help='Number of epochs to train')
+@click.option('--max_epochs', type=int, default=25, help='Number of epochs to train')
 @click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
 @click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--cuda', type=click.Choice(['True', 'False']), default=True, help='Enable or disable CUDA support.')
 @click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
-def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_histogram):
+def start_training(max_epochs, general_seed, xgboost_seed, cuda, single_precision_histogram):
     avail_gpus = GPUtil.getGPUs()
     use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
     if use_cuda:
@@ -53,7 +53,7 @@ def start_training(epochs, general_seed, xgboost_seed, cuda, single_precision_hi
         # Train on the chosen device
         results = {}
         runtime = time.time()
-        xgb.train(param, dtrain, epochs, evals=[(dtest, 'test')], evals_result=results)
+        xgb.train(param, dtrain, max_epochs, evals=[(dtest, 'test')], evals_result=results)
         device = 'GPU' if use_cuda else 'CPU'
         if use_cuda:
             click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))

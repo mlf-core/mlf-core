@@ -14,9 +14,9 @@ def set_general_random_seeds(seed):
     random.seed(seed)  # Python random
 
 
-def set_pytorch_random_seeds(seed, use_cuda):
+def set_pytorch_random_seeds(seed, num_gpus):
     torch.manual_seed(seed)
-    if use_cuda:
+    if num_gpus > 0:
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)  # For multiGPU
 

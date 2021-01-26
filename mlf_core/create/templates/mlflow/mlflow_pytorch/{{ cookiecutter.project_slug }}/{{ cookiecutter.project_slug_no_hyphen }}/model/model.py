@@ -2,7 +2,6 @@ from torch.autograd import Variable
 import pytorch_lightning as pl
 import torch
 from argparse import ArgumentParser
-from pytorch_lightning.metrics.functional import accuracy
 from torch.nn import functional as F
 
 
@@ -74,7 +73,7 @@ class LightningMNISTClassifier(pl.LightningModule):
         logits = self.forward(x)
         loss = self.cross_entropy_loss(logits, y)
         self.train_acc(logits, y)
-        self.log('train_acc', self.train_acc, on_step = True, on_epoch = True)
+        self.log('train_acc', self.train_acc, on_step=True, on_epoch=True)
         return {'loss': loss}
 
     def training_epoch_end(self, training_step_outputs):
@@ -100,7 +99,7 @@ class LightningMNISTClassifier(pl.LightningModule):
         self.test_acc(y_hat, y)
         self.log('test_acc', self.test_acc, on_step=False, on_epoch=True)
         # sum up batch loss
-        data, target = Variable(x), Variable(y)
+        data, target = Variable(x), Variable(y)  # noqa: F841
         test_loss = F.nll_loss(output, target, reduction='sum').data.item()
         # get the index of the max log-probability
         pred = output.data.max(1)[1]

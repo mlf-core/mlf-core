@@ -1,5 +1,4 @@
 import pytorch_lightning as pl
-import torch
 from argparse import ArgumentParser
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -31,14 +30,6 @@ if __name__ == "__main__":
         default=100,
         help="log interval (default: 100)",
     )
-
-    # Set GPU settings
-    # click option cuda
-    use_cuda = (True if 'True' == 'True' else False) and torch.cuda.is_available()
-    device = torch.device("cuda" if use_cuda else "cpu")
-    if use_cuda and torch.cuda.device_count() > 0:
-        print(f'[bold blue]Using {torch.cuda.device_count()} GPUs!')
-
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)
 
@@ -48,9 +39,12 @@ if __name__ == "__main__":
     # parse cli arguments
     args = parser.parse_args()
     dict_args = vars(args)
-
-    set_general_random_seeds(dict_args['general_seed'])
-    set_pytorch_random_seeds(dict_args['pytorch_seed'], True)
+    # store seed and number of gpus to make linter bit less restrict in terms of naming
+    general_seed = dict_args['general_seed']
+    pytorch_seed = dict_args['pytorch_seed']
+    num_of_gpus = dict_args['gpus']
+    set_general_random_seeds(general_seed)
+    set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
 
     if "accelerator" in dict_args:
         if dict_args["accelerator"] == "None":
@@ -86,4 +80,3 @@ if __name__ == "__main__":
     trainer.fit(model, dm)
     trainer.test()
     print(f'\n[bold blue]For tensorboard log, call [bold green]tensorboard --logdir={tensorboard_output_path}')
-

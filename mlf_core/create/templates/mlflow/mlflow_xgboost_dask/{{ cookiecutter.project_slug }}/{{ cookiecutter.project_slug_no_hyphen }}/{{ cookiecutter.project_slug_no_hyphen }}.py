@@ -19,11 +19,11 @@ from rich import traceback
 @click.command()
 @click.option('--cuda', type=click.Choice(['True', 'False']), default=True, help='Enable or disable CUDA support.')
 @click.option('--n-workers', type=int, default=2, help='Number of workers. Equivalent to number of GPUs.')
-@click.option('--epochs', type=int, default=5, help='Number of epochs to train')
+@click.option('--max_epochs', type=int, default=25, help='Number of epochs to train')
 @click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
 @click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
 @click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
-def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_precision_histogram):
+def start_training(cuda, n_workers, max_epochs, general_seed, xgboost_seed, single_precision_histogram):
     avail_gpus = GPUtil.getGPUs()
     use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
     if use_cuda:
@@ -68,7 +68,7 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 trained_xgboost_model = xgb.dask.train(client,
                                                        param,
                                                        dtrain,
-                                                       num_boost_round=epochs,
+                                                       num_boost_round=max_epochs,
                                                        evals=[(dtest, 'test')])
                 mlflow.xgboost.log_model(trained_xgboost_model['booster'], 'model')
                 mlflow.log_metric('test mlogloss', trained_xgboost_model['history']['test']['mlogloss'][-1])

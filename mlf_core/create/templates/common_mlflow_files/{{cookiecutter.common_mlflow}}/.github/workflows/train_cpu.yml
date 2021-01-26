@@ -30,4 +30,4 @@ jobs:
         run: pip install mlflow
 
       - name: Train on the CPU
-        run: mlflow run . -P epochs=2
+        run: mlflow run . -P max_epochs=2

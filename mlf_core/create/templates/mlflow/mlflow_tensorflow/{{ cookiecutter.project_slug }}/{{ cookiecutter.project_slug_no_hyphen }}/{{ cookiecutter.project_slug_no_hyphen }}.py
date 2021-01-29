@@ -1,11 +1,10 @@
-import click
+from argparse import ArgumentParser
 import tensorflow as tf
 import mlflow
 import mlflow.tensorflow
 import os
 import time
-
-from rich import traceback
+from rich import traceback, print
 
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 from data_loading.data_loader import load_train_test_data
@@ -13,17 +12,54 @@ from model.model import create_model
 from training.train import train, test
 
 
-@click.command()
-@click.option('--cuda', type=bool, default=True, help='Enable or disable CUDA support')
-@click.option('--epochs', type=int, default=10, help='Number of epochs to train')
-@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--tensorflow-seed', type=int, default=0, help='Tensorflow specific random seed.')
-@click.option('--batch-size', type=int, default=64, help='Input batch size for training and testing')
-@click.option('--buffer-size', type=int, default=10000, help='Buffer size for Mirrored Training')
-@click.option('--learning-rate', type=float, default=0.01, help='Learning rate')
-def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buffer_size, learning_rate):
+def start_training():
+    parser = ArgumentParser(description='Tensorflow example')
+    parser.add_argument(
+        '--cuda',
+        type=bool,
+        default=True,
+        help='Enable or disable CUDA support',
+    )
+    parser.add_argument(
+        '--max_epochs',
+        type=int,
+        default=10,
+        help='Number of epochs to train',
+    )
+    parser.add_argument(
+        '--general-seed',
+        type=int,
+        default=0,
+        help='General Python, Python random and Numpy seed.',
+    )
+    parser.add_argument(
+        '--tensorflow-seed',
+        type=int,
+        default=0,
+        help='Tensorflow specific random seed.',
+    )
+    parser.add_argument(
+        '--batch-size',
+        type=int,
+        default=64,
+        help='Input batch size for training and testing',
+    )
+    parser.add_argument(
+        '--buffer-size',
+        type=int,
+        default=10000,
+        help='Buffer size for Mirrored Training',
+    )
+    parser.add_argument(
+        '--lr',
+        type=float,
+        default=0.01,
+        help='Learning rate',
+    )
+    args = parser.parse_args()
+    dict_args = vars(args)
     # Disable GPU support if no GPUs are supposed to be used
-    if not cuda:
+    if not dict_args['cuda']:
         tf.config.set_visible_devices([], 'GPU')
 
     with mlflow.start_run():
@@ -31,37 +67,36 @@ def start_training(cuda, epochs, general_seed, tensorflow_seed, batch_size, buff
         mlflow.tensorflow.autolog()
 
         # Fix all random seeds and Tensorflow specific reproducibility settings
-        set_general_random_seeds(general_seed)
-        set_tensorflow_random_seeds(tensorflow_seed)
+        set_general_random_seeds(dict_args["general_seed"])
+        set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
 
         # Use Mirrored Strategy for multi GPU support
         strategy = tf.distribute.MirroredStrategy()
-        click.echo(click.style(f'Number of devices: {strategy.num_replicas_in_sync}', fg='blue'))
+        print(f'[bold blue]Number of devices: {strategy.num_replicas_in_sync}')
 
         # Fetch and prepare dataset
-        train_dataset, eval_dataset = load_train_test_data(strategy, batch_size, buffer_size, tensorflow_seed)
+        train_dataset, eval_dataset = load_train_test_data(strategy, dict_args['batch_size'], dict_args['buffer_size'], dict_args['tensorflow_seed'])
 
         with strategy.scope():
             # Define model and compile model
             model = create_model(input_shape=(28, 28, 1))
             model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                          optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+                          optimizer=tf.keras.optimizers.Adam(learning_rate=dict_args['lr']),
                           metrics=['accuracy'])
 
             # Train and evaluate the trained model
             runtime = time.time()
-            train(model, epochs, train_dataset)
+            train(model, dict_args['max_epochs'], train_dataset)
             eval_loss, eval_acc = test(model, eval_dataset)
-            click.echo(f'Test loss: {eval_loss}, Test Accuracy: {eval_acc}')
+            print(f'Test loss: {eval_loss}, Test Accuracy: {eval_acc}')
 
-            device = 'GPU' if cuda else 'CPU'
-            click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
+            device = 'GPU' if dict_args['cuda'] else 'CPU'
+            print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
             # Log hardware and software
             log_sys_intel_conda_env()
 
-            click.echo(click.style(f'\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}',
-                                   fg='blue'))
+            print(f'[bold blue]\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}')
 
 
 def set_tensorflow_random_seeds(seed):

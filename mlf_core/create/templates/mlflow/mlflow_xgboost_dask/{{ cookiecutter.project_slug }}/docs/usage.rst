@@ -41,7 +41,7 @@ Parameters
 +++++++++++++++
 
 - cuda:                       Whether to train with CUDA support (=GPU)                   ['True': string]
-- epochs:                     Number of epochs to train                                   [25:        int]
+- max_epochs:                 Number of epochs to train                                   [25:        int]
 - general-seed:               Python, Random, Numpy seed                                  [0:         int]
 - xgboost-seed:               XGBoost specific seed                                       [0:         int]
 - single-precision-histogram  Whether to enable `single precision for histogram building <https://xgboost.readthedocs.io/en/latest/parameter.html#additional-parameters-for-hist-and-gpu-hist-tree-method>`_ ['True': string]

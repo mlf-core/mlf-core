@@ -1,35 +1,66 @@
-import click
+from argparse import ArgumentParser
 import xgboost as xgb
 import time
 import mlflow
 import GPUtil
 import mlflow.xgboost
-
+from rich import traceback, print
 from dask_cuda import LocalCUDACluster
 from dask.distributed import LocalCluster, Client
 from dask import array as da
 from xgboost.dask import DaskDMatrix
 from sklearn.datasets import fetch_covtype
 from dask_ml.model_selection import train_test_split
+
 from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
 
-from rich import traceback
 
-
-@click.command()
-@click.option('--cuda', type=click.Choice(['True', 'False']), default=True, help='Enable or disable CUDA support.')
-@click.option('--n-workers', type=int, default=2, help='Number of workers. Equivalent to number of GPUs.')
-@click.option('--epochs', type=int, default=5, help='Number of epochs to train')
-@click.option('--general-seed', type=int, default=0, help='General Python, Python random and Numpy seed.')
-@click.option('--xgboost-seed', type=int, default=0, help='XGBoost specific random seed.')
-@click.option('--single-precision-histogram', default=True, help='Enable or disable single precision histogram calculation.')
-def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_precision_histogram):
+def start_training():
+    parser = ArgumentParser(description='XGBoost Dask example')
+    parser.add_argument(
+        '--max_epochs',
+        type=int,
+        default=25,
+        help='Number of epochs to train',
+    )
+    parser.add_argument(
+        '--general-seed',
+        type=int,
+        default=0,
+        help='General Python, Python random and Numpy seed.',
+    )
+    parser.add_argument(
+        '--xgboost-seed',
+        type=int,
+        default=0,
+        help='XGBoost specific random seed.',
+    )
+    parser.add_argument(
+        '--cuda',
+        type=bool,
+        default=True,
+        help='Enable or disable CUDA support.',
+    )
+    parser.add_argument(
+        '--n-workers',
+        type=int,
+        default=2,
+        help='Number of workers. Equivalent to number of GPUs.',
+    )
+    parser.add_argument(
+        '--single-precision-histogram',
+        type=bool,
+        default=True,
+        help='Enable or disable single precision histogram calculation.',
+    )
     avail_gpus = GPUtil.getGPUs()
-    use_cuda = True if cuda == 'True' and len(avail_gpus) > 0 else False
+    args = parser.parse_args()
+    dict_args = vars(args)
+    use_cuda = True if dict_args['cuda'] == 'True' and len(avail_gpus) > 0 else False
     if use_cuda:
-        click.echo(click.style(f'Using {len(avail_gpus)} GPUs!', fg='blue'))
+        print(f'[bold blue]Using {len(avail_gpus)} GPUs!')
     else:
-        click.echo(click.style('No GPUs detected. Running on the CPU', fg='blue'))
+        print('[bold blue]No GPUs detected. Running on the CPU')
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
@@ -37,9 +68,9 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
 
         # Setup a Dask cluster to facilitate multiCPU/multiGPU training
         if use_cuda:
-            cluster = LocalCUDACluster(n_workers=n_workers, threads_per_worker=1)
+            cluster = LocalCUDACluster(n_workers=dict_args['n_workers'], threads_per_worker=1)
         else:
-            cluster = LocalCluster(n_workers=n_workers, threads_per_worker=1)
+            cluster = LocalCluster(n_workers=dict_args['n_workers'], threads_per_worker=1)
         with cluster as cluster:
             with Client(cluster) as client:
                 # Fetch and prepare data
@@ -48,15 +79,15 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 # Set XGBoost parameters
                 param = {'objective': 'multi:softmax',
                          'num_class': 8,
-                         'single_precision_histogram': True if single_precision_histogram == 'True' else False,
+                         'single_precision_histogram': True if dict_args['single_precision_histogram'] == 'True' else False,
                          'subsample': 0.5,
                          'colsample_bytree': 0.5,
                          'colsample_bylevel': 0.5,
                          'verbosity': 2}
 
                 # Set random seeds
-                set_general_random_seeds(general_seed)
-                set_xgboost_dask_random_seeds(xgboost_seed, param)
+                set_general_random_seeds(dict_args["general_seed"])
+                set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
 
                 # Set CPU or GPU as training device
                 if use_cuda:
@@ -68,15 +99,15 @@ def start_training(cuda, n_workers, epochs, general_seed, xgboost_seed, single_p
                 trained_xgboost_model = xgb.dask.train(client,
                                                        param,
                                                        dtrain,
-                                                       num_boost_round=epochs,
+                                                       num_boost_round=dict_args['max_epochs'],
                                                        evals=[(dtest, 'test')])
                 mlflow.xgboost.log_model(trained_xgboost_model['booster'], 'model')
                 mlflow.log_metric('test mlogloss', trained_xgboost_model['history']['test']['mlogloss'][-1])
-                click.echo(trained_xgboost_model['history'])
+                print(trained_xgboost_model['history'])
 
                 device = 'GPU' if use_cuda else 'CPU'
                 if use_cuda:
-                    click.echo(click.style(f'{device} Run Time: {str(time.time() - runtime)} seconds', fg='green'))
+                    print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
                 # Log hardware and software
                 log_sys_intel_conda_env()

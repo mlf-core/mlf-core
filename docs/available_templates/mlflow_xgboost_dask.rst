@@ -13,7 +13,7 @@ Design
 ^^^^^^^^
 
 The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.
+As required a MLproject file serves as entry point and for parameter definitions.
 
 .. code::
 

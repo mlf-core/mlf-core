@@ -71,26 +71,39 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.benchmark = False
         """
         passed_pytorch_reproducibility_seeds = True
+        passed_pytorch_reproducibility_seeds_mlf_core = True
         entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
+        mlf_core_file_path = f'{self.path}/{self.project_slug_no_hyphen}/mlf_core/mlf_core.py'
         with open(entry_point_file_path) as f:
-            project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
+            project_slug_entry_point_content = set(map(lambda line: line.strip(), f.readlines()))
+        with open(mlf_core_file_path) as f:
+            mlf_core_content = set(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_pytorch_reproducibility = ['def set_pytorch_random_seeds(seed, use_cuda):',
-                                                  'torch.manual_seed(seed)',
-                                                  'torch.cuda.manual_seed(seed)',
-                                                  'torch.cuda.manual_seed_all(seed)  # For multiGPU',
-                                                  'torch.backends.cudnn.deterministic = True',
-                                                  'torch.backends.cudnn.benchmark = False',
+        expected_lines_pytorch_reproducibility = ['trainer.deterministic = True',
+                                                  'trainer.benchmark = False',
                                                   'set_general_random_seeds(general_seed)',
-                                                  'set_pytorch_random_seeds(pytorch_seed, use_cuda=use_cuda)']
+                                                  'set_pytorch_random_seeds(pytorch_seed, num_of_gpus)']
 
+        expected_lines_pytorch_mlf_core = ['torch.manual_seed(seed)',
+                                           'torch.cuda.manual_seed(seed)',
+                                           'torch.cuda.manual_seed_all(seed)  # For multiGPU']
+
+        # check for existence of all required entry point files lines for reproducibility
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:
                 passed_pytorch_reproducibility_seeds = False
                 self.failed.append(('mlflow-pytorch-2', f'{expected_line} not found in {entry_point_file_path}'))
 
-        if passed_pytorch_reproducibility_seeds:
+        # check for existence of required mlf_core lines
+        for expected_line in expected_lines_pytorch_mlf_core:
+            if expected_line not in mlf_core_content:
+                passed_pytorch_reproducibility_seeds_mlf_core = False
+                self.failed.append(('mlflow-pytorch-3', f'{expected_line} not found in {entry_point_file_path}'))
+
+        # only pass linting when all seeds and mlf_core settings are set
+        if passed_pytorch_reproducibility_seeds and passed_pytorch_reproducibility_seeds_mlf_core:
             self.passed.append(('mlflow-pytorch-2', 'All required reproducibility settings enabled.'))
+            self.passed.append(('mlflow-pytorch-3', 'All required reproducibility mlf_core settings enabled.'))
 
     def pytorch_no_atomic_operations(self) -> None:
         """
@@ -113,18 +126,53 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         """
         atomic_add_functions = [
             'index_add',
+            'index_select',
             'scatter_add',
             'bincount',
             'embedding_bag',
-            'ctc_loss',
             'interpolate',
             'repeat_interleave',
-            'index_select'
+            'histc'
+            'AvgPool3d',
+            'AdaptiveAvgPool2d',
+            'AdaptiveAvgPool3d',
+            'MaxPool3d',
+            'AdaptiveMaxPool2d',
+            'FractionalMaxPool2d',
+            'FractionalMaxPool3d',
+            'ReflectionPad1d',
+            'ReflectionPad2d',
+            'ReplicationPad1d',
+            'ReplicationPad2d'
+            'ReplicationPad3d',
+            'NLLLoss',
+            'CTCLoss',
+            'EmbeddingBag'
+
+            # interpolate when called on a CUDA tensor that requires grad and one of the following modes is used: - linear - bilinear - bicubic - trilinear
+            # TODO COOKIETEMPLE: This should ideally be solved with a nice regex, which would also help when people have several parameters
+            'interpolate(\'linear\')',
+            'interpolate(\"linear\")',
+            'interpolate(mode=\'linear\')',
+            'interpolate(mode=\"linear\")',
+
+            'interpolate(\'bilinear\')',
+            'interpolate(\"bilinear\")',
+            'interpolate(mode=\'bilinear\')',
+            'interpolate(mode=\"bilinear\")',
+
+            'interpolate(bicubic\'bicubic\')',
+            'interpolate(\"bicubic\")',
+            'interpolate(mode=\'bicubic\')',
+            'interpolate(mode=\"bicubic\")',
+
+            'interpolate(bicubic\'trilinear\')',
+            'interpolate(\"trilinear\")',
+            'interpolate(mode=\'trilinear\')',
+            'interpolate(mode=\"trilinear\")',
         ]
 
         verify_method_not_present(self, atomic_add_functions, 'mlflow-pytorch-3')
-
-        # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
 
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
@@ -195,8 +243,8 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only',
                                                   'tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only',
                                                   'os.environ[\'TF_DETERMINISTIC_OPS\'] = \'1\'',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_tensorflow_random_seeds(tensorflow_seed)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_tensorflow_random_seeds(dict_args["tensorflow_seed"])']
 
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -286,8 +334,8 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
                                                   'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_xgboost_random_seeds(xgboost_seed, param)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -398,8 +446,8 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         expected_lines_xgboost_reproducibility = ['def set_xgboost_dask_random_seeds(seed, param):',
                                                   'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_xgboost_dask_random_seeds(xgboost_seed, param)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:

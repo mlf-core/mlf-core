@@ -11,24 +11,24 @@ from rich import print
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="PyTorch Autolog Mnist Example")
+    parser = ArgumentParser(description='PyTorch Autolog Mnist Example')
     parser.add_argument(
-        "--general-seed",
+        '--general-seed',
         type=int,
         default=0,
-        help="General random seed",
+        help='General random seed',
     )
     parser.add_argument(
-        "--pytorch-seed",
+        '--pytorch-seed',
         type=int,
         default=0,
-        help="Random seed of all Pytorch functions",
+        help='Random seed of all Pytorch functions',
     )
     parser.add_argument(
-        "--log-interval",
+        '--log-interval',
         type=int,
         default=100,
-        help="log interval of stdout",
+        help='log interval of stdout',
     )
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)
@@ -46,12 +46,12 @@ if __name__ == "__main__":
     set_general_random_seeds(general_seed)
     set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
 
-    if "accelerator" in dict_args:
-        if dict_args["accelerator"] == "None":
-            dict_args["accelerator"] = None
-        elif dict_args["accelerator"] != "ddp":
+    if 'accelerator' in dict_args:
+        if dict_args['accelerator'] == 'None':
+            dict_args['accelerator'] = None
+        elif dict_args['accelerator'] != 'ddp':
             print(f"[bold red]{dict_args['accelerator']}[bold blue] currently not supported. Switching to [bold green]ddp!")
-            dict_args["accelerator"] = "ddp"
+            dict_args['accelerator'] = 'ddp'
 
     dm = MNISTDataModule(**dict_args)
 
@@ -62,15 +62,11 @@ if __name__ == "__main__":
 
     # check, whether the run is inside a Docker container or not
     if 'MLF_CORE_DOCKER_RUN' in os.environ:
-        checkpoint_callback = ModelCheckpoint(
-            filepath='/mlflow/tmp/mlruns', save_top_k=1, verbose=True, monitor="train_avg_loss", mode="min", prefix="",
-        )
+        checkpoint_callback = ModelCheckpoint(filepath='/mlflow/tmp/mlruns', save_top_k=1, verbose=True, monitor="train_avg_loss", mode="min", prefix="",)
         trainer = pl.Trainer.from_argparse_args(args, checkpoint_callback=checkpoint_callback, default_root_dir='/data', logger=TensorBoardLogger('/data'))
         tensorboard_output_path = f'data/default/version_{trainer.logger.version}'
     else:
-        checkpoint_callback = ModelCheckpoint(
-            filepath=os.getcwd(), save_top_k=1, verbose=True, monitor="train_avg_loss", mode="min", prefix="",
-        )
+        checkpoint_callback = ModelCheckpoint(filepath=os.getcwd(), save_top_k=1, verbose=True, monitor="train_avg_loss", mode="min", prefix="",)
         trainer = pl.Trainer.from_argparse_args(args, checkpoint_callback=checkpoint_callback)
         tensorboard_output_path = f'{os.getcwd()}/lightning_logs/version_{trainer.logger.version}'
 

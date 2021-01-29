@@ -13,48 +13,48 @@ from training.train import train, test
 
 
 def start_training():
-    parser = ArgumentParser(description="Tensorflow")
+    parser = ArgumentParser(description='Tensorflow example')
     parser.add_argument(
-        "--cuda",
+        '--cuda',
         type=bool,
         default=True,
-        help="Enable or disable CUDA support",
+        help='Enable or disable CUDA support',
     )
     parser.add_argument(
-        "--max_epochs",
+        '--max_epochs',
         type=int,
         default=10,
-        help="Number of epochs to train",
+        help='Number of epochs to train',
     )
     parser.add_argument(
-        "--general-seed",
+        '--general-seed',
         type=int,
         default=0,
-        help="General Python, Python random and Numpy seed.",
+        help='General Python, Python random and Numpy seed.',
     )
     parser.add_argument(
-        "--tensorflow-seed",
+        '--tensorflow-seed',
         type=int,
         default=0,
-        help="Tensorflow specific random seed.",
+        help='Tensorflow specific random seed.',
     )
     parser.add_argument(
-        "--batch-size",
+        '--batch-size',
         type=int,
         default=64,
-        help="Input batch size for training and testing",
+        help='Input batch size for training and testing',
     )
     parser.add_argument(
-        "--buffer-size",
+        '--buffer-size',
         type=int,
         default=10000,
-        help="Buffer size for Mirrored Training",
+        help='Buffer size for Mirrored Training',
     )
     parser.add_argument(
-        "--lr",
+        '--lr',
         type=float,
         default=0.01,
-        help="Learning rate",
+        help='Learning rate',
     )
     args = parser.parse_args()
     dict_args = vars(args)

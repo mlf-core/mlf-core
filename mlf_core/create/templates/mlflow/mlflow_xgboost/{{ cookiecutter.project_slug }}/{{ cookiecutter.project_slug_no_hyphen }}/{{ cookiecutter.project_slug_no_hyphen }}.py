@@ -11,36 +11,36 @@ from data_loading.data_loader import load_train_test_data
 
 
 def start_training():
-    parser = ArgumentParser(description="XGBoost Example")
+    parser = ArgumentParser(description='XGBoost Example')
     parser.add_argument(
-        "--max_epochs",
+        '--max_epochs',
         type=int,
         default=25,
-        help="Number of epochs to train",
+        help='Number of epochs to train',
     )
     parser.add_argument(
-        "--general-seed",
+        '--general-seed',
         type=int,
         default=0,
-        help="General Python, Python random and Numpy seed.",
+        help='General Python, Python random and Numpy seed.',
     )
     parser.add_argument(
-        "--xgboost-seed",
+        '--xgboost-seed',
         type=int,
         default=0,
-        help="XGBoost specific random seed.",
+        help='XGBoost specific random seed.',
     )
     parser.add_argument(
-        "--cuda",
+        '--cuda',
         type=bool,
         default=True,
-        help="Enable or disable CUDA support.",
+        help='Enable or disable CUDA support.',
     )
     parser.add_argument(
-        "--single-precision-histogram",
+        '--single-precision-histogram',
         type=bool,
         default=True,
-        help="Enable or disable single precision histogram calculation.",
+        help='Enable or disable single precision histogram calculation.',
     )
     avail_gpus = GPUtil.getGPUs()
     args = parser.parse_args()

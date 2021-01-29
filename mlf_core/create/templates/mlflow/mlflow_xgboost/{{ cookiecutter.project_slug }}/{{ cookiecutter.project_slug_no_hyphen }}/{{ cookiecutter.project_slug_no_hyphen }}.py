@@ -67,8 +67,8 @@ def start_training():
                  'colsample_bylevel': 0.5}
 
         # Set random seeds
-        set_general_random_seeds(dict_args['general_seed'])
-        set_xgboost_random_seeds(dict_args['xgboost_seed'], param)
+        set_general_random_seeds(dict_args["general_seed"])
+        set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
 
         # Set CPU or GPU as training device
         if use_cuda:

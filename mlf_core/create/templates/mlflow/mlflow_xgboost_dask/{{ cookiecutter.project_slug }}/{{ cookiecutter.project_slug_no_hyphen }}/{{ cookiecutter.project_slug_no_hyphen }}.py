@@ -86,8 +86,8 @@ def start_training():
                          'verbosity': 2}
 
                 # Set random seeds
-                set_general_random_seeds(dict_args['general_seed'])
-                set_xgboost_dask_random_seeds(dict_args['xgboost_seed'], param)
+                set_general_random_seeds(dict_args["general_seed"])
+                set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
 
                 # Set CPU or GPU as training device
                 if use_cuda:

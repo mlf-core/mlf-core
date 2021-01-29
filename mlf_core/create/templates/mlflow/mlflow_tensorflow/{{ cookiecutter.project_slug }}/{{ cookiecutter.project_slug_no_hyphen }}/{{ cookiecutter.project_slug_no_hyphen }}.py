@@ -67,8 +67,8 @@ def start_training():
         mlflow.tensorflow.autolog()
 
         # Fix all random seeds and Tensorflow specific reproducibility settings
-        set_general_random_seeds(dict_args['general_seed'])
-        set_tensorflow_random_seeds(dict_args['tensorflow_seed'])
+        set_general_random_seeds(dict_args["general_seed"])
+        set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
 
         # Use Mirrored Strategy for multi GPU support
         strategy = tf.distribute.MirroredStrategy()

@@ -243,8 +243,8 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only',
                                                   'tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only',
                                                   'os.environ[\'TF_DETERMINISTIC_OPS\'] = \'1\'',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_tensorflow_random_seeds(tensorflow_seed)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_tensorflow_random_seeds(dict_args["tensorflow_seed"])']
 
         for expected_line in expected_lines_pytorch_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -334,8 +334,8 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
                                                   'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_xgboost_random_seeds(xgboost_seed, param)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -446,8 +446,8 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         expected_lines_xgboost_reproducibility = ['def set_xgboost_dask_random_seeds(seed, param):',
                                                   'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_xgboost_dask_random_seeds(xgboost_seed, param)']
+                                                  'set_general_random_seeds(dict_args["general_seed"])',
+                                                  'set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:

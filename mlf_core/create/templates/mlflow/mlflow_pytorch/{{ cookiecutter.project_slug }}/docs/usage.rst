@@ -41,7 +41,7 @@ Parameters
 +++++++++++++++
 
 - gpus                        Number of gpus to train with                             [0:         int]
-- accelerator                 Accelerator connecting to the Lightning Trainer          [none    string]
+- accelerator                 Accelerator connecting to the Lightning Trainer          ['None'  string]
 - max_epochs:                 Number of epochs to train                                [5:         int]
 - general-seed:               Python, Random, Numpy seed                               [0:         int]
 - pytorch-seed:               Pytorch specific seed                                    [0:         int]

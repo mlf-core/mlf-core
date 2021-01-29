@@ -44,7 +44,7 @@ def log_system_intelligence(reports_output_dir: str):
 
 def log_conda_environment(reports_output_dir: str):
     print('[bold blue]Exporting conda environment...')
-    conda_env_filehandler = open(f'{reports_output_dir}/mnist_autolog_example1_conda_environment.yml', "w")
-    subprocess.call(['conda', 'env', 'export', '--name', 'mnist_autolog_example1'], stdout=conda_env_filehandler)
+    conda_env_filehandler = open(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', 'w')
+    subprocess.call(['conda', 'env', 'export', '--name', '{{ cookiecutter.project_slug_no_hyphen }}'], stdout=conda_env_filehandler)
     print('[bold blue]Uploading conda environment report as a run artifact...')
-    mlflow.log_artifact(f'{reports_output_dir}/mnist_autolog_example1_conda_environment.yml', artifact_path='reports')
+    mlflow.log_artifact(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', artifact_path='reports')

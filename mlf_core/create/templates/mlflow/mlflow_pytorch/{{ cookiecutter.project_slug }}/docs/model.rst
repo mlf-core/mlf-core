@@ -19,7 +19,7 @@ For more details visit the `mnist website <http://yann.lecun.com/exdb/mnist/>`_.
 Model architecture
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The model is based on `Pytorch <https://pytorch.org/>`_.
+The model is based on `Pytorch <https://pytorch.org/>`_ and `Pytorch Lightning <https://github.com/PyTorchLightning/pytorch-lightning>`_.
 On a high level the model can be summarized as follows:
 1. 1x convolutional layer
 2. 1x rectified linear activation function

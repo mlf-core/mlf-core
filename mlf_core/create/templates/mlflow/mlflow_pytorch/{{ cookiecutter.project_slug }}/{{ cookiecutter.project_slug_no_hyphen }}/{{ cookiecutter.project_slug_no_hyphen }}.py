@@ -16,19 +16,19 @@ if __name__ == "__main__":
         "--general-seed",
         type=int,
         default=0,
-        help="number of workers (default: 3)",
+        help="General random seed",
     )
     parser.add_argument(
         "--pytorch-seed",
         type=int,
         default=0,
-        help="number of workers (default: 3)",
+        help="Random seed of all Pytorch functions",
     )
     parser.add_argument(
         "--log-interval",
         type=int,
         default=100,
-        help="log interval (default: 100)",
+        help="log interval of stdout",
     )
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)

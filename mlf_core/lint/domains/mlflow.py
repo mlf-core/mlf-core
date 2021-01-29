@@ -126,18 +126,53 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         """
         atomic_add_functions = [
             'index_add',
+            'index_select',
             'scatter_add',
             'bincount',
             'embedding_bag',
-            'ctc_loss',
             'interpolate',
             'repeat_interleave',
-            'index_select'
+            'histc'
+            'AvgPool3d',
+            'AdaptiveAvgPool2d',
+            'AdaptiveAvgPool3d',
+            'MaxPool3d',
+            'AdaptiveMaxPool2d',
+            'FractionalMaxPool2d',
+            'FractionalMaxPool3d',
+            'ReflectionPad1d',
+            'ReflectionPad2d',
+            'ReplicationPad1d',
+            'ReplicationPad2d'
+            'ReplicationPad3d',
+            'NLLLoss',
+            'CTCLoss',
+            'EmbeddingBag'
+
+            # interpolate when called on a CUDA tensor that requires grad and one of the following modes is used: - linear - bilinear - bicubic - trilinear
+            # TODO COOKIETEMPLE: This should ideally be solved with a nice regex, which would also help when people have several parameters
+            'interpolate(\'linear\')',
+            'interpolate(\"linear\")',
+            'interpolate(mode=\'linear\')',
+            'interpolate(mode=\"linear\")',
+
+            'interpolate(\'bilinear\')',
+            'interpolate(\"bilinear\")',
+            'interpolate(mode=\'bilinear\')',
+            'interpolate(mode=\"bilinear\")',
+
+            'interpolate(bicubic\'bicubic\')',
+            'interpolate(\"bicubic\")',
+            'interpolate(mode=\'bicubic\')',
+            'interpolate(mode=\"bicubic\")',
+
+            'interpolate(bicubic\'trilinear\')',
+            'interpolate(\"trilinear\")',
+            'interpolate(mode=\'trilinear\')',
+            'interpolate(mode=\"trilinear\")',
         ]
 
         verify_method_not_present(self, atomic_add_functions, 'mlflow-pytorch-3')
-
-        # TODO COOKIETEMPLE: Add all functions to atomic_add_functions, which also use these methods.
 
 
 class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):

@@ -8,7 +8,7 @@ dependencies:
   - defaults::python=3.8.2
   - conda-forge::tensorboardx=2.1
   - conda-forge::mlflow=1.13.1
-  - conda-forge::rich=9.9.0
+  - conda-forge::rich=9.10.0
   - pytorch::pytorch=1.6.0
   - pytorch::torchvision=0.7.0
   - pytorch-lightning==1.1.5

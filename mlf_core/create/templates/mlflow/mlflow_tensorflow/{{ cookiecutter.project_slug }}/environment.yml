@@ -11,7 +11,7 @@ dependencies:
     # 2020-04-10 13:08:01.736556: E tensorflow/stream_executor/cuda/cuda_diagnostics.cc:313] kernel version 440.82.0 does not match DSO version 418.87.1 -- cannot find working devices in this configuration
     # Also, see here: https://github.com/tensorflow/tensorflow/issues/35754#issuecomment-589170464
     - defaults::tensorflow-gpu=2.2.0
-    - conda-forge::rich=9.9.0
+    - conda-forge::rich=9.10.0
     - conda-forge::mlflow=1.13.1
     - conda-forge::tensorboardx=2.1
     - pip

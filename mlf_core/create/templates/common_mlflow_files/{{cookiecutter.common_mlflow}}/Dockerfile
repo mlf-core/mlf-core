@@ -13,7 +13,3 @@ RUN conda env export --name {{ cookiecutter.project_slug }} > {{ cookiecutter.pr
 
 # Currently required, since mlflow writes every file as root!
 USER root
-
-# https://pytorch.org/docs/stable/generated/torch.set_deterministic.html#torch.set_deterministic
-ENV CUBLAS_WORKSPACE_CONFIG=:16:8
-ENV CUBLAS_WORKSPACE_CONFIG=:4096:8

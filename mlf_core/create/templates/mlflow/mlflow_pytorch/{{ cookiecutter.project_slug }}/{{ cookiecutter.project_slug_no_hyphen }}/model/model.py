@@ -78,7 +78,7 @@ class LightningMNISTClassifier(pl.LightningModule):
 
     def training_epoch_end(self, training_step_outputs):
         """
-        Bla
+        On each training epoch end, log the average training loss
         """
         train_avg_loss = torch.stack([train_output["loss"] for train_output in training_step_outputs]).mean()
         self.log("train_avg_loss", train_avg_loss, sync_dist=True)

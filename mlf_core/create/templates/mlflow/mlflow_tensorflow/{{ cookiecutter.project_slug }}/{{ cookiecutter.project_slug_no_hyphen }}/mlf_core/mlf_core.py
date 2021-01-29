@@ -1,4 +1,3 @@
-import platform
 import tempfile
 import mlflow
 import subprocess

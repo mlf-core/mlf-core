@@ -56,7 +56,7 @@ if __name__ == "__main__":
     dm = MNISTDataModule(**dict_args)
 
     dm.prepare_data()
-    dm.setup(stage="fit")
+    dm.setup(stage='fit')
     model = LightningMNISTClassifier(len_test_set=len(dm.df_test), **dict_args)
     model.log_every_n_steps = dict_args['log_interval']
 

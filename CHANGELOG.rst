@@ -25,8 +25,13 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * config default values are now preconfigured values (if any)
 * added logging to all commands mlf-core offers
 * refactored sync, bump-version and create code (added type hints, fixed some variable scoping)
+* [ALL TEMPLATES] replaced click with argparse
+* [ALL TEMPLATES] renamed some parameters to harmonize between templates
+* [PyTorch Template] New template with autologging via pytorch-lightning and mlflow 1.13.1
 
 **Fixed**
+
+* fixed publish_docs WF for all templates working on main or master branch
 
 * fixed gh_pages setup for default branch main
 

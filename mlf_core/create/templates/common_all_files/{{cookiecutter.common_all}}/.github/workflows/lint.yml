@@ -10,17 +10,14 @@ jobs:
   mlf-core-lint:
     name: Run mlf-core lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
         name: Check out source-code repository
 
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: {% raw %}${{ matrix.python }}{% endraw %}
+          python-version: '3.9'
 
       - name: Install mlf-core
         run: |
@@ -34,17 +31,14 @@ jobs:
   flake8:
     name: Run flake8
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
         name: Check out source-code repository
 
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: {% raw %}${{ matrix.python }}{% endraw %}
+          python-version: '3.9'
 
       - name: Install flake8
         run: |
@@ -58,17 +52,14 @@ jobs:
     name: Run bandit
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
-    strategy:
-      matrix:
-        python: [3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
         name: Check out source-code repository
 
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
-          python-version: {% raw %}${{ matrix.python }}{% endraw %}
+          python-version: '3.9'
 
       - name: Install bandit
         run: pip install bandit

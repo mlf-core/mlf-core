@@ -1,15 +1,18 @@
-name: mlf-core lint
-
-on: [push, pull_request]
+name: mlf-core linting
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
 
 jobs:
-  build:
 
+  mlf-core-lint:
+    name: Run mlf-core lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python: [3.7, 3.8]
-
     steps:
       - uses: actions/checkout@v2
         name: Check out source-code repository

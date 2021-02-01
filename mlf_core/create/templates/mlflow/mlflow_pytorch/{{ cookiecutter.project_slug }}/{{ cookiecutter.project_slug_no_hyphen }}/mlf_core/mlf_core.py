@@ -18,13 +18,13 @@ class MLFCore:
             # Put any initialization here.
         return cls._instance
 
-    def set_general_random_seeds(self, seed):
+    def set_general_random_seeds(seed):
         os.environ['PYTHONHASHSEED'] = str(seed)  # Python general
         np.random.seed(seed)  # Numpy random
         random.seed(seed)  # Python random
 
 
-    def set_pytorch_random_seeds(self, seed, num_gpus):
+    def set_pytorch_random_seeds(seed, num_gpus):
         torch.manual_seed(seed)
         if num_gpus > 0:
             torch.cuda.manual_seed(seed)

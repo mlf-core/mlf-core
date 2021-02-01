@@ -6,7 +6,7 @@ import time
 import GPUtil
 from rich import traceback, print
 
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 from data_loading.data_loader import load_train_test_data
 
 
@@ -67,8 +67,8 @@ def start_training():
                  'colsample_bylevel': 0.5}
 
         # Set random seeds
-        set_general_random_seeds(dict_args["general_seed"])
-        set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
+        MLFCore.set_general_random_seeds(dict_args["general_seed"])
+        MLFCore.set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
 
         # Set CPU or GPU as training device
         if use_cuda:
@@ -85,7 +85,7 @@ def start_training():
             print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
         # Log hardware and software
-        log_sys_intel_conda_env()
+        MLFCore.log_sys_intel_conda_env()
 
 
 def set_xgboost_random_seeds(seed, param):

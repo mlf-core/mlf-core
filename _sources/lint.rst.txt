@@ -111,25 +111,20 @@ mlflow-pytorch-2
 ~~~~~~~~~~~~~~~~~~
 
 | Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.
-| Currently, mlflow-pytorch expects:
+| Currently, mlflow-pytorch expects the following lines in the main entry script:
 
 .. code-block::
     :linenos:
 
-    def set_pytorch_random_seeds(seed, use_cuda):
-    torch.manual_seed(seed)
-    if use_cuda:
-        torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)  # For multiGPU
-        torch.backends.cudnn.deterministic = True
-        torch.backends.cudnn.benchmark = False
+     trainer.deterministic = True,
+     trainer.benchmark = False,
+     set_general_random_seeds(general_seed),
+     set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
 
-| Line 2 fixes the seed of Pytorch.
-| Given that CUDA support is enabled:
-| Line 4 fixes the Pytorch CUDA seed.
-| Line 5 fixes the Pytorch CUDA seed for all CUDA devices.
-| Line 6 enables deterministic cuDNN operations
-| Line 7 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.
+| Line 1 enables deterministic training operations
+| Line 2 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.
+| Line 3 sets the general random seeds (python random, numpy random and python general)
+| Line 4 sets the seed of Pytorch
 
 mlflow-pytorch-3
 ~~~~~~~~~~~~~~~~~~~
@@ -170,17 +165,20 @@ mlflow-tensorflow-2
 
 .. code-block::
     :linenos:
-
+    set_general_random_seeds(dict_args["general_seed"]),
+    set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
     def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
-| Line 2 fixes the seed of Tensorflow
-| Line 3 sets the number of threads within an individual operation for parallelism to 1
-| Line 4 sets the number of threads between independent operations for parallelism to 1
-| Line 5 enables and forces all deterministic operations
+| Line 1 sets the general random seeds (python random, numpy random and python general)
+| Line 2 sets the seed of Tensorflow
+| Line 4 fixes the seed of Tensorflow
+| Line 5 sets the number of threads within an individual operation for parallelism to 1
+| Line 6 sets the number of threads between independent operations for parallelism to 1
+| Line 7 enables and forces all deterministic operations
 
 mlflow-tensorflow-3
 ~~~~~~~~~~~~~~~~~~~~
@@ -212,11 +210,14 @@ mlflow-xgboost-2
 
 .. code-block::
     :linenos:
-
+    set_general_random_seeds(dict_args["general_seed"]),
+    set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
 
-| Line 2 fixes the seed of XGBoost
+| Line 1 sets the general random seeds (python random, numpy random and python general)
+| Line 2 sets the seed of XGBoost
+| Line 4 fixes the seed of XGBoost
 
 mlflow-xgboost-3
 ~~~~~~~~~~~~~~~~~~
@@ -248,11 +249,14 @@ mlflow-xgboost_dask-2
 
 .. code-block::
     :linenos:
-
+    set_general_random_seeds(dict_args["general_seed"]),
+    set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
     def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
 
-| Line 2 fixes the seed of XGBoost
+| Line 1 sets the general random seeds (python random, numpy random and python general)
+| Line 2 sets the seed of XGBoost
+| Line 4 fixes the seed of XGBoost
 
 mlflow-xgboost_dask-3
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -4,13 +4,13 @@ import numpy as np
 import random
 import subprocess
 from rich import print
-{%- if cookiecutter.language == "pytorch" -%}
+{%- if cookiecutter.language == "pytorch" %}
 import torch
 import mlflow.pytorch
-{%- elif cookiecutter.language == "tensorflow" -%}
+{%- elif cookiecutter.language == "tensorflow" %}
 # ONLY FOR TENSORFLOW -> else RuntimeError: make_default_context() wasn't able to create a context on any of the 1 detected devices
 from system_intelligence.query import query_and_export  # noqa F401
-{% endif %}
+{%- endif %}
 
 
 class MLFCore:
@@ -50,19 +50,19 @@ class MLFCore:
         print('[bold blue]Uploading conda environment report as a run artifact...')
         mlflow.log_artifact(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', artifact_path='reports')
 
-{%- if cookiecutter.language == "pytorch" -%}
+{%- if cookiecutter.language == "pytorch" %}
     def set_pytorch_random_seeds(seed, num_gpus):
         torch.manual_seed(seed)
         if num_gpus > 0:
             torch.cuda.manual_seed(seed)
             torch.cuda.manual_seed_all(seed)  # For multiGPU
-{%- elif cookiecutter.language == "tensorflow" -%}
+{%- elif cookiecutter.language == "tensorflow" %}
     def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
-{% endif %}
+{%- endif %}
 
     def log_sys_intel_conda_env(self):
         reports_output_dir = tempfile.mkdtemp()

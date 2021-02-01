@@ -35,13 +35,12 @@ class MLFCore:
         print(f'[bold blue]Writing reports locally to {reports_output_dir}\n')
         print('[bold blue]Running system-intelligence')
         query_and_export(query_scope={'all'},
-                        verbose=False,
-                        export_format='json',
-                        generate_html_table=True,
-                        output=f'{reports_output_dir}/system_intelligence.json')
+                         verbose=False,
+                         export_format='json',
+                         generate_html_table=True,
+                         output=f'{reports_output_dir}/system_intelligence.json')
         print('[bold blue]Uploading system-intelligence report as a run artifact...')
         mlflow.log_artifacts(reports_output_dir, artifact_path='reports')
-
 
     def log_conda_environment(self, reports_output_dir: str):
         print('[bold blue]Exporting conda environment...')
@@ -51,21 +50,24 @@ class MLFCore:
         mlflow.log_artifact(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', artifact_path='reports')
 
 {%- if cookiecutter.language == "pytorch" %}
+
     def set_pytorch_random_seeds(seed, num_gpus):
         torch.manual_seed(seed)
         if num_gpus > 0:
             torch.cuda.manual_seed(seed)
             torch.cuda.manual_seed_all(seed)  # For multiGPU
+
 {%- elif cookiecutter.language == "tensorflow" %}
+
     def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
+
 {%- endif %}
 
     def log_sys_intel_conda_env(self):
         reports_output_dir = tempfile.mkdtemp()
         self.log_system_intelligence(reports_output_dir)
         self.log_conda_environment(reports_output_dir)
-

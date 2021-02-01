@@ -1,9 +1,8 @@
 import io
 import os
 import re
-
+import logging
 import configparser
-
 import requests
 import rich.progress
 import rich.markdown
@@ -11,12 +10,14 @@ import rich.panel
 import rich.console
 from pkg_resources import parse_version
 from rich import print
-
 from packaging import version
 from itertools import groupby
 
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dir_util import pf, find_filepath_in_dir
+from mlf_core.util.rich import console
+
+log = logging.getLogger(__name__)
 
 
 class TemplateLinter(object):
@@ -56,6 +57,7 @@ class TemplateLinter(object):
             check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
             # Remove internal functions
             check_functions = list(set(check_functions).difference({'lint_project'}))
+            log.debug(f'Linting functions of general linting are:\n {check_functions}')
             # Remove mlflow specific linting functions if not applicable
             if 'mlflow' not in self.__class__.__name__.lower():
                 check_functions = list(filter(lambda func: not func.startswith('mlflow'), check_functions))
@@ -68,6 +70,7 @@ class TemplateLinter(object):
         with progress:
             lint_progress = progress.add_task('Running lint checks', total=len(check_functions), func_name=check_functions)
             for fun_name in check_functions:
+                log.debug(f'Running linting function: {fun_name}')
                 progress.update(lint_progress, advance=1, func_name=fun_name)
                 if fun_name == 'check_files_exist':
                     getattr(calling_class, fun_name)(is_subclass_calling)
@@ -407,10 +410,10 @@ class TemplateLinter(object):
             'reports_output_dir = tempfile.mkdtemp()',
             'log_system_intelligence(reports_output_dir)',
             'log_conda_environment(reports_output_dir)',
-            'query_and_export(query_scope=list((\'all\',)),',
+            'query_and_export(query_scope={\'all\'},',
             'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
-            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
-            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
+            # f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
+            # f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
         ]
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
@@ -418,7 +421,6 @@ class TemplateLinter(object):
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):
-        console = rich.console.Console()
         console.print()
         console.rule("[bold blue]LINT RESULTS")
         console.print()

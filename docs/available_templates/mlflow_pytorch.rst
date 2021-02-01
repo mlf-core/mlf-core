@@ -5,6 +5,7 @@ Purpose
 ^^^^^^^^
 
 mlflow-pytorch is a `MLflow <https://mlflow.org/>`_ based template designed for `Pytorch <https://pytorch.org/>`_ machine learning models.
+Additionally, `Pytorch Lightning <https://github.com/PyTorchLightning/pytorch-lightning>`_ abstracts away boilerplate code.
 The project is fully CPU and GPU deterministic with `system-intelligence <https://github.com/mlf-core/system-intelligence>`_ integration.
 Additionally, Conda and Docker are supported out of the box.
 
@@ -12,7 +13,7 @@ Design
 ^^^^^^^^
 
 The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.
+As required a MLproject file serves as entry point and for parameter definitions.
 
 .. code::
 
@@ -45,8 +46,6 @@ As required a MLproject file serves as entry point and parameter definition.
     │   │   ├── mlf_core.py
     │   ├── model
     │   │   ├── model.py
-    │   └── training
-    │       └── train.py
     ├── .flake8
     ├── .github
     │   ├── ISSUE_TEMPLATE

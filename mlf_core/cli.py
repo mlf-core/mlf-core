@@ -78,9 +78,10 @@ def mlf_core_cli(ctx, verbose, log_file):
 
 
 @mlf_core_cli.command(short_help='Create a new project using one of our templates.', cls=CustomHelpSubcommand)
+@click.argument('path', type=click.Path(), default=Path.cwd(), helpmsg='Path where the project should be created at.', cls=CustomArg)  # type: ignore
 @click.option('--domain', type=click.Choice(['cli', 'lib', 'gui', 'web', 'pub']),
               help='The projects domain with currently cli, lib, gui, web and pub supported.')
-def create(domain: str) -> None:
+def create(path: Path, domain: str) -> None:
     """
     Create a new project using one of our templates.
 
@@ -90,7 +91,7 @@ def create(domain: str) -> None:
     Next, you will be asked whether you want to use mlf-core's Github support create a repository, push your template and enable a few settings.
     After the project has been created it will be linted and you will be notified of any TODOs.
     """
-    choose_domain(domain, None)
+    choose_domain(path, domain, None)
 
 
 @mlf_core_cli.command(short_help='Lint your existing mlf-core project.', cls=CustomHelpSubcommand)
@@ -152,13 +153,16 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
     To ensure that you have the latest changes you can invoke sync, which submits a pull request to your Github repository (if existing).
     If no repository exists the TEMPLATE branch will be updated and you can merge manually.
     """
-    project_dir_path = Path(f'{Path.cwd()}/{project_dir}') if not str(project_dir).startswith(str(Path.cwd())) else Path(project_dir)
+    project_dir_path = Path(project_dir).resolve()
+    log.debug(f'Loading project information from .mlf_core.yml file located at {project_dir}')
     project_data = load_yaml_file(f'{project_dir}/.mlf_core.yml')
-
+    log.debug(f'Set project top level path to given path argument {project_dir_path}')
     # if set_token flag is set, update the sync token value and exit
     if set_token:
+        log.debug('Running sync to update sync token in repo.')
         try:
             if project_data['is_github_repo']:
+                log.debug(f'Project is a Github repo. Using {project_data["github_username"]} as username.')
                 TemplateSync.update_sync_token(project_name=project_data['project_slug'], gh_username=project_data['github_username'])
             else:
                 print('[bold red]Your current project does not seem to have a Github repository!')
@@ -170,12 +174,15 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
             sys.exit(1)
         sys.exit(0)
 
-    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat, repo_owner=project_data['github_username'])
+    log.debug('Initializing syncer object.')
+    syncer = TemplateSync(new_template_version='', project_dir=project_dir_path, gh_username=username, token=pat)
     # check for template version updates
+    log.debug('Checking for major/minor or patch version changes in mlf-core templates.')
     major_change, minor_change, patch_change, project_template_version, mlf_core_template_version = syncer.has_template_version_changed(project_dir_path)
     syncer.new_template_version = mlf_core_template_version
     # check for user without actually syncing
     if check_update:
+        log.debug('Running snyc to manually check whether a new template version is available.')
         # a template update has been released by mlf-core
         if any(change for change in (major_change, minor_change, patch_change)):
             print(f'[bold blue]Your templates version received an update from {project_template_version} to {mlf_core_template_version}!\n'
@@ -189,14 +196,17 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
     syncer.major_update = major_change
     syncer.minor_update = minor_change
     syncer.patch_update = patch_change
+    log.debug('Major template update found.' if major_change else 'Minor template update found.' if minor_change else 'Patch template update found.' if
+              patch_change else 'No template update found.')
 
     # sync the project if any changes were detected
     if any(change for change in (major_change, minor_change, patch_change)):
-        # If required sync level is set -> sync
-        if syncer.check_sync_level():
+        # If required sync level is set and sync is enabled -> sync
+        if syncer.should_run_sync():
+            log.debug('Starting sync.')
             syncer.sync()
         else:
-            print('[bold red]Aborting sync due to set level constraints. '
+            print('[bold red]Aborting sync due to set level constraints or sync being disabled. '
                   'You can set the level any time in your mlf_core.cfg in the sync_level section and sync again.')
     else:
         print('[bold blue]No changes detected. Your template is up to date.')
@@ -240,7 +250,7 @@ def bump_version(ctx, new_version, project_dir, downgrade) -> None:
                     version_bumper.bump_template_version(new_version, project_dir)
                 elif mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                                           question=f'Bumping from {version_bumper.CURRENT_VERSION} to {new_version} seems not reasonable.\n'
-                                                          f'Do you really want to bump the project version?',
+                                                                   f'Do you really want to bump the project version?',
                                                           default='n'):
                     print('\n')
                     version_bumper.bump_template_version(new_version, project_dir)
@@ -314,5 +324,6 @@ def upgrade() -> None:
     UpgradeCommand.check_upgrade_mlf_core()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    traceback.install()
     sys.exit(main())  # pragma: no cover

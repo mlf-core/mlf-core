@@ -6,6 +6,56 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.8.0 (2021-02-01)
+------------------
+
+**Added**
+
+* fixed sync command: blacklisted files now fully working
+* updated sync code to the latest version and added logging
+* added a output-directory parameter option to create command, allowing users to specifify the
+  directory, where the project should be created
+* added a user information before the user is prompted to create a GitHub repo with mlf-core
+* added flake8 linting for each create template workflow
+* GitHub workflow badges in README now link to the corresponding workflow
+* [ALL TEMPLATES] added vscode files to .gitignore for templates
+* [ALL TEMPLATES] now feature a mlf-core lint workflow with colored linting result output
+* [ALL TEMPLATES] renamed train_cpu workflows to use project_slug (was project_slug_no_hyphen)
+* [MLFLOW TEMPLATES] refactored the common files for all mlflow templates into a common files directory
+* config default values are now preconfigured values (if any)
+* added logging to all commands mlf-core offers
+* refactored sync, bump-version and create code (added type hints, fixed some variable scoping)
+* [ALL TEMPLATES] replaced click with argparse
+* [ALL TEMPLATES] renamed some parameters to harmonize between templates
+* [PyTorch Template] New template with autologging via pytorch-lightning and mlflow 1.13.1
+
+**Fixed**
+
+* fixed publish_docs WF for all templates working on main or master branch
+
+* fixed gh_pages setup for default branch main
+
+* fixed a bug causing the check upgrade version function to fail if local version is a SNAPSHOT version
+
+**Dependencies**
+
+**Deprecated**
+
+
+1.7.8 (2020-12-04)
+------------------
+
+**Added**
+
+* Instructions to make Docker container public
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.7.7 (2020-11-29)
 ------------------
 

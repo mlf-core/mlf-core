@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+import logging
 from packaging import version
 from configparser import ConfigParser
 from tempfile import mkstemp
@@ -14,6 +15,8 @@ from rich import print
 from mlf_core.create.github_support import is_git_repo
 from mlf_core.lint.template_linter import TemplateLinter
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+
+log = logging.getLogger(__name__)
 
 
 class VersionBumper:
@@ -43,6 +46,7 @@ class VersionBumper:
                              bumps the version from the projects top level directory. If this is not the case this parameter
                              shows the path where the projects top level directory is and bumps the version there
         """
+        log.debug(f'Current version: {self.CURRENT_VERSION} --- New version: {new_version}')
         sections = ['bumpversion_files_whitelisted', 'bumpversion_files_blacklisted']
 
         # if project_dir was given as handle use cwd since we need it for git add
@@ -60,6 +64,7 @@ class VersionBumper:
 
         # for each section (whitelisted and blacklisted files) bump the version (if allowed)
         for section in sections:
+            log.debug(f'Bumping files of section: {section}.')
             for file, path in self.parser.items(section):
                 not_changed, file_path = self.replace(f'{project_dir}/{path}', new_version, section)
                 # only add file if the version(s) in the file were bumped
@@ -68,12 +73,13 @@ class VersionBumper:
                     changed_files.append(path_changed)
 
         # update new version in mlf_core.cfg file
+        log.debug('Updating version in mlf_core.cfg file.')
         self.parser.set('bumpversion', 'current_version', new_version)
         with open(f'{project_dir}/mlf_core.cfg', 'w') as configfile:
             self.parser.write(configfile)
 
         # add a new changelog section when downgrade mode is disabled
-        self.add_changelog_section(project_dir, new_version)
+        self.add_changelog_section(new_version)
 
         # check if a project is a git repository and if so, commit bumped version changes
         if is_git_repo(project_dir):
@@ -209,17 +215,21 @@ class VersionBumper:
 
         # major update like bumping from 1.8.3 to 2.0.0
         if new_v_split[0] != cur_v_split[0]:
+            log.debug('Identified major version bump')
             return new_v_split[1] == '0' and new_v_split[2] == '0' and (int(new_v_split[0]) - int(cur_v_split[0]) == 1)
 
         # minor update like bumping from 1.8.5 to 1.9.0
         elif new_v_split[1] != cur_v_split[1]:
+            log.debug('Identified minor version bump')
             return new_v_split[0] == cur_v_split[0] and new_v_split[2] == '0' and (int(new_v_split[1]) - int(cur_v_split[1]) == 1)
 
         # x-minor update like bumping from 1.8.5 to 1.8.6
         elif new_v_split[2] != cur_v_split[2]:
+            log.debug('Identified patch version bump')
             return new_v_split[0] == cur_v_split[0] and new_v_split[1] == cur_v_split[1] and (int(new_v_split[2]) - int(cur_v_split[2]) == 1)
 
         # case when we bumping like 3.0.0-SNAPSHOT to 3.0.0
+        log.debug('Identified SNAPSHOT version bump')
         return True
 
     def lint_before_bump(self) -> None:
@@ -236,7 +246,9 @@ class VersionBumper:
             print(f'[bold red]No file named CHANGELOG.rst found at {self.top_level_dir}. Aborting!')
             sys.exit(1)
         # lint changelog and check version consistency
+        log.debug('Linting changelog')
         changelog_linter.lint_changelog()
+        log.debug('Linting version consistent')
         changelog_linter.check_version_consistent()
         print()
         changelog_linter._print_results()
@@ -251,12 +263,12 @@ class VersionBumper:
                                                         default='n'):
                 sys.exit(1)
 
-    def add_changelog_section(self, path: Path, new_version: str) -> None:
+    def add_changelog_section(self, new_version: str) -> None:
         """
         Each version bump will add a new section template to the CHANGELOG.rst
-        :param path: Path to top level project directory (where the CHANGELOG.rst file should lie)
         :param new_version: The new version
         """
+        log.debug('Adding new changelog section.')
         if self.downgrade_mode:
             print('[bold yellow]WARNING: Running bump-version in downgrade mode will not add a new changelog section currently!')
         else:
@@ -273,13 +285,14 @@ class VersionBumper:
 
                 self.insert_latest_version_section(old_changelog_file=f'{self.top_level_dir}/CHANGELOG.rst', section=section)
 
-    def replace_snapshot_header(self, source_file_path, new_version: str, date: str) -> None:
+    def replace_snapshot_header(self, source_file_path: str, new_version: str, date: str) -> None:
         """
         Replace the SNAPSHOT header section in CHANGELOG. The pattern (currently) cannot include any newline characters, therefore no multiline support!
         :param source_file_path: Path to source file (the path where CHANGELOG lies)
         :param new_version: The new version
         :param date: Current date
         """
+        log.debug('Replacing the changelog header in the changelog file.')
         # create a temp file (requires to be explicitly deleted later)
         fh, target_file_path = mkstemp()
         # read from old file (the source file) and write into new file (the target file)
@@ -311,6 +324,7 @@ class VersionBumper:
         :param old_changelog_file: path to the current CHANGELOG.rst file
         :param section: the new section template block for changelog
         """
+        log.debug('Inserting latest version section into the changelog.')
         # create a temp file (requires to be explicitly deleted later)
         fh, target_file_path = mkstemp()
         # read from old file (the source file) and write into new file (the target file)

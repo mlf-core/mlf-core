@@ -1,8 +1,8 @@
 import os
 import sys
+import logging
 import requests
 import json
-
 from base64 import b64encode
 from nacl import encoding, public
 from pathlib import Path
@@ -19,6 +19,8 @@ from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStru
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.config.config import ConfigCommand
+
+log = logging.getLogger(__name__)
 
 
 def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplateStruct, tmp_repo_path: str) -> None:
@@ -38,6 +40,7 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         access_token = handle_pat_authentification()
 
         # Login to Github
+        log.debug('Logging into Github.')
         print('[bold blue]Logging into Github')
         authenticated_github_user = Github(access_token)
         user = authenticated_github_user.get_user()
@@ -45,10 +48,12 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         # Create new repository
         print('[bold blue]Creating Github repository')
         if creator_ctx.is_github_orga:
+            log.debug(f'Creating a new Github repository for organizaton: {creator_ctx.github_orga}.')
             org = authenticated_github_user.get_organization(creator_ctx.github_orga)
             repo = org.create_repo(creator_ctx.project_slug, description=creator_ctx.project_short_description, private=creator_ctx.is_repo_private)
             creator_ctx.github_username = creator_ctx.github_orga
         else:
+            log.debug(f'Creating a new Github repository for user: {creator_ctx.github_username}.')
             repo = user.create_repo(creator_ctx.project_slug, description=creator_ctx.project_short_description, private=creator_ctx.is_repo_private)
 
         print('[bold blue]Creating labels and default Github settings')
@@ -63,20 +68,24 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         create_sync_secret(creator_ctx.github_username, creator_ctx.project_slug, access_token)
 
         # git clone
+        log.debug(f'Cloning repository {creator_ctx.github_username}/{creator_ctx.project_slug}')
         print('[bold blue]Cloning empty Github repository')
         Repo.clone_from(f'https://{creator_ctx.github_username}:{access_token}@github.com/{creator_ctx.github_username}/{creator_ctx.project_slug}', repository)
 
         # Copy files which should be included in the initial commit -> basically the template
+        log.debug('Copying files from the template into the cloned repository.')
         copy_tree(f'{repository}', project_path)
 
         # the created project repository with the copied .git directory
         cloned_repo = Repo(path=project_path)
 
         # git add
+        log.debug('git add')
         print('[bold blue]Staging template')
         cloned_repo.git.add(A=True)
 
         # git commit
+        log.debug('git commit')
         cloned_repo.index.commit(f'Created {creator_ctx.project_slug} with {creator_ctx.template_handle} '
                                  f'template of version {creator_ctx.template_version} using mlf-core.')
 
@@ -86,12 +95,14 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         url = f"https://api.github.com/repos/{creator_ctx.github_username}/{creator_ctx.project_slug}"
         response = requests.get(url, headers=headers).json()
         default_branch = response['default_branch']
+        log.debug(f'git push origin {default_branch}')
         print(f'[bold blue]Pushing template to Github origin {default_branch}')
         if default_branch != 'master':
             cloned_repo.git.branch('-M', f'{default_branch}')
         cloned_repo.remotes.origin.push(refspec=f'{default_branch}:{default_branch}')
 
         # set branch protection (all WF must pass, dismiss stale PR reviews) only when repo is public
+        log.debug('Set branch protection rules.')
         if not creator_ctx.is_repo_private and not creator_ctx.is_github_orga:
             main_branch = authenticated_github_user.get_user().get_repo(name=creator_ctx.project_slug).get_branch(f'{default_branch}')
             main_branch.edit_protection(dismiss_stale_reviews=True)
@@ -100,23 +111,35 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
                   'You can set it manually later on.')
 
         # git create development branch
+        log.debug('git checkout -b development')
         print('[bold blue]Creating development branch.')
         cloned_repo.git.checkout('-b', 'development')
 
         # git push to origin development
+        log.debug('git push origin development')
         print('[bold blue]Pushing template to Github origin development.')
         cloned_repo.remotes.origin.push(refspec='development:development')
 
         # git create TEMPLATE branch
+        log.debug('git checkout -b TEMPLATE')
         print('[bold blue]Creating TEMPLATE branch.')
         cloned_repo.git.checkout('-b', 'TEMPLATE')
 
         # git push to origin TEMPLATE
+        log.debug('git push origin TEMPLATE')
         print('[bold blue]Pushing template to Github origin TEMPLATE.')
         cloned_repo.remotes.origin.push(refspec='TEMPLATE:TEMPLATE')
 
+        # finally, checkout to development branch
+        log.debug('git checkout development')
+        print('[bold blue]Checking out development branch.')
+        cloned_repo.git.checkout('development')
+
         print(f'[bold green]Successfully created a Github repository at '
               f'https://github.com/{creator_ctx.github_username}/{creator_ctx.project_slug}')
+
+        print('[bold blue]Do not forget to make your Docker container Github Package public!')
+        print('[bold blue]Read https://bit.ly/2VDwMKw for instructions.')
 
     except (GithubException, ConnectionError) as e:
         handle_failed_github_repo_creation(e)
@@ -129,7 +152,7 @@ def handle_pat_authentification() -> str:
 
     :return: The decrypted PAT
     """
-
+    log.debug(f'Attempting to read the personal access token from {ConfigCommand.CONF_FILE_PATH}')
     # check if the key and encrypted PAT already exist
     if os.path.exists(ConfigCommand.CONF_FILE_PATH):
         path = Path(ConfigCommand.CONF_FILE_PATH)
@@ -139,6 +162,7 @@ def handle_pat_authentification() -> str:
             pat = decrypt_pat()
             return pat
         else:
+            log.debug(f'Unable to read the personal access token from {ConfigCommand.CONF_FILE_PATH}')
             print('[bold red]Could not find encrypted personal access token!\n')
             print('[bold blue]Please navigate to Github -> Your profile -> Settings -> Developer Settings -> Personal access token -> Generate a new Token')
             print('[bold blue]Only tick \'repo\'. The token is a hidden input to mlf-core and stored encrypted locally on your machine.')
@@ -178,6 +202,8 @@ def prompt_github_repo(dot_mlf_core: OrderedDict or None) -> (bool, bool, bool, 
 
     # No dot_mlf_core_dict was passed -> prompt whether to create a Github repository and the required settings
     create_git_repo, private, is_github_org, github_org = False, False, False, ''
+    print('[bold blue]Automatically creating a Github repository with mlf-core is strongly recommended. '
+          'Otherwise you will not be able to use all of mlf-core\'s features!\n')
     if mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                             question='Do you want to create a Github repository and push your template to it?',
                                             default='Yes'):
@@ -239,6 +265,7 @@ def create_secret(username: str, repo_name: str, token: str, public_key_value: s
     :param public_key_value: The public keys value (the key) of the repos public key PyNacl uses for encryption of the secrets value
     :param public_key_id: The ID of the public key used for encryption
     """
+    log.debug('Creating Github repository secret.')
     encrypted_value = encrypt_sync_secret(public_key_value, token)
     # the parameters required by the Github API
     params = {
@@ -260,7 +287,7 @@ def encrypt_sync_secret(public_key: str, token: str) -> str:
     :param token: The users PAT with repo scope as the secret
     :return: The encrypted secret (PAT)
     """
-    """Encrypt a Unicode string using the public key."""
+    log.debug('Encrypting Github repository secret.')
     public_key = public.PublicKey(public_key.encode("utf-8"), encoding.Base64Encoder())
     sealed_box = public.SealedBox(public_key)
     encrypted = sealed_box.encrypt(token.encode("utf-8"))
@@ -274,10 +301,12 @@ def decrypt_pat() -> str:
 
     :return: The decrypted Personal Access Token for GitHub
     """
+    log.debug(f'Decrypting personal access token using key saved in {ConfigCommand.KEY_PAT_FILE}.')
     # read key and encrypted PAT from files
     with open(ConfigCommand.KEY_PAT_FILE, 'rb') as f:
         key = f.readline()
     fer = Fernet(key)
+    log.debug(f'Reading personal access token from {ConfigCommand.CONF_FILE_PATH}.')
     encrypted_pat = load_yaml_file(ConfigCommand.CONF_FILE_PATH)['pat']
     # decrypt the PAT and decode it to string
     print('[bold blue]Decrypting personal access token.')
@@ -343,11 +372,13 @@ def is_git_accessible() -> bool:
 
     :return: True if accessible, false if not
     """
+    log.debug('Testing whether git is accessible.')
     git_installed = Popen(['git', '--version'], stdout=PIPE, stderr=PIPE, universal_newlines=True)
     (git_installed_stdout, git_installed_stderr) = git_installed.communicate()
     if git_installed.returncode != 0:
         print('[bold red]Could not find \'git\' in the PATH. Is it installed?')
         print('[bold red]Run command was: \'git --version \'')
+        log.debug('git is not accessible!')
         return False
 
     return True
@@ -362,9 +393,11 @@ def create_github_labels(repo, labels: list) -> None:
     :param labels: A list of the new labels to be added
     """
     for label in labels:
+        log.debug(f'Creating Github label {label[0]}')
         try:
             repo.create_label(name=label[0], color=label[1])
         except GithubException:
+            log.debug(f'Unable to create label {label[0]}')
             print(f'[bold red]Unable to create label {label[0]} due to permissions')
 
 

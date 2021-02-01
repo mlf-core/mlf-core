@@ -8,17 +8,17 @@
 mlf-core
 ========
 
-.. image:: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
-        :target: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Build%20mlf-core%20Package/badge.svg?branch=master
+        :target: https://github.com/mlf-core/mlf-core/actions?query=workflow%3A%22Build+mlf-core+Package%22
         :alt: Github Workflow Build mlf-core Status
 
-.. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
-        :target: https://github.com/mlf-core/mlf_core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg
+.. image:: https://github.com/mlf-core/mlf-core/workflows/Run%20mlf-core%20Tox%20Test%20Suite/badge.svg?branch=master
+        :target: https://github.com/mlf-core/mlf-core/actions?query=workflow%3A%22Run+mlf-core+Tox+Test+Suite%22
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
-        :alt: PyPI
+        :alt: PyPI Status
 
 .. image:: https://img.shields.io/discord/742367395196305489?color=passing
         :target: https://discord.gg/Mv8sAcq
@@ -38,17 +38,83 @@ Fully GPU deterministic machine learning project templates using MLflow_.
 * Free software: Apache2.0
 * Documentation: https://mlf-core.readthedocs.io.
 
-.. image:: https://user-images.githubusercontent.com/21954664/94257992-7a140e00-ff2c-11ea-8059-216a31c62ef1.gif
-    :target: https://user-images.githubusercontent.com/21954664/94257992-7a140e00-ff2c-11ea-8059-216a31c62ef1.gif
-    :alt: mlf-core create gif
 
 Features
 --------
 
-* Jumpstart your machine learning project with fully fledged, multi GPU enabled mlflow project templates
+* Jumpstart your machine learning project with fully fledged, (multi) GPU deterministic mlflow project templates
 * Pytorch, Tensorflow, XGBoost supported
-* mlflow templates are fully GPU deterministic with system-intelligence
 * Conda and Docker support out of the box
+
+Installing
+---------------
+
+Start your journey with mlf-core by installing it via ``$ pip install mlf-core``.
+
+See `Installation  <https://mlf_core.readthedocs.io/en/latest/readme.html#installing>`_.
+
+config
+------
+Configure mlf-core to get started.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102669098-f6199d00-418d-11eb-9ae6-26c12d9c1231.gif
+
+See `Configuring mlf-core <https://mlf_core.readthedocs.io/en/latest/config.html>`_
+
+list
+----
+List all available mlf-core templates.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102668939-8d322500-418d-11eb-8b2c-acd895fc50e3.gif
+
+See `Listing all templates <https://mlf_core.readthedocs.io/en/latest/list_info.html#list>`_.
+
+info
+----
+Get detailed information on a mlf-core template.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102669191-324cfd80-418e-11eb-9542-d2995b7318a9.gif
+
+See `Get detailed template information <https://mlf_core.readthedocs.io/en/latest/list_info.html#info>`_.
+
+create
+------
+Kickstart your deterministic machine laerning project with one of mlf-core's templates in no time.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102669143-1184a800-418e-11eb-853b-0deb0387efc6.gif
+
+See `Create a project <https://mlf_core.readthedocs.io/en/latest/create.html>`_.
+
+lint
+----
+Use advanced linting to ensure your project always adheres to mlf-core's standards and stays deterministic.
+
+.. image:: https://user-images.githubusercontent.com/31141763/102668893-696edf00-418d-11eb-888e-822244a6f5dc.gif
+
+See `Linting your project <https://mlf_core.readthedocs.io/en/latest/lint.html>`_
+
+bump-version
+------------
+Bump your project version across several files.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102668987-aaff8a00-418d-11eb-9292-dc512f77f09b.gif
+
+See `Bumping the version of an existing project  <https://mlf_core.readthedocs.io/en/latest/bump_version.html>`_.
+
+sync
+------
+Sync your project with the latest mlf-core release to get the latest template features.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/102669065-de421900-418d-11eb-9e1b-a76487d02b2a.gif
+
+See `Syncing a project <https://mlf_core.readthedocs.io/en/latest/sync.html>`_.
+
+upgrade
+-------
+Check whether you are using the latest mlf-core version and update automatically to benefit from the latest features.
+
+See `<https://mlf_core.readthedocs.io/en/latest/upgrade.html>`_.
+
 
 .. figure:: https://user-images.githubusercontent.com/21954664/98472352-c2dd0900-21f2-11eb-9fe3-929b2a21bd4c.png
    :scale: 100 %
@@ -61,10 +127,11 @@ Features
 Credits
 -------
 
-Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_.
-This package was created with cookietemple_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using Cookiecutter_.
+Primary idea and main development by `Lukas Heumos <https://github.com/zethson/>`_. mlf-core is inspired by nf-core_.
+This package was created with cookietemple_ based on a modified `audreyr/cookiecutter-pypackage`_ project template using cookiecutter_.
 
 .. _MLflow: https://mlflow.org
 .. _cookietemple: https://cookietemple.com
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _nf-core: https://nf-co.re

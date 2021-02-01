@@ -1,1 +1,1 @@
-"""Unit test package for mlf_core."""
+"""Unit test package for mlf-core."""

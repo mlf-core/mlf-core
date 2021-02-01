@@ -62,13 +62,10 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         """
         Verifies that all CPU and GPU reproducibility settings for Pytorch are enabled
         Required are:
-        def set_pytorch_random_seeds(seed, use_cuda):
-            torch.manual_seed(seed)
-            if use_cuda:
-                torch.cuda.manual_seed(seed)
-                torch.cuda.manual_seed_all(seed)  # For multiGPU
-                torch.backends.cudnn.deterministic = True
-                torch.backends.cudnn.benchmark = False
+             trainer.deterministic = True,
+             trainer.benchmark = False,
+             set_general_random_seeds(general_seed),
+             set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
         """
         passed_pytorch_reproducibility_seeds = True
         passed_pytorch_reproducibility_seeds_mlf_core = True
@@ -227,6 +224,8 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         """
         Verifies that all CPU and GPU reproducibility settings for Tensorflow are enabled
         Required are:
+        set_general_random_seeds(dict_args["general_seed"])
+        set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
         def set_tensorflow_random_seeds(seed):
             tf.random.set_seed(seed)
             tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only -> https://github.com/NVIDIA/tensorflow-determinism
@@ -318,14 +317,6 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def xgboost_reproducibility_seeds(self) -> None:
         """
         Verifies that all CPU and GPU reproducibility settings for XGBoost are enabled
-        Required are:
-        def set_pytorch_random_seeds(seed, use_cuda):
-            torch.manual_seed(seed)
-            if use_cuda:
-                torch.cuda.manual_seed(seed)
-                torch.cuda.manual_seed_all(seed)  # For multiGPU
-                torch.backends.cudnn.deterministic = True
-                torch.backends.cudnn.benchmark = False
         """
         passed_xgboost_reproducibility_seeds = True
         entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
@@ -430,14 +421,6 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
     def xgboost_reproducibility_seeds(self) -> None:
         """
         Verifies that all CPU and GPU reproducibility settings for XGBoost are enabled
-        Required are:
-        def set_pytorch_random_seeds(seed, use_cuda):
-            torch.manual_seed(seed)
-            if use_cuda:
-                torch.cuda.manual_seed(seed)
-                torch.cuda.manual_seed_all(seed)  # For multiGPU
-                torch.backends.cudnn.deterministic = True
-                torch.backends.cudnn.benchmark = False
         """
         passed_xgboost_reproducibility_seeds = True
         entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'

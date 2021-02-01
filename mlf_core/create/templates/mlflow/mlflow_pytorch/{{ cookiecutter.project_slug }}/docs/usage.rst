@@ -34,7 +34,9 @@ Training using GPUs
 +++++++++++++++++++++++
 
 Conda environments will automatically use the GPU if available.
-Docker requires the accessible GPUs to be passed as runtime parameters. To train using all gpus run ``mlflow run . -A t-A gpus=all -P acc=ddp``.
+Docker requires the accessible GPUs to be passed as runtime parameters. To train using all gpus run ``mlflow run . -A t-A gpus=all -P gpus=<<num_of_gpus>> -P acc=ddp``.
+To train only on CPU it is sufficient to call ``mlflow run . -A t``. To train on a single GPU, you can call ``mlflow run . -A t -A gpus=all -P gpus=1`` and for multiple GPUs (for example 2)
+``mlflow run . -A t -A gpus=all -P gpus=2 -P accelerator=ddp``.
 You can replace ``all`` with specific GPU ids (e.g. 0) if desired.
 
 Parameters

@@ -64,7 +64,7 @@ be switched on or off. If you want to enable sync (which is the default), the ``
 simply change this value into ``False, false, No, no, N, n``. It can be configured in the::
 
     [sync]
-    sync_enable = True
+    sync_enabled = True
 
 section.
 

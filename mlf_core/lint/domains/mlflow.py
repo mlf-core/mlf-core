@@ -25,9 +25,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_flake8_linting.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/flake8.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -44,8 +42,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -192,8 +189,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug_no_hyphen/mlf_core/mlf_core.py',
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_flake8_linting.yml',
-            '.github/workflows/run_bandit.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -209,8 +205,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -284,8 +279,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/mlf_core/mlf_core.py'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -301,8 +295,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -396,8 +389,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/mlf_core/mlf_core.py'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -413,8 +405,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.

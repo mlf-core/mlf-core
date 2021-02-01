@@ -80,9 +80,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             mlf_core_content = set(map(lambda line: line.strip(), f.readlines()))
 
         expected_lines_pytorch_reproducibility = ['trainer.deterministic = True',
-                                                  'trainer.benchmark = False',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_pytorch_random_seeds(pytorch_seed, num_of_gpus)']
+                                                  'trainer.benchmark = False']
 
         expected_lines_pytorch_mlf_core = ['torch.manual_seed(seed)',
                                            'torch.cuda.manual_seed(seed)',

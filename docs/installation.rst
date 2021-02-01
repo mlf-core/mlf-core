@@ -44,11 +44,7 @@ Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-<<<<<<< HEAD
     $ make install
-=======
-    $ pip install .
->>>>>>> development
 
 
 .. _Github repo: https://github.com/mlf-core/mlf-core

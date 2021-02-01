@@ -7,7 +7,7 @@ from rich import print
 {%- if cookiecutter.language == "pytorch" -%}
 import torch
 import mlflow.pytorch
-{%- if cookiecutter.language == "tensorflow" -%}
+{%- elif cookiecutter.language == "tensorflow" -%}
 # ONLY FOR TENSORFLOW -> else RuntimeError: make_default_context() wasn't able to create a context on any of the 1 detected devices
 from system_intelligence.query import query_and_export  # noqa F401
 {% endif %}

@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>General Usage &mdash; mlf-core 1.7.7 documentation</title>
+  <title>General Usage &mdash; mlf-core 1.8.0 documentation</title>
   
 
   
@@ -18,7 +18,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,7 +55,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> mlf-core
+            <a href="index.html" class="icon icon-home"> mlf-core
           
 
           
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.8.0
               </div>
             
           
@@ -162,6 +164,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -173,7 +177,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -198,7 +202,7 @@ It starts the project creation process and guides the user through domain select
 Additionally, the project is linted after creation to ensure that everything went well.
 The user also has the option to push his just created project directly to Github.
 Invoke <code class="docutils literal notranslate"><span class="pre">create</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core create
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core create
 </pre></div>
 </div>
 <p>For more details about project creation please visit <a class="reference internal" href="create.html#create"><span class="std std-ref">Create a project</span></a> and for a detailed list of all available templates please visit <a class="reference internal" href="available_templates/available_templates.html#available-templates"><span class="std std-ref">Available templates</span></a>.</p>
@@ -209,7 +213,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">create</span
 The list command prints the name, handle, short description, available libraries for the template and its version to the console.
 Note that the long description is emitted and the <code class="docutils literal notranslate"><span class="pre">info</span></code> command should be used to get a long description of the template.
 Invoke <code class="docutils literal notranslate"><span class="pre">list</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core list
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core list
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="list_info.html#list-info"><span class="std std-ref">Getting information about available templates</span></a>.</p>
@@ -219,7 +223,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">list</span><
 <p><code class="docutils literal notranslate"><span class="pre">info</span></code> provides detailed information about a specific template or set of templates.
 It prints the name, handle, long description, available libraries and version of the selected subset or specific template.
 Invoke <code class="docutils literal notranslate"><span class="pre">info</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core info &lt;HANDLE&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core info &lt;HANDLE&gt;
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="list_info.html#list-info"><span class="std std-ref">Getting information about available templates</span></a>.</p>
@@ -230,7 +234,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">info</span><
 When linting an already existing project several general checks, which all templates share are performed and afterwards template specific linting functions are run.
 All results are collected and printed to the user. If any of the checks fail linting terminates.
 Invoke <code class="docutils literal notranslate"><span class="pre">lint</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core lint
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core lint
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="lint.html#lint"><span class="std std-ref">Linting your project</span></a>.</p>
@@ -240,7 +244,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">lint</span><
 <p><code class="docutils literal notranslate"><span class="pre">fix-artifact-paths</span></code> fixes absolute paths, which do not match on the current machine.
 This is especially useful when training on a remote machine, saving all runs locally and then transferring to another machine with different file paths.
 Invoke <code class="docutils literal notranslate"><span class="pre">fix-artifact-paths</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core fix-artifact-paths &lt;PATH&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core fix-artifact-paths &lt;PATH&gt;
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="fix_artifact_paths.html#fix-artifact-paths"><span class="std std-ref">Fixing the paths of locally saved MLflow runs</span></a>.</p>
@@ -251,7 +255,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">fix-artifact
 Default configurations for <code class="docutils literal notranslate"><span class="pre">bump-version</span></code> are shipped with the template and can be extended if the user so desires.
 All lines where the version was changed are printed to the console.
 Invoke <code class="docutils literal notranslate"><span class="pre">bump-version</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core bump-version &lt;NEWVERSION&gt; &lt;PATH&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core bump-version &lt;NEWVERSION&gt; &lt;PATH&gt;
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="bump_version.html#bump-version"><span class="std std-ref">Bumping the version of an existing project</span></a>.</p>
@@ -261,7 +265,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">bump-version
 <p><code class="docutils literal notranslate"><span class="pre">sync</span></code> checks for a project whether a newer version of the used template is available.
 If so, a pull request with only the changes of the newer template version is created against the development/last active branchh.
 Invoke <code class="docutils literal notranslate"><span class="pre">sync</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core sync
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core sync
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="sync.html#sync"><span class="std std-ref">Syncing your project</span></a>.</p>
@@ -271,7 +275,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">sync</span><
 <p><code class="docutils literal notranslate"><span class="pre">config</span></code> sets commonly used defaults for the project creation.
 Moreover, it is required for mlf-core’s Github support, since it takes care of the personal access token (PAT).
 Invoke <code class="docutils literal notranslate"><span class="pre">config</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core config &lt;all/general/pat&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core config &lt;all/general/pat&gt;
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="config.html#config"><span class="std std-ref">Configure mlf-core</span></a> and <a class="reference internal" href="github_support.html#github-support"><span class="std std-ref">Github Support</span></a>.</p>
@@ -280,7 +284,7 @@ Invoke <code class="docutils literal notranslate"><span class="pre">config</span
 <h2>upgrade<a class="headerlink" href="#upgrade" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">upgrade</span></code> checks whether a new version is available on PyPI and upgrades the version if not.
 Invoke <code class="code docutils literal notranslate"><span class="pre">upgrade</span></code> by running</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> mlf-core upgrade
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core upgrade
 </pre></div>
 </div>
 <p>For more details please visit <a class="reference internal" href="upgrade.html#upgrade"><span class="std std-ref">Upgrade mlf-core</span></a>.</p>
@@ -288,7 +292,7 @@ Invoke <code class="code docutils literal notranslate"><span class="pre">upgrade
 <div class="section" id="external-python-based-projects">
 <h2>External Python based projects<a class="headerlink" href="#external-python-based-projects" title="Permalink to this headline">¶</a></h2>
 <p>To use mlf-core in an external Python based project</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlf_core</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlf</span><span class="o">-</span><span class="n">core</span>
 </pre></div>
 </div>
 </div>
@@ -299,37 +303,29 @@ Invoke <code class="code docutils literal notranslate"><span class="pre">upgrade
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="create.html" class="btn btn-neutral float-right" title="Create a project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="create.html" class="btn btn-neutral float-right" title="Create a project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Lukas Heumos
+        &#169; Copyright 2020, Lukas Heumos.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

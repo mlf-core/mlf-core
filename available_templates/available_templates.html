@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Available templates &mdash; mlf-core 1.7.7 documentation</title>
+  <title>Available templates &mdash; mlf-core 1.8.0 documentation</title>
   
 
   
@@ -18,7 +18,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -31,7 +34,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -53,7 +55,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> mlf-core
+            <a href="../index.html" class="icon icon-home"> mlf-core
           
 
           
@@ -63,7 +65,7 @@
             
             
               <div class="version">
-                1.7.7
+                1.8.0
               </div>
             
           
@@ -234,6 +236,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -245,7 +249,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/available_templates/available_templates.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -277,13 +281,14 @@ It is recommended to use the sidebar to navigate this documentation, since it is
 <div class="section" id="purpose">
 <h3>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h3>
 <p>mlflow-pytorch is a <a class="reference external" href="https://mlflow.org/">MLflow</a> based template designed for <a class="reference external" href="https://pytorch.org/">Pytorch</a> machine learning models.
+Additionally, <a class="reference external" href="https://github.com/PyTorchLightning/pytorch-lightning">Pytorch Lightning</a> abstracts away boilerplate code.
 The project is fully CPU and GPU deterministic with <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a> integration.
 Additionally, Conda and Docker are supported out of the box.</p>
 </div>
 <div class="section" id="design">
 <h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
 <p>The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.</p>
+As required a MLproject file serves as entry point and for parameter definitions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
 ├── .bandit.yml
 ├── CHANGELOG.rst
@@ -313,8 +318,6 @@ As required a MLproject file serves as entry point and parameter definition.</p>
 │   │   ├── mlf_core.py
 │   ├── model
 │   │   ├── model.py
-│   └── training
-│       └── train.py
 ├── .flake8
 ├── .github
 │   ├── ISSUE_TEMPLATE
@@ -409,7 +412,7 @@ Additionally, Conda and Docker are supported out of the box.</p>
 <div class="section" id="id10">
 <h3>Design<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.</p>
+As required a MLproject file serves as entry point and for parameter definitions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
 ├── .bandit.yml
 ├── CHANGELOG.rst
@@ -535,7 +538,7 @@ Additionally, Conda and Docker are supported out of the box.</p>
 <div class="section" id="id30">
 <h3>Design<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <p>The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.</p>
+As required a MLproject file serves as entry point and for parameter definitions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
 ├── .bandit.yml
 ├── CHANGELOG.rst
@@ -658,7 +661,7 @@ Additionally, Conda and Docker are supported out of the box.</p>
 <div class="section" id="id51">
 <h3>Design<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
 <p>The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
-As required a MLproject file serves as entry point and parameter definition.</p>
+As required a MLproject file serves as entry point and for parameter definitions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
 ├── .bandit.yml
 ├── CHANGELOG.rst
@@ -916,37 +919,29 @@ Note that you need to do this for every organization separately. Dependabot will
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../github_support.html" class="btn btn-neutral float-right" title="Github Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../upgrade.html" class="btn btn-neutral float-left" title="Upgrade mlf-core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="../github_support.html" class="btn btn-neutral float-right" title="Github Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../upgrade.html" class="btn btn-neutral float-left" title="Upgrade mlf-core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Lukas Heumos
+        &#169; Copyright 2020, Lukas Heumos.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

@@ -7,7 +7,8 @@ Syncing your project
 Syncing is supposed to integrate any changes to the mlf-core templates back into your already existing project.
 When ``mlf-core sync`` is invoked, mlf-core checks whether a new version of the corresponding template for the current project is available.
 If so, mlf-core creates a temporary project with the most recent template and pushes it to the ``TEMPLATE`` branch.
-Next, a pull request is submitted to the ``development`` branch.
+Next, a temporary sync branch is created to avoid pushing and manipulating the TEMPLATE branch (called ``mlf_core_sync_v_<<new-version>>`` with ``new-version`` being the
+updated templates version). Finally, a pull request is submitted to the ``development`` branch from this branch.
 
 
 The syncing process is configurable by setting the desired lower syncing boundary level and blacklisting files from syncing (see :ref:`sync_config`).
@@ -54,6 +55,18 @@ Configuring sync
 -----------------------
 
 .. _sync_config:
+
+Enable/Disable sync
+~~~~~~~~~~~~~~~~~~~
+
+Mlf-core aims to provide the user as much configuration as possible. So, the sync feature is optional and should also
+be switched on or off. If you want to enable sync (which is the default), the ``sync_enable`` accepts the following values: ``True, true, Yes, yes, Y, y``. To disable sync,
+simply change this value into ``False, false, No, no, N, n``. It can be configured in the::
+
+    [sync]
+    sync_enabled = True
+
+section.
 
 Sync level
 ~~~~~~~~~~~~~~~~

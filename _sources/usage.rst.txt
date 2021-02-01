@@ -133,4 +133,4 @@ To use mlf-core in an external Python based project
 
 .. code-block:: python
 
-    import mlf_core
+    import mlf-core

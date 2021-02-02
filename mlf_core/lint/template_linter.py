@@ -399,7 +399,7 @@ class TemplateLinter(object):
             mlf_core_py_content = list(map(lambda line: line.strip(), f.readlines()))
 
         # Verify that general_random_seeds is complete
-        expected_lines_general_random_seeds = ['def set_general_random_seeds(seed):',
+        expected_lines_general_random_seeds = ['def set_general_random_seeds(self, seed):',
                                                'os.environ[\'PYTHONHASHSEED\'] = str(seed)  # Python general',
                                                'np.random.seed(seed)  # Numpy random',
                                                'random.seed(seed)  # Python random']

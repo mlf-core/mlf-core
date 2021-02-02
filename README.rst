@@ -19,6 +19,10 @@ mlf-core
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
         :alt: PyPI Status
+        
+.. image:: https://static.pepy.tech/personalized-badge/mlf-core?period=month&units=international_system&left_color=black&right_color=red&left_text=Downloads
+        :target: https://pepy.tech/project/mlf-core
+        :alt: Pepy Downloads
 
 .. image:: https://img.shields.io/discord/742367395196305489?color=passing
         :target: https://discord.gg/Mv8sAcq

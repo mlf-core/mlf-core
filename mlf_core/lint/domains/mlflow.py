@@ -236,7 +236,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_pytorch_reproducibility = ['def set_tensorflow_random_seeds(seed):',
+        expected_lines_pytorch_reproducibility = ['def set_pytorch_random_seeds(seed):',
                                                   'tf.random.set_seed(seed)',
                                                   'tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only',
                                                   'tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only',

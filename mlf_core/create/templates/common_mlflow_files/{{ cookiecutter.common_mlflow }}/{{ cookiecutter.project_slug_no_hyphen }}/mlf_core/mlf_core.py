@@ -65,6 +65,11 @@ class MLFCore:
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
         os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
+{%- elif cookiecutter.language == "xgboost" %}
+
+    def set_xgboost_random_seeds(self, seed, param):
+        param['seed'] = seed
+
 {%- endif %}
 
     def log_sys_intel_conda_env(self):

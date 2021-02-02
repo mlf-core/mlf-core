@@ -88,10 +88,6 @@ def start_training():
         MLFCore.log_sys_intel_conda_env()
 
 
-def set_xgboost_random_seeds(seed, param):
-    param['seed'] = seed
-
-
 if __name__ == '__main__':
     traceback.install()
     start_training()

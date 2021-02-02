@@ -33,9 +33,11 @@ if __name__ == "__main__":
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)
 
+    mlfcore = MLFCore()
+
     mlflow.pytorch.autolog()
     # log conda env and system information
-    MLFCore.log_sys_intel_conda_env()
+    mlfcore.log_sys_intel_conda_env()
     # parse cli arguments
     args = parser.parse_args()
     dict_args = vars(args)
@@ -43,8 +45,8 @@ if __name__ == "__main__":
     general_seed = dict_args['general_seed']
     pytorch_seed = dict_args['pytorch_seed']
     num_of_gpus = dict_args['gpus']
-    MLFCore.set_general_random_seeds(general_seed)
-    MLFCore.set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
+    mlfcore.set_general_random_seeds(general_seed)
+    mlfcore.set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
 
     if 'accelerator' in dict_args:
         if dict_args['accelerator'] == 'None':

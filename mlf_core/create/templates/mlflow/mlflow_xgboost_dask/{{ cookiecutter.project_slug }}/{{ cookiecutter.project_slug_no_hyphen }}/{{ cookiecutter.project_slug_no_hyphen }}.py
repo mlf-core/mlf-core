@@ -129,10 +129,6 @@ def load_train_test_data(client):
     return dtrain, dtest
 
 
-def set_xgboost_dask_random_seeds(seed, param):
-    param['seed'] = seed
-
-
 if __name__ == '__main__':
     traceback.install()
     start_training()

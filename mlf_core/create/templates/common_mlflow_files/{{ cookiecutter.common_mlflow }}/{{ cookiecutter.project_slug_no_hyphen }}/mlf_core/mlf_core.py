@@ -70,6 +70,11 @@ class MLFCore:
     def set_xgboost_random_seeds(self, seed, param):
         param['seed'] = seed
 
+{%- elif cookiecutter.language == "xgboost_dask" %}
+
+    def set_xgboost_dask_random_seeds(self, seed, param):
+        param['seed'] = seed
+
 {%- endif %}
 
     def log_sys_intel_conda_env(self):

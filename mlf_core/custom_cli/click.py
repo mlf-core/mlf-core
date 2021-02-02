@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from configparser import NoSectionError
 
+from mlf_core import __version__
 from mlf_core.common.suggest_similar_commands import MAIN_COMMANDS
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.bump_version.bump_version import VersionBumper
@@ -171,6 +172,20 @@ def print_project_version(ctx, param, value) -> None:
     except NoSectionError:
         ctx.fail(click.style('Unable to read from mlf-core.cfg file.\nMake sure your current working directory has a mlf-core.cfg file '
                              'when running bump-version with the --project-version flag!', fg='red'))
+
+
+def print_mlfcore_version(ctx, param, value):
+    """
+    Print mlf-core version
+    """
+    # if context uses resilient parsing (no changes of execution flow) or no flag value is provided, do nothing
+    if not value or ctx.resilient_parsing:
+        return
+    try:
+        print(f'[bold blue]Mlf-core version: {__version__}')
+        ctx.exit()
+    except click.ClickException:
+        ctx.fail(f'An error occurred fetching mlf-core version!')
 
 
 class CustomHelpSubcommand(click.Command):

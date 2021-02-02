@@ -15,7 +15,7 @@ import mlf_core
 from mlf_core.bump_version.bump_version import VersionBumper
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain
-from mlf_core.custom_cli.click import HelpErrorHandling, print_project_version, CustomHelpSubcommand, CustomArg
+from mlf_core.custom_cli.click import HelpErrorHandling, print_project_version, print_mlfcore_version, CustomHelpSubcommand, CustomArg
 from mlf_core.info.info import TemplateInfo
 from mlf_core.lint.lint import lint_project
 from mlf_core.list.list import TemplateLister
@@ -48,7 +48,7 @@ def main():
 
 
 @click.group(cls=HelpErrorHandling)
-@click.version_option(mlf_core.__version__, message=click.style(f'mlf-core Version: {mlf_core.__version__}', fg='blue'))
+@click.option('--version', is_flag=True, callback=print_mlfcore_version, expose_value=False, is_eager=True)
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Enable verbose output (print debug statements).')
 @click.option("-l", "--log-file", help="Save a verbose log to a file.")
 @click.pass_context

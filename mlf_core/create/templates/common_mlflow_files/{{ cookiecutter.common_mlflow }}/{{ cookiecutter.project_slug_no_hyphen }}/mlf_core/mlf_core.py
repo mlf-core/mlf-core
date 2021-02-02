@@ -23,7 +23,7 @@ class MLFCore:
             # Put any initialization here.
         return cls._instance
 
-    def set_general_random_seeds(seed):
+    def set_general_random_seeds(self, seed):
         os.environ['PYTHONHASHSEED'] = str(seed)  # Python general
         np.random.seed(seed)  # Numpy random
         random.seed(seed)  # Python random
@@ -51,7 +51,7 @@ class MLFCore:
 
 {%- if cookiecutter.language == "pytorch" %}
 
-    def set_pytorch_random_seeds(seed, num_gpus):
+    def set_pytorch_random_seeds(self, seed, num_gpus):
         torch.manual_seed(seed)
         if num_gpus > 0:
             torch.cuda.manual_seed(seed)
@@ -59,7 +59,7 @@ class MLFCore:
 
 {%- elif cookiecutter.language == "tensorflow" %}
 
-    def set_tensorflow_random_seeds(seed):
+    def set_tensorflow_random_seeds(self, seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only

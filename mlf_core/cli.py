@@ -11,7 +11,6 @@ import rich.logging
 from rich import traceback
 from rich import print
 
-import mlf_core
 from mlf_core.bump_version.bump_version import VersionBumper
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain

@@ -185,7 +185,7 @@ def print_mlfcore_version(ctx, param, value):
         print(f'[bold blue]Mlf-core version: {__version__}')
         ctx.exit()
     except click.ClickException:
-        ctx.fail(f'An error occurred fetching mlf-core version!')
+        ctx.fail('An error occurred fetching mlf-core version!')
 
 
 class CustomHelpSubcommand(click.Command):

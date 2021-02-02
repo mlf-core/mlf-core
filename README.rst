@@ -20,7 +20,7 @@ mlf-core
         :target: https://pypi.python.org/pypi/mlf-core
         :alt: PyPI Status
         
-.. image:: https://static.pepy.tech/personalized-badge/mlf-core?units=international_system&left_color=black&right_color=red&left_text=Downloads
+.. image:: https://static.pepy.tech/personalized-badge/mlf-core?units=international_system&left_color=grey&right_color=red&left_text=Downloads
         :target: https://pepy.tech/project/mlf-core
         :alt: Pepy Downloads
 

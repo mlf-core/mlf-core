@@ -418,7 +418,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-xgboost_dask')
 
-    def xgboost_reproducibility_seeds(self) -> None:
+    def xgboost_dask_reproducibility_seeds(self) -> None:
         """
         Verifies that all CPU and GPU reproducibility settings for XGBoost are enabled
         Required are:
@@ -430,22 +430,20 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                 torch.backends.cudnn.deterministic = True
                 torch.backends.cudnn.benchmark = False
         """
-        passed_xgboost_reproducibility_seeds = True
+        passed_xgboost_dask_reproducibility_seeds = True
         entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_xgboost_reproducibility = ['def set_xgboost_dask_random_seeds(seed, param):',
-                                                  'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(dict_args["general_seed"])',
-                                                  'set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
+        expected_lines_xgboost_dask_reproducibility = ['MLFCore.set_general_random_seeds(dict_args["general_seed"])',
+                                                       'MLFCore.set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
 
-        for expected_line in expected_lines_xgboost_reproducibility:
+        for expected_line in expected_lines_xgboost_dask_reproducibility:
             if expected_line not in project_slug_entry_point_content:
-                passed_xgboost_reproducibility_seeds = False
+                passed_xgboost_dask_reproducibility_seeds = False
                 self.failed.append(('mlflow-xgboost_dask-2', f'{expected_line} not found in {entry_point_file_path}'))
 
-        if passed_xgboost_reproducibility_seeds:
+        if passed_xgboost_dask_reproducibility_seeds:
             self.passed.append(('mlflow-xgboost_dask-2', 'All required reproducibility settings enabled.'))
 
     def xgboost_version(self) -> None:

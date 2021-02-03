@@ -325,10 +325,8 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
-                                                  'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(dict_args["general_seed"])',
-                                                  'set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
+        expected_lines_xgboost_reproducibility = ['MLFCore.set_general_random_seeds(dict_args["general_seed"])',
+                                                  'MLFCore.set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:

@@ -5,7 +5,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 import mlflow
 from data_loading.data_loader import MNISTDataModule
 from model.model import LightningMNISTClassifier
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_pytorch_random_seeds, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 import os
 from rich import print
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     mlflow.pytorch.autolog()
     # log conda env and system information
-    log_sys_intel_conda_env()
+    MLFCore.log_sys_intel_conda_env()
     # parse cli arguments
     args = parser.parse_args()
     dict_args = vars(args)
@@ -43,8 +43,8 @@ if __name__ == "__main__":
     general_seed = dict_args['general_seed']
     pytorch_seed = dict_args['pytorch_seed']
     num_of_gpus = dict_args['gpus']
-    set_general_random_seeds(general_seed)
-    set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
+    MLFCore.set_general_random_seeds(general_seed)
+    MLFCore.set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
 
     if 'accelerator' in dict_args:
         if dict_args['accelerator'] == 'None':

@@ -12,7 +12,7 @@ from xgboost.dask import DaskDMatrix
 from sklearn.datasets import fetch_covtype
 from dask_ml.model_selection import train_test_split
 
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 
 
 def start_training():
@@ -86,8 +86,8 @@ def start_training():
                          'verbosity': 2}
 
                 # Set random seeds
-                set_general_random_seeds(dict_args["general_seed"])
-                set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
+                MLFCore.set_general_random_seeds(dict_args["general_seed"])
+                MLFCore.set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
 
                 # Set CPU or GPU as training device
                 if use_cuda:
@@ -110,7 +110,7 @@ def start_training():
                     print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
                 # Log hardware and software
-                log_sys_intel_conda_env()
+                MLFCore.log_sys_intel_conda_env()
 
 
 def load_train_test_data(client):
@@ -127,10 +127,6 @@ def load_train_test_data(client):
     dtest = DaskDMatrix(client, X_test, y_test)
 
     return dtrain, dtest
-
-
-def set_xgboost_dask_random_seeds(seed, param):
-    param['seed'] = seed
 
 
 if __name__ == '__main__':

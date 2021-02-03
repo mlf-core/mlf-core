@@ -399,17 +399,17 @@ class TemplateLinter(object):
             mlf_core_py_content = list(map(lambda line: line.strip(), f.readlines()))
 
         # Verify that general_random_seeds is complete
-        expected_lines_general_random_seeds = ['def set_general_random_seeds(self, seed):',
+        expected_lines_general_random_seeds = ['def set_general_random_seeds(seed):',
                                                'os.environ[\'PYTHONHASHSEED\'] = str(seed)  # Python general',
                                                'np.random.seed(seed)  # Numpy random',
                                                'random.seed(seed)  # Python random']
 
         # Verify that system-intelligence and conda environment logging are intact
         expected_lines_sys_intell_conda_env = [
-            'def log_sys_intel_conda_env(self):',
+            'def log_sys_intel_conda_env(cls):',
             'reports_output_dir = tempfile.mkdtemp()',
-            'def log_system_intelligence(self, reports_output_dir: str):',
-            'def log_conda_environment(self, reports_output_dir: str):',
+            'def log_system_intelligence(reports_output_dir: str):',
+            'def log_conda_environment(reports_output_dir: str):',
             'query_and_export(query_scope={\'all\'},',
             'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
             # f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',

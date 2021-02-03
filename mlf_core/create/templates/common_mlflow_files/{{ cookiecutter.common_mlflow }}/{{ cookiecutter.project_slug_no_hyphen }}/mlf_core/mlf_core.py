@@ -10,7 +10,6 @@ import torch
 {%- elif cookiecutter.language == "tensorflow" %}
 # ONLY FOR TENSORFLOW -> else RuntimeError: make_default_context() wasn't able to create a context on any of the 1 detected devices
 import tensorflow as tf
-from system_intelligence.query import query_and_export  # noqa F401
 {%- endif %}
 
 

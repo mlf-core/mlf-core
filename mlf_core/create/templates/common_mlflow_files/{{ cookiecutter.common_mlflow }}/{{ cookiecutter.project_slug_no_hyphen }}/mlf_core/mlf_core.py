@@ -23,12 +23,14 @@ class MLFCore:
             # Put any initialization here.
         return cls._instance
 
-    def set_general_random_seeds(self, seed):
+    @staticmethod
+    def set_general_random_seeds(seed):
         os.environ['PYTHONHASHSEED'] = str(seed)  # Python general
         np.random.seed(seed)  # Numpy random
         random.seed(seed)  # Python random
 
-    def log_system_intelligence(self, reports_output_dir: str):
+    @staticmethod
+    def log_system_intelligence(reports_output_dir: str):
         # Scoped import to prevent issues like RuntimeError: Numba cannot operate on non-primary CUDA context
         from system_intelligence.query import query_and_export
 
@@ -42,7 +44,8 @@ class MLFCore:
         print('[bold blue]Uploading system-intelligence report as a run artifact...')
         mlflow.log_artifacts(reports_output_dir, artifact_path='reports')
 
-    def log_conda_environment(self, reports_output_dir: str):
+    @staticmethod
+    def log_conda_environment(reports_output_dir: str):
         print('[bold blue]Exporting conda environment...')
         conda_env_filehandler = open(f'{reports_output_dir}/{{ cookiecutter.project_slug_no_hyphen }}_conda_environment.yml', 'w')
         subprocess.call(['conda', 'env', 'export', '--name', '{{ cookiecutter.project_slug_no_hyphen }}'], stdout=conda_env_filehandler)
@@ -51,7 +54,8 @@ class MLFCore:
 
 {%- if cookiecutter.language == "pytorch" %}
 
-    def set_pytorch_random_seeds(self, seed, num_gpus):
+    @staticmethod
+    def set_pytorch_random_seeds(seed, num_gpus):
         torch.manual_seed(seed)
         if num_gpus > 0:
             torch.cuda.manual_seed(seed)
@@ -59,7 +63,8 @@ class MLFCore:
 
 {%- elif cookiecutter.language == "tensorflow" %}
 
-    def set_tensorflow_random_seeds(self, seed):
+    @staticmethod
+    def set_tensorflow_random_seeds(seed):
         tf.random.set_seed(seed)
         tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
         tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
@@ -67,17 +72,20 @@ class MLFCore:
 
 {%- elif cookiecutter.language == "xgboost" %}
 
-    def set_xgboost_random_seeds(self, seed, param):
+    @staticmethod
+    def set_xgboost_random_seeds(seed, param):
         param['seed'] = seed
 
 {%- elif cookiecutter.language == "xgboost_dask" %}
 
-    def set_xgboost_dask_random_seeds(self, seed, param):
+    @staticmethod
+    def set_xgboost_dask_random_seeds(seed, param):
         param['seed'] = seed
 
 {%- endif %}
 
-    def log_sys_intel_conda_env(self):
+    @classmethod
+    def log_sys_intel_conda_env(cls):
         reports_output_dir = tempfile.mkdtemp()
-        self.log_system_intelligence(reports_output_dir)
-        self.log_conda_environment(reports_output_dir)
+        cls.log_system_intelligence(reports_output_dir)
+        cls.log_conda_environment(reports_output_dir)

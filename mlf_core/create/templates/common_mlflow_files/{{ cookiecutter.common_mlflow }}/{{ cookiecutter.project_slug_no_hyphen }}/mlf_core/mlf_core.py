@@ -4,9 +4,9 @@ import numpy as np
 import random
 import subprocess
 from rich import print
+import mlflow
 {%- if cookiecutter.language == "pytorch" %}
 import torch
-import mlflow.pytorch
 {%- elif cookiecutter.language == "tensorflow" %}
 # ONLY FOR TENSORFLOW -> else RuntimeError: make_default_context() wasn't able to create a context on any of the 1 detected devices
 import tensorflow as tf

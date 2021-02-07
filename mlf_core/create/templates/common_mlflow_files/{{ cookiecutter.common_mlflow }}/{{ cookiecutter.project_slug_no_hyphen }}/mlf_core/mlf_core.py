@@ -1,3 +1,4 @@
+import hashlib
 import tempfile
 import os
 import numpy as np
@@ -104,6 +105,6 @@ class MLFCore:
     @staticmethod
     def log_input_data(input_data: str):
         print('[bold blue]Hashing input data...')
-        input_hash = md5_sum_input_data(input_fname)
+        input_hash = md5_sum_input_data(input_data)
         print('[bold blue]Uploading input hash as a run param...')
         mlflow.log_param("input_hash", input_hash)

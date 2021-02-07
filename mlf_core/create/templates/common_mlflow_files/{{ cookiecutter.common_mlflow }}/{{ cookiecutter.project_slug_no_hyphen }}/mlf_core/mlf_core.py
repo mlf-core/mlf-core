@@ -89,3 +89,21 @@ class MLFCore:
         reports_output_dir = tempfile.mkdtemp()
         cls.log_system_intelligence(reports_output_dir)
         cls.log_conda_environment(reports_output_dir)
+
+    @staticmethod
+    def md5_sum_input_data(fname: str):
+        """Generate md5 sum for input file"""
+        hash_md5 = hashlib.md5()
+        with open(fname, "rb") as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hash_md5.update(chunk)
+
+        md5sum = hash_md5.hexdigest()
+        return md5sum
+
+    @staticmethod
+    def log_input_data(input_data: str):
+        print('[bold blue]Hashing input data...')
+        input_hash = md5_sum_input_data(input_fname)
+        print('[bold blue]Uploading input hash as a run param...')
+        mlflow.log_param("input_hash", input_hash)

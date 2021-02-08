@@ -95,8 +95,8 @@ class MLFCore:
     def md5_sum_input_data(fname: str):
         """Generate md5 sum for input file"""
         hash_md5 = hashlib.md5()
-        with open(fname, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
+        with open(fname, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b''):
                 hash_md5.update(chunk)
 
         md5sum = hash_md5.hexdigest()

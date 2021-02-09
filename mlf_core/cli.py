@@ -298,12 +298,14 @@ def config(ctx, view: bool, section: str) -> None:
 @click.pass_context
 def fix_artifact_paths(ctx, path: str) -> None:
     """
-
+    Ensures that the paths of all locally saved MLflow artifacts are fixed to display them on the current machine.
     """
     for meta_yaml in Path(f'{path}/mlruns').rglob('meta.yaml'):
-        if 'file' not in meta_yaml.absolute():
-            print(f'[bold yellow] Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
-        print(f'[bold blue] Fixing path for: {meta_yaml.absolute()}')
+        with open(meta_yaml.absolute()) as meta_yaml_file:
+            content = meta_yaml_file.readlines()
+            if 'file://' not in content[0]:
+                print(f'[bold yellow]Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
+        print(f'[bold blue]Fixing path for: {meta_yaml.absolute()}')
         with open(meta_yaml.absolute()) as meta_yaml_file:
             content = meta_yaml_file.readlines()
             if 'artifact_location' in content[0]:

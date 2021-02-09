@@ -11,7 +11,11 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Possibility to log input files in all template with the MLFCore object.
+
 **Fixed**
+
+* mlf-core fix-artifact-paths does now operate as expected.
 
 **Dependencies**
 

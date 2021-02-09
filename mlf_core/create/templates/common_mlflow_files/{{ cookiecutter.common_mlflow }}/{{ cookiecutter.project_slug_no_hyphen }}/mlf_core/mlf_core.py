@@ -1,3 +1,4 @@
+import glob
 import hashlib
 import tempfile
 import os
@@ -92,7 +93,7 @@ class MLFCore:
         cls.log_conda_environment(reports_output_dir)
 
     @staticmethod
-    def md5_sum_input_data(fname: str):
+    def _md5(fname: str):
         """Generate md5 sum for input file"""
         hash_md5 = hashlib.md5()
         with open(fname, 'rb') as f:
@@ -103,7 +104,28 @@ class MLFCore:
         return md5sum
 
     @staticmethod
+    def get_md5_sums(self, dir, md5_sums=None):
+        """
+        Recursively go through directories and subdirectories
+        and generate tuples of (<file_path>, <md5sum>)
+        returns: list of tuples
+        """
+        if not md5_sums:
+            md5_sums = []
+        elements = glob.glob(dir + "/*")
+        for elem in elements:
+            # if file, get md5 sum
+            if os.path.isfile(elem):
+                elem_md5 = self._md5(elem)
+                md5_sums.append((elem, elem_md5))
+            # if directory, apply recursion
+            if os.path.isdir(elem):
+                md5_sums = self._get_md5_sums(elem, md5_sums)
+            else:
+                continue
+
+    @staticmethod
     def log_input_data(input_data: str):
         print('[bold blue]Hashing input data...')
-        input_hash = md5_sum_input_data(input_data)
+        input_hash = get_md5_sums(input_data)
         mlflow.log_param("input_hash", input_data + "-" + input_hash)

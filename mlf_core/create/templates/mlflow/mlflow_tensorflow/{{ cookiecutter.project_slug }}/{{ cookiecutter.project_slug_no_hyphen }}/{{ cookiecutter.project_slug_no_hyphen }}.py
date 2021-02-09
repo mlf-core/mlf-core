@@ -76,6 +76,8 @@ def start_training():
 
         # Fetch and prepare dataset
         train_dataset, eval_dataset = load_train_test_data(strategy, dict_args['batch_size'], dict_args['buffer_size'], dict_args['tensorflow_seed'])
+        MLFCore.log_input_data(train_dataset)
+        MLFCore.log_input_data(eval_dataset)
 
         with strategy.scope():
             # Define model and compile model

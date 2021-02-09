@@ -55,8 +55,8 @@ def start_training():
         # Fetch and prepare data
         dtrain, dtest = load_train_test_data()
 
-        MLFCore.log_input_data(dtrain)
-        MLFCore.log_input_data(dtest)
+        # TODO MLF-CORE: Enable input data logging
+        # MLFCore.log_input_data('data/')
 
         # Enable the logging of all parameters, metrics and models to mlflow
         mlflow.xgboost.autolog()

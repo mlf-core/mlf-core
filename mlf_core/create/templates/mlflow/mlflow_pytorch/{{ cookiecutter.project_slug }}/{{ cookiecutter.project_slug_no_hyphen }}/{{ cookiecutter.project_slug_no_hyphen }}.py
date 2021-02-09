@@ -54,7 +54,9 @@ if __name__ == "__main__":
             dict_args['accelerator'] = 'ddp'
 
     dm = MNISTDataModule(**dict_args)
-    MLFCore.log_input_data(dm)
+
+    # TODO MLF-CORE: Enable input data logging
+    # MLFCore.log_input_data('data/')
 
     dm.prepare_data()
     dm.setup(stage='fit')

@@ -115,7 +115,9 @@ def start_training():
 
 def load_train_test_data(client):
     dataset = fetch_covtype()
-    MLFCore.log_input_data(dataset)
+
+    # TODO MLF-CORE: Enable input data logging
+    # MLFCore.log_input_data('data/')
 
     # Rechunking is required for the covertype dataset
     X = da.from_array(dataset.data, chunks=1000)

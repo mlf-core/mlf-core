@@ -55,6 +55,9 @@ if __name__ == "__main__":
 
     dm = MNISTDataModule(**dict_args)
 
+    # TODO MLF-CORE: Enable input data logging
+    # MLFCore.log_input_data('data/')
+
     dm.prepare_data()
     dm.setup(stage='fit')
     model = LightningMNISTClassifier(len_test_set=len(dm.df_test), **dict_args)

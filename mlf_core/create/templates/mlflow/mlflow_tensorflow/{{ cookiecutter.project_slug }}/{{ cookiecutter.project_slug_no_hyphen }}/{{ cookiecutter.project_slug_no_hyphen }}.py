@@ -77,6 +77,9 @@ def start_training():
         # Fetch and prepare dataset
         train_dataset, eval_dataset = load_train_test_data(strategy, dict_args['batch_size'], dict_args['buffer_size'], dict_args['tensorflow_seed'])
 
+        # TODO MLF-CORE: Enable input data logging
+        # MLFCore.log_input_data('data/')
+
         with strategy.scope():
             # Define model and compile model
             model = create_model(input_shape=(28, 28, 1))

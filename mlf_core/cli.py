@@ -294,10 +294,11 @@ def config(ctx, view: bool, section: str) -> None:
 
 
 @mlf_core_cli.command(short_help='Fix artifact location path for local all mlruns.', cls=CustomHelpSubcommand)
-@click.argument('path', type=str, default='.', required=False, helpmsg='Path to the root of the mlruns folder.', cls=CustomArg)
+@click.argument('path', type=str, default=os.getcwd(), required=False, helpmsg='Path to the root of the mlruns folder.', cls=CustomArg)
 @click.pass_context
 def fix_artifact_paths(ctx, path: str) -> None:
     """
+
     """
     for meta_yaml in Path(f'{path}/mlruns').rglob('meta.yaml'):
         if 'file' not in meta_yaml.absolute():

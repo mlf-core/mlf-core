@@ -47,7 +47,7 @@ def main():
 
 
 @click.group(cls=HelpErrorHandling)
-@click.option('--version', is_flag=True, callback=print_mlfcore_version, expose_value=False, is_eager=True)
+@click.option('--version', is_flag=True, callback=print_mlfcore_version, expose_value=False, is_eager=True, help='Print the current mlf-core version.')
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Enable verbose output (print debug statements).')
 @click.option("-l", "--log-file", help="Save a verbose log to a file.")
 @click.pass_context

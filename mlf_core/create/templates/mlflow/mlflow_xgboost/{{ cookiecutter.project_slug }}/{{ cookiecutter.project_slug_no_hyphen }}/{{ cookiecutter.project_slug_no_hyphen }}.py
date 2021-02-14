@@ -58,7 +58,6 @@ def start_training():
         # Log hardware and software
         MLFCore.log_sys_intel_conda_env()
 
-
         # Fetch and prepare data
         dtrain, dtest = load_train_test_data()
 

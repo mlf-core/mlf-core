@@ -53,7 +53,7 @@ def start_training():
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow
-        mlflow.xgboost.autolog()
+        mlflow.autolog(1)
 
         # Log hardware and software
         MLFCore.log_sys_intel_conda_env()

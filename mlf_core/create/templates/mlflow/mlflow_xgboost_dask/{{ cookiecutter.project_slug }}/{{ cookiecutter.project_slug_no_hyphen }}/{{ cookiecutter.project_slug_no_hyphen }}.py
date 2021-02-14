@@ -64,7 +64,7 @@ def start_training():
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
-        mlflow.xgboost.autolog()
+        mlflow.autolog(1)
 
         # Setup a Dask cluster to facilitate multiCPU/multiGPU training
         if use_cuda:

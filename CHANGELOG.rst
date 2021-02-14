@@ -12,6 +12,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Added**
 
 * Possibility to log input files in all template with the MLFCore object.
+* [ALL TEMPLATES] Using new mlf-core/base:1.2.0 container, which is based on CUDA 11.2.1 and cudnn 8.1
+* [PYTORCH] Upgraded Pytorch to 1.7.1
+* [PYTORCH] Added set_deterministic
 
 **Fixed**
 

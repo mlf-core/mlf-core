@@ -77,6 +77,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
                                                   'trainer.benchmark = False']
 
         expected_lines_pytorch_mlf_core = ['torch.manual_seed(seed)',
+                                           'torch.set_deterministic(True)',
                                            'torch.cuda.manual_seed(seed)',
                                            'torch.cuda.manual_seed_all(seed)  # For multiGPU']
 

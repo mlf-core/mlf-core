@@ -1,4 +1,4 @@
-FROM mlfcore/base:1.1.0
+FROM mlfcore/base:1.2.0
 
 # Install the conda environment
 COPY environment.yml .

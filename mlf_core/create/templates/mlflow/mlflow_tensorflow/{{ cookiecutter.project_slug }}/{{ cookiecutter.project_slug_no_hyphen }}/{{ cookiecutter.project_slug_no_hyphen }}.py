@@ -66,6 +66,9 @@ def start_training():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
         mlflow.tensorflow.autolog()
 
+        # Log hardware and software
+        MLFCore.log_sys_intel_conda_env()
+
         # Fix all random seeds and Tensorflow specific reproducibility settings
         MLFCore.set_general_random_seeds(dict_args["general_seed"])
         MLFCore.set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
@@ -95,9 +98,6 @@ def start_training():
 
             device = 'GPU' if dict_args['cuda'] else 'CPU'
             print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
-
-            # Log hardware and software
-            MLFCore.log_sys_intel_conda_env()
 
             print(f'[bold blue]\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}')
 

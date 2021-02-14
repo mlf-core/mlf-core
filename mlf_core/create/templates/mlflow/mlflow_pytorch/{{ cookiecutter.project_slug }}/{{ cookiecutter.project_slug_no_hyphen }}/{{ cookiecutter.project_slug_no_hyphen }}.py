@@ -33,7 +33,7 @@ if __name__ == "__main__":
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
     parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)
 
-    mlflow.autolog()
+    mlflow.autolog(1)
     # log conda env and system information
     MLFCore.log_sys_intel_conda_env()
     # parse cli arguments

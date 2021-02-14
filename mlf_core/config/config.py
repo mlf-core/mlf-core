@@ -44,10 +44,10 @@ class ConfigCommand:
         """
         already_configured = False
         settings = {}
-        if ConfigCommand.check_mlf_core_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ:
-            if os.path.exists(Path(ConfigCommand.CONF_FILE_PATH)):
-                already_configured = True
-                settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
+        if ConfigCommand.check_mlf_core_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ \
+           and os.path.exists(Path(ConfigCommand.CONF_FILE_PATH)):
+            already_configured = True
+            settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
 
         full_name = mlf_core_questionary_or_dot_mlf_core(function='text',
                                                          question='Full name',
@@ -103,8 +103,8 @@ class ConfigCommand:
 
         if mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                                 question='Do you want to configure your GitHub personal access token right now?\n'
-                                                'You can still configure it later '
-                                                'by calling    mlf-core config pat',
+                                                         'You can still configure it later '
+                                                         'by calling    mlf-core config pat',
                                                 default='Yes'):
             print('[bold blue]mlf-core requires your Github Access token to have full repository, workflow and create/update packages permissions!')
             access_token = mlf_core_questionary_or_dot_mlf_core(function='password',

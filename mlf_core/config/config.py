@@ -201,12 +201,8 @@ class ConfigCommand:
         """
         log.debug(f'Checking whether a config directory already exists at {Path(ConfigCommand.CONF_FILE_PATH).parent}.')
         if not os.path.exists(Path(ConfigCommand.CONF_FILE_PATH).parent):
-<<<<<<< HEAD
-            log.debug('Config directory does not exist.')
-=======
             log.debug('Config directory did not exist. Creating it.')
             os.makekdirs(Path(ConfigCommand.CONF_FILE_PATH).parent)
->>>>>>> c2297fc (fix some doc errors)
             return False
         return True
 

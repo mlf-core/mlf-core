@@ -39,11 +39,6 @@ The :code:`bump-version` command follows the syntax
 
 - ``PATH`` [CWD]: The path to the ``mlf_core.cfg`` file, which contains all locations, where the version should be increased.
 
-.. figure:: images/bump_version_example.png
-   :scale: 100 %
-   :alt: bump-version example
-
-   bump-version applied to a fresh cli-python project
 
 Flags
 -------

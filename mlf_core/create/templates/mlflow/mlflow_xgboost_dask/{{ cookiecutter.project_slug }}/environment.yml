@@ -8,8 +8,8 @@ dependencies:
     - defaults::python=3.8.2
     - conda-forge::rich=9.10.0
     - conda-forge::mlflow=1.13.1
-    - conda-forge::dask=2020.12.0
-    - conda-forge::dask-ml=1.7.0
+    - conda-forge::dask=2021.2.0
+    - conda-forge::dask-ml=1.8.0
     - conda-forge::scikit-learn=0.24.1
     - conda-forge::matplotlib=3.3.4
     - rapidsai::dask-cuda=0.17.0

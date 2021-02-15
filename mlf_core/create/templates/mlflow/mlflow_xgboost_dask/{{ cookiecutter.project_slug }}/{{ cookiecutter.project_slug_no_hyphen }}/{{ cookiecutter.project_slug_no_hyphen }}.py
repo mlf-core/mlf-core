@@ -56,7 +56,7 @@ def start_training():
     avail_gpus = GPUtil.getGPUs()
     args = parser.parse_args()
     dict_args = vars(args)
-    use_cuda = True if dict_args['cuda'] == 'True' and len(avail_gpus) > 0 else False
+    use_cuda = True if dict_args['cuda'] and len(avail_gpus) > 0 else False
     if use_cuda:
         print(f'[bold blue]Using {len(avail_gpus)} GPUs!')
     else:

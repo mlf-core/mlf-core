@@ -21,6 +21,9 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Fixed**
 
 * mlf-core fix-artifact-paths does now operate as expected.
+* [ALL TEMPLATES] fixed a path error that causes the general template linter to fail searching for
+  subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'<<project_name>>\'], stdout=conda_env_filehandler) and
+  mlflow.log_artifact(f\'{{reports_output_dir}}/<<project_name>>_conda_environment.yml\', artifact_path=\'reports\') in the project's mlf_core.py file
 
 **Dependencies**
 

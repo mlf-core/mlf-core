@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.9.1 (2021-02-16)
+------------------
+
+**Added**
+
+**Fixed**
+
+* [ALL TEMPLATES] lint badge in README.rst
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.9.0 (2021-02-16)
 ------------------
 

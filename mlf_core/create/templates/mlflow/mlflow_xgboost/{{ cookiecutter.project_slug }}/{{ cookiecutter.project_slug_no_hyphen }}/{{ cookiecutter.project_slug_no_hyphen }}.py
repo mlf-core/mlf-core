@@ -6,7 +6,7 @@ import time
 import GPUtil
 from rich import traceback, print
 
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 from data_loading.data_loader import load_train_test_data
 
 
@@ -45,18 +45,24 @@ def start_training():
     avail_gpus = GPUtil.getGPUs()
     args = parser.parse_args()
     dict_args = vars(args)
-    use_cuda = True if dict_args['cuda'] == 'True' and len(avail_gpus) > 0 else False
+    use_cuda = True if dict_args['cuda'] and len(avail_gpus) > 0 else False
     if use_cuda:
         print(f'[bold blue]Using {len(avail_gpus)} GPUs!')
     else:
         print('[bold blue]No GPUs detected. Running on the CPU')
 
     with mlflow.start_run():
+        # Enable the logging of all parameters, metrics and models to mlflow
+        mlflow.autolog(1)
+
+        # Log hardware and software
+        MLFCore.log_sys_intel_conda_env()
+
         # Fetch and prepare data
         dtrain, dtest = load_train_test_data()
 
-        # Enable the logging of all parameters, metrics and models to mlflow
-        mlflow.xgboost.autolog()
+        # TODO MLF-CORE: Enable input data logging
+        # MLFCore.log_input_data('data/')
 
         # Set XGBoost parameters
         param = {'objective': 'multi:softmax',
@@ -67,8 +73,8 @@ def start_training():
                  'colsample_bylevel': 0.5}
 
         # Set random seeds
-        set_general_random_seeds(dict_args["general_seed"])
-        set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
+        MLFCore.set_general_random_seeds(dict_args["general_seed"])
+        MLFCore.set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
 
         # Set CPU or GPU as training device
         if use_cuda:
@@ -83,13 +89,6 @@ def start_training():
         device = 'GPU' if use_cuda else 'CPU'
         if use_cuda:
             print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
-
-        # Log hardware and software
-        log_sys_intel_conda_env()
-
-
-def set_xgboost_random_seeds(seed, param):
-    param['seed'] = seed
 
 
 if __name__ == '__main__':

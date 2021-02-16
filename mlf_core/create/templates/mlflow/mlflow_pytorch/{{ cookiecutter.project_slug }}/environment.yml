@@ -4,18 +4,17 @@ channels:
   - conda-forge
   - pytorch
 dependencies:
-  - defaults::cudatoolkit=10.1
+  - defaults::cudatoolkit=11.0.221
   - defaults::python=3.8.2
   - conda-forge::tensorboardx=2.1
   - conda-forge::mlflow=1.13.1
   - conda-forge::rich=9.10.0
-  - pytorch::pytorch=1.6.0
-  - pytorch::torchvision=0.7.0
-  - pytorch-lightning==1.1.5
-  - torchvision=0.7.0
+  - pytorch::pytorch=1.7.1
+  - pytorch::torchvision=0.8.2
+  - pytorch-lightning==1.1.8
   - pip
   - pip:
     - pycuda==2019.1.2  # not on Conda
     - cloudpickle==1.6.0
-    - boto3==1.16.58
+    - boto3==1.17.7
     - system-intelligence==2.0.2

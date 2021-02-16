@@ -12,7 +12,7 @@ from xgboost.dask import DaskDMatrix
 from sklearn.datasets import fetch_covtype
 from dask_ml.model_selection import train_test_split
 
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 
 
 def start_training():
@@ -56,7 +56,7 @@ def start_training():
     avail_gpus = GPUtil.getGPUs()
     args = parser.parse_args()
     dict_args = vars(args)
-    use_cuda = True if dict_args['cuda'] == 'True' and len(avail_gpus) > 0 else False
+    use_cuda = True if dict_args['cuda'] and len(avail_gpus) > 0 else False
     if use_cuda:
         print(f'[bold blue]Using {len(avail_gpus)} GPUs!')
     else:
@@ -64,7 +64,7 @@ def start_training():
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
-        mlflow.xgboost.autolog()
+        mlflow.autolog(1)
 
         # Setup a Dask cluster to facilitate multiCPU/multiGPU training
         if use_cuda:
@@ -86,8 +86,8 @@ def start_training():
                          'verbosity': 2}
 
                 # Set random seeds
-                set_general_random_seeds(dict_args["general_seed"])
-                set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
+                MLFCore.set_general_random_seeds(dict_args["general_seed"])
+                MLFCore.set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
 
                 # Set CPU or GPU as training device
                 if use_cuda:
@@ -110,11 +110,14 @@ def start_training():
                     print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
                 # Log hardware and software
-                log_sys_intel_conda_env()
+                MLFCore.log_sys_intel_conda_env()
 
 
 def load_train_test_data(client):
     dataset = fetch_covtype()
+
+    # TODO MLF-CORE: Enable input data logging
+    # MLFCore.log_input_data('data/')
 
     # Rechunking is required for the covertype dataset
     X = da.from_array(dataset.data, chunks=1000)
@@ -127,10 +130,6 @@ def load_train_test_data(client):
     dtest = DaskDMatrix(client, X_test, y_test)
 
     return dtrain, dtest
-
-
-def set_xgboost_dask_random_seeds(seed, param):
-    param['seed'] = seed
 
 
 if __name__ == '__main__':

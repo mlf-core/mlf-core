@@ -25,9 +25,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_flake8_linting.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/flake8.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -44,8 +42,7 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -77,11 +74,10 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             mlf_core_content = set(map(lambda line: line.strip(), f.readlines()))
 
         expected_lines_pytorch_reproducibility = ['trainer.deterministic = True',
-                                                  'trainer.benchmark = False',
-                                                  'set_general_random_seeds(general_seed)',
-                                                  'set_pytorch_random_seeds(pytorch_seed, num_of_gpus)']
+                                                  'trainer.benchmark = False']
 
         expected_lines_pytorch_mlf_core = ['torch.manual_seed(seed)',
+                                           'torch.set_deterministic(True)',
                                            'torch.cuda.manual_seed(seed)',
                                            'torch.cuda.manual_seed_all(seed)  # For multiGPU']
 
@@ -189,8 +185,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug_no_hyphen/mlf_core/mlf_core.py',
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_flake8_linting.yml',
-            '.github/workflows/run_bandit.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -206,8 +201,7 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -237,15 +231,10 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_pytorch_reproducibility = ['def set_tensorflow_random_seeds(seed):',
-                                                  'tf.random.set_seed(seed)',
-                                                  'tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only',
-                                                  'tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only',
-                                                  'os.environ[\'TF_DETERMINISTIC_OPS\'] = \'1\'',
-                                                  'set_general_random_seeds(dict_args["general_seed"])',
-                                                  'set_tensorflow_random_seeds(dict_args["tensorflow_seed"])']
+        expected_lines_tensorflow_reproducibility = ['MLFCore.set_general_random_seeds(dict_args["general_seed"])',
+                                                     'MLFCore.set_tensorflow_random_seeds(dict_args["tensorflow_seed"])']
 
-        for expected_line in expected_lines_pytorch_reproducibility:
+        for expected_line in expected_lines_tensorflow_reproducibility:
             if expected_line not in project_slug_entry_point_content:
                 passed_tensorflow_reproducibility_seeds = False
                 self.failed.append(('mlflow-tensorflow-2', f'{expected_line} not found in {entry_point_file_path}'))
@@ -283,8 +272,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/mlf_core/mlf_core.py'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -300,8 +288,7 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -323,10 +310,8 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_xgboost_reproducibility = ['def set_xgboost_random_seeds(seed, param):',
-                                                  'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(dict_args["general_seed"])',
-                                                  'set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
+        expected_lines_xgboost_reproducibility = ['MLFCore.set_general_random_seeds(dict_args["general_seed"])',
+                                                  'MLFCore.set_xgboost_random_seeds(dict_args["xgboost_seed"], param)']
 
         for expected_line in expected_lines_xgboost_reproducibility:
             if expected_line not in project_slug_entry_point_content:
@@ -387,8 +372,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             'project_slug/mlf_core/mlf_core.py'
         Files that *should* be present::
             '.github/workflows/train_cpu.yml',
-            '.github/workflows/run_bandit.yml',
-            '.github/workflows/run_flake8_linting.yml',
+            '.github/workflows/lint.yml',
         Files that *must not* be present::
             none
         Files that *should not* be present::
@@ -404,8 +388,7 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
         files_warn = [
             [os.path.join('.github', 'workflows', 'train_cpu.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
-            [os.path.join('.github', 'workflows', 'run_bandit.yml')],
+            [os.path.join('.github', 'workflows', 'lint.yml')],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
@@ -418,26 +401,24 @@ class MlflowXGBoostDaskLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='mlflow-xgboost_dask')
 
-    def xgboost_reproducibility_seeds(self) -> None:
+    def xgboost_dask_reproducibility_seeds(self) -> None:
         """
         Verifies that all CPU and GPU reproducibility settings for XGBoost are enabled
         """
-        passed_xgboost_reproducibility_seeds = True
+        passed_xgboost_dask_reproducibility_seeds = True
         entry_point_file_path = f'{self.path}/{self.project_slug_no_hyphen}/{self.project_slug_no_hyphen}.py'
         with open(entry_point_file_path) as f:
             project_slug_entry_point_content = list(map(lambda line: line.strip(), f.readlines()))
 
-        expected_lines_xgboost_reproducibility = ['def set_xgboost_dask_random_seeds(seed, param):',
-                                                  'param[\'seed\'] = seed',
-                                                  'set_general_random_seeds(dict_args["general_seed"])',
-                                                  'set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
+        expected_lines_xgboost_dask_reproducibility = ['MLFCore.set_general_random_seeds(dict_args["general_seed"])',
+                                                       'MLFCore.set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)']
 
-        for expected_line in expected_lines_xgboost_reproducibility:
+        for expected_line in expected_lines_xgboost_dask_reproducibility:
             if expected_line not in project_slug_entry_point_content:
-                passed_xgboost_reproducibility_seeds = False
+                passed_xgboost_dask_reproducibility_seeds = False
                 self.failed.append(('mlflow-xgboost_dask-2', f'{expected_line} not found in {entry_point_file_path}'))
 
-        if passed_xgboost_reproducibility_seeds:
+        if passed_xgboost_dask_reproducibility_seeds:
             self.passed.append(('mlflow-xgboost_dask-2', 'All required reproducibility settings enabled.'))
 
     def xgboost_version(self) -> None:

@@ -6,7 +6,7 @@ import os
 import time
 from rich import traceback, print
 
-from mlf_core.mlf_core import log_sys_intel_conda_env, set_general_random_seeds
+from mlf_core.mlf_core import MLFCore
 from data_loading.data_loader import load_train_test_data
 from model.model import create_model
 from training.train import train, test
@@ -64,11 +64,14 @@ def start_training():
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
-        mlflow.tensorflow.autolog()
+        mlflow.autolog(1)
+
+        # Log hardware and software
+        MLFCore.log_sys_intel_conda_env()
 
         # Fix all random seeds and Tensorflow specific reproducibility settings
-        set_general_random_seeds(dict_args["general_seed"])
-        set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
+        MLFCore.set_general_random_seeds(dict_args["general_seed"])
+        MLFCore.set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
 
         # Use Mirrored Strategy for multi GPU support
         strategy = tf.distribute.MirroredStrategy()
@@ -76,6 +79,9 @@ def start_training():
 
         # Fetch and prepare dataset
         train_dataset, eval_dataset = load_train_test_data(strategy, dict_args['batch_size'], dict_args['buffer_size'], dict_args['tensorflow_seed'])
+
+        # TODO MLF-CORE: Enable input data logging
+        # MLFCore.log_input_data('data/')
 
         with strategy.scope():
             # Define model and compile model
@@ -93,17 +99,7 @@ def start_training():
             device = 'GPU' if dict_args['cuda'] else 'CPU'
             print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
-            # Log hardware and software
-            log_sys_intel_conda_env()
-
             print(f'[bold blue]\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}')
-
-
-def set_tensorflow_random_seeds(seed):
-    tf.random.set_seed(seed)
-    tf.config.threading.set_intra_op_parallelism_threads = 1  # CPU only
-    tf.config.threading.set_inter_op_parallelism_threads = 1  # CPU only
-    os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
 
 if __name__ == '__main__':

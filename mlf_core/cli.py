@@ -11,11 +11,10 @@ import rich.logging
 from rich import traceback
 from rich import print
 
-import mlf_core
 from mlf_core.bump_version.bump_version import VersionBumper
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain
-from mlf_core.custom_cli.click import HelpErrorHandling, print_project_version, CustomHelpSubcommand, CustomArg
+from mlf_core.custom_cli.click import HelpErrorHandling, print_project_version, print_mlfcore_version, CustomHelpSubcommand, CustomArg
 from mlf_core.info.info import TemplateInfo
 from mlf_core.lint.lint import lint_project
 from mlf_core.list.list import TemplateLister
@@ -48,7 +47,7 @@ def main():
 
 
 @click.group(cls=HelpErrorHandling)
-@click.version_option(mlf_core.__version__, message=click.style(f'mlf-core Version: {mlf_core.__version__}', fg='blue'))
+@click.option('--version', is_flag=True, callback=print_mlfcore_version, expose_value=False, is_eager=True, help='Print the current mlf-core version.')
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Enable verbose output (print debug statements).')
 @click.option("-l", "--log-file", help="Save a verbose log to a file.")
 @click.pass_context
@@ -295,15 +294,18 @@ def config(ctx, view: bool, section: str) -> None:
 
 
 @mlf_core_cli.command(short_help='Fix artifact location path for local all mlruns.', cls=CustomHelpSubcommand)
-@click.argument('path', type=str, default='.', required=False, helpmsg='Path to the root of the mlruns folder.', cls=CustomArg)
+@click.argument('path', type=str, default=os.getcwd(), required=False, helpmsg='Path to the root of the mlruns folder.', cls=CustomArg)
 @click.pass_context
 def fix_artifact_paths(ctx, path: str) -> None:
     """
+    Ensures that the paths of all locally saved MLflow artifacts are fixed to display them on the current machine.
     """
     for meta_yaml in Path(f'{path}/mlruns').rglob('meta.yaml'):
-        if 'file' not in meta_yaml.absolute():
-            print(f'[bold yellow] Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
-        print(f'[bold blue] Fixing path for: {meta_yaml.absolute()}')
+        with open(meta_yaml.absolute()) as meta_yaml_file:
+            content = meta_yaml_file.readlines()
+            if 'file://' not in content[0]:
+                print(f'[bold yellow]Skipping path fixing for: {meta_yaml.absolute()}. Run was not saved locally.')
+        print(f'[bold blue]Fixing path for: {meta_yaml.absolute()}')
         with open(meta_yaml.absolute()) as meta_yaml_file:
             content = meta_yaml_file.readlines()
             if 'artifact_location' in content[0]:

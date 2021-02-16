@@ -31,7 +31,8 @@ class ConfigCommand:
         """
         Set general settings and PAT.
         """
-        ConfigCommand.check_mlf_core_config_dir_exists()
+        if not ConfigCommand.check_mlf_core_config_dir_exists():
+            ConfigCommand.create_config_dirs()
         ConfigCommand.config_general_settings()
         ConfigCommand.config_pat()
 
@@ -43,7 +44,8 @@ class ConfigCommand:
         """
         already_configured = False
         settings = {}
-        if ConfigCommand.check_mlf_core_config_dir_exists() and 'GITHUB_ACTIONS' not in os.environ:
+        config_path = Path(ConfigCommand.CONF_FILE_PATH)
+        if config_path.exists() and 'GITHUB_ACTIONS' not in os.environ:
             already_configured = True
             settings = load_yaml_file(ConfigCommand.CONF_FILE_PATH)
 
@@ -82,7 +84,9 @@ class ConfigCommand:
         """
         Set the personal access token (PAT) for automatic Github repo creation.
         """
-        ConfigCommand.check_mlf_core_config_dir_exists()
+        if not ConfigCommand.check_mlf_core_config_dir_exists():
+            ConfigCommand.create_config_dirs()
+
         try:
             path = Path(ConfigCommand.CONF_FILE_PATH)
             yaml = YAML()
@@ -99,8 +103,8 @@ class ConfigCommand:
 
         if mlf_core_questionary_or_dot_mlf_core(function='confirm',
                                                 question='Do you want to configure your GitHub personal access token right now?\n'
-                                                'You can still configure it later '
-                                                'by calling    mlf-core config pat',
+                                                         'You can still configure it later '
+                                                         'by calling    mlf-core config pat',
                                                 default='Yes'):
             print('[bold blue]mlf-core requires your Github Access token to have full repository, workflow and create/update packages permissions!')
             access_token = mlf_core_questionary_or_dot_mlf_core(function='password',
@@ -193,14 +197,20 @@ class ConfigCommand:
     @staticmethod
     def check_mlf_core_config_dir_exists() -> bool:
         """
-        Check whether the config directory for mlf-core exists. If not, create it.
+        Check whether the config directory for mlf-core exists.
         """
         log.debug(f'Checking whether a config directory already exists at {Path(ConfigCommand.CONF_FILE_PATH).parent}.')
         if not os.path.exists(Path(ConfigCommand.CONF_FILE_PATH).parent):
             log.debug('Config directory did not exist. Creating it.')
-            os.mkdir(Path(ConfigCommand.CONF_FILE_PATH).parent)
             return False
         return True
+
+    @staticmethod
+    def create_config_dirs() -> None:
+        """
+        Create the config directory, if none exists (and parent directories, if necessary)
+        """
+        os.makedirs(Path(ConfigCommand.CONF_FILE_PATH).parent)
 
     @staticmethod
     def handle_switcher() -> dict:

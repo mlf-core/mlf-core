@@ -5,6 +5,7 @@ Welcome to mlf-core's documentation!
    :caption: Contents:
 
    readme
+   tutorial
    installation
    usage
    create

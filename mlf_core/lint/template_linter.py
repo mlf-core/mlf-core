@@ -390,7 +390,7 @@ class TemplateLinter(object):
         Verifies that the random_seed method exists and
 
         """
-        mlf_core_py_path = find_filepath_in_dir('mlf_core.py', os.getcwd())
+        mlf_core_py_path = find_filepath_in_dir('mlf_core.py', self.path)
         if not mlf_core_py_path:
             self.failed.append(('mlflow-general-8', 'mlf_core.py could not be found!'))
             return
@@ -406,18 +406,18 @@ class TemplateLinter(object):
 
         # Verify that system-intelligence and conda environment logging are intact
         expected_lines_sys_intell_conda_env = [
-            'def log_sys_intel_conda_env():',
+            'def log_sys_intel_conda_env(cls):',
             'reports_output_dir = tempfile.mkdtemp()',
-            'log_system_intelligence(reports_output_dir)',
-            'log_conda_environment(reports_output_dir)',
+            'def log_system_intelligence(reports_output_dir: str):',
+            'def log_conda_environment(reports_output_dir: str):',
             'query_and_export(query_scope={\'all\'},',
             'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
-            # f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
-            # f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
+            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
+            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
         ]
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
-            if expected_line not in mlf_core_py_content:
+            if expected_line.strip() not in mlf_core_py_content:
                 self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
 
     def _print_results(self):

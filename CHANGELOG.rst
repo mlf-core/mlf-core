@@ -6,6 +6,30 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.9.0 (2021-02-16)
+------------------
+
+**Added**
+
+* Possibility to log input files in all template with the MLFCore object.
+* [ALL TEMPLATES] Using new mlf-core/base:1.2.0 container, which is based on CUDA 11.2.1 and cudnn 8.1
+* [PYTORCH] Upgraded Pytorch to 1.7.1
+* [PYTORCH] Added set_deterministic
+* [ALL TEMPLATES] Using new mlflow autolog
+* [ALL TEMPLATES] Changed mlflow autolog for loss to every 1 iteration
+
+**Fixed**
+
+* mlf-core fix-artifact-paths does now operate as expected.
+* [ALL TEMPLATES] fixed a path error that causes the general template linter to fail searching for
+  subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'<<project_name>>\'], stdout=conda_env_filehandler) and
+  mlflow.log_artifact(f\'{{reports_output_dir}}/<<project_name>>_conda_environment.yml\', artifact_path=\'reports\') in the project's mlf_core.py file
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.8.0 (2021-02-01)
 ------------------
 

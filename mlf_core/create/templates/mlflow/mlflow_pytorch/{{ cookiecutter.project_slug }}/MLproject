@@ -10,7 +10,7 @@ name: {{ cookiecutter.project_slug }}
 docker_env:
   image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}
   volumes: ["${PWD}/data:/data"]
-  environment: [["MLF_CORE_DOCKER_RUN", "TRUE"],["CUBLAS_WORKSPACE_CONFIG", "4096:8"]]
+  environment: [["MLF_CORE_DOCKER_RUN", "TRUE"],["CUBLAS_WORKSPACE_CONFIG", ":4096:8"]]
 
 entry_points:
   main:

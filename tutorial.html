@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Tutorial &mdash; mlf-core 1.9.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="mlf-core" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> mlf-core
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.9.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">mlf-core</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mlf-core-overview">mlf-core Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-mlf-core-project">Creating a mlf-core project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mlf-core-project-overview">mlf-core project overview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">General Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create.html">Create a project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_info.html">Getting information about available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lint.html">Linting your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fix_artifact_paths.html">Fixing the paths of locally saved MLflow runs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bump_version.html">Bumping the version of an existing project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sync.html">Syncing your project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configure mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="available_templates/available_templates.html">Available templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_support.html">Github Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creating_releases.html">Creating Releases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adding_new_templates.html">Adding new templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mlf-core</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>This page is currently under development. Please check back later.</strong></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This document serves as a single page tutorial for mlf-core, the issue of deterministic machine learning and everything related.
+It is <strong>not</strong> supposed to be used as a reference documentation for specific pieces of information.
+Please use the remaining mlf-core or the respective tools’ documentation for this purpose.
+Although, mlf-core is designed with users in mind and as easy as possible it is inherently complex due to the nature of the issue it solves.
+Hence, please be patient while working through this tutorial.</p>
+</div>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The fields of machine learning and artificial intelligence grew immensly in recent years.
+Nevertheless, many papers cannot be reproduced and it is difficult for scientists even after rigorous peer review to know which results to trust.
+This serious problem is known as the reproducibility crisis in machine learning.
+The reasons for this issue are manifold, but include the fact that major machine learning libraries default to the usage of non-deterministic algorithms based on atomic operations.
+Solely fixing all random seeds is not sufficient for deterministic machine learning.
+Fortunately, major machine learning libraries such as Pytorch, Tensoflow and XGBoost are aware of these issues and the they are slowly providing
+more and more deterministic variants of these atomic operations based algorithms.
+We evaluated the current state of deterministic machine learning and formulated a set of requirements for fully reproducible machine learning even with several GPUs.
+Based on this evaluation we developed the mlf-core ecosystem, an intuitive software solution solving the issue of irreproducible machine learning.</p>
+</div>
+<div class="section" id="mlf-core-overview">
+<h2>mlf-core Overview<a class="headerlink" href="#mlf-core-overview" title="Permalink to this headline">¶</a></h2>
+<p>The mlf-core ecosystem consists of the primary Python packages <a class="reference external" href="https://github.com/mlf-core/mlf-core">mlf-core</a> and <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a>,
+a set of GPU enable <cite>docker containers &lt;https://github.com/mlf-core/containers&gt;</cite> and various fully reproducible machine learning projects found in the <a class="reference external" href="https://github.com/mlf-core">mlf-core Github organization</a>.</p>
+<div class="figure align-default" id="id2">
+<img alt="mlf-core overview" src="_images/mlf_core_overview.png" />
+<p class="caption"><span class="caption-text">An overview of the mlf-core project.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>This tutorial will primarily focus on the mlf-core Python package since it is the part that users will knowingly use the most.
+Additionally, mlf-core makes heavy use of <a class="reference external" href="https://docs.conda.io/en/latest/">Conda</a>, <a class="reference external" href="https://www.docker.com/">Docker</a>, <a class="reference external" href="https://github.com">Github</a> and <a class="reference external" href="https://github.com/features/actions">Github Actions</a>.
+We <strong>strongly</strong> suggest that you look for tutorials on Youtube or your favorite search engine to get comfortable with these technologies before proceeding further.
+Whenever we use more advanced features of these tools we will explain them. Therefore you don’t need to be an expert, but a good overview is helpful.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>The mlf-core Python package is available on <a class="reference external" href="https://pypi.org/project/mlf-core/">PyPI</a> and the latest version can be installed with</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install mlf-core
+</pre></div>
+</div>
+<p>It is advised to use a virtual environment for mlf-core since it relies on explicitly pinning many requirements.
+To verify that your installation was successful run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core --help
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core tightly (optionally, but <strong>strongly recommended</strong>) integrates with Github and wants to prevent overhead when creating several projects.
+Therefore mlf-core requires a little bit of configuration before the first usage.
+To configure mlf-core run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core config all
+</pre></div>
+</div>
+<p>Enter your full name, your email and your Github username (hit enter if not available).
+Next you will be asked whether you want to update your Github personal access token.
+mlf-core requires your Github access token to automatically create a Github repository to upload your code and to enable mlf-core’s sync functionality (explained later).
+Hence, answer with <strong>y</strong>. Now you will be prompted for the token.
+To create a token go to <a class="reference external" href="https://github.com">Github</a> and log in. Next, click on your profile avater and navigate to ‘Settings’.</p>
+<div class="figure align-default" id="id3">
+<img alt="Github settings navigation" src="_images/navigate_settings.png" />
+<p class="caption"><span class="caption-text">Click on ‘Settings’.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Now navigate to the ‘Developer settings’.</p>
+<div class="figure align-default">
+<img alt="Github settings navigation" src="_images/navigate_developer_settings.png" />
+</div>
+<p>Click on ‘Developer settings’ in the bottom left. Then access ‘Personal access token’ and click ‘Generate new token in the top right.
+You should now be prompted for your password. Enter a name for the note that clearly specifies what it is for e.g. ‘mlf-core token’.
+Tick all options in the following image:</p>
+<div class="figure align-default" id="id4">
+<img alt="Github settings navigation" src="_images/token_settings.png" />
+<p class="caption"><span class="caption-text">Select <strong>all</strong> of the in the screenshot ticked options. No additional options are required, especially not repository deletion.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>Click ‘Generate token’ at the very bottom and copy your token into the prompt of mlf-core. Hit enter and accept the update.
+mlf-core is now configured and ready to be used!</p>
+<p>For more details including security precautions please visit <a class="reference internal" href="config.html#config"><span class="std std-ref">Configure mlf-core</span></a> and <a class="reference internal" href="github_support.html#github-support"><span class="std std-ref">Github Support</span></a>.</p>
+</div>
+<div class="section" id="creating-a-mlf-core-project">
+<h2>Creating a mlf-core project<a class="headerlink" href="#creating-a-mlf-core-project" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="mlf-core-project-overview">
+<h2>mlf-core project overview<a class="headerlink" href="#mlf-core-project-overview" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="readme.html" class="btn btn-neutral float-left" title="mlf-core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Lukas Heumos.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

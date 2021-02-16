@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Linting your project &mdash; mlf-core 1.8.0 documentation</title>
+  <title>Linting your project &mdash; mlf-core 1.9.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.8.0
+                1.9.0
               </div>
             
           
@@ -93,6 +93,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">mlf-core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">General Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="create.html">Create a project</a></li>
@@ -318,10 +319,10 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-pytorch expects the following lines in the main entry script:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">trainer</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">trainer</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
  <span class="n">trainer</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
  <span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">general_seed</span><span class="p">),</span>
  <span class="n">set_pytorch_random_seeds</span><span class="p">(</span><span class="n">pytorch_seed</span><span class="p">,</span> <span class="n">num_of_gpus</span><span class="p">)</span>
@@ -342,14 +343,14 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Source: <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">https://pytorch.org/docs/stable/notes/randomness.html</a></div>
 <div class="line">Currently mlflow-pytorch reports:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;index_add&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;index_add&#39;</span><span class="p">,</span>
 <span class="s1">&#39;scatter_add&#39;</span><span class="p">,</span>
 <span class="s1">&#39;bincount&#39;</span><span class="p">,</span>
 <span class="s1">&#39;embedding_bag&#39;</span><span class="p">,</span>
@@ -377,6 +378,21 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-tensorflow expects:</div>
 </div>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="n">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;tensorflow_seed&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_intra_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_inter_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_DETERMINISTIC_OPS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</td></tr></table></div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of Tensorflow</div>
@@ -392,8 +408,8 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Function operates non-deterministically.</div>
 <div class="line">There are a couple of functions left in Tensorflow, which are known to be operating non-deterministically. They are not allowed to be used.</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;softmax_cross_entropy_with_logits&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;softmax_cross_entropy_with_logits&#39;</span><span class="p">,</span>
 <span class="s1">&#39;sparse_softmax_cross_entropy_with_logits&#39;</span>
 </pre></div>
 </td></tr></table></div>
@@ -415,6 +431,15 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-xgboost expects:</div>
 </div>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="n">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+</pre></div>
+</td></tr></table></div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of XGBoost</div>
@@ -452,6 +477,15 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-xgboost_dask expects:</div>
 </div>
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="n">set_xgboost_dask_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+</pre></div>
+</td></tr></table></div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of XGBoost</div>

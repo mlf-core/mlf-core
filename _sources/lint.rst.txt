@@ -165,6 +165,7 @@ mlflow-tensorflow-2
 
 .. code-block::
     :linenos:
+
     set_general_random_seeds(dict_args["general_seed"]),
     set_tensorflow_random_seeds(dict_args["tensorflow_seed"])
     def set_tensorflow_random_seeds(seed):
@@ -210,6 +211,7 @@ mlflow-xgboost-2
 
 .. code-block::
     :linenos:
+
     set_general_random_seeds(dict_args["general_seed"]),
     set_xgboost_random_seeds(dict_args["xgboost_seed"], param)
     def set_xgboost_random_seeds(seed, param):
@@ -249,6 +251,7 @@ mlflow-xgboost_dask-2
 
 .. code-block::
     :linenos:
+    
     set_general_random_seeds(dict_args["general_seed"]),
     set_xgboost_dask_random_seeds(dict_args["xgboost_seed"], param)
     def set_xgboost_random_seeds(seed, param):

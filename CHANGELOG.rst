@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* [ALL TEMPLATES] lint badge in README.rst
+
 **Dependencies**
 
 **Deprecated**

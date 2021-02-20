@@ -304,7 +304,7 @@ Try to always define all dependencies from Conda channels if possible and only a
 
 If you have dependencies that are not available on Conda nor PyPI you can adapt the Docker container.
 
-mlf-core post project creation TODOs
+Post project creation TODOs
 ---------------------------------------
 
 mlf-core tries to automate as much as possible, but some minor actions need to be done manually.
@@ -312,10 +312,60 @@ mlf-core tries to automate as much as possible, but some minor actions need to b
 Public Docker container on Github Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-bla
+mlf-core by default pushes the Docker container using the ``publish_docker.yml`` Github Actions workflow to `Github Packages <https://github.com/features/packages>`_.
+If you want to push your Docker container to a different registry you need to adapt the workflow and potentially update the username and add a Github secret for your password.
+By default, containers pushed to Github are private. As a result you would need to log in to pull the container.
+Hence, you have to make your Docker container public by navigating to the used Github account, selecting ``Packages`` and then your package.
+On the right you will find a button ``package settings``. Scroll down on the package settings page and at the bottom you will find a button ``make public``.
+Click it, authenticate and your Github container is now public!
+Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immidiately show up in the Packages tab.
 
 Publish documentation on Github Pages or Read the Docs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+mlf-core projects offers a Sphinx based documentation setup which can easily be hosted on either Github Pages or Read the Docs.
+The choice is yours. Note that you may need to update the badge in the README of your project.
+
+Github Pages
++++++++++++++++++
+
+The ``publish_docs.yml`` Github action pushes your built documentation automatically to a branch called ``gh-pages``.
+Hence, you only need to enable Github Pages on this branch.
+Please follow the final steps (6-8 at time of writing) of the official `Github - creating your site <https://docs.github.com/en/github/working-with-github-pages/creating-a-github-pages-site#creating-your-site>`_ documentation.
+
+Read the Docs
+++++++++++++++++
+
+Please follow the offical `Read the Docs - Building your documentation <https://docs.readthedocs.io/en/stable/intro/import-guide.html>`_ documentation.
+
+Training models with mlf-core
+-------------------------------
+
+CPU
+~~~~
+
+Single GPU
+~~~~~~~~~~~~
+
+Multiple GPUs
+~~~~~~~~~~~~~~
+
+Developing mlf-core projects
+------------------------------
+
+Ensuring determinism with mlf-core lint
+------------------------------------------
+
+Interactive visualization
+----------------------------
+
+Keeping mlf-core based projects up to data with mlf-core sync
+-----------------------------------------------------------------
+
+Contributing to mlf-core
+---------------------------
+
+
 
 
 .. _Github: https://github.com

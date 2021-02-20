@@ -205,6 +205,11 @@ Do not worry if there appear to be an overwhelming amount of files. With just a 
 which files you should edit and which ones can be safely ignored.
 We will now examine a couple of files more closely. Note that for visual reasons a couple of lines are removed in this tutorial.
 
+CI & CD with Github Actions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All mlf-core based projects use `Github Actions <https://github.com/features/actions>`_ for continous integration (CI) and continous development (CD).
+As soon as your project is on Github all Github Actions are enabled automatically. The purpose of these workflows will be explained throughout this tutorial.
 
 MLProject
 ~~~~~~~~~~~

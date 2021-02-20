@@ -38,10 +38,12 @@ a set of GPU enable `docker containers <https://github.com/mlf-core/containers>`
 .. figure:: images/mlf_core_overview.png
    :alt: mlf-core overview
 
-   An overview of the mlf-core project.
+   An overview of the mlf-core ecosystem.
 
 This tutorial will primarily focus on the mlf-core Python package since it is the part that users will knowingly use the most.
 Additionally, mlf-core makes heavy use of `Conda <https://docs.conda.io/en/latest/>`_, `Docker <https://www.docker.com/>`_, Github_ and `Github Actions <https://github.com/features/actions>`_.
+To follow the tutorial you should also have Conda, Docker and `nvidia-docker <https://github.com/NVIDIA/nvidia-docker>`_ installed and tested.
+Please follow the respective installation instructions found on the tools' websites.
 We **strongly** suggest that you look for tutorials on Youtube or your favorite search engine to get comfortable with these technologies before proceeding further.
 Whenever we use more advanced features of these tools we will explain them. Therefore you don't need to be an expert, but a good overview is helpful.
 
@@ -346,31 +348,159 @@ Please follow the offical `Read the Docs - Building your documentation <https://
 Training models with mlf-core
 -------------------------------
 
+mlf-core models are designed to easily run on any hardware with the same runtime environment.
+First, select the runtime environment by commenting either Conda or Docker in or out as described above.
+Depending on the used template the commands for training a model on the CPU, a GPU or multiple GPUs may slightly differ.
+In all cases they are described in the usage.rst file.
+Remember that MLflow parameters are passed as ``-P key=val`` and Docker parameters as ``-A key=val`` or ``-A key``.
+For our just created ``mlflow-pytorch`` project, assuming that we are in the root directory of the project, we run our project as follows:
+
 CPU
 ~~~~
+
+.. code-block:: console
+
+    $ mlflow run . -A t
 
 Single GPU
 ~~~~~~~~~~~~
 
+.. code-block:: console
+
+    $ mlflow run . -A t-A gpus=all -P gpus=1
+
 Multiple GPUs
 ~~~~~~~~~~~~~~
 
-Developing mlf-core projects
-------------------------------
+.. code-block:: console
 
-Ensuring determinism with mlf-core lint
-------------------------------------------
+    $ mlflow run . -A t-A gpus=all -P gpus=2 -P acc=ddp
+
+This will train our model on 2 gpus with the ``distributed data parallel`` accelerator.
+Adjust the number of GPUs to your liking.
 
 Interactive visualization
 ----------------------------
 
+Congratulations, you have just trained your first GPU deterministic model! All metrics and models are saved in the ``mlruns`` directory.
+A couple of metrics were already printed onto the terminal. However, due to the tight MLflow integration there are more ways to visualize our results.
+
+mlflow UI
+~~~~~~~~~~~
+
+To open the mlflow UI simply run ``mlflow ui`` in the root directory of your project.
+Note that if you trained on a different machine than you now want to open the MLflow web interface, you should run ``mlf-core fix-artifact-paths`` on the local machine.
+This will ensure that all artifacts are visible. Open the URL shown in the terminal in your browser.
+You should be greeted with something like this:
+
+.. figure:: images/mlflow_ui_overview.png
+   :alt: MLflow web interface overview
+
+   Landing page of the MLflow web interface.
+
+All runs are grouped into experiments together with a run status. Simply click on a specific run to see more details:
+
+.. figure:: images/mlflow_ui_run.png
+   :alt: MLflow web interface run
+
+   Detailed overview of a MLflow run.
+
+When clicking on one of the metrics you can also view for example a line plot of the performance over time or per epoch.
+
+.. figure:: images/mlflow_ui_run_epochs.png
+   :alt: MLflow web interface run
+
+   Plot of the training epochs of a run.
+
+The MLflow web interface can also be hosted somewhere and be made accessible to other collaborators.
+Consult the MLflow documentation for this purpose.
+
+Tensorboard
+~~~~~~~~~~~~~~
+
+At the end of the run the project will print out a command to view your just trained model with Tensorboard.
+Simply run the command and open the URL in your favorite browser.
+
+Developing mlf-core projects
+------------------------------
+
+mlf-core offers additional functionality that eases development.
+A subset of these features and general development tips are the focus of this section.
+
+git branches and development flow
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As soon as your project is pushed to Github you will see that four branches are used:
+
+1. A ``master/main`` branch. This branch should at any point only contain the latest release.
+2. A ``development`` branch. Use this branch to collect all development milestones.
+3. A ``TEMPLATE`` branch. This branch is used for syncing (see below). Do not touch it.
+4. A ``gh-pages`` branch. The built documentation is pushed to this branch. You should not have to edit it manually.
+
+While developing always merge first into the ``development`` branch.
+If you think that your code is ready to become a new release create a release branch such as: ``release-1.0.0``.
+Now open a pull request from the release branch into the ``master`` branch and have any collaborators review it.
+When ready merge it into the master branch and create a new Github release. This will trigger a release build of your Docker container.
+
+Rebuilding the Docker container
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever you add new libraries to the ``environment.yml`` file simply push to the development branch.
+Your Docker container will rebuild and overwrite the latest development container.
+
+Increasing the project version with mlf-core bump-version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Increasing the version of a project across several files is cumbersome.
+Hence, mlf-core offers a ``mlf-core bump-version`` command.
+Considering that a usual project starts as a ``0.1.0-SNAPSHOT`` version (SNAPSHOT equals unstable development version) you should,
+following the development flow introduced above, increase the version on the release branch:
+
+.. code-block:: console
+
+    $ mlf-core bump-version 0.1.0 .
+
+This will update the version of all files and add a new section in the changelog which you should continously keep up to date.
+For more details please visit :ref:`bump-version`.
+
+Ensuring determinism with mlf-core lint
+------------------------------------------
+
+Determinism is the heart and soul of mlf-core projects. Ideally you, as a user of mlf-core, do not need to know how mlf-core ensures determinism behind the scenes.
+The only thing that you have to do is to periodically run:
+
+.. code-block:: console
+
+    $ mlf-core lint
+
+on your project. You will be made aware of any violations of known non-determinism and how to fix them.
+This ensures that you can fix the issues by yourself and learn in the process without requiring expert knowledge beforehand.
+
+.. figure:: images/linting_example.png
+   :alt: mlf-core lint example
+
+   Example of a mlf-core lint run. The usage of the function ``bincount`` was found, which is known to operate non-deterministically. It has to be replaced.
+
+``mlf-core lint`` is also run on any push event to any branch on your Github repository.
+For more details please read :ref:`lint`.
+
 Keeping mlf-core based projects up to data with mlf-core sync
------------------------------------------------------------------
+----------------------------------------------------------------
+
+mlf-core continously tries to update all project templates to adhere to the latest best practices and requirements for deterministic machine learning.
+Whenever mlf-core releases a new version and updated templates you will automatically receive a pull request with the latest changes.
+You should then try to integrate them as fast as possible and to create a minor release.
+
+For more details and configuration options please visit :ref:`sync`.
 
 Contributing to mlf-core
 ---------------------------
 
-
-
+There are various ways of contributing to mlf-core.
+First you can make your best practice model available by forking your project to the mlf-core organization or by developing it there directly.
+Be aware that we would like to discuss this first with you to ensure that only well developed or finished projects are in the mlf-core organization.
+This increases the visibility of your project and is a seal of quality.
+Moreover, you can join the Community Discord via `this link <https://discord.gg/Mv8sAcq>`_.
+We are looking forward to meeting you and are always available to help if required!
 
 .. _Github: https://github.com

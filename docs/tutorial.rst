@@ -421,6 +421,18 @@ Tensorboard
 At the end of the run the project will print out a command to view your just trained model with Tensorboard.
 Simply run the command and open the URL in your favorite browser.
 
+Serving a mlf-core model
+---------------------------
+
+A benefit of MLflow is that it allows you to easily serve your model to make it available to other users:
+
+.. code-block:: console
+
+    $ mlflow models serve -m <path to the model>
+
+will spin up a server to which you can send requests to and will receive predictions as answers!
+Please follow the `MLflow deployment documentation <https://www.mlflow.org/docs/latest/models.html#deploy-mlflow-models>`_.
+
 Developing mlf-core projects
 ------------------------------
 

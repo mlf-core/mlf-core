@@ -129,15 +129,15 @@ To create a mlf-core project run:
 
     $ mlf-core create
 
-You will now be guided interactively through the project creation process.
-mlf-core currently provides two template domains: mlflow and package. Whereas the package templates are designed to create Python packages
-facilitating predictions to be included into complex pipelines, the mlflow templates are used to train deterministic models.
-Hence, select ``mlflow`` and ``pytorch`` afterwards. Enter a project name, a project description, hit enter for the version prompt and selected a license of your choosing.
-MIT and the Apache 2.0 license are common choices. Next, hit the ``y`` button when asked whether you want to create a Github repository and push your code to it.
-If you select ``n`` as in no and create a Github repository manually, mlf-core will not be able to set up required secrets for features such as Docker container building and mlf-core sync.
-Depending on whether you want to create an organization and/or a private repository answer the following prompts with ``y`` or ``n``.
-The project creation process will now end with mlf-core lint verifying the successful creation if your project and the link to your Github repository being printed.
-You are now ready to start training deterministic machine learning models, but first let us have a look at the template's architecture and functionality.
+| You will now be guided interactively through the project creation process.
+  mlf-core currently provides two template domains: mlflow and package. Whereas the package templates are designed to create Python packages
+  facilitating predictions to be included into complex pipelines, the mlflow templates are used to train deterministic models.
+| Hence, select ``mlflow`` and ``pytorch`` afterwards. Enter a project name, a project description, hit enter for the version prompt and selected a license of your choosing.
+  MIT and the Apache 2.0 license are common choices. Next, hit the ``y`` button when asked whether you want to create a Github repository and push your code to it.
+  If you select ``n`` as in no and create a Github repository manually, mlf-core will not be able to set up required secrets for features such as Docker container building and mlf-core sync.
+| Depending on whether you want to create an organization and/or a private repository answer the following prompts with ``y`` or ``n``.
+  The project creation process will now end with mlf-core lint verifying the successful creation if your project and the link to your Github repository being printed.
+| You are now ready to start training deterministic machine learning models, but first let us have a look at the template's architecture and functionality.
 
 .. figure:: images/project_github.png
    :alt: Project on Github
@@ -253,7 +253,7 @@ The ``image`` by default points to the Docker image build on Github Packages whi
 Moreover, all runs mount the data directory in the root folder of the project to ``/data`` inside the container.
 Therefore, you need to ensure that your data either resides in the data folder of your project or adapt the mounted volumes to include your training data.
 mlf-core also presets environment variables required for deterministic machine learning. Do not modify them without an exceptional reason.
-Finally, the project_name.py file is set as an entry point and all parameters are defined and passed with MLflow.
+Finally, the ``project_name.py`` file is set as an entry point and all parameters are defined and passed with MLflow.
 
 Dockerfile
 ~~~~~~~~~~~~
@@ -285,6 +285,8 @@ environment.yml
 The ``environment.yml`` file is used for both, running the mlf-core project with Conda, and for creating the Conda environment inside the Docker container.
 Therefore you only need to specify your dependencies once in this file.
 Try to always define all dependencies from Conda channels if possible and only add PyPI dependencies if a Conda version is not available.
+However, note that only the version combinations of the template were tested to be deterministic and to create valid environments.
+We encourage you to regularly upgrade your dependencies, but do so at your own risk!
 
 .. code-block::
 

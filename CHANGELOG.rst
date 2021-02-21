@@ -11,7 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
-* Tutorial accessible at: mlf-core.com/tutorial
+* Tutorial accessible at: mlf-core.com/tutorial (#159)
+* Removed AUTHORS.rst and moved content into docs/authors.rst (#267)
 
 **Fixed**
 

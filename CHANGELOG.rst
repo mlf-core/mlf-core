@@ -11,6 +11,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Added**
 
+* Tutorial accessible at: mlf-core.com/tutorial
+
 **Fixed**
 
 **Dependencies**

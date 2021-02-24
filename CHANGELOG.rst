@@ -6,6 +6,21 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.10.0-SNAPSHOT (2021-02-21)
+----------------------------
+
+**Added**
+
+* Tutorial accessible at: mlf-core.com/tutorial (#159)
+* Removed AUTHORS.rst and moved content into docs/authors.rst (#267)
+
+**Fixed**
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.9.1 (2021-02-16)
 ------------------
 

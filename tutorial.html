@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Tutorial &mdash; mlf-core 1.9.1 documentation</title>
+  <title>Tutorial &mdash; mlf-core 1.10.0-SNAPSHOT documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.9.1
+                1.10.0-SNAPSHOT
               </div>
             
           
@@ -100,7 +100,43 @@
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-mlf-core-project">Creating a mlf-core project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mlf-core-project-overview">mlf-core project overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mlf-core-project-overview">mlf-core project overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ci-cd-with-github-actions">CI &amp; CD with Github Actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mlproject">MLProject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dockerfile">Dockerfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-yml">environment.yml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#post-project-creation-todos">Post project creation TODOs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#public-docker-container-on-github-packages">Public Docker container on Github Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#publish-documentation-on-github-pages-or-read-the-docs">Publish documentation on Github Pages or Read the Docs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#github-pages">Github Pages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#read-the-docs">Read the Docs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#training-models-with-mlf-core">Training models with mlf-core</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpu">CPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#single-gpu">Single GPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-gpus">Multiple GPUs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-visualization">Interactive visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mlflow-ui">mlflow UI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tensorboard">Tensorboard</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#serving-a-mlf-core-model">Serving a mlf-core model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#developing-mlf-core-projects">Developing mlf-core projects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#git-branches-and-development-flow">git branches and development flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rebuilding-the-docker-container">Rebuilding the Docker container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#increasing-the-project-version-with-mlf-core-bump-version">Increasing the project version with mlf-core bump-version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ensuring-determinism-with-mlf-core-lint">Ensuring determinism with mlf-core lint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync">Keeping mlf-core based projects up to data with mlf-core sync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing-to-mlf-core">Contributing to mlf-core</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -222,12 +258,14 @@ Based on this evaluation we developed the mlf-core ecosystem, an intuitive softw
 <h2>mlf-core Overview<a class="headerlink" href="#mlf-core-overview" title="Permalink to this headline">¶</a></h2>
 <p>The mlf-core ecosystem consists of the primary Python packages <a class="reference external" href="https://github.com/mlf-core/mlf-core">mlf-core</a> and <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a>,
 a set of GPU enable <cite>docker containers &lt;https://github.com/mlf-core/containers&gt;</cite> and various fully reproducible machine learning projects found in the <a class="reference external" href="https://github.com/mlf-core">mlf-core Github organization</a>.</p>
-<div class="figure align-default" id="id2">
+<div class="figure align-default" id="id3">
 <img alt="mlf-core overview" src="_images/mlf_core_overview.png" />
-<p class="caption"><span class="caption-text">An overview of the mlf-core project.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">An overview of the mlf-core ecosystem.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 <p>This tutorial will primarily focus on the mlf-core Python package since it is the part that users will knowingly use the most.
 Additionally, mlf-core makes heavy use of <a class="reference external" href="https://docs.conda.io/en/latest/">Conda</a>, <a class="reference external" href="https://www.docker.com/">Docker</a>, <a class="reference external" href="https://github.com">Github</a> and <a class="reference external" href="https://github.com/features/actions">Github Actions</a>.
+To follow the tutorial you should also have Conda, Docker and <a class="reference external" href="https://github.com/NVIDIA/nvidia-docker">nvidia-docker</a> installed and tested.
+Please follow the respective installation instructions found on the tools’ websites.
 We <strong>strongly</strong> suggest that you look for tutorials on Youtube or your favorite search engine to get comfortable with these technologies before proceeding further.
 Whenever we use more advanced features of these tools we will explain them. Therefore you don’t need to be an expert, but a good overview is helpful.</p>
 </div>
@@ -256,9 +294,9 @@ Next you will be asked whether you want to update your Github personal access to
 mlf-core requires your Github access token to automatically create a Github repository to upload your code and to enable mlf-core’s sync functionality (explained later).
 Hence, answer with <strong>y</strong>. Now you will be prompted for the token.
 To create a token go to <a class="reference external" href="https://github.com">Github</a> and log in. Next, click on your profile avater and navigate to ‘Settings’.</p>
-<div class="figure align-default" id="id3">
+<div class="figure align-default" id="id4">
 <img alt="Github settings navigation" src="_images/navigate_settings.png" />
-<p class="caption"><span class="caption-text">Click on ‘Settings’.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Click on ‘Settings’.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </div>
 <p>Now navigate to the ‘Developer settings’.</p>
 <div class="figure align-default">
@@ -267,9 +305,9 @@ To create a token go to <a class="reference external" href="https://github.com">
 <p>Click on ‘Developer settings’ in the bottom left. Then access ‘Personal access token’ and click ‘Generate new token in the top right.
 You should now be prompted for your password. Enter a name for the note that clearly specifies what it is for e.g. ‘mlf-core token’.
 Tick all options in the following image:</p>
-<div class="figure align-default" id="id4">
+<div class="figure align-default" id="id5">
 <img alt="Github settings navigation" src="_images/token_settings.png" />
-<p class="caption"><span class="caption-text">Select <strong>all</strong> of the in the screenshot ticked options. No additional options are required, especially not repository deletion.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">Select <strong>all</strong> of the in the screenshot ticked options. No additional options are required, especially not repository deletion.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 <p>Click ‘Generate token’ at the very bottom and copy your token into the prompt of mlf-core. Hit enter and accept the update.
 mlf-core is now configured and ready to be used!</p>
@@ -277,9 +315,360 @@ mlf-core is now configured and ready to be used!</p>
 </div>
 <div class="section" id="creating-a-mlf-core-project">
 <h2>Creating a mlf-core project<a class="headerlink" href="#creating-a-mlf-core-project" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core offers templates for several machine learning libraries. To get an overview of all available machine learning templates run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core list
+</pre></div>
+</div>
+<p>If you want a more detailed overview you can also run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core info &lt;template-handle/type/library&gt;
+</pre></div>
+</div>
+<p>A more detailed overview on all available templates is provided <a class="reference external" href="https://mlf-core.readthedocs.io/en/latest/available_templates/available_templates.html">here</a>.
+In the follow sections we will create and focus on a Pytorch based template identified under the template handle <code class="docutils literal notranslate"><span class="pre">mlflow-pytorch</span></code>.
+The outlined processes work the same for all other templates.</p>
+<p>To create a mlf-core project run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core create
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">You will now be guided interactively through the project creation process.
+mlf-core currently provides two template domains: mlflow and package. Whereas the package templates are designed to create Python packages
+facilitating predictions to be included into complex pipelines, the mlflow templates are used to train deterministic models.</div>
+<div class="line">Hence, select <code class="docutils literal notranslate"><span class="pre">mlflow</span></code> and <code class="docutils literal notranslate"><span class="pre">pytorch</span></code> afterwards. Enter a project name, a project description, hit enter for the version prompt and selected a license of your choosing.
+MIT and the Apache 2.0 license are common choices. Next, hit the <code class="docutils literal notranslate"><span class="pre">y</span></code> button when asked whether you want to create a Github repository and push your code to it.
+If you select <code class="docutils literal notranslate"><span class="pre">n</span></code> as in no and create a Github repository manually, mlf-core will not be able to set up required secrets for features such as Docker container building and mlf-core sync.</div>
+<div class="line">Depending on whether you want to create an organization and/or a private repository answer the following prompts with <code class="docutils literal notranslate"><span class="pre">y</span></code> or <code class="docutils literal notranslate"><span class="pre">n</span></code>.
+The project creation process will now end with mlf-core lint verifying the successful creation if your project and the link to your Github repository being printed.</div>
+<div class="line">You are now ready to start training deterministic machine learning models, but first let us have a look at the template’s architecture and functionality.</div>
+</div>
+<div class="figure align-default" id="id6">
+<img alt="Project on Github" src="_images/project_github.png" />
+<p class="caption"><span class="caption-text">A created project using the mlflow-pytorch template on Github</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="mlf-core-project-overview">
 <h2>mlf-core project overview<a class="headerlink" href="#mlf-core-project-overview" title="Permalink to this headline">¶</a></h2>
+<p>Using <code class="docutils literal notranslate"><span class="pre">tree</span></code> we identify the following file structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── .bandit.yml &lt;- Configuration file for Bandit (identifies security issues in the code)
+├── CHANGELOG.rst &lt;- Changelog of the project (controlled by mlf-core bump-version)
+├── CODE_OF_CONDUCT.rst
+├── Dockerfile &lt;- Dockerfile specifying how the Docker container is build; Uses the environment.yml file to create a Conda environment inside the container
+├── docs
+│   ├── authors.rst
+│   ├── changelog.rst
+│   ├── code_of_conduct.rst
+│   ├── conf.py &lt;- Sphinx configuration file
+│   ├── index.rst &lt;- Root of the documentation; defines the toctree
+│   ├── make.bat &lt;- Windows version of the Makefile
+│   ├── Makefile &lt;- Makefile for the documentation (run   make html   to build the documentation)
+│   ├── model.rst &lt;- Model documentation
+│   ├── readme.rst
+│   ├── requirements.txt &lt;- Defines Python dependencies for the documentation
+│   ├── _static
+│   │   └── custom_cookietemple.css &lt;- Custom dark documentation style
+│   └── usage.rst &lt;- How to use the mlf-core model
+├── .editorconfig &lt;- Configuration for IDEs and editors
+├── environment.yml &lt;- Defines all dependencies for your project; Used to create a Conda environment inside the Docker container
+├── project_name
+│   ├── data_loading
+│   │   ├── data_loader.py &lt;- Loading and preprocess training/testing data
+│   ├── mlf_core
+│   │   └── mlf_core.py &lt;- mlf-core internal code to run system-intelligence and advanced logging; Should usually not be modified
+│   ├── model
+│   │   ├── model.py &lt;- Model architecture
+│   ├── project_name.py &lt;- Entry point for MLflow; Connects all pieces
+├── .flake8 &lt;- flake8 configuration file (lints code style)
+├── .gitattributes &lt;- git configuration file
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   ├── feature_request.md
+│   │   └── general_question.md
+│   ├── pull_request_template.md
+│   └── workflows
+│       ├── lint.yml &lt;- Runs mlf-core lint and flake8 on push events
+│       ├── master_branch_protection.yml &lt;- Protects the master branch from non-release merges
+│       ├── publish_docker.yml &lt;- Publishes the Docker container on Github Packages (or alternatives)
+│       ├── publish_docs.yml &lt;- Publishes the documentation on Github Pages or Read the Docs
+│       ├── sync.yml &lt;- Checks for new mlf-core templates versions and triggers a PR with changes if found; Runs daily
+│       └── train_cpu.yml &lt;- Trains the model with a reduced dataset on the CPU
+├── .gitignore
+├── LICENSE
+├── mlf_core.cfg &lt;- mlf-core configuration file (sync, bump-version, linting, ...)
+├── .mlf_core.yml &lt;- Meta information of the mlf_core.yml file; Do not edit!
+├── MLproject &lt;- MLflow Project file; Defines entry point and parameters
+├── README.rst
+└── .readthedocs.yml &lt;- Read the Docs configuration file
+</pre></div>
+</div>
+<p>Now would be a good time to explore the specific files to understand how everything is connected.
+Do not worry if there appear to be an overwhelming amount of files. With just a little bit of experience you will easily understand
+which files you should edit and which ones can be safely ignored.
+We will now examine a couple of files more closely. Note that for visual reasons a couple of lines are removed in this tutorial.</p>
+<div class="section" id="ci-cd-with-github-actions">
+<h3>CI &amp; CD with Github Actions<a class="headerlink" href="#ci-cd-with-github-actions" title="Permalink to this headline">¶</a></h3>
+<p>All mlf-core based projects use <a class="reference external" href="https://github.com/features/actions">Github Actions</a> for continous integration (CI) and continous development (CD).
+As soon as your project is on Github all Github Actions are enabled automatically. The purpose of these workflows will be explained throughout this tutorial.</p>
+</div>
+<div class="section" id="mlproject">
+<h3>MLProject<a class="headerlink" href="#mlproject" title="Permalink to this headline">¶</a></h3>
+<p>The MLproject file is the primary configuration file for MLflow.
+It defines with which runtime environment the project is run, configures them and configures MLflow entry points.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">project_name</span>
+
+<span class="c1"># conda_env: environment.yml</span>
+<span class="n">docker_env</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">ghcr</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">github_user</span><span class="o">/</span><span class="n">project_name</span><span class="p">:</span><span class="mf">0.1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">SNAPSHOT</span>
+    <span class="n">volumes</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$</span><span class="si">{PWD}</span><span class="s2">/data:/data&quot;</span><span class="p">]</span>
+    <span class="n">environment</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;MLF_CORE_DOCKER_RUN&quot;</span><span class="p">,</span> <span class="s2">&quot;TRUE&quot;</span><span class="p">],[</span><span class="s2">&quot;CUBLAS_WORKSPACE_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;:4096:8&quot;</span><span class="p">]]</span>
+
+<span class="n">entry_points</span><span class="p">:</span>
+<span class="n">main</span><span class="p">:</span>
+    <span class="n">parameters</span><span class="p">:</span>
+    <span class="n">max_epochs</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+    <span class="n">gpus</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="n">accelerator</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="s2">&quot;None&quot;</span><span class="p">}</span>
+    <span class="n">lr</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">}</span>
+    <span class="n">general</span><span class="o">-</span><span class="n">seed</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="n">pytorch</span><span class="o">-</span><span class="n">seed</span><span class="p">:</span> <span class="p">{</span><span class="nb">type</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="n">command</span><span class="p">:</span> <span class="o">|</span>
+        <span class="n">python</span> <span class="n">project_name</span><span class="o">/</span><span class="n">project_name</span><span class="o">.</span><span class="n">py</span> \
+            <span class="o">--</span><span class="n">max_epochs</span> <span class="p">{</span><span class="n">max_epochs</span><span class="p">}</span> \
+            <span class="o">--</span><span class="n">gpus</span> <span class="p">{</span><span class="n">gpus</span><span class="p">}</span> \
+            <span class="o">--</span><span class="n">accelerator</span> <span class="p">{</span><span class="n">accelerator</span><span class="p">}</span> \
+            <span class="o">--</span><span class="n">lr</span> <span class="p">{</span><span class="n">lr</span><span class="p">}</span> \
+            <span class="o">--</span><span class="n">general</span><span class="o">-</span><span class="n">seed</span> <span class="p">{</span><span class="n">general</span><span class="o">-</span><span class="n">seed</span><span class="p">}</span> \
+            <span class="o">--</span><span class="n">pytorch</span><span class="o">-</span><span class="n">seed</span> <span class="p">{</span><span class="n">pytorch</span><span class="o">-</span><span class="n">seed</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>mlf-core projects by default run with Docker. If you prefer to run your project with Conda you need to comment in <code class="docutils literal notranslate"><span class="pre">conda_env</span></code> and comment out
+<code class="docutils literal notranslate"><span class="pre">docker_env</span></code> and its associated configuration. We are currently working on easing this switching, but for now it is a MLflow limitation.
+The <code class="docutils literal notranslate"><span class="pre">image</span></code> by default points to the Docker image build on Github Packages which automatically happens on project creation.
+Moreover, all runs mount the data directory in the root folder of the project to <code class="docutils literal notranslate"><span class="pre">/data</span></code> inside the container.
+Therefore, you need to ensure that your data either resides in the data folder of your project or adapt the mounted volumes to include your training data.
+mlf-core also presets environment variables required for deterministic machine learning. Do not modify them without an exceptional reason.
+Finally, the <code class="docutils literal notranslate"><span class="pre">project_name.py</span></code> file is set as an entry point and all parameters are defined and passed with MLflow.</p>
+</div>
+<div class="section" id="dockerfile">
+<h3>Dockerfile<a class="headerlink" href="#dockerfile" title="Permalink to this headline">¶</a></h3>
+<p>The Dockerfile usually does not need to be adapted.
+It is based on a custom mlf-core base container which provides CUDA, Conda and other utilities.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FROM mlfcore/base:1.2.0
+
+# Install the conda environment
+COPY environment.yml .
+RUN conda env create -f environment.yml &amp;&amp; conda clean -a
+
+# Activate the environment
+RUN echo &quot;source activate exploding_springfield&quot; &gt;&gt; ~/.bashrc
+ENV PATH /home/user/miniconda/envs/exploding_springfield/bin:$PATH
+
+# Dump the details of the installed packages to a file for posterity
+RUN conda env export --name exploding_springfield &gt; exploding_springfield_environment.yml
+</pre></div>
+</div>
+<p>The Docker container simply uses the environment.yml file to create a Conda environment and activates it.
+You can find the base container definitions in the <a class="reference external" href="https://github.com/mlf-core/containers">mlf-core containers repository</a>.</p>
+</div>
+<div class="section" id="environment-yml">
+<h3>environment.yml<a class="headerlink" href="#environment-yml" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file is used for both, running the mlf-core project with Conda, and for creating the Conda environment inside the Docker container.
+Therefore you only need to specify your dependencies once in this file.
+Try to always define all dependencies from Conda channels if possible and only add PyPI dependencies if a Conda version is not available.
+However, note that only the version combinations of the template were tested to be deterministic and to create valid environments.
+We encourage you to regularly upgrade your dependencies, but do so at your own risk!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">project_name</span>
+<span class="n">channels</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">defaults</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="o">-</span> <span class="n">pytorch</span>
+<span class="n">dependencies</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">11.0</span><span class="o">.</span><span class="mi">221</span>
+<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">python</span><span class="o">=</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">2</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">tensorboardx</span><span class="o">=</span><span class="mf">2.1</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">mlflow</span><span class="o">=</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">rich</span><span class="o">=</span><span class="mf">9.10</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">pytorch</span><span class="o">=</span><span class="mf">1.7</span><span class="o">.</span><span class="mi">1</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">torchvision</span><span class="o">=</span><span class="mf">0.8</span><span class="o">.</span><span class="mi">2</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="o">-</span><span class="n">lightning</span><span class="o">==</span><span class="mf">1.1</span><span class="o">.</span><span class="mi">8</span>
+<span class="o">-</span> <span class="n">pip</span>
+<span class="o">-</span> <span class="n">pip</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">pycuda</span><span class="o">==</span><span class="mf">2019.1</span><span class="o">.</span><span class="mi">2</span>  <span class="c1"># not on Conda</span>
+    <span class="o">-</span> <span class="n">cloudpickle</span><span class="o">==</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">0</span>
+    <span class="o">-</span> <span class="n">boto3</span><span class="o">==</span><span class="mf">1.17</span><span class="o">.</span><span class="mi">7</span>
+    <span class="o">-</span> <span class="n">system</span><span class="o">-</span><span class="n">intelligence</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>If you have dependencies that are not available on Conda nor PyPI you can adapt the Docker container.</p>
+</div>
+</div>
+<div class="section" id="post-project-creation-todos">
+<h2>Post project creation TODOs<a class="headerlink" href="#post-project-creation-todos" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core tries to automate as much as possible, but some minor actions need to be done manually.</p>
+<div class="section" id="public-docker-container-on-github-packages">
+<h3>Public Docker container on Github Packages<a class="headerlink" href="#public-docker-container-on-github-packages" title="Permalink to this headline">¶</a></h3>
+<p>mlf-core by default pushes the Docker container using the <code class="docutils literal notranslate"><span class="pre">publish_docker.yml</span></code> Github Actions workflow to <a class="reference external" href="https://github.com/features/packages">Github Packages</a>.
+If you want to push your Docker container to a different registry you need to adapt the workflow and potentially update the username and add a Github secret for your password.
+By default, containers pushed to Github are private. As a result you would need to log in to pull the container.
+Hence, you have to make your Docker container public by navigating to the used Github account, selecting <code class="docutils literal notranslate"><span class="pre">Packages</span></code> and then your package.
+On the right you will find a button <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">settings</span></code>. Scroll down on the package settings page and at the bottom you will find a button <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">public</span></code>.
+Click it, authenticate and your Github container is now public!
+Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immidiately show up in the Packages tab.</p>
+</div>
+<div class="section" id="publish-documentation-on-github-pages-or-read-the-docs">
+<h3>Publish documentation on Github Pages or Read the Docs<a class="headerlink" href="#publish-documentation-on-github-pages-or-read-the-docs" title="Permalink to this headline">¶</a></h3>
+<p>mlf-core projects offers a Sphinx based documentation setup which can easily be hosted on either Github Pages or Read the Docs.
+The choice is yours. Note that you may need to update the badge in the README of your project.</p>
+<div class="section" id="github-pages">
+<h4>Github Pages<a class="headerlink" href="#github-pages" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">publish_docs.yml</span></code> Github action pushes your built documentation automatically to a branch called <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>.
+Hence, you only need to enable Github Pages on this branch.
+Please follow the final steps (6-8 at time of writing) of the official <a class="reference external" href="https://docs.github.com/en/github/working-with-github-pages/creating-a-github-pages-site#creating-your-site">Github - creating your site</a> documentation.</p>
+</div>
+<div class="section" id="read-the-docs">
+<h4>Read the Docs<a class="headerlink" href="#read-the-docs" title="Permalink to this headline">¶</a></h4>
+<p>Please follow the offical <a class="reference external" href="https://docs.readthedocs.io/en/stable/intro/import-guide.html">Read the Docs - Building your documentation</a> documentation.</p>
+</div>
+</div>
+</div>
+<div class="section" id="training-models-with-mlf-core">
+<h2>Training models with mlf-core<a class="headerlink" href="#training-models-with-mlf-core" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core models are designed to easily run on any hardware with the same runtime environment.
+First, select the runtime environment by commenting either Conda or Docker in or out as described above.
+Depending on the used template the commands for training a model on the CPU, a GPU or multiple GPUs may slightly differ.
+In all cases they are described in the usage.rst file.
+Remember that MLflow parameters are passed as <code class="docutils literal notranslate"><span class="pre">-P</span> <span class="pre">key=val</span></code> and Docker parameters as <code class="docutils literal notranslate"><span class="pre">-A</span> <span class="pre">key=val</span></code> or <code class="docutils literal notranslate"><span class="pre">-A</span> <span class="pre">key</span></code>.
+For our just created <code class="docutils literal notranslate"><span class="pre">mlflow-pytorch</span></code> project, assuming that we are in the root directory of the project, we run our project as follows:</p>
+<div class="section" id="cpu">
+<h3>CPU<a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlflow run . -A t
+</pre></div>
+</div>
+</div>
+<div class="section" id="single-gpu">
+<h3>Single GPU<a class="headerlink" href="#single-gpu" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlflow run . -A t-A <span class="nv">gpus</span><span class="o">=</span>all -P <span class="nv">gpus</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-gpus">
+<h3>Multiple GPUs<a class="headerlink" href="#multiple-gpus" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlflow run . -A t-A <span class="nv">gpus</span><span class="o">=</span>all -P <span class="nv">gpus</span><span class="o">=</span><span class="m">2</span> -P <span class="nv">acc</span><span class="o">=</span>ddp
+</pre></div>
+</div>
+<p>This will train our model on 2 gpus with the <code class="docutils literal notranslate"><span class="pre">distributed</span> <span class="pre">data</span> <span class="pre">parallel</span></code> accelerator.
+Adjust the number of GPUs to your liking.</p>
+</div>
+</div>
+<div class="section" id="interactive-visualization">
+<h2>Interactive visualization<a class="headerlink" href="#interactive-visualization" title="Permalink to this headline">¶</a></h2>
+<p>Congratulations, you have just trained your first GPU deterministic model! All metrics and models are saved in the <code class="docutils literal notranslate"><span class="pre">mlruns</span></code> directory.
+A couple of metrics were already printed onto the terminal. However, due to the tight MLflow integration there are more ways to visualize our results.</p>
+<div class="section" id="mlflow-ui">
+<h3>mlflow UI<a class="headerlink" href="#mlflow-ui" title="Permalink to this headline">¶</a></h3>
+<p>To open the mlflow UI simply run <code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">ui</span></code> in the root directory of your project.
+Note that if you trained on a different machine than you now want to open the MLflow web interface, you should run <code class="docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">fix-artifact-paths</span></code> on the local machine.
+This will ensure that all artifacts are visible. Open the URL shown in the terminal in your browser.
+You should be greeted with something like this:</p>
+<div class="figure align-default" id="id7">
+<img alt="MLflow web interface overview" src="_images/mlflow_ui_overview.png" />
+<p class="caption"><span class="caption-text">Landing page of the MLflow web interface.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+<p>All runs are grouped into experiments together with a run status. Simply click on a specific run to see more details:</p>
+<div class="figure align-default" id="id8">
+<img alt="MLflow web interface run" src="_images/mlflow_ui_run.png" />
+<p class="caption"><span class="caption-text">Detailed overview of a MLflow run.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<p>When clicking on one of the metrics you can also view for example a line plot of the performance over time or per epoch.</p>
+<div class="figure align-default" id="id9">
+<img alt="MLflow web interface run" src="_images/mlflow_ui_run_epochs.png" />
+<p class="caption"><span class="caption-text">Plot of the training epochs of a run.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+<p>The MLflow web interface can also be hosted somewhere and be made accessible to other collaborators.
+Consult the MLflow documentation for this purpose.</p>
+</div>
+<div class="section" id="tensorboard">
+<h3>Tensorboard<a class="headerlink" href="#tensorboard" title="Permalink to this headline">¶</a></h3>
+<p>At the end of the run the project will print out a command to view your just trained model with Tensorboard.
+Simply run the command and open the URL in your favorite browser.</p>
+</div>
+</div>
+<div class="section" id="serving-a-mlf-core-model">
+<h2>Serving a mlf-core model<a class="headerlink" href="#serving-a-mlf-core-model" title="Permalink to this headline">¶</a></h2>
+<p>A benefit of MLflow is that it allows you to easily serve your model to make it available to other users:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlflow models serve -m &lt;path to the model&gt;
+</pre></div>
+</div>
+<p>will spin up a server to which you can send requests to and will receive predictions as answers!
+Please follow the <a class="reference external" href="https://www.mlflow.org/docs/latest/models.html#deploy-mlflow-models">MLflow deployment documentation</a>.</p>
+</div>
+<div class="section" id="developing-mlf-core-projects">
+<h2>Developing mlf-core projects<a class="headerlink" href="#developing-mlf-core-projects" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core offers additional functionality that eases development.
+A subset of these features and general development tips are the focus of this section.</p>
+<div class="section" id="git-branches-and-development-flow">
+<h3>git branches and development flow<a class="headerlink" href="#git-branches-and-development-flow" title="Permalink to this headline">¶</a></h3>
+<p>As soon as your project is pushed to Github you will see that four branches are used:</p>
+<ol class="arabic simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">master/main</span></code> branch. This branch should at any point only contain the latest release.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">development</span></code> branch. Use this branch to collect all development milestones.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">TEMPLATE</span></code> branch. This branch is used for syncing (see below). Do not touch it.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch. The built documentation is pushed to this branch. You should not have to edit it manually.</p></li>
+</ol>
+<p>While developing always merge first into the <code class="docutils literal notranslate"><span class="pre">development</span></code> branch.
+If you think that your code is ready to become a new release create a release branch such as: <code class="docutils literal notranslate"><span class="pre">release-1.0.0</span></code>.
+Now open a pull request from the release branch into the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch and have any collaborators review it.
+When ready merge it into the master branch and create a new Github release. This will trigger a release build of your Docker container.</p>
+</div>
+<div class="section" id="rebuilding-the-docker-container">
+<h3>Rebuilding the Docker container<a class="headerlink" href="#rebuilding-the-docker-container" title="Permalink to this headline">¶</a></h3>
+<p>Whenever you add new libraries to the <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file simply push to the development branch.
+Your Docker container will rebuild and overwrite the latest development container.</p>
+</div>
+<div class="section" id="increasing-the-project-version-with-mlf-core-bump-version">
+<h3>Increasing the project version with mlf-core bump-version<a class="headerlink" href="#increasing-the-project-version-with-mlf-core-bump-version" title="Permalink to this headline">¶</a></h3>
+<p>Increasing the version of a project across several files is cumbersome.
+Hence, mlf-core offers a <code class="docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">bump-version</span></code> command.
+Considering that a usual project starts as a <code class="docutils literal notranslate"><span class="pre">0.1.0-SNAPSHOT</span></code> version (SNAPSHOT equals unstable development version) you should,
+following the development flow introduced above, increase the version on the release branch:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core bump-version <span class="m">0</span>.1.0 .
+</pre></div>
+</div>
+<p>This will update the version of all files and add a new section in the changelog which you should continously keep up to date.
+For more details please visit <a class="reference internal" href="bump_version.html#bump-version"><span class="std std-ref">Bumping the version of an existing project</span></a>.</p>
+</div>
+</div>
+<div class="section" id="ensuring-determinism-with-mlf-core-lint">
+<h2>Ensuring determinism with mlf-core lint<a class="headerlink" href="#ensuring-determinism-with-mlf-core-lint" title="Permalink to this headline">¶</a></h2>
+<p>Determinism is the heart and soul of mlf-core projects. Ideally you, as a user of mlf-core, do not need to know how mlf-core ensures determinism behind the scenes.
+The only thing that you have to do is to periodically run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core lint
+</pre></div>
+</div>
+<p>on your project. You will be made aware of any violations of known non-determinism and how to fix them.
+This ensures that you can fix the issues by yourself and learn in the process without requiring expert knowledge beforehand.</p>
+<div class="figure align-default" id="id10">
+<img alt="mlf-core lint example" src="_images/linting_example.png" />
+<p class="caption"><span class="caption-text">Example of a mlf-core lint run. The usage of the function <code class="docutils literal notranslate"><span class="pre">bincount</span></code> was found, which is known to operate non-deterministically. It has to be replaced.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">lint</span></code> is also run on any push event to any branch on your Github repository.
+For more details please read <a class="reference internal" href="lint.html#lint"><span class="std std-ref">Linting your project</span></a>.</p>
+</div>
+<div class="section" id="keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync">
+<h2>Keeping mlf-core based projects up to data with mlf-core sync<a class="headerlink" href="#keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync" title="Permalink to this headline">¶</a></h2>
+<p>mlf-core continously tries to update all project templates to adhere to the latest best practices and requirements for deterministic machine learning.
+Whenever mlf-core releases a new version and updated templates you will automatically receive a pull request with the latest changes.
+You should then try to integrate them as fast as possible and to create a minor release.</p>
+<p>For more details and configuration options please visit <a class="reference internal" href="sync.html#sync"><span class="std std-ref">Syncing your project</span></a>.</p>
+</div>
+<div class="section" id="contributing-to-mlf-core">
+<h2>Contributing to mlf-core<a class="headerlink" href="#contributing-to-mlf-core" title="Permalink to this headline">¶</a></h2>
+<p>There are various ways of contributing to mlf-core.
+First you can make your best practice model available by forking your project to the mlf-core organization or by developing it there directly.
+Be aware that we would like to discuss this first with you to ensure that only well developed or finished projects are in the mlf-core organization.
+This increases the visibility of your project and is a seal of quality.
+Moreover, you can join the Community Discord via <a class="reference external" href="https://discord.gg/Mv8sAcq">this link</a>.
+We are looking forward to meeting you and are always available to help if required!</p>
 </div>
 </div>
 

@@ -6,6 +6,7 @@ channels:
 dependencies:
   - defaults::cudatoolkit=11.0.221
   - defaults::python=3.8.2
+  - defaults::boto3==1.17.11
   - conda-forge::tensorboardx=2.1
   - conda-forge::mlflow=1.13.1
   - conda-forge::rich=9.10.0
@@ -16,5 +17,4 @@ dependencies:
   - pip:
     - pycuda==2019.1.2  # not on Conda
     - cloudpickle==1.6.0
-    - boto3==1.17.7
     - system-intelligence==2.0.2

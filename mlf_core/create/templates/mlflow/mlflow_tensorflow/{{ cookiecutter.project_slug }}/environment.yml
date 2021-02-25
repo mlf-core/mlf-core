@@ -1,16 +1,17 @@
 name: {{ cookiecutter.project_slug }}
 channels:
-    - defaults
-    - conda-forge
+  - defaults
+  - conda-forge
 dependencies:
-    - defaults::cudatoolkit=11.0.221
-    - defaults::python=3.8.2
-    - conda-forge::rich=9.10.0
-    - conda-forge::mlflow=1.13.1
-    - conda-forge::tensorboardx=2.1
-    - pip
-    - pip:
-      - tensorflow==2.4.1  # not yet on Conda with full GPU support
-      - tensorflow_datasets==4.2.0
-      - pycuda==2019.1.2  # not on Conda
-      - system-intelligence==2.0.2  # not yet on Conda
+  - defaults::cudatoolkit=11.0.221
+  - defaults::python=3.8.2
+  - defaults::boto3==1.17.11
+  - conda-forge::rich=9.10.0
+  - conda-forge::mlflow=1.13.1
+  - conda-forge::tensorboardx=2.1
+  - pip
+  - pip:
+    - tensorflow==2.4.1  # not yet on Conda with full GPU support
+    - tensorflow_datasets==4.2.0
+    - pycuda==2019.1.2  # not on Conda
+    - system-intelligence==2.0.2  # not yet on Conda

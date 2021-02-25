@@ -19,7 +19,7 @@ mlf-core
 .. image:: https://img.shields.io/pypi/v/mlf-core.svg
         :target: https://pypi.python.org/pypi/mlf-core
         :alt: PyPI Status
-        
+
 .. image:: https://static.pepy.tech/personalized-badge/mlf-core?units=international_system&left_color=grey&right_color=green&left_text=Downloads
         :target: https://pepy.tech/project/mlf-core
         :alt: Pepy Downloads
@@ -37,18 +37,14 @@ mlf-core
         :alt: Dependabot Enabled
 
 
-Fully GPU deterministic machine learning project templates using MLflow_.
-
-* Free software: Apache2.0
-* Documentation: https://mlf-core.readthedocs.io.
-
-
-Features
+Overview
 --------
 
-* Jumpstart your machine learning project with fully fledged, (multi) GPU deterministic mlflow project templates
-* Pytorch, Tensorflow, XGBoost supported
-* Conda and Docker support out of the box
+.. figure:: https://user-images.githubusercontent.com/21954664/109179670-6d6d3d80-778a-11eb-9919-ffca4aaa1873.png
+   :alt: mlf-core soverview
+
+   mlf-core provides CPU and GPU deterministic machine learning templates based on MLflow, Conda, Docker and a strong Github integration.
+   A custom linter ensures that projects stay deterministic in all phases of development and deployment.
 
 Installing
 ---------------
@@ -119,14 +115,6 @@ Check whether you are using the latest mlf-core version and update automatically
 
 See `<https://mlf_core.readthedocs.io/en/latest/upgrade.html>`_.
 
-
-.. figure:: https://user-images.githubusercontent.com/21954664/98472352-c2dd0900-21f2-11eb-9fe3-929b2a21bd4c.png
-   :scale: 100 %
-   :alt: mlf-core summary
-
-   mlf-core enables deterministic machine learning. MLflow and a provided Read the Docs setup ensure that all hyperparameters, metrics and model details are well documented.
-   Reproducible environments are provided with the use of Conda and Docker. Finally, the mlf-core ecosystem ensures that all library specific settings required for determinism are enabled,
-   no non-deterministic algorithms are used and that the used hardware is tracked.
 
 Credits
 -------

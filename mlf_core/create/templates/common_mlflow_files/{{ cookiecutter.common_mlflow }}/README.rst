@@ -16,8 +16,8 @@
         :alt: mlf-core lint
 
 {% if is_open_source %}
-.. image:: https://readthedocs.org/projects/{{ cookiecutter.project_name }}/badge/?version=latest
-        :target: https://{{ cookiecutter.project_name }}.readthedocs.io/en/latest/?badge=latest
+.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/publish_docs.yml/badge.svg?branch=main
+        :target: https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_name }}
         :alt: Documentation Status
 {%- endif %}
 

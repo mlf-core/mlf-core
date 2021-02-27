@@ -94,8 +94,7 @@ class MLFCore:
     @staticmethod
     def md5(fname: str):
         """Generate md5 sum for input file"""
-        # Adding nosec (bandit) here, these isn't for security, just for
-        # tracking file integrity.
+        # Adding nosec (bandit) here, these isn't for security, just for tracking file integrity.
         hash_md5 = hashlib.md5()  # nosec
         with open(fname, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b''):

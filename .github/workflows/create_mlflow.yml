@@ -4,13 +4,14 @@ on: [push, pull_request]
 
 jobs:
   create:
-    name: Create mlflow-${{ matrix.template }} Template
+    name: Create mlflow-${{ matrix.template }} Template (${{ matrix.container }})
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         template: [ 'pytorch', 'tensorflow', 'xgboost', 'xgboost_dask' ]
+        container: [ 'docker', 'conda' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -49,11 +50,30 @@ jobs:
         run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
 
       - name: Build Docker container
+        if: matrix.container == 'docker'
         uses: docker/build-push-action@v1
         with:
           repository: ghcr.io/homergithub/exploding_springfield
           tags: 0.1.0-SNAPSHOT
           push: false
+
+      - name: Setup miniconda
+        if: matrix.container == 'conda'
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          channels: conda-forge,bioconda,defaults
+          python-version: ${{ matrix.python-version }}
+
+      - name: Conda clean
+        if: matrix.container == 'conda'
+        run: conda clean -a
+
+      - name: Enable conda and disable docker
+        if: matrix.container == 'conda'
+        run: |
+          sed -i 's/# conda_env/conda_env/' ../exploding_springfield/MLproject
+          sed -i '10,13d' ../exploding_springfield/MLproject
 
       - name: Install mlflow
         run: pip install mlflow

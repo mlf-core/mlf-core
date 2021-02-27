@@ -3,6 +3,7 @@
 # Version: {{ cookiecutter.version }}
 # License: {{ cookiecutter.license }}
 
+
 name: {{ cookiecutter.project_slug }}
 
 # conda_env: environment.yml

@@ -17,6 +17,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* Bandit complaining about insecure md5
+
 **Dependencies**
 
 **Deprecated**

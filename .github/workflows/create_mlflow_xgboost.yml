@@ -37,6 +37,12 @@ jobs:
       - name: Lint project with flake8
         run: flake8 ../exploding_springfield
 
+      - name: Install bandit
+        run: pip install bandit
+
+      - name: Run bandit
+        run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
+
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:

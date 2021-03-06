@@ -16,7 +16,7 @@
         :alt: mlf-core lint
 
 {% if is_open_source %}
-.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/publish_docs.yml/badge.svg?branch=main
+.. image:: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/actions/workflows/publish_docs.yml/badge.svg
         :target: https://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.project_name }}
         :alt: Documentation Status
 {%- endif %}

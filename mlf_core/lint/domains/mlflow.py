@@ -1,5 +1,5 @@
 import os
-
+from pathlib import Path
 from pkg_resources import parse_version
 
 from mlf_core.common.load_yaml import load_yaml_file
@@ -466,7 +466,7 @@ def verify_method_not_present(calling_class: TemplateLinter, functions_to_check:
     for root, dirs, files in os.walk(f'{calling_class.path}/{calling_class.project_slug_no_hyphen}'):
         for file in files:
             if file.endswith(".py"):
-                file_to_check_full_path = os.path.join(root, file)
+                file_to_check_full_path = Path(root)/file
                 with open(file_to_check_full_path) as f:
                     content_stripped = list(map(lambda line: line.strip(), f.readlines()))
                     for function in functions_to_check:

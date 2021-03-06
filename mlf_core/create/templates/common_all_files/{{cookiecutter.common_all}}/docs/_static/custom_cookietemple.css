@@ -63,12 +63,24 @@ div, span, code {
     background: #005fff !important;
 }
 
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a:hover {
+    color: #FFFFFF !important;
+    background: #005fff !important;
+}
+
 .wy-menu-vertical li.toctree-l2.current > a:hover {
     color: #FFFFFF !important;
     background: #005fff !important;
 }
 
+/* Child items of current expanded parent section are white font on dark background*/
+
 .wy-menu-vertical li.toctree-l2.current li.toctree-l3 > a {
+    color: #FFFFFF !important;
+    background: #2D2E2F !important;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
     color: #FFFFFF !important;
     background: #2D2E2F !important;
 }

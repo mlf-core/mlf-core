@@ -498,6 +498,27 @@ This ensures that you can fix the issues by yourself and learn in the process wi
 ``mlf-core lint`` is also run on any push event to any branch on your Github repository.
 For more details please read :ref:`lint`.
 
+Utilizing MLFCore Singleton Class
+------------------------------------
+
+When you start to build your model you will notice several ``MLFCore`` function calls already built in.
+These can be found in ``mlf_core/mlf_core.py`` if you want to peak under the hood.
+It's also maintained by the linter in-case anything gets changed on accident.
+There are a few utilities for setting random seeds for the framework, mlf-core logging functionalities, and the ability to log the hash of your input data.
+
+
+.. code-block:: python
+
+    from mlf_core.mlf_core import MLFCore
+
+    MLFCore.set_general_random_seeds(general_seed)
+    MLFCore.set_pytorch_random_seeds(pytorch_seed, num_of_gpus)
+
+    MLFCore.log_sys_intel_conda_env()
+
+    MLFCore.log_input_data('data/')
+
+
 Keeping mlf-core based projects up to data with mlf-core sync
 ----------------------------------------------------------------
 

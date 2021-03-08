@@ -18,7 +18,7 @@ jobs:
         with:
           dockerfile: Dockerfile
           repository: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
-          tags: {{ cookiecutter.version }}
+          tags: {{ cookiecutter.version }} # <<MLF-CORE_FORCE_BUMP>>
           push: false
 
       - name: Setup Python

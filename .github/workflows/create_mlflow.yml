@@ -48,6 +48,11 @@ jobs:
       - name: Run bandit
         run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
 
+      - name: Reclaim space
+        run: |
+             sudo rm -rf /usr/share/dotnet
+             sudo rm -rf /opt/ghc
+
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:

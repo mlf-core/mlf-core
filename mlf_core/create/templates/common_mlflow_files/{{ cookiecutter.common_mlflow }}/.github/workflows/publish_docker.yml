@@ -15,6 +15,11 @@ jobs:
   publish_release:
     runs-on: ubuntu-latest
     steps:
+      - name: Reclaim space
+        run: |
+             sudo rm -rf /usr/share/dotnet
+             sudo rm -rf /opt/ghc
+
     - uses: actions/checkout@master
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master

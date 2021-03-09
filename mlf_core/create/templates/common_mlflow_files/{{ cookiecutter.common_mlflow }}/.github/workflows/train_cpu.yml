@@ -13,6 +13,11 @@ jobs:
       - name: Check out source-code repository
         uses: actions/checkout@v2
 
+      - name: Reclaim space
+        run: |
+             sudo rm -rf /usr/share/dotnet
+             sudo rm -rf /opt/ghc
+
       - name: Build Docker container
         uses: docker/build-push-action@v1
         with:

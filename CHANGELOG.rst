@@ -19,8 +19,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Fixed**
 
 * Bandit complaining about insecure md5
-
 * mlf-core pytorch template creation and updated its dependencies versions accordingly (#298)
+* Pytorch template hparam logging with tensorboard now working
 
 **Dependencies**
 

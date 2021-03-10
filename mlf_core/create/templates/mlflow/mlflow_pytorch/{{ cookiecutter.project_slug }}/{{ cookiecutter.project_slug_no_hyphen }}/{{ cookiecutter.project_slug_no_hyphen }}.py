@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     dm.prepare_data()
     dm.setup(stage='fit')
-    model = LightningMNISTClassifier(len_test_set=len(dm.df_test), **dict_args)
+    model = LightningMNISTClassifier(len_test_set=len(dm.df_test), hparams=parser.parse_args(), **dict_args)
     model.log_every_n_steps = dict_args['log_interval']
 
     # check, whether the run is inside a Docker container or not

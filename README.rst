@@ -40,7 +40,7 @@ mlf-core
 Overview
 --------
 
-.. figure:: https://user-images.githubusercontent.com/21954664/109179670-6d6d3d80-778a-11eb-9919-ffca4aaa1873.png
+.. figure:: https://user-images.githubusercontent.com/31141763/110704981-02921c80-81f6-11eb-8775-bd73f565568c.png
    :alt: mlf-core soverview
 
    mlf-core provides CPU and GPU deterministic machine learning templates based on MLflow, Conda, Docker and a strong Github integration.

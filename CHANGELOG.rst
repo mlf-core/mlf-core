@@ -14,6 +14,7 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Tutorial accessible at: mlf-core.com/tutorial (#159)
 * [ALL TEMPLATES] Removed AUTHORS.rst and moved content into docs/authors.rst (#267)
 * [ALL TEMPLATES] Added boto3 to environment to allow for S3 accessibility (#278)
+* [ALL TEMPLATES] Workflows, that were triggered when pusing/pr to default master branch do now accept main as default branch
 
 **Fixed**
 

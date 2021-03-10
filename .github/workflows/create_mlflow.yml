@@ -13,6 +13,11 @@ jobs:
         template: [ 'pytorch', 'tensorflow', 'xgboost', 'xgboost_dask' ]
 
     steps:
+      - name: Reclaim space
+        run: |
+             sudo rm -rf /usr/share/dotnet
+             sudo rm -rf /opt/ghc
+
       - uses: actions/checkout@v2
         name: Check out source-code repository
 

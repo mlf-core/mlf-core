@@ -10,6 +10,10 @@ jobs:
         python: [3.7, 3.8]
 
     steps:
+      -   name: Reclaim space
+          run: |
+                sudo rm -rf /usr/share/dotnet
+                sudo rm -rf /opt/ghc
       - name: Check out source-code repository
         uses: actions/checkout@v2
 

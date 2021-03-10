@@ -13,6 +13,11 @@ jobs:
         template: [ 'pytorch', 'tensorflow', 'xgboost', 'xgboost_dask' ]
 
     steps:
+      - name: Reclaim space
+        run: |
+             sudo rm -rf /usr/share/dotnet
+             sudo rm -rf /opt/ghc
+
       - uses: actions/checkout@v2
         name: Check out source-code repository
 
@@ -47,11 +52,6 @@ jobs:
 
       - name: Run bandit
         run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
-
-      - name: Reclaim space
-        run: |
-             sudo rm -rf /usr/share/dotnet
-             sudo rm -rf /opt/ghc
 
       - name: Build Docker container
         uses: docker/build-push-action@v1

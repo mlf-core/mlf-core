@@ -1,4 +1,4 @@
-name: mypytest
+name: {{ cookiecutter.project_slug_no_hyphen }}
 channels:
   - defaults
   - conda-forge

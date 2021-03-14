@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Tutorial &mdash; mlf-core 1.10.0-SNAPSHOT documentation</title>
+  <title>Tutorial &mdash; mlf-core 1.10.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.10.0-SNAPSHOT
+                1.10.0
               </div>
             
           
@@ -135,6 +135,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ensuring-determinism-with-mlf-core-lint">Ensuring determinism with mlf-core lint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilizing-the-mlfcore-singleton-class">Utilizing the MLFCore singleton class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync">Keeping mlf-core based projects up to data with mlf-core sync</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#contributing-to-mlf-core">Contributing to mlf-core</a></li>
 </ul>
@@ -653,6 +654,21 @@ This ensures that you can fix the issues by yourself and learn in the process wi
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">lint</span></code> is also run on any push event to any branch on your Github repository.
 For more details please read <a class="reference internal" href="lint.html#lint"><span class="std std-ref">Linting your project</span></a>.</p>
+</div>
+<div class="section" id="utilizing-the-mlfcore-singleton-class">
+<h2>Utilizing the MLFCore singleton class<a class="headerlink" href="#utilizing-the-mlfcore-singleton-class" title="Permalink to this headline">¶</a></h2>
+<p>When you start to build your model you will notice several <code class="docutils literal notranslate"><span class="pre">MLFCore</span></code> function calls already built in.
+These calls set all required random seeds and log the hardware together with the runtime environment.
+Moreover, the <code class="docutils literal notranslate"><span class="pre">MLFCore</span></code> singleton allows for data tracking with MD5 sums.
+These functions can be found in <code class="docutils literal notranslate"><span class="pre">mlf_core/mlf_core.py</span></code> if you want to peak under the hood.
+Usually they should neither be modified nor removed without any strong reason.
+It’s also maintained by the linter in-case anything gets changed on accident.
+To log your input data use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlf_core.mlf_core</span> <span class="kn">import</span> <span class="n">MLFCore</span>
+
+<span class="n">MLFCore</span><span class="o">.</span><span class="n">log_input_data</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync">
 <h2>Keeping mlf-core based projects up to data with mlf-core sync<a class="headerlink" href="#keeping-mlf-core-based-projects-up-to-data-with-mlf-core-sync" title="Permalink to this headline">¶</a></h2>

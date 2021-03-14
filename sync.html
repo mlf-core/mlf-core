@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Syncing your project &mdash; mlf-core 1.10.0-SNAPSHOT documentation</title>
+  <title>Syncing your project &mdash; mlf-core 1.10.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.10.0-SNAPSHOT
+                1.10.0
               </div>
             
           
@@ -259,7 +259,9 @@ The sync level therefore specifies a lower boundary. It can be configured in the
 <h3>Blacklisting files<a class="headerlink" href="#blacklisting-files" title="Permalink to this headline">¶</a></h3>
 <p>Although, mlf-core only submits pull requests for files, which are part of the template, sometimes even those files should be ignored.
 Examples could be any html files, which ,at some point, contain only custom content and should not be synced.
-When syncing, mlf-core examines the <code class="docutils literal notranslate"><span class="pre">mlf_core.cfg</span></code> file and ignores any file patterns (globs) (e.g. <code class="docutils literal notranslate"><span class="pre">*.html</span></code>) below the <code class="docutils literal notranslate"><span class="pre">[sync_files_blacklisted]</span></code> section.</p>
+When syncing, mlf-core examines the <code class="docutils literal notranslate"><span class="pre">mlf_core.cfg</span></code> file and ignores any file patterns (globs) (e.g. <code class="docutils literal notranslate"><span class="pre">*.html</span></code>) below the <code class="docutils literal notranslate"><span class="pre">[sync_files_blacklisted]</span></code> section.
+IMPORTANT NOTE: If you would like to add some files to this section, make sure your current branch (if you are syncing manually, which is not recommended) or your default branch
+has the latest blacklisted sync file section with your changes, so it will be used by the sync.</p>
 </div>
 </div>
 </div>

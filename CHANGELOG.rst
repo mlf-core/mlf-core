@@ -6,15 +6,23 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
-1.10.0-SNAPSHOT (2021-02-21)
-----------------------------
+1.10.0 (2021-03-11)
+-------------------
 
 **Added**
 
 * Tutorial accessible at: mlf-core.com/tutorial (#159)
-* Removed AUTHORS.rst and moved content into docs/authors.rst (#267)
+* [ALL TEMPLATES] Removed AUTHORS.rst and moved content into docs/authors.rst (#267)
+* [ALL TEMPLATES] Added boto3 to environment to allow for S3 accessibility (#278)
+* [ALL TEMPLATES] Workflows, that were triggered when pusing/pr to default master branch do now accept main as default branch
 
 **Fixed**
+
+* Bandit complaining about insecure md5
+* mlf-core pytorch template creation and updated its dependencies versions accordingly (#298)
+* Pytorch template hparam logging with tensorboard now working
+* blacklisted files for sync defined by the user are now correctly picked up
+* blacklisted sync files, that are newly introduced by a PR are now included in the sync PR, they were introduced but not in the following ones
 
 **Dependencies**
 

@@ -1,9 +1,10 @@
-name: PR to master branch from patch/release branch only
+name: PR to master/main branch from patch/release branch only
 
 on:
   pull_request:
     branches:
     - master
+    - main
 
 jobs:
   check_target:

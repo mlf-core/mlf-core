@@ -5,8 +5,8 @@ mlflow:
         version: 2.0.0
         available libraries: Pytorch
         short description: Fully CPU and GPU reproducible MLflow based Pytorch template with Tensorboard support.
-        long description: A fully CPU and GPU reproducible MLflow based Pytorch template with CPU, multi-GPU (Dataparallel API),
-                        system-intelligence and Tensorboard support. The initialized project contains a MNIST example.
+        long description: A fully CPU and GPU reproducible MLflow based Pytorch template with CPU, multi-GPU (DistributedDataParallel API),
+                        system-intelligence and Tensorboard support. Makes heavy use of Pytorch Lightning. The initialized project contains a MNIST example.
     tensorflow:
         name: Tensorflow
         handle: mlflow-tensorflow
@@ -31,7 +31,7 @@ mlflow:
         short description: MLflow and Dask based XGBoost template.
         long description: A MLflow based XGBoost template with CPU, single-GPU, multi-GPU and
                         system-intelligence support. The initialized project contains a Covertype example.
-                        Due to Dask's non deterministic shuffling the template may not always be reproducible!
+                        Due to Dask's non-deterministic shuffling the template may not always be reproducible!
 package:
     prediction:
         name: Prediction

@@ -6,11 +6,12 @@ from torch.nn import functional as F
 
 
 class LightningMNISTClassifier(pl.LightningModule):
-    def __init__(self, len_test_set: int, **kwargs):
+    def __init__(self, len_test_set: int, hparams: dict, **kwargs):
         """
         Initializes the network
         """
         super(LightningMNISTClassifier, self).__init__()
+        self.hparams = hparams
 
         # mnist images are (1, 28, 28) (channels, width, height)
         self.optimizer = None

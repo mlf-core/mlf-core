@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        template: [ 'pytorch', 'tensorflow', 'xgboost', 'xgboost_dask' ]
+        template: [ 'pytorch', 'tensorflow', 'xgboost']
 
     steps:
       - name: Reclaim space

@@ -13,18 +13,6 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
-**Dependencies**
-
-**Deprecated**
-
-
-1.10.1 (2021-03-26)
--------------------
-
-**Added**
-
-**Fixed**
-
 * [MLFLOW-PYTORCH] MNIST data loading (#298)
 
 **Dependencies**

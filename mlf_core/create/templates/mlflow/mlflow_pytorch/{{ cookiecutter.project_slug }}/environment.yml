@@ -11,7 +11,7 @@ dependencies:
   - conda-forge::tensorboardx=2.1
   - conda-forge::mlflow=1.14.1
   - conda-forge::rich=9.13.0
-  - pytorch::pytorch=1.8.0
+  - pytorch::pytorch=1.8.1
   - pytorch::torchvision=0.9.1
   - pytorch-lightning=1.1.8
   - pip=21.0.1

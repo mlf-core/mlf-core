@@ -354,39 +354,6 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         all_reduce_functions = ['all_reduce']
         verify_method_not_present(self, all_reduce_functions, 'mlflow-xgboost-4')
 
-    def xgboost_version(self) -> None:
-        """
-        Verifies that the XGBoost version is at least 1.1.0, since reproducibility cannot be guaranteed elsewise.
-        """
-        # Verify that XGBoost version is greater than 1.1.0
-        conda_env = load_yaml_file(f'{self.path}/environment.yml')
-        conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
-        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
-
-        for dependency in conda_only:
-            if 'xgboost' in dependency:
-                split = dependency.split('==')
-                current_version = parse_version(split[-1])
-                if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost_dask-3',
-                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
-
-        for dependency in pip_only:
-            if 'xgboost' in dependency:
-                split = dependency.split('==')
-                current_version = parse_version(split[-1])
-                if current_version < parse_version('1.1.0'):
-                    self.failed.append(('mlflow-xgboost_dask-3',
-                                        f'XGBoost version {current_version} is not at least 1.1.0. Reproducibility cannot be guaranteed.'))
-
-    def xgboost_no_all_reduce(self) -> None:
-        """
-        Verifies that all_reduce is not used.
-        https://github.com/dmlc/xgboost/issues/5023
-        """
-        all_reduce_functions = ['all_reduce']
-        verify_method_not_present(self, all_reduce_functions, 'mlflow-xgboost-4')
-
 
 def verify_method_not_present(calling_class: TemplateLinter, functions_to_check: list, linting_code: str):
     """

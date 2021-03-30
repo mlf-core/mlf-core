@@ -30,7 +30,6 @@ class MlflowCreator(TemplateCreator):
         self.MLFLOW_PYTORCH_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-pytorch', self.AVAILABLE_TEMPLATES_PATH)
         self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-tensorflow', self.AVAILABLE_TEMPLATES_PATH)
         self.MLFLOW_XGBOOST_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-xgboost', self.AVAILABLE_TEMPLATES_PATH)
-        self.MLFLOW_XGBOOST_DASK_TEMPLATE_VERSION = load_mlf_core_template_version('mlflow-xgboost_dask', self.AVAILABLE_TEMPLATES_PATH)
 
     def create_template(self, path: Path, dot_mlf_core: dict or None):
         """
@@ -39,7 +38,7 @@ class MlflowCreator(TemplateCreator):
 
         self.cli_struct.language = mlf_core_questionary_or_dot_mlf_core(function='select',
                                                                         question='Choose the project\'s primary framework',
-                                                                        choices=['pytorch', 'tensorflow', 'xgboost', 'xgboost_dask'],
+                                                                        choices=['pytorch', 'tensorflow', 'xgboost'],
                                                                         default='pytorch',
                                                                         dot_mlf_core=dot_mlf_core,
                                                                         to_get_property='language')
@@ -52,7 +51,6 @@ class MlflowCreator(TemplateCreator):
             'pytorch': self.mlflow_pytorch_options,
             'tensorflow': self.mlflow_tensorflow_options,
             'xgboost': self.mlflow_xgboost_options,
-            'xgboost_dask': self.mlflow_xgboost_dask_options,
         }
         switcher.get(self.cli_struct.language)(dot_mlf_core)
 
@@ -72,7 +70,6 @@ class MlflowCreator(TemplateCreator):
             'pytorch': self.MLFLOW_PYTORCH_TEMPLATE_VERSION,
             'tensorflow': self.MLFLOW_TENSORFLOW_TEMPLATE_VERSION,
             'xgboost': self.MLFLOW_XGBOOST_TEMPLATE_VERSION,
-            'xgboost_dask': self.MLFLOW_XGBOOST_DASK_TEMPLATE_VERSION
         }
         self.cli_struct.template_version, self.cli_struct.template_handle = switcher_version.get(
             self.cli_struct.language), f'mlflow-{self.cli_struct.language.lower()}'
@@ -90,8 +87,4 @@ class MlflowCreator(TemplateCreator):
 
     def mlflow_xgboost_options(self, dot_mlf_core: dict or None):
         """ Prompts for mlflow-xgboost specific options and saves them into the MlflowTemplateStruct """
-        pass
-
-    def mlflow_xgboost_dask_options(self, dot_mlf_core: dict or None):
-        """ Prompts for mlflow-xgboost_dask specific options and saves them into the MlflowTemplateStruct """
         pass

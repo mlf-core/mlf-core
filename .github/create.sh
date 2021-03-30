@@ -15,10 +15,6 @@ case "$1" in
     echo -e "\n\033[B\033[B\n\n\n\nn\n\n\n\nn" | mlf-core create
     ;;
 
-  xgboost_dask)
-    echo -e "\n\033[B\033[B\033[B\n\n\n\nn\n\n\n\nn" | mlf-core create
-    ;;
-
   *)
     echo -n "unknown"
     ;;

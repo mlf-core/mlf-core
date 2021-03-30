@@ -6,6 +6,23 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.11.0 (2021-03-30)
+-------------------
+
+**Added**
+
+**Fixed**
+
+* [MLFLOW-PYTORCH] MNIST data loading (#298)
+
+**Dependencies**
+
+**Deprecated**
+
+* Removed mlflow-xgboost_dask. It was never deterministic to begin with.
+  If you are interested in using mlf-core and XGBoost with multiple GPUs please refer to the old releases.
+
+
 1.10.0 (2021-03-11)
 -------------------
 
@@ -21,6 +38,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 * Bandit complaining about insecure md5
 * mlf-core pytorch template creation and updated its dependencies versions accordingly (#298)
 * Pytorch template hparam logging with tensorboard now working
+* blacklisted files for sync defined by the user are now correctly picked up
+* blacklisted sync files, that are newly introduced by a PR are now included in the sync PR, they were introduced but not in the following ones
 
 **Dependencies**
 

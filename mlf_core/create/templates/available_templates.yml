@@ -23,15 +23,6 @@ mlflow:
         short description: Fully CPU and GPU reproducible MLflow based XGBoost template.
         long description: A fully CPU and GPU reproducible MLflow based XGBoost template with CPU, single-GPU and
                         system-intelligence support. The initialized project contains a Covertype example.
-    xgboost_dask:
-        name: XGBoost-Dask
-        handle: mlflow-xgboost_dask
-        version: 1.2.2
-        available libraries: XGBoost, Dask
-        short description: MLflow and Dask based XGBoost template.
-        long description: A MLflow based XGBoost template with CPU, single-GPU, multi-GPU and
-                        system-intelligence support. The initialized project contains a Covertype example.
-                        Due to Dask's non-deterministic shuffling the template may not always be reproducible!
 package:
     prediction:
         name: Prediction

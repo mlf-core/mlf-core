@@ -44,6 +44,7 @@ Overview
    :alt: mlf-core soverview
 
    mlf-core provides CPU and GPU deterministic machine learning templates based on MLflow, Conda, Docker and a strong Github integration.
+   Templates are available for PyTorch, TensorFlow and XGBoost.
    A custom linter ensures that projects stay deterministic in all phases of development and deployment.
 
 Installing

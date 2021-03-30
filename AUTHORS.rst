@@ -11,4 +11,4 @@ Development Lead
 Contributors
 ------------
 
-* Edmund Miller
+* Edmund Miller <edmund.miller@utdallas.edu>

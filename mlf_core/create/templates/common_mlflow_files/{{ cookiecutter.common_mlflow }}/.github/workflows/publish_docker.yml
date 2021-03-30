@@ -7,26 +7,26 @@ name: Publish Container to Docker Packages
 
 on:
   release:
-      types: [published]
+    types: [published]
   push:
-      branches:
-        - development
+    branches:
+      - development
+
 jobs:
   publish_release:
     runs-on: ubuntu-latest
     steps:
       - name: Reclaim space
         run: |
-             sudo rm -rf /usr/share/dotnet
-             sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
 
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
-        username: {{ cookiecutter.github_username }}
-        password: {% raw %}'${{ secrets.MLF_CORE_SYNC_TOKEN}}'{% endraw %}
-        registry: ghcr.io
-        tags: "latest,{{ cookiecutter.version }}"
-
+      - uses: actions/checkout@master
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: {{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
+          username: {{ cookiecutter.github_username }}
+          password: {% raw %}'${{ secrets.MLF_CORE_SYNC_TOKEN}}'{% endraw %}
+          registry: ghcr.io
+          tags: "latest,{{ cookiecutter.version }}"

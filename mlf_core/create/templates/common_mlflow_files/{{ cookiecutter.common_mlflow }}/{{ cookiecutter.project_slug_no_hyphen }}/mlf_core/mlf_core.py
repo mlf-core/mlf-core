@@ -104,25 +104,18 @@ class MLFCore:
         return md5sum
 
     @classmethod
-    def get_md5_sums(cls, dir, md5_sums=None):
-        """
-        Recursively go through directories and subdirectories
-        and generate tuples of (<file_path>, <md5sum>)
-        returns: list of tuples
-        """
-        if not md5_sums:
-            md5_sums = []
-        elements = glob.glob(dir + "/*")
-        for elem in elements:
-            # if file, get md5 sum
-            if os.path.isfile(elem):
+    def get_md5_sums(cls, dir):
+        """ Walk through directory and collect md5 sums """
+        # TODO: check whether file or directory
+        input_files = []
+        for root, _, file in os.walk(dir):
+            for elem in file:
+                elem = os.path.join(root, elem)
                 elem_md5 = cls.md5(elem)
-                md5_sums.append((elem, elem_md5))
-            # if directory, apply recursion
-            if os.path.isdir(elem):
-                md5_sums = cls.get_md5_sums(elem, md5_sums)
-            else:
-                continue
+                # Switch out the results directory path with the expected 'output' directory
+                input_files.append({"path": elem, "md5sum": elem_md5})
+
+        return input_files
 
     @classmethod
     def log_input_data(cls, input_data: str):

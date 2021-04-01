@@ -235,7 +235,11 @@ def create_sync_secret(username: str, repo_name: str, token: str) -> None:
     :param token: The PAT of the user with repo scope
     """
     public_key_dict = get_repo_public_key(username, repo_name, token)
-    create_secret(username, repo_name, token, public_key_dict['key'], public_key_dict['key_id'])
+    try:
+        create_secret(username, repo_name, token, public_key_dict['key'], public_key_dict['key_id'])
+    except KeyError:
+        print('[bold red]Could not create sync secret for repository due to GitHubs API currently unavailable. See '
+              'https://mlf-core.readthedocs.io/en/latest/faq.html for more!')
 
 
 def get_repo_public_key(username: str, repo_name: str, token: str) -> dict:

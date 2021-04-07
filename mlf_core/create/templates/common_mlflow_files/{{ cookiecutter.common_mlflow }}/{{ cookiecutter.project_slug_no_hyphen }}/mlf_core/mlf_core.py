@@ -134,7 +134,7 @@ class MLFCore:
         try:
             with open(path, 'w') as tmp:
                 tmp.writelines(input_files)
-            dir_hash = md5(path)
+            dir_hash = cls.md5(path)
         finally:
             os.remove(path)
 

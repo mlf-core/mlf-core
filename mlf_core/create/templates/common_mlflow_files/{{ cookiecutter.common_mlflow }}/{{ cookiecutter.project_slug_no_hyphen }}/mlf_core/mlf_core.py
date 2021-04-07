@@ -152,4 +152,4 @@ class MLFCore:
             input_hash = cls.get_md5_sums(input_data, max_files=max_files)
         else:
             input_hash = cls.md5(input_data)
-        mlflow.log_param("input_hash", input_data + "-" + input_hash)
+        mlflow.log_param("training_data_hash", input_data + "-" + input_hash)

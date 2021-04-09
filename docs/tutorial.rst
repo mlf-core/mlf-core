@@ -139,10 +139,10 @@ To create a mlf-core project run:
   The project creation process will now end with mlf-core lint verifying the successful creation if your project and the link to your Github repository being printed.
 | You are now ready to start training deterministic machine learning models, but first let us have a look at the template's architecture and functionality.
 
-.. figure:: images/project_github.png
-   :alt: Project on Github
+.. figure:: images/mlf_core_create_tutorial.gif
+   :alt: Create process
 
-   A created project using the mlflow-pytorch template on Github
+   The project creation process with mlf-core
 
 mlf-core project overview
 ----------------------------

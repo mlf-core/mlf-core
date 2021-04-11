@@ -1,7 +1,6 @@
-=====
 Usage
 =====
 
-To use mlf-core in a project::
-
-    import mlf-core
+.. click:: mlf_core.__main__:main
+   :prog: mlf-core
+   :nested: full

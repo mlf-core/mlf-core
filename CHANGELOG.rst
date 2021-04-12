@@ -14,7 +14,6 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 **Fixed**
 
 * [MLFLOW-PYTORCH] MNIST data loading (#298)
-
 * Improved console output info in case the repos sync secret could not be set automatically and added it to FAQ docs
 
 **Dependencies**

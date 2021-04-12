@@ -3,8 +3,9 @@ channels:
   - defaults
   - conda-forge
   - rapidsai
+  - nvidia
 dependencies:
-  - defaults::cudatoolkit=11.1.74
+  - nvidia::cudatoolkit=11.1.74
   - defaults::python=3.8.2
   - defaults::boto3==1.17.11
   - conda-forge::rich=9.10.0

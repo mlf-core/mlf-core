@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>FAQ &mdash; mlf-core 1.10.0 documentation</title>
+  <title>FAQ &mdash; mlf-core 1.11.0 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.10.0
+                1.11.0
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#i-need-help-with-mlf-core-how-can-i-get-in-contact-with-the-developers">I need help with mlf-core. How can I get in contact with the developers?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#i-am-looking-for-a-template-for-domain-x-and-language-framework-y-but-it-does-not-exist-yet">I am looking for a template for domain x and language/framework y, but it does not exist yet!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-can-you-claim-that-your-templates-are-gpu-deterministic">How can you claim that your templates are GPU deterministic?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-to-do-if-my-sync-secret-could-not-be-set-during-project-creation-process">What to do if my sync secret could not be set during project creation process?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
@@ -204,6 +205,12 @@ Even better if you already have a draft for the template and/or could add it you
 <h2>How can you claim that your templates are GPU deterministic?<a class="headerlink" href="#how-can-you-claim-that-your-templates-are-gpu-deterministic" title="Permalink to this headline">¶</a></h2>
 <p>We performed extensive tests on various GPU architectures and can confidently say that given our settings GPU deterministic results can be expected on the same GPU architecture.
 Hence, all mlf-core templates feature <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a>, which queries your system for the used GPUs and their architecture.</p>
+</div>
+<div class="section" id="what-to-do-if-my-sync-secret-could-not-be-set-during-project-creation-process">
+<h2>What to do if my sync secret could not be set during project creation process?<a class="headerlink" href="#what-to-do-if-my-sync-secret-could-not-be-set-during-project-creation-process" title="Permalink to this headline">¶</a></h2>
+<p>You may encounter (rarely) the console info, that your projects sync secret could not be set during project creation. This is mostly caused by
+GitHubs API not being reachable for a few seconds. You can now either recreate your project or simply head to your projects repo and set a repo secret called <code class="docutils literal notranslate"><span class="pre">CT_SYNC_TOKEN</span></code> with its
+value being a valid personal access token for your account.</p>
 </div>
 </div>
 

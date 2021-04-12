@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Welcome to mlf-core’s documentation! &mdash; mlf-core 1.10.0 documentation</title>
+  <title>Welcome to mlf-core’s documentation! &mdash; mlf-core 1.11.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.10.0
+                1.11.0
               </div>
             
           
@@ -281,7 +281,6 @@
 <li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-pytorch">mlflow-pytorch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-tensorflow">mlflow-tensorflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-xgboost">mlflow-xgboost</a></li>
-<li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#mlflow-xgboost-dask">mlflow-xgboost_dask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#package-prediction">package-prediction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="available_templates/available_templates.html#shared-faq">Shared FAQ</a></li>
 </ul>
@@ -309,37 +308,39 @@
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-need-help-with-mlf-core-how-can-i-get-in-contact-with-the-developers">I need help with mlf-core. How can I get in contact with the developers?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-am-looking-for-a-template-for-domain-x-and-language-framework-y-but-it-does-not-exist-yet">I am looking for a template for domain x and language/framework y, but it does not exist yet!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-you-claim-that-your-templates-are-gpu-deterministic">How can you claim that your templates are GPU deterministic?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-to-do-if-my-sync-secret-could-not-be-set-during-project-creation-process">What to do if my sync secret could not be set during project creation process?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">1.10.0 (2021-03-11)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.9.1 (2021-02-16)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.9.0 (2021-02-16)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.8.0 (2021-02-01)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.7.8 (2020-12-04)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.7.7 (2020-11-29)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.7.6 (2020-11-22)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.7.5 (2020-11-18)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.7.4 (2020-11-11)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.7.3 (2020-11-09)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.7.2 (2020-11-07)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.7.1 (2020-11-07)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">1.7.0 (2020-11-06)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">1.6.1 (2020-11-06)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">1.6.0 (2020-11-02)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id16">1.5.0 (2020-10-29)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">1.4.4 (2020-10-22)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id18">1.4.3 (2020-09-17)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id19">1.4.2 (2020-09-11)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">1.4.1 (2020-09-10)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id21">1.4.0 (2020-08-28)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">1.3.0 (2020-08-27)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id23">1.2.2 (2020-08-21)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id24">1.2.1 (2020-08-21)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id25">1.2.0 (2020-08-21)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id26">1.1.0 (2020-08-19)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id27">1.0.1 (2020-08-11)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id28">1.0.0 (2020-08-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">1.11.0 (2021-03-30)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.10.0 (2021-03-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.9.1 (2021-02-16)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.9.0 (2021-02-16)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.8.0 (2021-02-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.7.8 (2020-12-04)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.7.7 (2020-11-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.7.6 (2020-11-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.7.5 (2020-11-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.7.4 (2020-11-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.7.3 (2020-11-09)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.7.2 (2020-11-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">1.7.1 (2020-11-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">1.7.0 (2020-11-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">1.6.1 (2020-11-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id16">1.6.0 (2020-11-02)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">1.5.0 (2020-10-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id18">1.4.4 (2020-10-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id19">1.4.3 (2020-09-17)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id20">1.4.2 (2020-09-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id21">1.4.1 (2020-09-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id22">1.4.0 (2020-08-28)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id23">1.3.0 (2020-08-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id24">1.2.2 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id25">1.2.1 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id26">1.2.0 (2020-08-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id27">1.1.0 (2020-08-19)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id28">1.0.1 (2020-08-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id29">1.0.0 (2020-08-11)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a><ul>

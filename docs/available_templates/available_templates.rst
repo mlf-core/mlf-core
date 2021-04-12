@@ -9,8 +9,7 @@ cookietemple currently has the following templates available:
 1. `mlflow-pytorch`_
 2. `mlflow-tensorflow`_
 3. `mlflow-xgboost`_
-4. `mlflow-xgboost_dask`_
-5. `package-prediction`_
+4. `package-prediction`_
 
 In the following every template is devoted its own section, which explains its purpose, design, included frameworks/libraries, usage and frequently asked questions.
 A set of frequently questions, which all templates share see here: :ref:`all_templates_faq` FAQ.
@@ -19,7 +18,6 @@ It is recommended to use the sidebar to navigate this documentation, since it is
 .. include:: mlflow_pytorch.rst
 .. include:: mlflow_tensorflow.rst
 .. include:: mlflow_xgboost.rst
-.. include:: mlflow_xgboost_dask.rst
 .. include:: package_prediction.rst
 
 .. _all_templates_faq:

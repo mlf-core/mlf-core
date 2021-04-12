@@ -28,3 +28,10 @@ How can you claim that your templates are GPU deterministic?
 
 We performed extensive tests on various GPU architectures and can confidently say that given our settings GPU deterministic results can be expected on the same GPU architecture.
 Hence, all mlf-core templates feature `system-intelligence <https://github.com/mlf-core/system-intelligence>`_, which queries your system for the used GPUs and their architecture.
+
+What to do if my sync secret could not be set during project creation process?
+-------------------------------------------------------------------------------
+
+You may encounter (rarely) the console info, that your projects sync secret could not be set during project creation. This is mostly caused by
+GitHubs API not being reachable for a few seconds. You can now either recreate your project or simply head to your projects repo and set a repo secret called ``CT_SYNC_TOKEN`` with its
+value being a valid personal access token for your account.

@@ -1,4 +1,3 @@
-import glob
 import hashlib
 import tempfile
 import os
@@ -104,28 +103,52 @@ class MLFCore:
         return md5sum
 
     @classmethod
-    def get_md5_sums(cls, dir, md5_sums=None):
-        """
-        Recursively go through directories and subdirectories
-        and generate tuples of (<file_path>, <md5sum>)
-        returns: list of tuples
-        """
-        if not md5_sums:
-            md5_sums = []
-        elements = glob.glob(dir + "/*")
-        for elem in elements:
-            # if file, get md5 sum
-            if os.path.isfile(elem):
+    def get_md5_sums(cls, dir, max_files=None):
+        """ Walk through directory and collect md5 sums """
+
+        input_files = []
+        for root, dirs, files in os.walk(dir, topdown=True):
+            dirs.sort()
+            files.sort()
+
+            # Get maximum number of files to hash
+            no_of_files = len(files)
+            if max_files:
+                no_of_files = max_files
+            file_count = 0
+
+            for elem in files:
+                file_count += 1
+                if file_count > no_of_files:
+                    break
+
+                elem = os.path.join(root, elem)
                 elem_md5 = cls.md5(elem)
-                md5_sums.append((elem, elem_md5))
-            # if directory, apply recursion
-            if os.path.isdir(elem):
-                md5_sums = cls.get_md5_sums(elem, md5_sums)
-            else:
-                continue
+                input_files.append(elem_md5)
+
+        input_files.sort()
+        # Create temp file, write all the md5sums in it and hash the file
+        # Gets deleted afterwards
+        _, path = tempfile.mkstemp()
+        try:
+            with open(path, 'w') as tmp:
+                tmp.writelines(input_files)
+            dir_hash = cls.md5(path)
+        finally:
+            os.remove(path)
+
+        return dir_hash
 
     @classmethod
-    def log_input_data(cls, input_data: str):
+    def log_input_data(cls, input_data: str, max_files=None):
+        """
+        Log input data by calculating a hash sum
+        :param input_data: path to input data that should be logged
+        :param max_files: maximum number of files to hash
+        """
         print('[bold blue]Hashing input data...')
-        input_hash = cls.get_md5_sums(input_data)
-        mlflow.log_param("input_hash", input_data + "-" + input_hash)
+        if os.path.isdir(input_data):
+            input_hash = cls.get_md5_sums(input_data, max_files=max_files)
+        else:
+            input_hash = cls.md5(input_data)
+        mlflow.log_param("training_data_hash", input_data + "-" + input_hash)

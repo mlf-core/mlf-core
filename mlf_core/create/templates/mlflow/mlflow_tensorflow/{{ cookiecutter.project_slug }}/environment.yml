@@ -2,8 +2,9 @@ name: {{ cookiecutter.project_slug_no_hyphen }}
 channels:
   - defaults
   - conda-forge
+  - nvidia
 dependencies:
-  - defaults::cudatoolkit=11.0.221
+  - nvidia::cudatoolkit=11.1.74
   - defaults::python=3.8.2
   - defaults::boto3==1.17.11
   - conda-forge::rich=9.10.0
@@ -13,5 +14,5 @@ dependencies:
   - pip:
     - tensorflow==2.4.1  # not yet on Conda with full GPU support
     - tensorflow_datasets==4.2.0
-    - pycuda==2019.1.2  # not on Conda
+    - pycuda==2020.1  # not on Conda
     - system-intelligence==2.0.2  # not yet on Conda

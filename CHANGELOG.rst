@@ -6,6 +6,24 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.11.0 (2021-03-30)
+-------------------
+
+**Added**
+
+**Fixed**
+
+* [MLFLOW-PYTORCH] MNIST data loading (#298)
+* Improved console output info in case the repos sync secret could not be set automatically and added it to FAQ docs
+
+**Dependencies**
+
+**Deprecated**
+
+* Removed mlflow-xgboost_dask. It was never deterministic to begin with.
+  If you are interested in using mlf-core and XGBoost with multiple GPUs please refer to the old releases.
+
+
 1.10.0 (2021-03-11)
 -------------------
 

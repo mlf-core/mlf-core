@@ -7,9 +7,6 @@ Tutorial
 Disclaimer
 -----------
 
-.. warning:: **This page is currently under development. Please check back later.**
-
-
 .. warning:: This document serves as a single page tutorial for mlf-core, the issue of deterministic machine learning and everything related.
              It is **not** supposed to be used as a reference documentation for specific pieces of information.
              Please use the remaining mlf-core or the respective tools' documentation for this purpose.

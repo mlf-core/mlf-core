@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Tutorial &mdash; mlf-core 1.11.0 documentation</title>
+  <title>Tutorial &mdash; mlf-core 1.11.1 documentation</title>
   
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.11.0
+                1.11.1
               </div>
             
           
@@ -232,10 +232,6 @@
 <h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><strong>This page is currently under development. Please check back later.</strong></p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
 <p>This document serves as a single page tutorial for mlf-core, the issue of deterministic machine learning and everything related.
 It is <strong>not</strong> supposed to be used as a reference documentation for specific pieces of information.
 Please use the remaining mlf-core or the respective tools’ documentation for this purpose.
@@ -343,8 +339,8 @@ The project creation process will now end with mlf-core lint verifying the succe
 <div class="line">You are now ready to start training deterministic machine learning models, but first let us have a look at the template’s architecture and functionality.</div>
 </div>
 <div class="figure align-default" id="id6">
-<img alt="Project on Github" src="_images/project_github.png" />
-<p class="caption"><span class="caption-text">A created project using the mlflow-pytorch template on Github</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<img alt="Create process" src="_images/mlf_core_create_tutorial.gif" />
+<p class="caption"><span class="caption-text">The project creation process with mlf-core</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="mlf-core-project-overview">
@@ -510,11 +506,31 @@ We encourage you to regularly upgrade your dependencies, but do so at your own r
 <h3>Public Docker container on Github Packages<a class="headerlink" href="#public-docker-container-on-github-packages" title="Permalink to this headline">¶</a></h3>
 <p>mlf-core by default pushes the Docker container using the <code class="docutils literal notranslate"><span class="pre">publish_docker.yml</span></code> Github Actions workflow to <a class="reference external" href="https://github.com/features/packages">Github Packages</a>.
 If you want to push your Docker container to a different registry you need to adapt the workflow and potentially update the username and add a Github secret for your password.
-By default, containers pushed to Github are private. As a result you would need to log in to pull the container.
-Hence, you have to make your Docker container public by navigating to the used Github account, selecting <code class="docutils literal notranslate"><span class="pre">Packages</span></code> and then your package.
-On the right you will find a button <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">settings</span></code>. Scroll down on the package settings page and at the bottom you will find a button <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">public</span></code>.
-Click it, authenticate and your Github container is now public!
-Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immidiately show up in the Packages tab.</p>
+By default, containers pushed to Github are private. As a result you would need to log in to pull the container.</p>
+<p>Hence, you have to make your Docker container public by navigating to the used Github account, selecting <code class="docutils literal notranslate"><span class="pre">Packages</span></code> and then your package.</p>
+<div class="figure align-default">
+<img alt="Creating a public docker image" src="_images/step_1.png" />
+</div>
+<p>As of writing this, there is a bug with the GitHub UI, that doesn’t show private images without selecting the visibility. Click visibility, and then private, and select your docker image.</p>
+<div class="figure align-default">
+<img alt="Private image bug" src="_images/step_2.png" />
+</div>
+<div class="figure align-default">
+<img alt="Click your image" src="_images/step_3.png" />
+</div>
+<p>On the right you will find a button <code class="docutils literal notranslate"><span class="pre">package</span> <span class="pre">settings</span></code>.</p>
+<div class="figure align-default">
+<img alt="Click Package Settings" src="_images/step_4.png" />
+</div>
+<p>Scroll down on the package settings page and at the bottom you will find a button <code class="docutils literal notranslate"><span class="pre">Change</span> <span class="pre">visibility</span></code>.</p>
+<div class="figure align-default">
+<img alt="Click Change visibility" src="_images/step_5.png" />
+</div>
+<p>Select Public, type in your project name, click it, authenticate and your Github container is now public!</p>
+<div class="figure align-default">
+<img alt="Click Public" src="_images/step_6.png" />
+</div>
+<p>Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immediately show up in the Packages tab.</p>
 </div>
 <div class="section" id="publish-documentation-on-github-pages-or-read-the-docs">
 <h3>Publish documentation on Github Pages or Read the Docs<a class="headerlink" href="#publish-documentation-on-github-pages-or-read-the-docs" title="Permalink to this headline">¶</a></h3>

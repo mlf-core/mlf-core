@@ -7,9 +7,6 @@ Tutorial
 Disclaimer
 -----------
 
-.. warning:: **This page is currently under development. Please check back later.**
-
-
 .. warning:: This document serves as a single page tutorial for mlf-core, the issue of deterministic machine learning and everything related.
              It is **not** supposed to be used as a reference documentation for specific pieces of information.
              Please use the remaining mlf-core or the respective tools' documentation for this purpose.
@@ -139,10 +136,10 @@ To create a mlf-core project run:
   The project creation process will now end with mlf-core lint verifying the successful creation if your project and the link to your Github repository being printed.
 | You are now ready to start training deterministic machine learning models, but first let us have a look at the template's architecture and functionality.
 
-.. figure:: images/project_github.png
-   :alt: Project on Github
+.. figure:: images/mlf_core_create_tutorial.gif
+   :alt: Create process
 
-   A created project using the mlflow-pytorch template on Github
+   The project creation process with mlf-core
 
 mlf-core project overview
 ----------------------------
@@ -324,10 +321,37 @@ Public Docker container on Github Packages
 mlf-core by default pushes the Docker container using the ``publish_docker.yml`` Github Actions workflow to `Github Packages <https://github.com/features/packages>`_.
 If you want to push your Docker container to a different registry you need to adapt the workflow and potentially update the username and add a Github secret for your password.
 By default, containers pushed to Github are private. As a result you would need to log in to pull the container.
+
+
 Hence, you have to make your Docker container public by navigating to the used Github account, selecting ``Packages`` and then your package.
-On the right you will find a button ``package settings``. Scroll down on the package settings page and at the bottom you will find a button ``make public``.
-Click it, authenticate and your Github container is now public!
-Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immidiately show up in the Packages tab.
+
+.. figure:: images/public_docker/step_1.png
+   :alt: Creating a public docker image
+
+As of writing this, there is a bug with the GitHub UI, that doesn't show private images without selecting the visibility. Click visibility, and then private, and select your docker image.
+
+.. figure:: images/public_docker/step_2.png
+   :alt: Private image bug
+
+.. figure:: images/public_docker/step_3.png
+   :alt: Click your image
+
+On the right you will find a button ``package settings``.
+
+.. figure:: images/public_docker/step_4.png
+   :alt: Click Package Settings
+
+Scroll down on the package settings page and at the bottom you will find a button ``Change visibility``.
+
+.. figure:: images/public_docker/step_5.png
+   :alt: Click Change visibility
+
+Select Public, type in your project name, click it, authenticate and your Github container is now public!
+
+.. figure:: images/public_docker/step_6.png
+   :alt: Click Public
+
+Be aware of the fact that building the Docker container usually takes 15-20 minutes and therefore your Docker container will not immediately show up in the Packages tab.
 
 Publish documentation on Github Pages or Read the Docs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -6,6 +6,20 @@ Changelog
 
 This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
+1.11.1 (2021-04-16)
+-------------------
+
+**Added**
+
+**Fixed**
+
+* XGBoost cudatoolkit channel
+
+**Dependencies**
+
+**Deprecated**
+
+
 1.11.0 (2021-03-30)
 -------------------
 

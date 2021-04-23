@@ -4,15 +4,15 @@ channels:
   - conda-forge
   - nvidia
 dependencies:
-  - nvidia::cudatoolkit=11.1.74
+  - nvidia::cudatoolkit=11.2.72
   - defaults::python=3.8.2
-  - defaults::boto3==1.17.11
-  - conda-forge::rich=9.10.0
+  - defaults::boto3==1.17.46
+  - conda-forge::rich=10.1.0
   - conda-forge::mlflow=1.13.1
-  - conda-forge::tensorboardx=2.1
+  - conda-forge::tensorboardx=2.2
   - pip
   - pip:
-    - tensorflow==2.4.1  # not yet on Conda with full GPU support
+    - tensorflow==2.5.0rc1  # not yet on Conda with full GPU support
     - tensorflow_datasets==4.2.0
-    - pycuda==2020.1  # not on Conda
+    - pycuda==2021.1  # not on Conda
     - system-intelligence==2.0.2  # not yet on Conda

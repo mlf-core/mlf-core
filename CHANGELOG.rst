@@ -13,6 +13,8 @@ This project adheres to `Semantic Versioning <https://semver.org/>`_.
 
 **Fixed**
 
+* libcudnn8 was not found for the Tensorflow container. Hence, we separated the Dockerfiles and added it to the container.
+
 **Dependencies**
 
 **Deprecated**

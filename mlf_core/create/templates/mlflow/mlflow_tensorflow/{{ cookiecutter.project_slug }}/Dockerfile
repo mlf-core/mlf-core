@@ -1,9 +1,5 @@
 FROM mlfcore/base:1.2.0
 
-# Tensorflow has issues finding libcudnn8 from the base NVIDIA Container so we reinstall it
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/libcudnn8_8.1.1.33-1+cuda11.2_amd64.deb
-RUN apt install ./libcudnn8_8.1.1.33-1+cuda11.2_amd64.deb
-
 # Install the conda environment
 COPY environment.yml .
 RUN conda env create -f environment.yml && conda clean -a
@@ -17,3 +13,7 @@ RUN conda env export --name {{ cookiecutter.project_slug }} > {{ cookiecutter.pr
 
 # Currently required, since mlflow writes every file as root!
 USER root
+
+# Tensorflow has issues finding libcudnn8 from the base NVIDIA Container so we reinstall it
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/libcudnn8_8.1.1.33-1+cuda11.2_amd64.deb
+RUN apt install ./libcudnn8_8.1.1.33-1+cuda11.2_amd64.deb

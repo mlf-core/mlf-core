@@ -7,10 +7,11 @@ from subprocess import Popen
 from urllib.error import HTTPError
 from urllib.error import URLError
 
-import mlf_core
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from pkg_resources import parse_version
 from rich import print
+
+import mlf_core
+from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 
 class UpgradeCommand:

@@ -19,6 +19,9 @@ from typing import Tuple
 import git
 from github import Github
 from github import GithubException
+from packaging import version
+from rich import print
+
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.common.version import load_mlf_core_template_version
 from mlf_core.common.version import load_project_template_version_and_handle
@@ -28,8 +31,6 @@ from mlf_core.create.github_support import create_sync_secret
 from mlf_core.create.github_support import decrypt_pat
 from mlf_core.create.github_support import load_github_username
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
-from packaging import version
-from rich import print
 
 log = logging.getLogger(__name__)
 

@@ -2,10 +2,11 @@ import os
 from typing import List
 
 import requests
+from pkg_resources import parse_version
+
 from mlf_core.lint.template_linter import files_exist_linting
 from mlf_core.lint.template_linter import GetLintingFunctionsMeta
 from mlf_core.lint.template_linter import TemplateLinter
-from pkg_resources import parse_version
 
 
 class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):

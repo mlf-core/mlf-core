@@ -9,9 +9,12 @@ from dataclasses import asdict
 from distutils.dir_util import copy_tree
 from pathlib import Path
 
-import mlf_core
 import requests
 from cookiecutter.main import cookiecutter
+from rich import print
+from ruamel.yaml import YAML
+
+import mlf_core
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
@@ -22,8 +25,6 @@ from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.lint.lint import lint_project
 from mlf_core.util.dir_util import delete_dir_tree
 from mlf_core.util.docs_util import fix_short_title_underline
-from rich import print
-from ruamel.yaml import YAML
 
 log = logging.getLogger(__name__)
 

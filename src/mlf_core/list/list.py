@@ -1,13 +1,14 @@
 import logging
 import os
 
-from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dict_util import is_nested_dictionary
 from rich import print
 from rich.box import HEAVY_HEAD
 from rich.console import Console
 from rich.style import Style
 from rich.table import Table
+
+from mlf_core.common.load_yaml import load_yaml_file
+from mlf_core.util.dict_util import is_nested_dictionary
 
 log = logging.getLogger(__name__)
 

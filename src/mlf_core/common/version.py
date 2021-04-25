@@ -2,8 +2,9 @@ import sys
 from pathlib import Path
 from typing import Tuple
 
-from mlf_core.common.load_yaml import load_yaml_file
 from rich import print
+
+from mlf_core.common.load_yaml import load_yaml_file
 
 
 def load_mlf_core_template_version(handle: str, yaml_path: str):

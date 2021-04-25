@@ -4,11 +4,10 @@ from pathlib import Path
 
 from rich import print
 from ruamel.yaml import YAML
-
-from mlf_core.lint.domains.mlflow import MlflowPytorchLint
-from mlf_core.lint.domains.mlflow import MlflowTensorflowLint
-from mlf_core.lint.domains.mlflow import MlflowXGBoostLint
-from mlf_core.lint.domains.package import PackagePredictionLint
+from src.mlf_core.lint.domains.mlflow import MlflowPytorchLint
+from src.mlf_core.lint.domains.mlflow import MlflowTensorflowLint
+from src.mlf_core.lint.domains.mlflow import MlflowXGBoostLint
+from src.mlf_core.lint.domains.package import PackagePredictionLint
 
 log = logging.getLogger(__name__)
 

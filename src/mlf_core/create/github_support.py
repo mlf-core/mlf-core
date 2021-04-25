@@ -19,11 +19,10 @@ from nacl import encoding
 from nacl import public
 from rich import print
 from ruamel.yaml import YAML
-
-from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.config.config import ConfigCommand
-from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from src.mlf_core.common.load_yaml import load_yaml_file
+from src.mlf_core.config.config import ConfigCommand
+from src.mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
+from src.mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 log = logging.getLogger(__name__)
 

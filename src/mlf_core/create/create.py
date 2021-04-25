@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from mlf_core.create.domains.mlflow_creator import MlflowCreator
-from mlf_core.create.domains.package_creator import PackageCreator
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from src.mlf_core.create.domains.mlflow_creator import MlflowCreator
+from src.mlf_core.create.domains.package_creator import PackageCreator
+from src.mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 
 def choose_domain(path: Path, domain: str or None, dot_mlf_core: dict = None):  # type: ignore

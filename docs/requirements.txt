@@ -1,5 +1,5 @@
-Sphinx==3.5.3
-sphinx_rtd_theme==0.5.2
-sphinx-automodapi==0.13
+Sphinx
+sphinx_rtd_theme
+sphinx-automodapi
 sphinx_click
 click

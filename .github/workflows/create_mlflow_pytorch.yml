@@ -15,6 +15,11 @@ jobs:
               with:
                   python-version: 3.9
 
+            - name: Reclaim space
+              run: |
+                  sudo rm -rf /usr/share/dotnet
+                  sudo rm -rf /opt/ghc
+
             - name: Install Poetry
               run: |
                   pip install poetry

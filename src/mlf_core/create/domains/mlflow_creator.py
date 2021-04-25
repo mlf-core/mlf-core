@@ -7,6 +7,7 @@ from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStru
 from mlf_core.create.github_support import prompt_github_repo
 from mlf_core.create.template_creator import TemplateCreator
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from typing import Optional
 
 
 @dataclass
@@ -37,7 +38,7 @@ class MlflowCreator(TemplateCreator):
             "mlflow-xgboost", self.AVAILABLE_TEMPLATES_PATH
         )
 
-    def create_template(self, path: Path, dot_mlf_core: dict or None):
+    def create_template(self, path: Path, dot_mlf_core):
         """
         Handles the mlflow domain. Prompts the user for the language, general and domain specific options.
         """
@@ -60,7 +61,7 @@ class MlflowCreator(TemplateCreator):
             "tensorflow": self.mlflow_tensorflow_options,
             "xgboost": self.mlflow_xgboost_options,
         }
-        switcher.get(self.cli_struct.language)(dot_mlf_core)
+        switcher.get(self.cli_struct.language)(dot_mlf_core)  # type: ignore
 
         (
             self.cli_struct.is_github_repo,
@@ -81,23 +82,23 @@ class MlflowCreator(TemplateCreator):
             "xgboost": self.MLFLOW_XGBOOST_TEMPLATE_VERSION,
         }
         self.cli_struct.template_version, self.cli_struct.template_handle = (
-            switcher_version.get(self.cli_struct.language),
-            f"mlflow-{self.cli_struct.language.lower()}",
+            switcher_version.get(self.cli_struct.language),  # type: ignore
+            f"mlflow-{self.cli_struct.language.lower()}",  # type: ignore
         )
 
         # perform general operations like creating a GitHub repository and general linting
         super().process_common_operations(
-            path=Path(path).resolve(), domain="mlflow", language=self.cli_struct.language, dot_mlf_core=dot_mlf_core
+            path=Path(path).resolve(), domain="mlflow", language=self.cli_struct.language, dot_mlf_core=dot_mlf_core  # type: ignore
         )
 
-    def mlflow_pytorch_options(self, dot_mlf_core: dict or None):
+    def mlflow_pytorch_options(self, dot_mlf_core: Optional[dict]):
         """ Prompts for mlflow-pytorch specific options and saves them into the MlflowTemplateStruct """
         pass
 
-    def mlflow_tensorflow_options(self, dot_mlf_core: dict or None):
+    def mlflow_tensorflow_options(self, dot_mlf_core: Optional[dict]):
         """ Prompts for mlflow-tensorflow specific options and saves them into the MlflowTemplateStruct """
         pass
 
-    def mlflow_xgboost_options(self, dot_mlf_core: dict or None):
+    def mlflow_xgboost_options(self, dot_mlf_core: Optional[dict]):
         """ Prompts for mlflow-xgboost specific options and saves them into the MlflowTemplateStruct """
         pass

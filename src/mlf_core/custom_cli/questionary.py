@@ -54,13 +54,13 @@ def mlf_core_questionary_or_dot_mlf_core(
             f".mlf_core.yml file was passed when creating a project, but key {to_get_property}"
             f" does not exist in the dot_mlf_core dictionary! Assigning default {default} to {to_get_property}."
         )
-        return default
+        return default  # type: ignore
 
     # There is no .mlf_core.yml file aka dot_mlf_core dict passed -> ask for the properties
     answer = ""
     try:
         if function == "select":
-            if default not in choices:
+            if default not in choices:  # type: ignore
                 log.debug(f"Default value {default} is not in the set of choices!")
             answer = getattr(questionary, function)(f"{question}: ", choices=choices, style=mlf_core_style).unsafe_ask()
         elif function == "password":
@@ -85,6 +85,6 @@ def mlf_core_questionary_or_dot_mlf_core(
         print("[bold red] Aborted!")
         sys.exit(1)
     if answer is None or answer == "":
-        answer = default
+        answer = default  # type: ignore
 
     return answer

@@ -17,6 +17,7 @@ from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from mlf_core.lint.template_linter import TemplateLinter
 from packaging import version
 from rich import print
+from typing import Tuple
 
 log = logging.getLogger(__name__)
 
@@ -105,7 +106,7 @@ class VersionBumper:
             print("[bold blue]Committing changes to local git repository.")
             repo.index.commit(f"Bump version from {self.CURRENT_VERSION} to {new_version}")
 
-    def replace(self, file_path: str, subst: str, section: str) -> (bool, str):
+    def replace(self, file_path: str, subst: str, section: str) -> Tuple[bool, str]:
         """
         Replace a version with the new version unless the line is explicitly excluded (marked with
         <<MLF-CORE_NO_BUMP>>).

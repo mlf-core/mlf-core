@@ -1,17 +1,19 @@
-import sys
 import logging
+import sys
 from pathlib import Path
-from ruamel.yaml import YAML
-from rich import print
 
-from mlf_core.lint.domains.mlflow import MlflowPytorchLint, MlflowTensorflowLint, MlflowXGBoostLint
+from mlf_core.lint.domains.mlflow import MlflowPytorchLint
+from mlf_core.lint.domains.mlflow import MlflowTensorflowLint
+from mlf_core.lint.domains.mlflow import MlflowXGBoostLint
 from mlf_core.lint.domains.package import PackagePredictionLint
 from mlf_core.lint.template_linter import TemplateLinter
+from rich import print
+from ruamel.yaml import YAML
 
 log = logging.getLogger(__name__)
 
 
-def lint_project(project_dir: str) -> TemplateLinter:
+def lint_project(project_dir: str):
     """
     Verifies the integrity of a project to best coding and practices.
     Runs a set of general linting functions, which all templates share and afterwards runs template specific linting functions.
@@ -29,7 +31,7 @@ def lint_project(project_dir: str) -> TemplateLinter:
     }
 
     try:
-        lint_obj = switcher.get(template_handle)(project_dir)
+        lint_obj = switcher.get(template_handle)(project_dir)  # type: ignore
     except TypeError:
         print(f"[bold red]Unable to find linter for handle {template_handle}! Aborting...")
         sys.exit(1)
@@ -45,7 +47,7 @@ def lint_project(project_dir: str) -> TemplateLinter:
         log.debug(f"Running linting of {template_handle}")
         print(f"[bold blue]Running {template_handle} linting")
 
-        lint_obj.lint()
+        lint_obj.lint()  # type: ignore
     except AssertionError as e:
         print(f"[bold red]Critical error: {e}")
         print("[bold red] Stopping tests...")

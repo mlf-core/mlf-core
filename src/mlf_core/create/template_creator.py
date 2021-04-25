@@ -1,27 +1,29 @@
-import os
-import sys
 import logging
-from collections import OrderedDict
-import shutil
+import os
 import re
+import shutil
+import sys
 import tempfile
-import requests
+from collections import OrderedDict
+from dataclasses import asdict
 from distutils.dir_util import copy_tree
 from pathlib import Path
-from dataclasses import asdict
-from ruamel.yaml import YAML
-from cookiecutter.main import cookiecutter
 
 import mlf_core
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
-from mlf_core.util.dir_util import delete_dir_tree
-from mlf_core.create.github_support import create_push_github_repository, load_github_username, is_git_repo
-from mlf_core.lint.lint import lint_project
-from mlf_core.util.docs_util import fix_short_title_underline
-from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
-from mlf_core.config.config import ConfigCommand
+import requests
+from cookiecutter.main import cookiecutter
 from mlf_core.common.load_yaml import load_yaml_file
+from mlf_core.config.config import ConfigCommand
+from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
+from mlf_core.create.github_support import create_push_github_repository
+from mlf_core.create.github_support import is_git_repo
+from mlf_core.create.github_support import load_github_username
+from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.lint.lint import lint_project
+from mlf_core.util.dir_util import delete_dir_tree
+from mlf_core.util.docs_util import fix_short_title_underline
 from rich import print
+from ruamel.yaml import YAML
 
 log = logging.getLogger(__name__)
 
@@ -236,7 +238,7 @@ class TemplateCreator:
                 self.creator_ctx.full_name = settings["full_name"]
                 self.creator_ctx.email = settings["email"]
 
-        self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(
+        self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="text",
             question="Project name",
             default="Exploding Springfield",
@@ -254,7 +256,7 @@ class TemplateCreator:
                 "Otherwise you will not be able to host your docs at readthedocs.io!",
                 default="Yes",
             ):
-                self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(
+                self.creator_ctx.project_name = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
                     function="text", question="Project name", default="Exploding Springfield"
                 ).lower()
             # break if the project should be named anyways
@@ -262,7 +264,7 @@ class TemplateCreator:
                 break
         self.creator_ctx.project_slug = self.creator_ctx.project_name.replace(" ", "_")
         self.creator_ctx.project_slug_no_hyphen = self.creator_ctx.project_slug.replace("-", "_")
-        self.creator_ctx.project_short_description = mlf_core_questionary_or_dot_mlf_core(
+        self.creator_ctx.project_short_description = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="text",
             question="Short description of your project",
             default=f"{self.creator_ctx.project_name}" f". A mlf-core based .",
@@ -278,7 +280,7 @@ class TemplateCreator:
         )
 
         # make sure that the version has the right format
-        while not re.match(r"(?<!.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!.)", poss_vers) and not dot_mlf_core:
+        while not re.match(r"(?<!.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!.)", poss_vers) and not dot_mlf_core:  # type: ignore
             print(
                 "[bold red]The version number entered does not match semantic versioning.\n"
                 + "Please enter the version in the format \[number].\[number].\[number](-SNAPSHOT)!"
@@ -286,9 +288,9 @@ class TemplateCreator:
             poss_vers = mlf_core_questionary_or_dot_mlf_core(
                 function="text", question="Initial version of your project", default="0.1.0-SNAPSHOT"
             )
-        self.creator_ctx.version = poss_vers
+        self.creator_ctx.version = poss_vers  # type: ignore
 
-        self.creator_ctx.license = mlf_core_questionary_or_dot_mlf_core(
+        self.creator_ctx.license = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="select",
             question="License",
             choices=[
@@ -377,6 +379,8 @@ class TemplateCreator:
                 "[bold red]Cannot check whether name already taken on readthedocs.io because its unreachable at the moment!"
             )
             return False
+
+        return False
 
     def directory_exists_warning(self) -> None:
         """

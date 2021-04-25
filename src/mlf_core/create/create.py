@@ -5,7 +5,7 @@ from mlf_core.create.domains.package_creator import PackageCreator
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 
-def choose_domain(path: Path, domain: str or None, dot_mlf_core: dict = None):
+def choose_domain(path: Path, domain: str or None, dot_mlf_core: dict = None):  # type: ignore
     """
     Prompts the user for the template domain.
     Creates the .mlf_core file.
@@ -27,5 +27,5 @@ def choose_domain(path: Path, domain: str or None, dot_mlf_core: dict = None):
 
     switcher = {"mlflow": MlflowCreator, "package": PackageCreator}
 
-    creator_obj = switcher.get(domain.lower())()
-    creator_obj.create_template(path, dot_mlf_core)
+    creator_obj = switcher.get(domain.lower())()  # type: ignore
+    creator_obj.create_template(path, dot_mlf_core)  # type: ignore

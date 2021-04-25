@@ -1,21 +1,22 @@
+import configparser
 import io
+import logging
 import os
 import re
-import logging
-import configparser
-import requests
-import rich.progress
-import rich.markdown
-import rich.panel
-import rich.console
-from pkg_resources import parse_version
-from rich import print
-from packaging import version
 from itertools import groupby
 
+import requests
+import rich.console
+import rich.markdown
+import rich.panel
+import rich.progress
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dir_util import pf, find_filepath_in_dir
+from mlf_core.util.dir_util import find_filepath_in_dir
+from mlf_core.util.dir_util import pf
 from mlf_core.util.rich import console
+from packaging import version
+from pkg_resources import parse_version
+from rich import print
 
 log = logging.getLogger(__name__)
 
@@ -272,7 +273,7 @@ class TemplateLinter(object):
                 ) or "<<MLF-CORE_FORCE_BUMP>>" in line:
                     line_version = re.search(r"(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)", line)
                     if line_version:
-                        line_version = line_version.group(0)
+                        line_version = line_version.group(0)  # type: ignore
                         # No match between the current version number and version in source code file
                         if line_version != version:
                             corrected_line = re.sub(r"(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)", version, line)
@@ -616,7 +617,7 @@ class ChangelogLinter:
         self.line_counter = 0
         self.header_offset = 0
 
-    def lint_header(self) -> (int, bool, bool):
+    def lint_header(self):
         """
         Lint the header which consists of an optional label, the headline CHANGELOG and an optional small description
         """

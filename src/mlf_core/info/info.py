@@ -1,15 +1,17 @@
-import os
 import logging
+import os
 import sys
-from rich import print
-from rich.style import Style
-from rich.console import Console
-from rich.table import Table
-from rich.box import HEAVY_HEAD
+
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dict_util import is_nested_dictionary
 from mlf_core.common.suggest_similar_commands import load_available_handles
+from mlf_core.util.dict_util import is_nested_dictionary
+from rich import print
+from rich.box import HEAVY_HEAD
+from rich.console import Console
+from rich.style import Style
+from rich.table import Table
+from typing import List
 
 log = logging.getLogger(__name__)
 
@@ -33,17 +35,17 @@ class TemplateInfo:
         :param handle: domain/language/template handle (examples: cli or cli-python)
         """
         # list of all templates that should be printed according to the passed handle
-        templates_to_print = []
+        templates_to_print: List = []
         available_templates = load_yaml_file(f"{self.TEMPLATES_PATH}/available_templates.yml")
         specifiers = handle.split("-")
         domain = specifiers[0]
-        global template_info
+        global template_info  # TODO fix this
 
         # only domain OR language specified
         if len(specifiers) == 1:
             log.debug("Only domain or language was specified.")
             try:
-                template_info = available_templates[domain]
+                template_info = available_templates[domain]  # type: ignore
             except KeyError:
                 self.handle_domain_or_language_only(handle, available_templates)
         # domain, subdomain, language
@@ -52,7 +54,7 @@ class TemplateInfo:
             try:
                 sub_domain = specifiers[1]
                 language = specifiers[2]
-                template_info = available_templates[domain][sub_domain][language]
+                template_info = available_templates[domain][sub_domain][language]  # type: ignore
             except KeyError:
                 self.handle_non_existing_command(handle, True)
         # domain, language OR domain, subdomain
@@ -60,12 +62,12 @@ class TemplateInfo:
             log.debug("A domain and language OR domain and a subdomain was specified.")
             try:
                 second_specifier = specifiers[1]
-                template_info = available_templates[domain][second_specifier]
+                template_info = available_templates[domain][second_specifier]  # type: ignore
             except KeyError:
                 self.handle_non_existing_command(handle, True)
 
         # Add all templates under template_info to list and output them
-        self.flatten_nested_dict(template_info, templates_to_print)
+        self.flatten_nested_dict(template_info, templates_to_print)  # type: ignore
         self.output_table(templates_to_print, handle)
 
     def handle_domain_or_language_only(self, handle: str, available_templates: dict) -> None:
@@ -81,7 +83,7 @@ class TemplateInfo:
             self.print_console_output(handle)
 
         # input may be a language so try this
-        templates_flatted = []
+        templates_flatted: List = []
         self.flatten_nested_dict(available_templates, templates_flatted)
         # load all available languages
         available_languages = self.load_available_languages(templates_flatted)

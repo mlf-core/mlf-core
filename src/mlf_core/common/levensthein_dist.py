@@ -1,5 +1,6 @@
 from mlf_core.common.suggest_similar_commands import SIMILARITY_SUGGEST_FACTOR
 from mlf_core.common.suggest_similar_commands import SIMILARITY_USE_FACTOR
+from typing import Tuple
 
 
 def levensthein_dist(input_command: str, candidate: str) -> int:
@@ -36,7 +37,7 @@ def levensthein_dist(input_command: str, candidate: str) -> int:
     return dp_table[len(candidate)][len(input_command)]
 
 
-def most_similar_command(command: str, command_list: set) -> (list, str):
+def most_similar_command(command: str, command_list: set) -> Tuple[list, str]:
     """
     Determine whether its possible to suggest a similar command.
     The similarity is determined by the levensthein distance and a factor (currently 1/3)

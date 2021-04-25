@@ -456,7 +456,7 @@ class TemplateSync:
             function="password", question="Please enter your updated sync token value"
         )
         print(f"[bold blue]\nUpdating sync secret for project {project_name}.")
-        create_sync_secret(gh_username, project_name, updated_sync_token)
+        create_sync_secret(gh_username, project_name, updated_sync_token)  # type: ignore
         print(f"[bold blue]\nSuccessfully updated sync secret for project {project_name}.")
 
     @staticmethod

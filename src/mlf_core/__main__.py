@@ -109,7 +109,7 @@ def create(path: Path, domain: str) -> None:
 
 
 @mlf_core_cli.command(short_help="Lint your existing mlf-core project.", cls=CustomHelpSubcommand)
-@click.argument(
+@click.argument(  # type: ignore
     "project_dir",
     type=click.Path(),
     default=Path(str(Path.cwd())),
@@ -144,7 +144,7 @@ def list() -> None:
 @mlf_core_cli.command(
     short_help="Get detailed info on a mlf-core template domain or a single template.", cls=CustomHelpSubcommand
 )
-@click.argument("handle", type=str, required=False, helpmsg="Language/domain of templates of interest.", cls=CustomArg)
+@click.argument("handle", type=str, required=False, helpmsg="Language/domain of templates of interest.", cls=CustomArg)  # type: ignore
 @click.pass_context
 def info(ctx, handle: str) -> None:
     """
@@ -162,7 +162,7 @@ def info(ctx, handle: str) -> None:
 
 
 @mlf_core_cli.command(short_help="Sync your project with the latest template release.", cls=CustomHelpSubcommand)
-@click.argument(
+@click.argument(  # type: ignore
     "project_dir",
     type=str,
     default=Path(f"{Path.cwd()}"),
@@ -172,14 +172,14 @@ def info(ctx, handle: str) -> None:
 @click.option(
     "--set-token", "-st", is_flag=True, help="Set sync token to a new personal access token of the current repo owner."
 )
-@click.argument(
+@click.argument(  # type: ignore
     "pat",
     type=str,
     required=False,
     helpmsg="Personal access token. Not needed for manual, local syncing!",
     cls=CustomArg,
 )
-@click.argument(
+@click.argument(  # type: ignore
     "username",
     type=str,
     required=False,
@@ -277,10 +277,10 @@ def sync(project_dir, set_token, pat, username, check_update) -> None:
 @mlf_core_cli.command(
     "bump-version", short_help="Bump the version of an existing mlf-core project.", cls=CustomHelpSubcommand
 )
-@click.argument(
+@click.argument(  # type: ignore
     "new_version", type=str, required=False, helpmsg="New project version in a valid format.", cls=CustomArg
 )
-@click.argument(
+@click.argument(  # type: ignore
     "project-dir",
     type=click.Path(),
     default=Path(f"{Path.cwd()}"),
@@ -345,7 +345,7 @@ def bump_version(ctx, new_version, project_dir, downgrade) -> None:
 
 @mlf_core_cli.command(short_help="Configure your general settings and github credentials.", cls=CustomHelpSubcommand)
 @click.option("--view", "-v", is_flag=True, help="View the current mlf-core configuration.")
-@click.argument(
+@click.argument(  # type: ignore
     "section", type=str, required=False, helpmsg="Section to configure (all, general or pat)", cls=CustomArg
 )
 @click.pass_context
@@ -380,7 +380,7 @@ def config(ctx, view: bool, section: str) -> None:
 
 
 @mlf_core_cli.command(short_help="Fix artifact location path for local all mlruns.", cls=CustomHelpSubcommand)
-@click.argument(
+@click.argument(  # type: ignore
     "path",
     type=str,
     default=os.getcwd(),
@@ -423,4 +423,4 @@ def upgrade() -> None:
 
 if __name__ == "__main__":
     traceback.install()
-    main(prog_name="mlf-core")  # pragma: no cover
+    main(prog_name="mlf-core")  # type: ignore

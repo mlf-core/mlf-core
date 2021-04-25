@@ -3,9 +3,10 @@ from pathlib import Path
 
 from mlf_core.common.load_yaml import load_yaml_file
 from rich import print
+from typing import Tuple
 
 
-def load_mlf_core_template_version(handle: str, yaml_path: str) -> str:
+def load_mlf_core_template_version(handle: str, yaml_path: str):
     """
     Load the version of the template specified by the handler from the given yaml file path.
 
@@ -21,7 +22,7 @@ def load_mlf_core_template_version(handle: str, yaml_path: str) -> str:
         return available_templates[parts[0]][parts[1]][parts[2]]["version"]
 
 
-def load_project_template_version_and_handle(project_dir: Path) -> (str, str):
+def load_project_template_version_and_handle(project_dir: Path) -> Tuple[str, str]:
     """
     Load the template version when the user synced its project with mlf-core the last time.
     If no sync has been done so far, its the version of the mlf-core template the user created the project initially with.
@@ -30,11 +31,11 @@ def load_project_template_version_and_handle(project_dir: Path) -> (str, str):
     :param project_dir: Top level directory of the users project.
     :return: The version number of the mlf-core template when the user created the project and the projects template handle.
     """
-    project_dir = str(project_dir)
+    project_dir_str = str(project_dir)
     try:
-        ct_meta = load_yaml_file(f"{project_dir}/.mlf_core.yml")
+        ct_meta = load_yaml_file(f"{project_dir_str}/.mlf_core.yml")
         # split the template version at first space to omit the mlf-core bump-version tag and return it and the the handle
         return ct_meta["template_version"].split(" ", 1)[0], ct_meta["template_handle"]
     except FileNotFoundError:
-        print(f"[bold red]No .mlf_core.yml found at {project_dir}. Is this a mlf-core project?")
+        print(f"[bold red]No .mlf_core.yml found at {project_dir_str}. Is this a mlf-core project?")
         sys.exit(1)

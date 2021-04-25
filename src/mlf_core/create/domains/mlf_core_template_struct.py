@@ -7,7 +7,7 @@ class MlfcoreTemplateStruct:
     First section declares the variables that all template have in common
     """
 
-    cookietemple_version: str = ""  # Version of mlf-core, which was used for creating the project
+    mlf_core_version: str = ""  # Version of mlf-core, which was used for creating the project
     domain: str = ""  # Domain of the template
     language: str = ""  # Primary language
     project_slug: str = ""  # Project name mlf-core uses for almost all further processing

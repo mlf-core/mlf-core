@@ -30,7 +30,7 @@ class PackageCreator(TemplateCreator):
             "package-prediction", self.AVAILABLE_TEMPLATES_PATH
         )
 
-    def create_template(self, path: Path, dot_mlf_core: dict or None):
+    def create_template(self, path: Path, dot_mlf_core):
         """
         Handles the package domain. Prompts the user for the language, general and domain specific options.
         """
@@ -51,7 +51,7 @@ class PackageCreator(TemplateCreator):
         switcher = {
             "prediction": self.package_prediction_options,
         }
-        switcher.get(self.package_struct.language)(dot_mlf_core)
+        switcher.get(self.package_struct.language)(dot_mlf_core)  # type: ignore
 
         (
             self.package_struct.is_github_repo,
@@ -70,19 +70,19 @@ class PackageCreator(TemplateCreator):
             "package": self.PACKAGE_PREDICTION_TEMPLATE_VERSION,
         }
         self.package_struct.template_version, self.package_struct.template_handle = (
-            switcher_version.get(self.package_struct.language),
-            f"package-{self.package_struct.language.lower()}",
+            switcher_version.get(self.package_struct.language),  # type: ignore
+            f"package-{self.package_struct.language.lower()}",  # type: ignore
         )
 
         # perform general operations like creating a GitHub repository and general linting
         super().process_common_operations(
             path=Path(path).resolve(),
             domain="package",
-            language=self.package_struct.language,
+            language=self.package_struct.language,  # type: ignore
             dot_mlf_core=dot_mlf_core,
         )
 
-    def package_prediction_options(self, dot_mlf_core: dict or None):
+    def package_prediction_options(self, dot_mlf_core):
         """ Prompts for package-prediction specific options and saves them into the PackageTemplateStruct """
         self.package_struct.framework = mlf_core_questionary_or_dot_mlf_core(
             function="select",

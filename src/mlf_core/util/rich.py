@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 from rich.console import Console
 
 

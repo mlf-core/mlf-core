@@ -2,6 +2,7 @@ import os
 
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dict_util import is_nested_dictionary
+from typing import Set
 
 AVAILABLE_TEMPLATES_PATH = f"{os.path.dirname(__file__)}/../create/templates/available_templates.yml"
 
@@ -20,7 +21,7 @@ def load_available_handles() -> set:
     :return: A set of all available handles
     """
     available_templates = load_yaml_file(f"{AVAILABLE_TEMPLATES_PATH}")
-    unsplit_handles = set()
+    unsplit_handles: Set = set()
     all_handles = set()
     nested_dict_to_handle_set(available_templates, unsplit_handles)
     all_handles.update(unsplit_handles)

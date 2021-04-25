@@ -1,14 +1,15 @@
 import json
-import urllib
 import sys
-
-from pkg_resources import parse_version
+import urllib
+from subprocess import check_call
+from subprocess import PIPE
+from subprocess import Popen
+from urllib.error import HTTPError
+from urllib.error import URLError
 
 import mlf_core
-
-from urllib.error import HTTPError, URLError
-from subprocess import Popen, PIPE, check_call
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from pkg_resources import parse_version
 from rich import print
 
 
@@ -69,6 +70,8 @@ class UpgradeCommand:
                 f"[bold red]Installed version {latest_local_version} of mlf-core is outdated. Newest version is {latest_pypi_version}!"
             )
             return False
+
+        return False
 
     @classmethod
     def upgrade_mlf_core(cls) -> None:

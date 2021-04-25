@@ -23,11 +23,12 @@ from nacl import encoding
 from nacl import public
 from rich import print
 from ruamel.yaml import YAML
+from typing import Tuple
 
 log = logging.getLogger(__name__)
 
 
-def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplateStruct, tmp_repo_path: str) -> None:
+def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplateStruct, tmp_repo_path: str):
     """
     Creates a Github repository for the created template and pushes the template to it.
     Prompts the user for the required specifications.
@@ -170,7 +171,7 @@ def create_push_github_repository(project_path: str, creator_ctx: MlfcoreTemplat
         handle_failed_github_repo_creation(e)
 
 
-def handle_pat_authentification() -> str:
+def handle_pat_authentification():
     """
     Try to read the encrypted Personal Access Token for GitHub.
     If this fails (maybe there was no generated key before) notify user to config its credentials for mlf-core.
@@ -215,7 +216,7 @@ def handle_pat_authentification() -> str:
         print("[bold red]Cannot find a mlf-core config file! Did you delete it?")
 
 
-def prompt_github_repo(dot_mlf_core: OrderedDict or None) -> (bool, bool, bool, str):
+def prompt_github_repo(dot_mlf_core) -> Tuple[bool, bool, bool, str]:
     """
     Ask user for all settings needed in order to create and push automatically to GitHub repo.
 
@@ -249,17 +250,17 @@ def prompt_github_repo(dot_mlf_core: OrderedDict or None) -> (bool, bool, bool, 
         default="Yes",
     ):
         create_git_repo = True
-        is_github_org = mlf_core_questionary_or_dot_mlf_core(
+        is_github_org = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="confirm", question="Do you want to create an organization repository?", default="No"
         )
         github_org = (
-            mlf_core_questionary_or_dot_mlf_core(
+            mlf_core_questionary_or_dot_mlf_core(  # type: ignore
                 function="text", question="Please enter the name of the Github organization", default="mlf-core"
             )
             if is_github_org
             else ""
         )
-        private = mlf_core_questionary_or_dot_mlf_core(
+        private = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="confirm", question="Do you want your repository to be private?", default="No"
         )
 
@@ -372,7 +373,7 @@ def load_github_username() -> str:
     return load_yaml_file(ConfigCommand.CONF_FILE_PATH)["github_username"]
 
 
-def handle_failed_github_repo_creation(e: ConnectionError or GithubException) -> None:
+def handle_failed_github_repo_creation(e) -> None:
     """
     Called, when the automatic GitHub repo creation process failed during the create process. As this may have various issue sources,
     try to provide the user a detailed error message for the individual exception and inform them about what they should/can do next.
@@ -392,7 +393,7 @@ def handle_failed_github_repo_creation(e: ConnectionError or GithubException) ->
         )
 
 
-def format_github_exception(data: dict) -> None:
+def format_github_exception(data) -> None:
     """
     Format the github exception thrown by PyGitHub in a nice way and output it.
 
@@ -404,7 +405,7 @@ def format_github_exception(data: dict) -> None:
         else:
             print(f"[bold red]{section.upper()}: ")
             messages = [
-                val if not isinstance(val, dict) and not isinstance(val, set) else github_exception_dict_repr(val)
+                val if not isinstance(val, dict) and not isinstance(val, set) else github_exception_dict_repr(val)  # type: ignore
                 for val in description
             ]
             print("[bold red]\n".join(msg for msg in messages))

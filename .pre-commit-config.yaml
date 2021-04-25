@@ -7,6 +7,7 @@ repos:
             language: system
             types: [python]
             require_serial: true
+            exclude: templates
           - id: check-added-large-files
             name: Check for added large files
             entry: check-added-large-files
@@ -21,6 +22,7 @@ repos:
             entry: check-yaml
             language: system
             types: [yaml]
+            exclude: templates
           - id: end-of-file-fixer
             name: Fix End of Files
             entry: end-of-file-fixer
@@ -33,12 +35,14 @@ repos:
             language: system
             types: [python]
             require_serial: true
+            exclude: templates
           - id: reorder-python-imports
             name: Reorder python imports
             entry: reorder-python-imports
             language: system
             types: [python]
             args: [--application-directories=src]
+            exclude: templates
           - id: trailing-whitespace
             name: Trim Trailing Whitespace
             entry: trailing-whitespace-fixer
@@ -49,3 +53,4 @@ repos:
       rev: v2.1.2
       hooks:
           - id: prettier
+            exclude: templates

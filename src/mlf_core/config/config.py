@@ -60,7 +60,7 @@ class ConfigCommand:
             question="Personal or work email",
             default="homer.simpson@example.com" if not already_configured else settings["email"],
         )
-        github_username = mlf_core_questionary_or_dot_mlf_core(
+        github_username = mlf_core_questionary_or_dot_mlf_core(  # type: ignore
             function="text",
             question="Github username",
             default="HomerGithub" if not already_configured else settings["github_username"],
@@ -123,7 +123,7 @@ class ConfigCommand:
             access_token = mlf_core_questionary_or_dot_mlf_core(
                 function="password", question="Please enter your Github Access token"
             )
-            access_token_b = access_token.encode("utf-8")
+            access_token_b = access_token.encode("utf-8")  # type: ignore
 
             # ask for confirmation since this action will delete the PAT irrevocably if the user has not saved it anywhere else
             if not mlf_core_questionary_or_dot_mlf_core(

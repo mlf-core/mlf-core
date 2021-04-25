@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Optional
 
 
 def delete_dir_tree(directory: Path) -> None:
@@ -30,7 +31,7 @@ def pf(calling_class, file_path: str) -> str:
     return os.path.join(calling_class.path, file_path)
 
 
-def find_filepath_in_dir(file_name: str, path: str, default: str = None) -> str:
+def find_filepath_in_dir(file_name: str, path: str, default: str = None) -> Optional[str]:
     """
     Looks for a filepath in a directory and returns it.
 

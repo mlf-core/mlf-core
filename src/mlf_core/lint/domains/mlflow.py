@@ -6,6 +6,7 @@ from mlf_core.lint.template_linter import files_exist_linting
 from mlf_core.lint.template_linter import GetLintingFunctionsMeta
 from mlf_core.lint.template_linter import TemplateLinter
 from pkg_resources import parse_version
+from typing import List
 
 CWD = os.getcwd()
 
@@ -44,8 +45,8 @@ class MlflowPytorchLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
-        files_fail_ifexists = ["__pycache__"]
-        files_warn_ifexists = []
+        files_fail_ifexists: List = ["__pycache__"]
+        files_warn_ifexists: List = []
 
         files_exist_linting(
             self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle="mlflow-pytorch"
@@ -192,8 +193,8 @@ class MlflowTensorflowLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
-        files_fail_ifexists = ["__pycache__"]
-        files_warn_ifexists = []
+        files_fail_ifexists: List = ["__pycache__"]
+        files_warn_ifexists: List = []
 
         files_exist_linting(
             self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle="mlflow-tensorflow"
@@ -277,8 +278,8 @@ class MlflowXGBoostLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
-        files_fail_ifexists = ["__pycache__"]
-        files_warn_ifexists = []
+        files_fail_ifexists: List = ["__pycache__"]
+        files_warn_ifexists: List = []
 
         files_exist_linting(
             self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle="mlflow-xgboost"

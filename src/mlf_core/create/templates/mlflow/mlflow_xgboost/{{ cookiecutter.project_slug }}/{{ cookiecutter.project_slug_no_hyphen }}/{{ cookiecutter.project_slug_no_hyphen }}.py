@@ -1,55 +1,55 @@
-import time
 from argparse import ArgumentParser
-
-import GPUtil
-import mlflow.xgboost
 import xgboost as xgb
-from data_loading.data_loader import load_train_test_data
+import mlflow
+import mlflow.xgboost
+import time
+import GPUtil
+from rich import traceback, print
+
 from mlf_core.mlf_core import MLFCore
-from rich import print
-from rich import traceback
+from data_loading.data_loader import load_train_test_data
 
 
 def start_training():
-    parser = ArgumentParser(description="XGBoost Example")
+    parser = ArgumentParser(description='XGBoost Example')
     parser.add_argument(
-        "--max_epochs",
+        '--max_epochs',
         type=int,
         default=25,
-        help="Number of epochs to train",
+        help='Number of epochs to train',
     )
     parser.add_argument(
-        "--general-seed",
+        '--general-seed',
         type=int,
         default=0,
-        help="General Python, Python random and Numpy seed.",
+        help='General Python, Python random and Numpy seed.',
     )
     parser.add_argument(
-        "--xgboost-seed",
+        '--xgboost-seed',
         type=int,
         default=0,
-        help="XGBoost specific random seed.",
+        help='XGBoost specific random seed.',
     )
     parser.add_argument(
-        "--cuda",
+        '--cuda',
         type=bool,
         default=True,
-        help="Enable or disable CUDA support.",
+        help='Enable or disable CUDA support.',
     )
     parser.add_argument(
-        "--single-precision-histogram",
+        '--single-precision-histogram',
         type=bool,
         default=True,
-        help="Enable or disable single precision histogram calculation.",
+        help='Enable or disable single precision histogram calculation.',
     )
     avail_gpus = GPUtil.getGPUs()
     args = parser.parse_args()
     dict_args = vars(args)
-    use_cuda = True if dict_args["cuda"] and len(avail_gpus) > 0 else False
+    use_cuda = True if dict_args['cuda'] and len(avail_gpus) > 0 else False
     if use_cuda:
-        print(f"[bold blue]Using {len(avail_gpus)} GPUs!")
+        print(f'[bold blue]Using {len(avail_gpus)} GPUs!')
     else:
-        print("[bold blue]No GPUs detected. Running on the CPU")
+        print('[bold blue]No GPUs detected. Running on the CPU')
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow
@@ -65,14 +65,12 @@ def start_training():
         # MLFCore.log_input_data('data/')
 
         # Set XGBoost parameters
-        param = {
-            "objective": "multi:softmax",
-            "num_class": 8,
-            "single_precision_histogram": True if dict_args["single_precision_histogram"] == "True" else False,
-            "subsample": 0.5,
-            "colsample_bytree": 0.5,
-            "colsample_bylevel": 0.5,
-        }
+        param = {'objective': 'multi:softmax',
+                 'num_class': 8,
+                 'single_precision_histogram': True if dict_args['single_precision_histogram'] == 'True' else False,
+                 'subsample': 0.5,
+                 'colsample_bytree': 0.5,
+                 'colsample_bylevel': 0.5}
 
         # Set random seeds
         MLFCore.set_general_random_seeds(dict_args["general_seed"])
@@ -80,19 +78,19 @@ def start_training():
 
         # Set CPU or GPU as training device
         if use_cuda:
-            param["tree_method"] = "gpu_hist"
+            param['tree_method'] = 'gpu_hist'
         else:
-            param["tree_method"] = "hist"
+            param['tree_method'] = 'hist'
 
         # Train on the chosen device
         results = {}
         runtime = time.time()
-        xgb.train(param, dtrain, dict_args["max_epochs"], evals=[(dtest, "test")], evals_result=results)
-        device = "GPU" if use_cuda else "CPU"
+        xgb.train(param, dtrain, dict_args['max_epochs'], evals=[(dtest, 'test')], evals_result=results)
+        device = 'GPU' if use_cuda else 'CPU'
         if use_cuda:
-            print(f"[bold green]{device} Run Time: {str(time.time() - runtime)} seconds")
+            print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     traceback.install()
     start_training()

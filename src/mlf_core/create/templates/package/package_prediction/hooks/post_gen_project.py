@@ -9,21 +9,19 @@ def remove(filepath):
         shutil.rmtree(filepath)
 
 
-cli_path = "{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}"
+cli_path = '{{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}'
 
-pytorch_files = [f"{cli_path}/cli_pytorch.py"]
+pytorch_files = [f'{cli_path}/cli_pytorch.py']
 
-tensorflow_files = [f"{cli_path}/cli_tensorflow.py"]
+tensorflow_files = [f'{cli_path}/cli_tensorflow.py']
 
-xgboost_files = [
-    f"{cli_path}/cli_xgboost.py",
-    "{{ cookiecutter.project_slug_no_hyphen }}/data/xgboost_test_data.tsv",
-    "{{ cookiecutter.project_slug_no_hyphen }}/models/xgboost_test_model.xgb",
-]
+xgboost_files = [f'{cli_path}/cli_xgboost.py',
+                 '{{ cookiecutter.project_slug_no_hyphen }}/data/xgboost_test_data.tsv',
+                 '{{ cookiecutter.project_slug_no_hyphen }}/models/xgboost_test_model.xgb']
 
-is_pytorch = "{{ cookiecutter.framework }}" == "pytorch"
-is_tensorflow = "{{ cookiecutter.framework }}" == "tensorflow"
-is_xgboost = "{{ cookiecutter.framework }}" == "xgboost"
+is_pytorch = '{{ cookiecutter.framework }}' == 'pytorch'
+is_tensorflow = '{{ cookiecutter.framework }}' == 'tensorflow'
+is_xgboost = '{{ cookiecutter.framework }}' == 'xgboost'
 
 if not is_pytorch:
     for file in pytorch_files:

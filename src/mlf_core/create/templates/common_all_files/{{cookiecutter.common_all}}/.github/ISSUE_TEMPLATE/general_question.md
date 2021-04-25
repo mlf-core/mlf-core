@@ -1,9 +1,10 @@
 ---
 name: General question
 about: Ask a question about anything related to this project
-title: "Question"
-labels: "question"
-assignees: ""
+title: 'Question'
+labels: 'question'
+assignees: ''
+
 ---
 
 **Question**

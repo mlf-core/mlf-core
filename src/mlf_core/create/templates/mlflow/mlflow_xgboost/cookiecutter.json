@@ -8,4 +8,4 @@
     "project_short_description": "mlf-core mlflow based XGBoost Covertype project.",
     "version": "0.1.0",
     "license": ["MIT", "Not open source"]
-}
+  }

@@ -1,9 +1,10 @@
 ---
 name: Feature request
 about: Suggest a new feature
-title: "Feature Request Summary"
-labels: "enhancement"
-assignees: ""
+title: 'Feature Request Summary'
+labels: 'enhancement'
+assignees: ''
+
 ---
 
 **Is your feature request related to a problem? Please describe.**

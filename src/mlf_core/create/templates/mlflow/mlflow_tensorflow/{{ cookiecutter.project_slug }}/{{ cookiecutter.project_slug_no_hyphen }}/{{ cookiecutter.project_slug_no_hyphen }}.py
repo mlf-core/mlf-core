@@ -1,67 +1,66 @@
+from argparse import ArgumentParser
+import tensorflow as tf
+import mlflow
+import mlflow.tensorflow
 import os
 import time
-from argparse import ArgumentParser
+from rich import traceback, print
 
-import mlflow.tensorflow
-import tensorflow as tf
-from data_loading.data_loader import load_train_test_data
 from mlf_core.mlf_core import MLFCore
+from data_loading.data_loader import load_train_test_data
 from model.model import create_model
-from rich import print
-from rich import traceback
-from training.train import test
-from training.train import train
+from training.train import train, test
 
 
 def start_training():
-    parser = ArgumentParser(description="Tensorflow example")
+    parser = ArgumentParser(description='Tensorflow example')
     parser.add_argument(
-        "--cuda",
+        '--cuda',
         type=bool,
         default=True,
-        help="Enable or disable CUDA support",
+        help='Enable or disable CUDA support',
     )
     parser.add_argument(
-        "--max_epochs",
+        '--max_epochs',
         type=int,
         default=10,
-        help="Number of epochs to train",
+        help='Number of epochs to train',
     )
     parser.add_argument(
-        "--general-seed",
+        '--general-seed',
         type=int,
         default=0,
-        help="General Python, Python random and Numpy seed.",
+        help='General Python, Python random and Numpy seed.',
     )
     parser.add_argument(
-        "--tensorflow-seed",
+        '--tensorflow-seed',
         type=int,
         default=0,
-        help="Tensorflow specific random seed.",
+        help='Tensorflow specific random seed.',
     )
     parser.add_argument(
-        "--batch-size",
+        '--batch-size',
         type=int,
         default=64,
-        help="Input batch size for training and testing",
+        help='Input batch size for training and testing',
     )
     parser.add_argument(
-        "--buffer-size",
+        '--buffer-size',
         type=int,
         default=10000,
-        help="Buffer size for Mirrored Training",
+        help='Buffer size for Mirrored Training',
     )
     parser.add_argument(
-        "--lr",
+        '--lr',
         type=float,
         default=0.01,
-        help="Learning rate",
+        help='Learning rate',
     )
     args = parser.parse_args()
     dict_args = vars(args)
     # Disable GPU support if no GPUs are supposed to be used
-    if not dict_args["cuda"]:
-        tf.config.set_visible_devices([], "GPU")
+    if not dict_args['cuda']:
+        tf.config.set_visible_devices([], 'GPU')
 
     with mlflow.start_run():
         # Enable the logging of all parameters, metrics and models to mlflow and Tensorboard
@@ -76,12 +75,10 @@ def start_training():
 
         # Use Mirrored Strategy for multi GPU support
         strategy = tf.distribute.MirroredStrategy()
-        print(f"[bold blue]Number of devices: {strategy.num_replicas_in_sync}")
+        print(f'[bold blue]Number of devices: {strategy.num_replicas_in_sync}')
 
         # Fetch and prepare dataset
-        train_dataset, eval_dataset = load_train_test_data(
-            strategy, dict_args["batch_size"], dict_args["buffer_size"], dict_args["tensorflow_seed"]
-        )
+        train_dataset, eval_dataset = load_train_test_data(strategy, dict_args['batch_size'], dict_args['buffer_size'], dict_args['tensorflow_seed'])
 
         # TODO MLF-CORE: Enable input data logging
         # MLFCore.log_input_data('data/')
@@ -89,30 +86,26 @@ def start_training():
         with strategy.scope():
             # Define model and compile model
             model = create_model(input_shape=(28, 28, 1))
-            model.compile(
-                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                optimizer=tf.keras.optimizers.Adam(learning_rate=dict_args["lr"]),
-                metrics=["accuracy"],
-            )
+            model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                          optimizer=tf.keras.optimizers.Adam(learning_rate=dict_args['lr']),
+                          metrics=['accuracy'])
 
             # Train and evaluate the trained model
             runtime = time.time()
-            train(model, dict_args["max_epochs"], train_dataset)
+            train(model, dict_args['max_epochs'], train_dataset)
             eval_loss, eval_acc = test(model, eval_dataset)
-            print(f"Test loss: {eval_loss}, Test Accuracy: {eval_acc}")
+            print(f'Test loss: {eval_loss}, Test Accuracy: {eval_acc}')
 
-            device = "GPU" if dict_args["cuda"] else "CPU"
-            print(f"[bold green]{device} Run Time: {str(time.time() - runtime)} seconds")
+            device = 'GPU' if dict_args['cuda'] else 'CPU'
+            print(f'[bold green]{device} Run Time: {str(time.time() - runtime)} seconds')
 
-            print(
-                f'[bold blue]\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}'
-            )
+            print(f'[bold blue]\nLaunch TensorBoard with:\ntensorboard --logdir={os.path.join(mlflow.get_artifact_uri(), "tensorboard_logs", "train")}')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     traceback.install()
     print(f'Num GPUs Available: {len(tf.config.experimental.list_physical_devices("GPU"))}')
 
-    os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Filtering out any Warnings messages
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Filtering out any Warnings messages
 
     start_training()

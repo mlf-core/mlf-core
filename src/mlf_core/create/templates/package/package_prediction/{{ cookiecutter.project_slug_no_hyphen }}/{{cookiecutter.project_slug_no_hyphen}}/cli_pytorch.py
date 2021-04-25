@@ -4,45 +4,38 @@ import sys
 import click
 import numpy as np
 import torch
-from rich import print
-from rich import traceback
+
+from rich import traceback, print
 
 WD = os.path.dirname(__file__)
 
 
 @click.command()
-@click.option("-i", "--input", required=True, type=str, help="Path to data file to predict.")
-@click.option(
-    "-m",
-    "--model",
-    type=str,
-    help="Path to an already trained XGBoost model. If not passed a default model will be loaded.",
-)
-@click.option("-c/-nc", "--cuda/--no-cuda", type=bool, default=False, help="Whether to enable cuda or not")
-@click.option("-o", "--output", type=str, help="Path to write the output to")
+@click.option('-i', '--input', required=True, type=str, help='Path to data file to predict.')
+@click.option('-m', '--model', type=str, help='Path to an already trained XGBoost model. If not passed a default model will be loaded.')
+@click.option('-c/-nc', '--cuda/--no-cuda', type=bool, default=False, help='Whether to enable cuda or not')
+@click.option('-o', '--output', type=str, help='Path to write the output to')
 def main(input: str, model: str, cuda: bool, output: str):
     """Command-line interface for {{ cookiecutter.project_name }}"""
 
-    print(
-        r"""[bold blue]
+    print(r"""[bold blue]
         {{ cookiecutter.project_name }}
-        """
-    )
+        """)
 
-    print("[bold blue]Run [green]{{ cookiecutter.project_name }} --help [blue]for an overview of all commands\n")
+    print('[bold blue]Run [green]{{ cookiecutter.project_name }} --help [blue]for an overview of all commands\n')
     if not model:
-        model = get_pytorch_model(f"{WD}/models/pytorch_test_model")
+        model = get_pytorch_model(f'{WD}/models/pytorch_test_model')
     else:
         model = get_pytorch_model(model)
     if cuda:
         model.cuda()
-    print("[bold blue] Parsing data")
+    print('[bold blue] Parsing data')
     data_to_predict = read_data_to_predict(input)
-    print("[bold blue] Performing predictions")
+    print('[bold blue] Performing predictions')
     predictions = np.round(model.predict(data_to_predict))
     print(predictions)
     if output:
-        print(f"[bold blue]Writing predictions to {output}")
+        print(f'[bold blue]Writing predictions to {output}')
         write_results(predictions, output)
 
 

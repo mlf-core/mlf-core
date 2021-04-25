@@ -1,0 +1,11 @@
+{
+    "full_name": "Homer Simpson",
+    "email": "homer.simpson@example.com",
+    "github_username": "homersimpson",
+    "project_name": "Pytorch MNIST",
+    "project_slug": "pytorch_mnist_slug",
+    "project_slug_no_hyphen": "pytorch_mnist_slug",
+    "project_short_description": "mlf-core mlflow based Pytorch MNIST project.",
+    "version": "0.1.0",
+    "license": ["MIT", "Not open source"]
+  }

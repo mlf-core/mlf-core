@@ -1,0 +1,35 @@
+mlflow:
+    pytorch:
+        name: Pytorch
+        handle: mlflow-pytorch
+        version: 2.0.0
+        available libraries: Pytorch
+        short description: Fully CPU and GPU reproducible MLflow based Pytorch template with Tensorboard support.
+        long description: A fully CPU and GPU reproducible MLflow based Pytorch template with CPU, multi-GPU (DistributedDataParallel API),
+                        system-intelligence and Tensorboard support. Makes heavy use of Pytorch Lightning. The initialized project contains a MNIST example.
+    tensorflow:
+        name: Tensorflow
+        handle: mlflow-tensorflow
+        version: 1.0.3
+        available libraries: Tensorflow
+        short description: Fully CPU and GPU reproducible MLflow based Tensorflow template with tensorboard support.
+        long description: A fully CPU and GPU reproducible MLflow based Tensorflow template with CPU, multi-GPU (Mirrored Strategy API),
+                        system-intelligence and Tensorboard support. The initialized project contains a MNIST example.
+    xgboost:
+        name: XGBoost
+        handle: mlflow-xgboost
+        version: 1.3.2
+        available libraries: XGBoost
+        short description: Fully CPU and GPU reproducible MLflow based XGBoost template.
+        long description: A fully CPU and GPU reproducible MLflow based XGBoost template with CPU, single-GPU and
+                        system-intelligence support. The initialized project contains a Covertype example.
+package:
+    prediction:
+        name: Prediction
+        handle: package-prediction
+        version: 1.0.2
+        available libraries: Pytorch, Tensorflow, XGBoost
+        short description: Python package offering loading and prediction of models with simple PyPI deployment.
+        long description: A Python package offering a command-line interfaces for predictions for custom models.
+            Depending on the chosen library/framework the template offers the appropriate way of loading the model.
+            The Python package is trivially distributed via PyPI.

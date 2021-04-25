@@ -1,0 +1,13 @@
+{
+  "full_name": "Homer Simpson",
+  "email": "homer.simpson@example.com",
+  "github_username": "homersimpson",
+  "project_name": "Project Slug",
+  "project_slug": "Project_slug",
+  "project_slug_no_hyphen": "Project_slug",
+  "project_short_description": "package-prediction Python package",
+  "pypi_username": "{{ cookiecutter.github_username }}",
+  "version": "0.1.0",
+  "license": "license",
+  "framework": "framework"
+}

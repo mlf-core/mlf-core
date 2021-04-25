@@ -1,0 +1,20 @@
+name: {{ cookiecutter.project_slug_no_hyphen }}
+channels:
+  - defaults
+  - conda-forge
+  - rapidsai
+  - nvidia
+dependencies:
+  - nvidia::cudatoolkit=11.1.74
+  - defaults::python=3.8.2
+  - defaults::boto3==1.17.11
+  - conda-forge::rich=9.10.0
+  - conda-forge::mlflow=1.13.1
+  - conda-forge::scikit-learn=0.24.1
+  - conda-forge::matplotlib=3.3.4
+  - pip
+  - pip:
+    - xgboost==1.3.3  # xgboost on Conda is not yet built with GPU support!
+    - pycuda==2020.1
+    - system-intelligence==2.0.2
+    - gputil==1.4.0

@@ -1,8 +1,8 @@
 import os
+from typing import Set
 
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dict_util import is_nested_dictionary
-from typing import Set
 
 AVAILABLE_TEMPLATES_PATH = f"{os.path.dirname(__file__)}/../create/templates/available_templates.yml"
 

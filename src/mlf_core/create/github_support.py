@@ -3,11 +3,11 @@ import logging
 import os
 import sys
 from base64 import b64encode
-from collections import OrderedDict
 from distutils.dir_util import copy_tree
 from pathlib import Path
 from subprocess import PIPE
 from subprocess import Popen
+from typing import Tuple
 
 import requests
 from cryptography.fernet import Fernet
@@ -23,7 +23,6 @@ from nacl import encoding
 from nacl import public
 from rich import print
 from ruamel.yaml import YAML
-from typing import Tuple
 
 log = logging.getLogger(__name__)
 

@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+from typing import List
 
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
@@ -11,7 +12,6 @@ from rich.box import HEAVY_HEAD
 from rich.console import Console
 from rich.style import Style
 from rich.table import Table
-from typing import List
 
 log = logging.getLogger(__name__)
 

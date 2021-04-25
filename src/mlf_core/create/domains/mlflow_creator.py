@@ -1,13 +1,13 @@
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 from mlf_core.common.version import load_mlf_core_template_version
 from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
 from mlf_core.create.github_support import prompt_github_repo
 from mlf_core.create.template_creator import TemplateCreator
 from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
-from typing import Optional
 
 
 @dataclass

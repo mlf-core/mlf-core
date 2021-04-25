@@ -6,7 +6,6 @@ from mlf_core.lint.domains.mlflow import MlflowPytorchLint
 from mlf_core.lint.domains.mlflow import MlflowTensorflowLint
 from mlf_core.lint.domains.mlflow import MlflowXGBoostLint
 from mlf_core.lint.domains.package import PackagePredictionLint
-from mlf_core.lint.template_linter import TemplateLinter
 from rich import print
 from ruamel.yaml import YAML
 

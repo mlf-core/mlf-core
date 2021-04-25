@@ -3,67 +3,67 @@ name: Create mlflow Template
 on: [push, pull_request]
 
 jobs:
-  create:
-    name: Create mlflow-${{ matrix.template }} Template
-    runs-on: ubuntu-latest
+    create:
+        name: Create mlflow-${{ matrix.template }} Template
+        runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        template: [ 'pytorch', 'tensorflow', 'xgboost']
+        strategy:
+            fail-fast: false
+            matrix:
+                template: ["pytorch", "tensorflow", "xgboost"]
 
-    steps:
-      - name: Reclaim space
-        run: |
-             sudo rm -rf /usr/share/dotnet
-             sudo rm -rf /opt/ghc
+        steps:
+            - name: Reclaim space
+              run: |
+                  sudo rm -rf /usr/share/dotnet
+                  sudo rm -rf /opt/ghc
 
-      - uses: actions/checkout@v2
-        name: Check out source-code repository
+            - uses: actions/checkout@v2
+              name: Check out source-code repository
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+            - name: Setup Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: 3.9
 
-      - name: Build mlf-core
-        run: |
-          make install
+            - name: Build mlf-core
+              run: |
+                  make install
 
-      - name: Create mlflow-${{ matrix.template }} Template
-        run: |
-          cd ..
-          bash mlf-core/.github/create.sh ${{ matrix.template }}
+            - name: Create mlflow-${{ matrix.template }} Template
+              run: |
+                  cd ..
+                  bash mlf-core/.github/create.sh ${{ matrix.template }}
 
-      # https://github.com/docker/build-push-action/issues/90
-      - name: Copy workaround
-        run: |
-          cp ../exploding_springfield/Dockerfile .
-          cp ../exploding_springfield/environment.yml .
+            # https://github.com/docker/build-push-action/issues/90
+            - name: Copy workaround
+              run: |
+                  cp ../exploding_springfield/Dockerfile .
+                  cp ../exploding_springfield/environment.yml .
 
-      - name: Install flake8
-        run: pip install flake8
+            - name: Install flake8
+              run: pip install flake8
 
-      - name: Lint project with flake8
-        run: flake8 ../exploding_springfield
+            - name: Lint project with flake8
+              run: flake8 ../exploding_springfield
 
-      - name: Install bandit
-        run: pip install bandit
+            - name: Install bandit
+              run: pip install bandit
 
-      - name: Run bandit
-        run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
+            - name: Run bandit
+              run: bandit -r ../exploding_springfield -c ../exploding_springfield/.bandit.yml
 
-      - name: Build Docker container
-        uses: docker/build-push-action@v1
-        with:
-          repository: ghcr.io/homergithub/exploding_springfield
-          tags: 0.1.0-SNAPSHOT
-          push: false
+            - name: Build Docker container
+              uses: docker/build-push-action@v1
+              with:
+                  repository: ghcr.io/homergithub/exploding_springfield
+                  tags: 0.1.0-SNAPSHOT
+                  push: false
 
-      - name: Install mlflow
-        run: pip install mlflow
+            - name: Install mlflow
+              run: pip install mlflow
 
-      - name: Train on the CPU
-        run: |
-          cd ../exploding_springfield
-          mlflow run . -P max_epochs=1
+            - name: Train on the CPU
+              run: |
+                  cd ../exploding_springfield
+                  mlflow run . -P max_epochs=1

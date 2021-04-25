@@ -107,7 +107,7 @@ h6,
 }
 
 .wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a:hover {
-    color: #FFFFFF !important;
+    color: #ffffff !important;
     background: #005fff !important;
 }
 
@@ -123,8 +123,8 @@ h6,
 /* Child items of current expanded parent section are white font on dark background*/
 
 .wy-menu-vertical li.toctree-l3.current li.toctree-l4 > a {
-    color: #FFFFFF !important;
-    background: #2D2E2F !important;
+    color: #ffffff !important;
+    background: #2d2e2f !important;
 }
 
 .wy-menu-vertical li.toctree-l1.current {

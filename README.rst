@@ -17,7 +17,7 @@ mlf-core
    :target: https://pypi.org/project/mlf-core
    :alt: Python Version
 .. |License| image:: https://img.shields.io/github/license/mlf-core/mlf-core
-   :target: https://opensource.org/licenses/Apache2.0
+   :target: https://opensource.org/licenses/Apache-2.0
    :alt: License
 .. |Read the Docs| image:: https://img.shields.io/readthedocs/mlf-core/latest.svg?label=Read%20the%20Docs
    :target: https://mlf-core.readthedocs.io/

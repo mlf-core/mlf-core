@@ -26,9 +26,13 @@ jobs:
               with:
                   python-version: 3.9
 
-            - name: Build mlf-core
+            - name: Install Poetry
               run: |
-                  make install
+                  pip install poetry
+                  poetry --version
+
+            - name: Build mlf-core
+              run: make install
 
             - name: Create mlflow-${{ matrix.template }} Template
               run: |

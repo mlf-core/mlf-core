@@ -91,7 +91,7 @@ def precommit(session: Session) -> None:
         "pep8-naming",
         "pre-commit",
         "pre-commit-hooks",
-        # "reorder-python-imports",
+        "reorder-python-imports",
     )
     session.run("pre-commit", *args)
     if args and args[0] == "install":

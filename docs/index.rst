@@ -22,7 +22,7 @@ Welcome to mlf-core's documentation!
    contributing
    adding_new_templates
    faq
-   changelog
+   reference
    authors
    code_of_conduct
 

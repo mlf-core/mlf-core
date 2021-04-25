@@ -6,5 +6,5 @@ Reference
     :backlinks: none
 
 
-.. automodule:: mlf_core.__main__
+.. automodule:: src.mlf_core
    :members:

@@ -1,0 +1,30 @@
+# Author: {{ cookiecutter.full_name }}
+# Email: {{ cookiecutter.email }}
+# Version: {{ cookiecutter.version }}
+# License: {{ cookiecutter.license }}
+
+
+name: {{ cookiecutter.project_slug }}
+
+# conda_env: environment.yml
+docker_env:
+  image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}
+  volumes: ["${PWD}/data:/data"]
+
+entry_points:
+  main:
+    parameters:
+      cuda: {type: string, default: 'True'}
+      max_epochs: {type: int, default: 10}
+      general-seed: {type: int, default: 0}
+      tensorflow-seed: {type: int, default: 0}
+      batch-size: {type: int, default: 64}
+      lr: {type: float, default: 0.01}
+    command: |
+          python {{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}.py \
+            --cuda {cuda} \
+            --max_epochs {max_epochs} \
+            --general-seed {general-seed} \
+            --tensorflow-seed {tensorflow-seed} \
+            --batch-size {batch-size} \
+            --lr {lr} \

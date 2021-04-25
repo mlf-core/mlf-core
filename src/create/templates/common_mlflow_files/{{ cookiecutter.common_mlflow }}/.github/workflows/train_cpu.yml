@@ -1,0 +1,37 @@
+name: Train {{ cookiecutter.project_slug }} using CPU
+
+on: [push, pull_request]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.7, 3.8]
+
+    steps:
+      -   name: Reclaim space
+          run: |
+                sudo rm -rf /usr/share/dotnet
+                sudo rm -rf /opt/ghc
+      - name: Check out source-code repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker container
+        uses: docker/build-push-action@v1
+        with:
+          dockerfile: Dockerfile
+          repository: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}
+          tags: {{ cookiecutter.version }} # <<MLF-CORE_FORCE_BUMP>>
+          push: false
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: {% raw %} ${{ matrix.python }} {% endraw %}
+
+      - name: Install mlflow
+        run: pip install mlflow
+
+      - name: Train on the CPU
+        run: mlflow run . -P max_epochs=2

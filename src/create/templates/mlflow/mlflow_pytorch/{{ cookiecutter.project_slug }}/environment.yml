@@ -1,0 +1,21 @@
+name: {{ cookiecutter.project_slug_no_hyphen }}
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - nvidia::cudatoolkit=11.1.74
+  - defaults::python=3.9.2
+  - defaults::boto3=1.17.20
+  - conda-forge::tensorboardx=2.1
+  - conda-forge::mlflow=1.14.1
+  - conda-forge::rich=9.13.0
+  - pytorch::pytorch=1.8.1
+  - pytorch::torchvision=0.9.1
+  - pytorch-lightning=1.1.8
+  - pip=21.0.1
+  - pip:
+    - pycuda==2020.1  # not on Conda
+    - cloudpickle==1.6.0
+    - system-intelligence==2.0.2

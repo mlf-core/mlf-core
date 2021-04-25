@@ -1,0 +1,37 @@
+# Author: {{ cookiecutter.full_name }}
+# Email: {{ cookiecutter.email }}
+# Version: {{ cookiecutter.version }}
+# License: {{ cookiecutter.license }}
+
+
+name: {{ cookiecutter.project_slug }}
+
+# conda_env: environment.yml
+docker_env:
+  image: ghcr.io/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug_no_hyphen }}:{{ cookiecutter.version }}
+  volumes: ["${PWD}/data:/data"]
+  environment: [["MLF_CORE_DOCKER_RUN", "TRUE"],["CUBLAS_WORKSPACE_CONFIG", ":4096:8"]]
+
+entry_points:
+  main:
+    parameters:
+      max_epochs: {type: int, default: 5}
+      gpus: {type: int, default: 0}
+      accelerator: {type str, default: "None"}
+      training-batch-size: {type: int, default: 64}
+      test-batch-size: {type: int, default: 1000}
+      lr: {type: float, default: 0.01}
+      general-seed: {type: int, default: 0}
+      pytorch-seed: {type: int, default: 0}
+      log-interval: {type: int, default: 100}
+    command: |
+          python {{ cookiecutter.project_slug_no_hyphen }}/{{ cookiecutter.project_slug_no_hyphen }}.py \
+            --max_epochs {max_epochs} \
+            --gpus {gpus} \
+            --accelerator {accelerator} \
+            --training-batch-size {training-batch-size} \
+            --test-batch-size {test-batch-size} \
+            --lr {lr} \
+            --general-seed {general-seed} \
+            --pytorch-seed {pytorch-seed} \
+            --log-interval {log-interval}

@@ -1,15 +1,16 @@
-from argparse import ArgumentParser
-import tensorflow as tf
-import mlflow
-import mlflow.tensorflow
 import os
 import time
-from rich import traceback, print
+from argparse import ArgumentParser
 
-from mlf_core.mlf_core import MLFCore
+import mlflow
+import mlflow.tensorflow
+import tensorflow as tf
 from data_loading.data_loader import load_train_test_data
 from model.model import create_model
-from training.train import train, test
+from rich import print, traceback
+from training.train import test, train
+
+from mlf_core.mlf_core import MLFCore
 
 
 def start_training():

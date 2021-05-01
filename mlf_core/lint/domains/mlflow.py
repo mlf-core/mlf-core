@@ -3,10 +3,10 @@ from pathlib import Path
 from typing import List
 
 from pkg_resources import parse_version
+
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.lint.template_linter import files_exist_linting
-from mlf_core.lint.template_linter import GetLintingFunctionsMeta
-from mlf_core.lint.template_linter import TemplateLinter
+from mlf_core.lint.template_linter import (GetLintingFunctionsMeta,
+                                           TemplateLinter, files_exist_linting)
 
 CWD = os.getcwd()
 

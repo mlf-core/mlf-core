@@ -7,24 +7,23 @@ from pathlib import Path
 
 import click
 import rich.logging
-from rich import print
-from rich import traceback
+from rich import print, traceback
+
 from mlf_core.bump_version.bump_version import VersionBumper
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain
-from mlf_core.custom_cli.click import CustomArg
-from mlf_core.custom_cli.click import CustomHelpSubcommand
-from mlf_core.custom_cli.click import HelpErrorHandling
-from mlf_core.custom_cli.click import print_mlfcore_version
-from mlf_core.custom_cli.click import print_project_version
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.custom_cli.click import (CustomArg, CustomHelpSubcommand,
+                                       HelpErrorHandling,
+                                       print_mlfcore_version,
+                                       print_project_version)
+from mlf_core.custom_cli.questionary import \
+    mlf_core_questionary_or_dot_mlf_core
 from mlf_core.info.info import TemplateInfo
 from mlf_core.lint.lint import lint_project
 from mlf_core.list.list import TemplateLister
 from mlf_core.sync.sync import TemplateSync
 from mlf_core.upgrade.upgrade import UpgradeCommand
-
 
 WD = os.path.dirname(__file__)
 log = logging.getLogger()

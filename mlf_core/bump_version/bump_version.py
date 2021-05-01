@@ -4,19 +4,19 @@ import re
 import sys
 from configparser import ConfigParser
 from datetime import datetime
-from os import fdopen
-from os import remove
+from os import fdopen, remove
 from pathlib import Path
-from shutil import copymode
-from shutil import move
+from shutil import copymode, move
 from tempfile import mkstemp
 from typing import Tuple
 
 from git import Repo
 from packaging import version
 from rich import print
+
 from mlf_core.create.github_support import is_git_repo
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.custom_cli.questionary import \
+    mlf_core_questionary_or_dot_mlf_core
 from mlf_core.lint.template_linter import TemplateLinter
 
 log = logging.getLogger(__name__)

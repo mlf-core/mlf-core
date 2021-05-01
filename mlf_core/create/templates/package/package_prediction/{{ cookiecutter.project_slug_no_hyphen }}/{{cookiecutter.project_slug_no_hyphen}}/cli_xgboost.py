@@ -5,8 +5,7 @@ from dataclasses import dataclass
 import click
 import numpy as np
 import xgboost as xgb
-
-from rich import traceback, print
+from rich import print, traceback
 
 WD = os.path.dirname(__file__)
 

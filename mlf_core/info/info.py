@@ -8,6 +8,7 @@ from rich.box import HEAVY_HEAD
 from rich.console import Console
 from rich.style import Style
 from rich.table import Table
+
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.common.suggest_similar_commands import load_available_handles

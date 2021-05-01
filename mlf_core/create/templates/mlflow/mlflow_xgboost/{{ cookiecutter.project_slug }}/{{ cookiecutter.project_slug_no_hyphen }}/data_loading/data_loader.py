@@ -1,5 +1,4 @@
 import xgboost as xgb
-
 from sklearn.datasets import fetch_covtype
 from sklearn.model_selection import train_test_split
 

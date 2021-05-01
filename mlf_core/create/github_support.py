@@ -5,24 +5,23 @@ import sys
 from base64 import b64encode
 from distutils.dir_util import copy_tree
 from pathlib import Path
-from subprocess import PIPE
-from subprocess import Popen
+from subprocess import PIPE, Popen
 from typing import Tuple
 
 import requests
 from cryptography.fernet import Fernet
-from git import exc
-from git import Repo
-from github import Github
-from github import GithubException
-from nacl import encoding
-from nacl import public
+from git import Repo, exc
+from github import Github, GithubException
+from nacl import encoding, public
 from rich import print
 from ruamel.yaml import YAML
+
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.config.config import ConfigCommand
-from mlf_core.create.domains.mlf_core_template_struct import MlfcoreTemplateStruct
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.create.domains.mlf_core_template_struct import \
+    MlfcoreTemplateStruct
+from mlf_core.custom_cli.questionary import \
+    mlf_core_questionary_or_dot_mlf_core
 
 log = logging.getLogger(__name__)
 

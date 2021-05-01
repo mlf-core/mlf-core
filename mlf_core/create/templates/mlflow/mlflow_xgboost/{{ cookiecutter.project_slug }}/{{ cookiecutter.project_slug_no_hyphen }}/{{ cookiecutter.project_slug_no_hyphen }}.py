@@ -1,13 +1,14 @@
+import time
 from argparse import ArgumentParser
-import xgboost as xgb
+
+import GPUtil
 import mlflow
 import mlflow.xgboost
-import time
-import GPUtil
-from rich import traceback, print
+import xgboost as xgb
+from data_loading.data_loader import load_train_test_data
+from rich import print, traceback
 
 from mlf_core.mlf_core import MLFCore
-from data_loading.data_loader import load_train_test_data
 
 
 def start_training():

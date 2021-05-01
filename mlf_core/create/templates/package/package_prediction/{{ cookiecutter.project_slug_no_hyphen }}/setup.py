@@ -3,11 +3,19 @@
 """The setup script."""
 
 import os
-import {{cookiecutter.project_slug|replace('-', '_')}} as module
-from setuptools import setup, find_packages
 
-
-def walker(base, *paths):
+import '-'
+import '_' }} as module
+import *paths
+import :
+import base
+import def
+import find_packages
+import import
+import setup
+import setuptools
+import walker
+import {{cookiecutter.project_slug|replace
     file_list = set([])
     cur_dir = os.path.abspath(os.curdir)
 

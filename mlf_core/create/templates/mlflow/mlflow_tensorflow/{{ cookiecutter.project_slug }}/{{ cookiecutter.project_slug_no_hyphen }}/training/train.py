@@ -1,5 +1,6 @@
-import tensorflow as tf
 import os
+
+import tensorflow as tf
 
 
 def train(model, epochs, train_dataset):

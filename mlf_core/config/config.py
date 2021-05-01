@@ -11,9 +11,11 @@ from rich.console import Console
 from rich.style import Style
 from rich.table import Table
 from ruamel.yaml import YAML
+
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
+from mlf_core.custom_cli.questionary import \
+    mlf_core_questionary_or_dot_mlf_core
 
 log = logging.getLogger(__name__)
 

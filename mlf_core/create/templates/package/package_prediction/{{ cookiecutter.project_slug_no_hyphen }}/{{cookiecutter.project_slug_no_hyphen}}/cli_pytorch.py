@@ -4,8 +4,7 @@ import sys
 import click
 import numpy as np
 import torch
-
-from rich import traceback, print
+from rich import print, traceback
 
 WD = os.path.dirname(__file__)
 

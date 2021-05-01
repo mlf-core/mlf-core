@@ -9,7 +9,7 @@ homepage = "https://github.com/mlf-core/mlf-core"
 repository = "https://github.com/mlf-core/mlf-core"
 documentation = "https://mlf-core.readthedocs.io"
 packages = [
-    { include = "src" },
+    { include = "mlf_core" },
 ]
 classifiers = [
     "Programming Language :: Python :: 3.7",
@@ -63,7 +63,7 @@ sphinx-click = "^2.5.0"
 Pygments = "^2.8.1"
 
 [tool.poetry.scripts]
-mlf-core = "src.mlf_core.__main__:main"
+mlf-core = "mlf_core.__main__:main"
 
 [tool.black]
 line-length = 120
@@ -78,11 +78,11 @@ exclude = '''
 
 
 [tool.coverage.paths]
-source = ["src", "*/site-packages"]
+source = ["mlf_core", "*/site-packages"]
 
 [tool.coverage.run]
 branch = true
-source = ["src.mlf_core"]
+source = ["mlf_core"]
 
 [tool.coverage.report]
 show_missing = true

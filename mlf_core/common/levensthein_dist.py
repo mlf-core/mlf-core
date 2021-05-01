@@ -1,7 +1,6 @@
 from typing import Tuple
 
-from mlf_core.common.suggest_similar_commands import (
-    SIMILARITY_SUGGEST_FACTOR, SIMILARITY_USE_FACTOR)
+from mlf_core.common.suggest_similar_commands import SIMILARITY_SUGGEST_FACTOR, SIMILARITY_USE_FACTOR
 
 
 def levensthein_dist(input_command: str, candidate: str) -> int:

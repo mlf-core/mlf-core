@@ -5,9 +5,7 @@ from pathlib import Path
 from rich import print
 from ruamel.yaml import YAML
 
-from mlf_core.lint.domains.mlflow import (MlflowPytorchLint,
-                                          MlflowTensorflowLint,
-                                          MlflowXGBoostLint)
+from mlf_core.lint.domains.mlflow import MlflowPytorchLint, MlflowTensorflowLint, MlflowXGBoostLint
 from mlf_core.lint.domains.package import PackagePredictionLint
 
 log = logging.getLogger(__name__)

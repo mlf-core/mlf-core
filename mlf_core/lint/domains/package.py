@@ -4,8 +4,7 @@ from typing import List
 import requests
 from pkg_resources import parse_version
 
-from mlf_core.lint.template_linter import (GetLintingFunctionsMeta,
-                                           TemplateLinter, files_exist_linting)
+from mlf_core.lint.template_linter import GetLintingFunctionsMeta, TemplateLinter, files_exist_linting
 
 
 class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):

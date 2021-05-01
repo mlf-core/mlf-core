@@ -2,21 +2,14 @@
 
 """The setup script."""
 
+
 import os
 
-import '-'
-import '_' }} as module
-import *paths
-import :
-import base
-import def
-import find_packages
-import import
-import setup
-import setuptools
-import walker
-import {{cookiecutter.project_slug|replace
+import {{ cookiecutter.project_slug_no_hyphen }} as module
+from setuptools import find_packages, setup
 
+
+def walker(base, *paths):
     file_list = set([])
     cur_dir = os.path.abspath(os.curdir)
 

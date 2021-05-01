@@ -16,6 +16,7 @@ import setup
 import setuptools
 import walker
 import {{cookiecutter.project_slug|replace
+
     file_list = set([])
     cur_dir = os.path.abspath(os.curdir)
 

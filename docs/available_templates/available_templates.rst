@@ -49,14 +49,6 @@ Your documentation is automatically pushed to the ``gh-pages`` branch. Follow th
 `configuring a publishing source for your Github pages site <https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_
 and select the gh-pages branch. Your documentation will then be available on ``https://username.github.io/repositoryname``.
 
-What is Dependabot and how do I set it up?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-`Dependabot <https://dependabot.com/>`_ is a service, which (for supported languages) automatically submits pull requests for dependency updates.
-cookietemple templates ship with dependabot configurations, if the language is supported by Dependabot.
-To enable Dependabot you need to login (with your Github account) and add your repository (or enable Dependabot for all repositories).
-Note that you need to do this for every organization separately. Dependabot will then pick up the configuration and start submitting pull requests!
-
 How do I add a new template?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

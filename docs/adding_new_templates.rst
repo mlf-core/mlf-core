@@ -271,32 +271,35 @@ Our shiny new CliBrainfuckLinter is now ready for action!
           runs-on: ubuntu-latest
           strategy:
             matrix:
-              python: [3.7, 3.8]
+              python: [3.8, 3.9]
 
           steps:
           - uses: actions/checkout@v2
             name: Check out source-code repository
 
           - name: Setup Python
-            uses: actions/setup-python@v1
+            uses: actions/setup-python@v2
             with:
               python-version: ${{ matrix.python }}
 
-          - name: Build mlf-core
+          - name: Install Poetry
             run: |
-              python setup.py clean --all install
+              pip install poetry
+              poetry --version
+
+          - name: Build mlf-core
+            run: make install
 
           - name: Create cli-brainfuck Template
             run: |
-              echo -e "\n\n\n\n\nn\n\n\n\nn" | mlf-core create
+              echo -e "\n\n\n\n\nn\n\n\n\nn" | poetry run mlf-core create
 
           - name: Build Package
             uses: fabasoad/setup-brainfuck-action@master
             with:
               version: 0.1.dev1
           - name: Hello World
-            run: |
-              brainfucky --file Exploding_Springfield/hello.bf
+            run: brainfucky --file Exploding_Springfield/hello.bf
 
 
    We were pleasently surprised to see that someone already made a Github Action for brainfuck.

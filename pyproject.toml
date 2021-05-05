@@ -39,7 +39,7 @@ PyNaCl = "^1.4.0"
 mlflow = "^1.15.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.3"
+pytest = "^6.2.4"
 coverage = {extras = ["toml"], version = "^5.3"}
 safety = "^1.9.0"
 mypy = "^0.812"

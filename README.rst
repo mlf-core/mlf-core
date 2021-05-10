@@ -63,6 +63,13 @@ Start your journey with mlf-core by installing it via ``$ pip install mlf-core``
 
 See `Installation  <https://mlf_core.readthedocs.io/en/latest/readme.html#installing>`_.
 
+run
+----
+See a mlf-core project in action.
+
+.. figure:: https://user-images.githubusercontent.com/31141763/117714817-c409e580-b1d7-11eb-9991-cb6eb58efbb7.gif
+
+
 config
 ------
 Configure mlf-core to get started.

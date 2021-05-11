@@ -415,7 +415,7 @@ It defines with which runtime environment the project is run, configures them an
 
 <span class="c1"># conda_env: environment.yml</span>
 <span class="n">docker_env</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">ghcr</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">github_user</span><span class="o">/</span><span class="n">project_name</span><span class="p">:</span><span class="mf">0.1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">SNAPSHOT</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">ghcr</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">github_user</span><span class="o">/</span><span class="n">project_name</span><span class="p">:</span><span class="mf">0.1.0</span><span class="o">-</span><span class="n">SNAPSHOT</span>
     <span class="n">volumes</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;$</span><span class="si">{PWD}</span><span class="s2">/data:/data&quot;</span><span class="p">]</span>
     <span class="n">environment</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;MLF_CORE_DOCKER_RUN&quot;</span><span class="p">,</span> <span class="s2">&quot;TRUE&quot;</span><span class="p">],[</span><span class="s2">&quot;CUBLAS_WORKSPACE_CONFIG&quot;</span><span class="p">,</span> <span class="s2">&quot;:4096:8&quot;</span><span class="p">]]</span>
 
@@ -480,20 +480,20 @@ We encourage you to regularly upgrade your dependencies, but do so at your own r
 <span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
 <span class="o">-</span> <span class="n">pytorch</span>
 <span class="n">dependencies</span><span class="p">:</span>
-<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">11.0</span><span class="o">.</span><span class="mi">221</span>
-<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">python</span><span class="o">=</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">2</span>
+<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">11.0.221</span>
+<span class="o">-</span> <span class="n">defaults</span><span class="p">::</span><span class="n">python</span><span class="o">=</span><span class="mf">3.8.2</span>
 <span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">tensorboardx</span><span class="o">=</span><span class="mf">2.1</span>
-<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">mlflow</span><span class="o">=</span><span class="mf">1.13</span><span class="o">.</span><span class="mi">1</span>
-<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">rich</span><span class="o">=</span><span class="mf">9.10</span><span class="o">.</span><span class="mi">0</span>
-<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">pytorch</span><span class="o">=</span><span class="mf">1.7</span><span class="o">.</span><span class="mi">1</span>
-<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">torchvision</span><span class="o">=</span><span class="mf">0.8</span><span class="o">.</span><span class="mi">2</span>
-<span class="o">-</span> <span class="n">pytorch</span><span class="o">-</span><span class="n">lightning</span><span class="o">==</span><span class="mf">1.1</span><span class="o">.</span><span class="mi">8</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">mlflow</span><span class="o">=</span><span class="mf">1.13.1</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span><span class="p">::</span><span class="n">rich</span><span class="o">=</span><span class="mf">9.10.0</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">pytorch</span><span class="o">=</span><span class="mf">1.7.1</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="p">::</span><span class="n">torchvision</span><span class="o">=</span><span class="mf">0.8.2</span>
+<span class="o">-</span> <span class="n">pytorch</span><span class="o">-</span><span class="n">lightning</span><span class="o">==</span><span class="mf">1.1.8</span>
 <span class="o">-</span> <span class="n">pip</span>
 <span class="o">-</span> <span class="n">pip</span><span class="p">:</span>
-    <span class="o">-</span> <span class="n">pycuda</span><span class="o">==</span><span class="mf">2019.1</span><span class="o">.</span><span class="mi">2</span>  <span class="c1"># not on Conda</span>
-    <span class="o">-</span> <span class="n">cloudpickle</span><span class="o">==</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">0</span>
-    <span class="o">-</span> <span class="n">boto3</span><span class="o">==</span><span class="mf">1.17</span><span class="o">.</span><span class="mi">7</span>
-    <span class="o">-</span> <span class="n">system</span><span class="o">-</span><span class="n">intelligence</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">2</span>
+    <span class="o">-</span> <span class="n">pycuda</span><span class="o">==</span><span class="mf">2019.1.2</span>  <span class="c1"># not on Conda</span>
+    <span class="o">-</span> <span class="n">cloudpickle</span><span class="o">==</span><span class="mf">1.6.0</span>
+    <span class="o">-</span> <span class="n">boto3</span><span class="o">==</span><span class="mf">1.17.7</span>
+    <span class="o">-</span> <span class="n">system</span><span class="o">-</span><span class="n">intelligence</span><span class="o">==</span><span class="mf">2.0.2</span>
 </pre></div>
 </div>
 <p>If you have dependencies that are not available on Conda nor PyPI you can adapt the Docker container.</p>

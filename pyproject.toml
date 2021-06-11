@@ -42,7 +42,7 @@ mlflow = "^1.15.0"
 pytest = "^6.2.4"
 coverage = {extras = ["toml"], version = "^5.3"}
 safety = "^1.9.0"
-mypy = "^0.901"
+mypy = "^0.902"
 typeguard = "^2.12.1"
 xdoctest = {extras = ["colors"], version = "^0.15.0"}
 sphinx = "^4.0.2"
@@ -60,6 +60,9 @@ pre-commit-hooks = "^4.0.1"
 sphinx-rtd-theme = "^0.5.0"
 sphinx-click = "^3.0.0"
 Pygments = "^2.9.0"
+types-attrs = "^19.1.0"
+types-requests = "^0.1.9"
+types-pkg-resources = "^0.1.2"
 
 [tool.poetry.scripts]
 mlf-core = "mlf_core.__main__:main"
@@ -74,6 +77,16 @@ exclude = '''
   )/
 )
 '''
+
+[tool.mypy]
+strict = false
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+ignore_missing_imports = true
+exclude = "templates"
+
 
 
 [tool.coverage.paths]

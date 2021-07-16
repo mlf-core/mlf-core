@@ -12,7 +12,7 @@ dependencies:
   - conda-forge::tensorboardx=2.2
   - pip
   - pip:
-    - tensorflow==2.6.1rc1  # not yet on Conda with full GPU support
+    - tensorflow==2.5.0  # not yet on Conda with full GPU support
     - tensorflow_datasets==4.2.0
     - pycuda==2021.1  # not on Conda
     - system-intelligence==2.0.2  # not yet on Conda

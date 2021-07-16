@@ -6,9 +6,9 @@ channels:
 dependencies:
   - nvidia::cudatoolkit=11.2.72
   - defaults::python=3.8.2
-  - defaults::boto3==1.17.46
-  - conda-forge::rich=10.1.0
-  - conda-forge::mlflow=1.13.1
+  - defaults::boto3==1.17.109
+  - conda-forge::rich=10.6.0
+  - conda-forge::mlflow=1.19.0
   - conda-forge::tensorboardx=2.2
   - pip
   - pip:

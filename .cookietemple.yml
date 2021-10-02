@@ -1,9 +1,9 @@
-cookietemple_version: '1.2.2 # <<COOKIETEMPLE_NO_BUMP>>'
+cookietemple_version: '1.3.0 # <<COOKIETEMPLE_NO_BUMP>>'
 domain: cli
 language: python
 project_slug: mlf-core
 project_slug_no_hyphen: mlf_core
-template_version: '1.1.0 # <<COOKIETEMPLE_NO_BUMP>>'
+template_version: '2.0.0 # <<COOKIETEMPLE_NO_BUMP>>'
 template_handle: cli-python
 github_username: mlf-core
 creator_github_username: zethson
@@ -15,7 +15,5 @@ full_name: Lukas Heumos
 email: lukas.heumos@posteo.net
 project_name: mlf-core
 project_short_description: Reproducible machine learning pipelines using mlflow.
-version: 1.11.2
+version: 1.11.3
 license: Apache2.0
-command_line_interface: Click
-testing_library: pytest

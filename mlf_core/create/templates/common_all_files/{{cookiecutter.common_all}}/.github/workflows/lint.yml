@@ -21,9 +21,9 @@ jobs:
 
       - name: Install mlf-core
         run: pip install mlf-core
-          
+
       - name: Run mlf-core lint
-        run: mlf-core lint .    
+        run: mlf-core lint .
 
 
   flake8:

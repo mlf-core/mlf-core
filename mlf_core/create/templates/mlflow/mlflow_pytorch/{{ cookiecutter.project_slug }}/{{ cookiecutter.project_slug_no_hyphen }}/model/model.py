@@ -1,7 +1,8 @@
-from torch.autograd import Variable
+from argparse import ArgumentParser
+
 import pytorch_lightning as pl
 import torch
-from argparse import ArgumentParser
+from torch.autograd import Variable
 from torch.nn import functional as F
 
 

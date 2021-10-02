@@ -1,0 +1,66 @@
+name: Create mlflow-tensorflow Template
+
+on: [push, pull_request]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+              name: Check out source-code repository
+
+            - name: Setup Python
+              uses: actions/setup-python@v2.2.2
+              with:
+                  python-version: 3.9
+
+            - name: Reclaim space
+              run: |
+                  sudo rm -rf /usr/share/dotnet
+                  sudo rm -rf /opt/ghc
+
+            - name: Install Poetry
+              run: |
+                  pip install poetry
+                  poetry --version
+
+            - name: Build mlf-core
+              run: make install
+
+            - name: Create mlflow-tensorflow Template
+              run: |
+                  echo -e "\n\033[B\n\n\n\nn\n\n\n\nn" | poetry run mlf-core create
+
+            # https://github.com/docker/build-push-action/issues/90
+            - name: Copy workaround
+              run: |
+                  cp exploding_springfield/Dockerfile .
+                  cp exploding_springfield/environment.yml .
+
+            - name: Install flake8
+              run: pip install flake8
+
+            - name: Lint project with flake8
+              run: flake8 exploding_springfield
+
+            - name: Install bandit
+              run: pip install bandit
+
+            - name: Run bandit
+              run: bandit -r exploding_springfield -c exploding_springfield/.bandit.yml
+
+            - name: Build Docker container
+              uses: docker/build-push-action@v1
+              with:
+                  repository: ghcr.io/homergithub/exploding_springfield
+                  tags: 0.1.0-SNAPSHOT
+                  push: false
+
+            - name: Install mlflow
+              run: pip install mlflow
+
+            - name: Train on the CPU
+              run: |
+                  cd exploding_springfield
+                  mlflow run . -P max_epochs=1

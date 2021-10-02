@@ -1,15 +1,16 @@
 import collections
 import io
-from rich.console import Console
-from rich import print
-import click
 import sys
-from pathlib import Path
 from configparser import NoSectionError
+from pathlib import Path
+
+import click
+from mlf_core.common.levensthein_dist import most_similar_command
+from mlf_core.common.suggest_similar_commands import MAIN_COMMANDS
+from rich import print
+from rich.console import Console
 
 from mlf_core import __version__
-from mlf_core.common.suggest_similar_commands import MAIN_COMMANDS
-from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.bump_version.bump_version import VersionBumper
 
 
@@ -34,11 +35,11 @@ class HelpErrorHandling(click.Group):
         ct_main_options = []
         # NOTE: this only works for options as arguments do not have a help attribute per default
         for p in ctx.command.params:
-            ct_main_options.append(('--' + p.name + ': ', p.help))
-        ct_main_options.append(('--help: ', '   Get detailed info on a command.'))
-        with formatter.section(self.get_rich_value('Options')):
+            ct_main_options.append(("--" + p.name + ": ", p.help))
+        ct_main_options.append(("--help: ", "   Get detailed info on a command."))
+        with formatter.section(self.get_rich_value("Options")):
             for t in ct_main_options:
-                formatter.write_text(f'{t[0] + t[1]}')
+                formatter.write_text(f"{t[0] + t[1]}")
 
     def format_help(self, ctx, formatter):
         """
@@ -68,17 +69,35 @@ class HelpErrorHandling(click.Group):
         formatter.width = 120
 
         with formatter.section(self.get_rich_value("General Commands")):
-            formatter.write_text(f"{self.commands.get('list').name}\t\t\t{self.commands.get('list').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('info').name}\t\t\t{self.commands.get('info').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('config').name}\t\t\t{self.commands.get('config').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('upgrade').name}\t\t\t{self.commands.get('upgrade').get_short_help_str(limit=150)}")
+            formatter.write_text(
+                f"{self.commands.get('list').name}\t\t\t{self.commands.get('list').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('info').name}\t\t\t{self.commands.get('info').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('config').name}\t\t\t{self.commands.get('config').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('upgrade').name}\t\t\t{self.commands.get('upgrade').get_short_help_str(limit=150)}"
+            )
 
         with formatter.section(self.get_rich_value("Commands for mlf-core projects")):
-            formatter.write_text(f"{self.commands.get('create').name}\t\t\t{self.commands.get('create').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('lint').name}\t\t\t{self.commands.get('lint').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('fix-artifact-paths').name}\t{self.commands.get('fix-artifact-paths').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('bump-version').name}\t\t{self.commands.get('bump-version').get_short_help_str(limit=150)}")
-            formatter.write_text(f"{self.commands.get('sync').name}\t\t\t{self.commands.get('sync').get_short_help_str(limit=150)}")
+            formatter.write_text(
+                f"{self.commands.get('create').name}\t\t\t{self.commands.get('create').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('lint').name}\t\t\t{self.commands.get('lint').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('fix-artifact-paths').name}\t{self.commands.get('fix-artifact-paths').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('bump-version').name}\t\t{self.commands.get('bump-version').get_short_help_str(limit=150)}"
+            )
+            formatter.write_text(
+                f"{self.commands.get('sync').name}\t\t\t{self.commands.get('sync').get_short_help_str(limit=150)}"
+            )
 
         with formatter.section(self.get_rich_value("Examples")):
             formatter.write_text("$ mlf-core create")
@@ -87,12 +106,16 @@ class HelpErrorHandling(click.Group):
             formatter.write_text("$ mlf-core info mlflow")
 
         with formatter.section(self.get_rich_value("Learn more")):
-            formatter.write_text("Use mlf-core <command> --help for more information about a command. You may also want to take a look at our docs at "
-                                 "https://mlf-core.readthedocs.io/.")
+            formatter.write_text(
+                "Use mlf-core <command> --help for more information about a command. You may also want to take a look at our docs at "
+                "https://mlf-core.readthedocs.io/."
+            )
 
         with formatter.section(self.get_rich_value("Feedback")):
-            formatter.write_text("We are always curious about your opinion on mlf-core. Join our Discord at "
-                                 "https://discord.gg/Mv8sAcq and drop us a message.")
+            formatter.write_text(
+                "We are always curious about your opinion on mlf-core. Join our Discord at "
+                "https://discord.gg/Mv8sAcq and drop us a message."
+            )
 
     def get_command(self, ctx, cmd_name):
         """
@@ -113,15 +136,20 @@ class HelpErrorHandling(click.Group):
 
         # no similar commands could be found
         if not matches:
-            ctx.fail(click.style('Unknown command and no similar command was found!', fg='red'))
-        elif len(matches) == 1 and action == 'use':
-            print(f'[bold red]Unknown command! Will use best match [green]{matches[0]}')
+            ctx.fail(click.style("Unknown command and no similar command was found!", fg="red"))
+        elif len(matches) == 1 and action == "use":
+            print(f"[bold red]Unknown command! Will use best match [green]{matches[0]}")
             return click.Group.get_command(self, ctx, matches[0])
-        elif len(matches) == 1 and action == 'suggest':
-            ctx.fail(click.style('Unknown command! Did you mean ', fg='red') + click.style(f'{matches[0]}?', fg='green'))
+        elif len(matches) == 1 and action == "suggest":
+            ctx.fail(
+                click.style("Unknown command! Did you mean ", fg="red") + click.style(f"{matches[0]}?", fg="green")
+            )
 
         # a few similar commands were found, print a info message
-        ctx.fail(click.style('Unknown command. Most similar commands were', fg='red') + click.style(f'{", ".join(sorted(matches))}', fg='red'))
+        ctx.fail(
+            click.style("Unknown command. Most similar commands were", fg="red")
+            + click.style(f'{", ".join(sorted(matches))}', fg="red")
+        )
 
     @staticmethod
     def args_not_provided(ctx, cmd: str) -> None:
@@ -130,18 +158,24 @@ class HelpErrorHandling(click.Group):
         :param ctx: Click app context
         :param cmd: The invoked subcommand
         """
-        if cmd == 'info':
-            print(f'[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a valid handle like [bold green]cli '
-                  '[bold blue]as argument.')
+        if cmd == "info":
+            print(
+                f"[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a valid handle like [bold green]cli "
+                "[bold blue]as argument."
+            )
             sys.exit(1)
 
-        elif cmd == 'bump-version':
-            print(f'[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a new version like [bold green]1.2.3 '
-                  '[bold blue]as first argument.')
+        elif cmd == "bump-version":
+            print(
+                f"[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a new version like [bold green]1.2.3 "
+                "[bold blue]as first argument."
+            )
             sys.exit(1)
 
-        elif cmd == 'config':
-            print(f'[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a valid argument. You can choose general, pat or all.')
+        elif cmd == "config":
+            print(
+                f"[bold red]Failed to execute [bold green]{cmd.upper()}.\n[bold blue]Please provide a valid argument. You can choose general, pat or all."
+            )
             sys.exit(1)
 
     def get_rich_value(self, output: str, is_header=True) -> str:
@@ -155,7 +189,7 @@ class HelpErrorHandling(click.Group):
         if is_header:
             console.print(f"[bold #1874cd]{output}")
 
-        return sio.getvalue().replace('\n', '')
+        return sio.getvalue().replace("\n", "")
 
 
 def print_project_version(ctx, param, value) -> None:
@@ -166,12 +200,17 @@ def print_project_version(ctx, param, value) -> None:
     if not value or ctx.resilient_parsing:
         return
     try:
-        print(f'[bold blue]Current project version is [bold green]{VersionBumper(Path.cwd(), False).CURRENT_VERSION}!')
+        print(f"[bold blue]Current project version is [bold green]{VersionBumper(Path.cwd(), False).CURRENT_VERSION}!")
         ctx.exit()
     # currently, its only possible to get project version from top level project dir where the mlf-core.cfg file is
     except NoSectionError:
-        ctx.fail(click.style('Unable to read from mlf-core.cfg file.\nMake sure your current working directory has a mlf-core.cfg file '
-                             'when running bump-version with the --project-version flag!', fg='red'))
+        ctx.fail(
+            click.style(
+                "Unable to read from mlf-core.cfg file.\nMake sure your current working directory has a mlf-core.cfg file "
+                "when running bump-version with the --project-version flag!",
+                fg="red",
+            )
+        )
 
 
 def print_mlfcore_version(ctx, param, value):
@@ -182,10 +221,10 @@ def print_mlfcore_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
     try:
-        print(f'[bold blue]Mlf-core version: {__version__}')
+        print(f"[bold blue]Mlf-core version: {__version__}")
         ctx.exit()
     except click.ClickException:
-        ctx.fail('An error occurred fetching mlf-core version!')
+        ctx.fail("An error occurred fetching mlf-core version!")
 
 
 class CustomHelpSubcommand(click.Command):
@@ -211,7 +250,9 @@ class CustomHelpSubcommand(click.Command):
         Custom implementation if formatting the usage of each subcommand.
         Usage section with a styled header will be printed.
         """
-        formatter.write_text(f'{self.get_rich_value("Usage: ")}mlf-core {self.name} {" ".join(self.collect_usage_pieces(ctx))}')
+        formatter.write_text(
+            f'{self.get_rich_value("Usage: ")}mlf-core {self.name} {" ".join(self.collect_usage_pieces(ctx))}'
+        )
 
     def format_help_text(self, ctx, formatter):
         """
@@ -221,7 +262,7 @@ class CustomHelpSubcommand(click.Command):
         """
         formatter.write_paragraph()
         formatter.write_text(self.help)
-        args = [('--' + param.name, param.helpmsg) for param in self.params if type(param) == CustomArg]
+        args = [("--" + param.name, param.helpmsg) for param in self.params if type(param) == CustomArg]
         if args:
             with formatter.section(self.get_rich_value("Arguments")):
                 formatter.write_dl(args)
@@ -231,9 +272,13 @@ class CustomHelpSubcommand(click.Command):
         Custom implementation of formatting the options of each subcommand.
         The options will be displayed in their relative order with their corresponding help message and a styled header.
         """
-        options = [('--' + param.name.replace('_', '-'), param.help) for param in self.params if type(param) == click.core.Option]
+        options = [
+            ("--" + param.name.replace("_", "-"), param.help)
+            for param in self.params
+            if type(param) == click.core.Option
+        ]
         help_option = self.get_help_option(ctx)
-        options.append(('--' + help_option.name, help_option.help))
+        options.append(("--" + help_option.name, help_option.help))
         with formatter.section(self.get_rich_value("Options")):
             formatter.write_dl(options)
 
@@ -248,7 +293,7 @@ class CustomHelpSubcommand(click.Command):
         if is_header:
             console.print(f"[bold #1874cd]{output}")
 
-        return sio.getvalue().replace('\n', '')
+        return sio.getvalue().replace("\n", "")
 
 
 class CustomArg(click.Argument):
@@ -257,5 +302,5 @@ class CustomArg(click.Argument):
     """
 
     def __init__(self, *args, **kwargs):
-        self.helpmsg = kwargs.pop('helpmsg')
+        self.helpmsg = kwargs.pop("helpmsg")
         super().__init__(*args, **kwargs)

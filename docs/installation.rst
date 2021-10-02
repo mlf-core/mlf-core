@@ -1,5 +1,3 @@
-.. highlight:: shell
-
 ============
 Installation
 ============
@@ -27,6 +25,7 @@ From sources
 ------------
 
 The sources for mlf-core can be downloaded from the `Github repo`_.
+Please note that you require `poetry`_ to be installed.
 
 You can either clone the public repository:
 
@@ -49,3 +48,4 @@ Once you have a copy of the source, you can install it with:
 
 .. _Github repo: https://github.com/mlf-core/mlf-core
 .. _tarball: https://github.com/mlf-core/mlf-core/tarball/master
+.. _poetry: https://python-poetry.org/

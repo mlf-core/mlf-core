@@ -1,6 +1,6 @@
 import pytorch_lightning as pl
-from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
+from torchvision import datasets, transforms
 
 
 class MNISTDataModule(pl.LightningDataModule):

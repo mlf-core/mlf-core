@@ -9,26 +9,30 @@ from rich import print
 log = logging.getLogger(__name__)
 
 
-mlf_core_style = Style([
-    ('qmark', 'fg:#0000FF bold'),  # token in front of the question
-    ('question', 'bold'),  # question text
-    ('answer', 'fg:#008000 bold'),  # submitted answer text behind the question
-    ('pointer', 'fg:#0000FF bold'),  # pointer used in select and checkbox prompts
-    ('highlighted', 'fg:#0000FF bold'),  # pointed-at choice in select and checkbox prompts
-    ('selected', 'fg:#008000'),  # style for a selected item of a checkbox
-    ('separator', 'fg:#cc5454'),  # separator in lists
-    ('instruction', ''),  # user instructions for select, rawselect, checkbox
-    ('text', ''),  # plain text
-    ('disabled', 'fg:#FF0000 italic')  # disabled choices for select and checkbox prompts
-])
+mlf_core_style = Style(
+    [
+        ("qmark", "fg:#0000FF bold"),  # token in front of the question
+        ("question", "bold"),  # question text
+        ("answer", "fg:#008000 bold"),  # submitted answer text behind the question
+        ("pointer", "fg:#0000FF bold"),  # pointer used in select and checkbox prompts
+        ("highlighted", "fg:#0000FF bold"),  # pointed-at choice in select and checkbox prompts
+        ("selected", "fg:#008000"),  # style for a selected item of a checkbox
+        ("separator", "fg:#cc5454"),  # separator in lists
+        ("instruction", ""),  # user instructions for select, rawselect, checkbox
+        ("text", ""),  # plain text
+        ("disabled", "fg:#FF0000 italic"),  # disabled choices for select and checkbox prompts
+    ]
+)
 
 
-def mlf_core_questionary_or_dot_mlf_core(function: str,
-                                         question: str,
-                                         choices: list = None,
-                                         default: str = None,
-                                         dot_mlf_core: dict = None,
-                                         to_get_property: str = None) -> Union[str, bool]:
+def mlf_core_questionary_or_dot_mlf_core(
+    function: str,
+    question: str,
+    choices: list = None,
+    default: str = None,
+    dot_mlf_core: dict = None,
+    to_get_property: str = None,
+) -> Union[str, bool]:
     """
     Custom selection based on Questionary. Handles keyboard interrupts and default values.
 
@@ -46,35 +50,41 @@ def mlf_core_questionary_or_dot_mlf_core(function: str,
             if to_get_property in dot_mlf_core:
                 return dot_mlf_core[to_get_property]
     except KeyError:
-        log.debug(f'.mlf_core.yml file was passed when creating a project, but key {to_get_property}'
-                  f' does not exist in the dot_mlf_core dictionary! Assigning default {default} to {to_get_property}.')
-        return default
+        log.debug(
+            f".mlf_core.yml file was passed when creating a project, but key {to_get_property}"
+            f" does not exist in the dot_mlf_core dictionary! Assigning default {default} to {to_get_property}."
+        )
+        return default  # type: ignore
 
     # There is no .mlf_core.yml file aka dot_mlf_core dict passed -> ask for the properties
-    answer = ''
+    answer = ""
     try:
-        if function == 'select':
-            if default not in choices:
-                log.debug(f'Default value {default} is not in the set of choices!')
-            answer = getattr(questionary, function)(f'{question}: ', choices=choices, style=mlf_core_style).unsafe_ask()
-        elif function == 'password':
-            while not answer or answer == '':
-                answer = getattr(questionary, function)(f'{question}: ', style=mlf_core_style).unsafe_ask()
-        elif function == 'text':
+        if function == "select":
+            if default not in choices:  # type: ignore
+                log.debug(f"Default value {default} is not in the set of choices!")
+            answer = getattr(questionary, function)(f"{question}: ", choices=choices, style=mlf_core_style).unsafe_ask()
+        elif function == "password":
+            while not answer or answer == "":
+                answer = getattr(questionary, function)(f"{question}: ", style=mlf_core_style).unsafe_ask()
+        elif function == "text":
             if not default:
-                log.debug('Tried to utilize default value in questionary prompt, but is None! Please set a default value.')
-                default = ''
-            answer = getattr(questionary, function)(f'{question} [{default}]: ', style=mlf_core_style).unsafe_ask()
-        elif function == 'confirm':
-            default_value_bool = True if default == 'Yes' or default == 'yes' else False
-            answer = getattr(questionary, function)(f'{question} [{default}]: ', style=mlf_core_style, default=default_value_bool).unsafe_ask()
+                log.debug(
+                    "Tried to utilize default value in questionary prompt, but is None! Please set a default value."
+                )
+                default = ""
+            answer = getattr(questionary, function)(f"{question} [{default}]: ", style=mlf_core_style).unsafe_ask()
+        elif function == "confirm":
+            default_value_bool = True if default == "Yes" or default == "yes" else False
+            answer = getattr(questionary, function)(
+                f"{question} [{default}]: ", style=mlf_core_style, default=default_value_bool
+            ).unsafe_ask()
         else:
-            log.debug(f'Unsupported questionary function {function} used!')
+            log.debug(f"Unsupported questionary function {function} used!")
 
     except KeyboardInterrupt:
-        print('[bold red] Aborted!')
+        print("[bold red] Aborted!")
         sys.exit(1)
-    if answer is None or answer == '':
-        answer = default
+    if answer is None or answer == "":
+        answer = default  # type: ignore
 
     return answer

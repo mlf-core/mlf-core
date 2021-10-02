@@ -1,15 +1,19 @@
 import hashlib
-import tempfile
 import os
-import numpy as np
 import random
 import subprocess
-from rich import print
+import tempfile
+
 import mlflow
+import numpy as np
+from rich import print
+
 {%- if cookiecutter.language == "pytorch" %}
 import torch
+
 {%- elif cookiecutter.language == "tensorflow" %}
 import tensorflow as tf
+
 {%- endif %}
 
 

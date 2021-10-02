@@ -1,21 +1,21 @@
+import configparser
 import io
+import logging
 import os
 import re
-import logging
-import configparser
-import requests
-import rich.progress
-import rich.markdown
-import rich.panel
-import rich.console
-from pkg_resources import parse_version
-from rich import print
-from packaging import version
 from itertools import groupby
 
+import requests
+import rich.console
+import rich.markdown
+import rich.panel
+import rich.progress
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dir_util import pf, find_filepath_in_dir
+from mlf_core.util.dir_util import find_filepath_in_dir, pf
 from mlf_core.util.rich import console
+from packaging import version
+from pkg_resources import parse_version
+from rich import print
 
 log = logging.getLogger(__name__)
 
@@ -30,11 +30,11 @@ class TemplateLinter(object):
         warned (list): A list of tuples of the form: `(<warned no>, <reason>)`
     """
 
-    def __init__(self, path='.'):
+    def __init__(self, path="."):
         self.path = path
         self.files = []
-        self.project_slug = load_yaml_file(f'{path}/.mlf_core.yml')['project_slug']
-        self.project_slug_no_hyphen = load_yaml_file(f'{path}/.mlf_core.yml')['project_slug_no_hyphen']
+        self.project_slug = load_yaml_file(f"{path}/.mlf_core.yml")["project_slug"]
+        self.project_slug_no_hyphen = load_yaml_file(f"{path}/.mlf_core.yml")["project_slug_no_hyphen"]
         self.passed = []
         self.warned = []
         self.failed = []
@@ -54,13 +54,17 @@ class TemplateLinter(object):
         # Called on its own, so not from a subclass -> run general linting
         if check_functions is None:
             # Fetch all general linting functions
-            check_functions = [func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('_'))]
+            check_functions = [
+                func
+                for func in dir(TemplateLinter)
+                if (callable(getattr(TemplateLinter, func)) and not func.startswith("_"))
+            ]
             # Remove internal functions
-            check_functions = list(set(check_functions).difference({'lint_project'}))
-            log.debug(f'Linting functions of general linting are:\n {check_functions}')
+            check_functions = list(set(check_functions).difference({"lint_project"}))
+            log.debug(f"Linting functions of general linting are:\n {check_functions}")
             # Remove mlflow specific linting functions if not applicable
-            if 'mlflow' not in self.__class__.__name__.lower():
-                check_functions = list(filter(lambda func: not func.startswith('mlflow'), check_functions))
+            if "mlflow" not in self.__class__.__name__.lower():
+                check_functions = list(filter(lambda func: not func.startswith("mlflow"), check_functions))
 
         progress = rich.progress.Progress(
             "[bold green]{task.description}",
@@ -68,11 +72,13 @@ class TemplateLinter(object):
             "[bold yellow]{task.completed} of {task.total}[reset] [bold green]{task.fields[func_name]}",
         )
         with progress:
-            lint_progress = progress.add_task('Running lint checks', total=len(check_functions), func_name=check_functions)
+            lint_progress = progress.add_task(
+                "Running lint checks", total=len(check_functions), func_name=check_functions
+            )
             for fun_name in check_functions:
-                log.debug(f'Running linting function: {fun_name}')
+                log.debug(f"Running linting function: {fun_name}")
                 progress.update(lint_progress, advance=1, func_name=fun_name)
-                if fun_name == 'check_files_exist':
+                if fun_name == "check_files_exist":
                     getattr(calling_class, fun_name)(is_subclass_calling)
                 else:
                     getattr(calling_class, fun_name)()
@@ -111,37 +117,33 @@ class TemplateLinter(object):
         # NB: Should all be files, not directories
         # List of lists. Passes if any of the files in the sublist are found.
         files_fail = [
-            ['Dockerfile'],
-            ['mlf_core.cfg'],
-            ['README.rst'],
-            ['CHANGELOG.rst'],
-            ['LICENSE', 'LICENSE.md', 'LICENCE', 'LICENCE.md'],  # NB: British / American spelling
-            [os.path.join('docs', 'index.rst')],
-            [os.path.join('docs', 'readme.rst')],
-            [os.path.join('docs', 'changelog.rst')],
-            [os.path.join('docs', 'usage.rst')],
+            ["Dockerfile"],
+            ["mlf_core.cfg"],
+            ["README.rst"],
+            ["CHANGELOG.rst"],
+            ["LICENSE", "LICENSE.md", "LICENCE", "LICENCE.md"],  # NB: British / American spelling
+            [os.path.join("docs", "index.rst")],
+            [os.path.join("docs", "readme.rst")],
+            [os.path.join("docs", "changelog.rst")],
+            [os.path.join("docs", "usage.rst")],
         ]
 
         files_warn = [
-            ['.gitignore'],
-            [os.path.join('.github', 'ISSUE_TEMPLATE', 'bug_report.md')],
-            [os.path.join('.github', 'ISSUE_TEMPLATE', 'feature_request.md')],
-            [os.path.join('.github', 'ISSUE_TEMPLATE', 'general_question.md')],
-            [os.path.join('.github', 'pull_request_template.md')]
+            [".gitignore"],
+            [os.path.join(".github", "ISSUE_TEMPLATE", "bug_report.md")],
+            [os.path.join(".github", "ISSUE_TEMPLATE", "feature_request.md")],
+            [os.path.join(".github", "ISSUE_TEMPLATE", "general_question.md")],
+            [os.path.join(".github", "pull_request_template.md")],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
-        files_fail_ifexists = [
+        files_fail_ifexists = []
 
-        ]
-
-        files_warn_ifexists = [
-
-        ]
+        files_warn_ifexists = []
 
         # First - critical files. Check that this is actually a mlf-core based project
-        if not os.path.isfile(pf(self, '.mlf_core.yml')):
-            raise AssertionError('.mlf_core.yml not found! Is this a mlf-core project?')
+        if not os.path.isfile(pf(self, ".mlf_core.yml")):
+            raise AssertionError(".mlf_core.yml not found! Is this a mlf-core project?")
 
         files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, is_subclass_calling)
 
@@ -149,7 +151,7 @@ class TemplateLinter(object):
         """
         Lint the Changelog.rst file
         """
-        changelog_path = os.path.join(self.path, 'CHANGELOG.rst')
+        changelog_path = os.path.join(self.path, "CHANGELOG.rst")
         linter = ChangelogLinter(changelog_path, self)
         if not len(linter.changelog_content) < 3:
             # lint header first
@@ -158,36 +160,40 @@ class TemplateLinter(object):
                 # if head linting did not found any errors lint sections
                 section_lint_passed = linter.lint_changelog_section()
                 if section_lint_passed and header_lint_passed:
-                    self.passed.append(('general-6', 'Changelog linting passed!'))
+                    self.passed.append(("general-6", "Changelog linting passed!"))
             elif not header_detected:
-                self.failed.append(('general-6', 'Changelog does not seem to contain a header or your header syntax is wrong!'))
+                self.failed.append(
+                    ("general-6", "Changelog does not seem to contain a header or your header syntax is wrong!")
+                )
         else:
-            self.failed.append(('general-6', 'Changelog does not seem to contain a header and/or at least one section!'))
+            self.failed.append(
+                ("general-6", "Changelog does not seem to contain a header and/or at least one section!")
+            )
 
     def check_docker(self):
         """
         Checks that Dockerfile contains the string ``FROM``
         """
-        fn = os.path.join(self.path, 'Dockerfile')
-        with open(fn, 'r') as fh:
+        fn = os.path.join(self.path, "Dockerfile")
+        with open(fn, "r") as fh:
             content = fh.read()
 
         # Implicitly also checks if empty.
-        if 'FROM' in content:
-            self.passed.append(('general-2', 'Dockerfile check passed'))
+        if "FROM" in content:
+            self.passed.append(("general-2", "Dockerfile check passed"))
             return
 
-        self.failed.append((2, 'Dockerfile check failed'))
+        self.failed.append((2, "Dockerfile check failed"))
 
     def check_mlf_core_todos(self) -> None:
         """
         Go through all template files looking for the string 'TODO MLF-CORE:' or 'MLF-CORE TODO:'
         """
-        ignore = ['.git']
-        if os.path.isfile(os.path.join(self.path, '.gitignore')):
-            with io.open(os.path.join(self.path, '.gitignore'), 'rt', encoding='latin1') as file:
+        ignore = [".git"]
+        if os.path.isfile(os.path.join(self.path, ".gitignore")):
+            with io.open(os.path.join(self.path, ".gitignore"), "rt", encoding="latin1") as file:
                 for line in file:
-                    ignore.append(os.path.basename(line.strip().rstrip('/')))
+                    ignore.append(os.path.basename(line.strip().rstrip("/")))
         for root, dirs, files in os.walk(self.path):
             # Ignore files
             for ignore_file in ignore:
@@ -196,56 +202,60 @@ class TemplateLinter(object):
                 if ignore_file in files:
                     files.remove(ignore_file)
             for fname in files:
-                with io.open(os.path.join(root, fname), 'rt', encoding='latin1') as file:
+                with io.open(os.path.join(root, fname), "rt", encoding="latin1") as file:
                     for line in file:
-                        if any(todostring in line for todostring in ['TODO MLF-CORE:', 'MLF-CORE TODO:']):
-                            line = line.replace('<!--', '') \
-                                .replace('-->', '') \
-                                .replace('# TODO MLF-CORE: ', '') \
-                                .replace('// TODO MLF-CORE: ', '') \
-                                .replace('TODO MLF-CORE: ', '') \
-                                .replace('# MLF-CORE TODO: ', '') \
-                                .replace('// MLF-CORE TODO: ', '') \
-                                .replace('MLF-CORE TODO: ', '') \
+                        if any(todostring in line for todostring in ["TODO MLF-CORE:", "MLF-CORE TODO:"]):
+                            line = (
+                                line.replace("<!--", "")
+                                .replace("-->", "")
+                                .replace("# TODO MLF-CORE: ", "")
+                                .replace("// TODO MLF-CORE: ", "")
+                                .replace("TODO MLF-CORE: ", "")
+                                .replace("# MLF-CORE TODO: ", "")
+                                .replace("// MLF-CORE TODO: ", "")
+                                .replace("MLF-CORE TODO: ", "")
                                 .strip()
-                            self.warned.append(('general-3', f'TODO string found in {self._wrap_quotes(fname)}: {line}'))
+                            )
+                            self.warned.append(
+                                ("general-3", f"TODO string found in {self._wrap_quotes(fname)}: {line}")
+                            )
 
     def check_no_cookiecutter_strings(self) -> None:
         """
         Verifies that no cookiecutter strings are in any of the files
         """
-        for root, dirs, files in os.walk(self.path):
+        for root, _, files in os.walk(self.path):
             for fname in files:
-                with io.open(os.path.join(root, fname), 'rt', encoding='latin1') as file:
-                    if file.name.endswith('.pyc'):
+                with io.open(os.path.join(root, fname), "rt", encoding="latin1") as file:
+                    if file.name.endswith(".pyc"):
                         continue
                     for line in file:
-                        regex = re.compile(r'{\s?.* cookiecutter.*\s?}')  # noqa W605
+                        regex = re.compile(r"{\s?.* cookiecutter.*\s?}")  # noqa W605
                         if regex.search(line):
-                            line = f'{line[:50 - len(fname)]}..'
-                            self.warned.append(('general-4', f'Cookiecutter string found in \'{fname}\': {line}'))
+                            line = f"{line[:50 - len(fname)]}.."
+                            self.warned.append(("general-4", f"Cookiecutter string found in '{fname}': {line}"))
 
     def check_version_consistent(self) -> None:
         """
         This method should check that the version is consistent across all files.
         """
         parser = configparser.ConfigParser()
-        parser.read(f'{self.path}/mlf_core.cfg')
-        sections = ['bumpversion_files_whitelisted', 'bumpversion_files_blacklisted']
+        parser.read(f"{self.path}/mlf_core.cfg")
+        sections = ["bumpversion_files_whitelisted", "bumpversion_files_blacklisted"]
 
-        current_version = parser.get('bumpversion', 'current_version')
+        current_version = parser.get("bumpversion", "current_version")
 
         cwd = os.getcwd()
         os.chdir(self.path)
 
         # check if the version matches current version in each listed file (depending on whitelisted or blacklisted)
         for section in sections:
-            for file, path in parser.items(section):
+            for _, path in parser.items(section):
                 self._check_version_match(path, current_version, section)
         os.chdir(cwd)
         # Pass message if there weren't any inconsistencies within the version numbers
-        if not any('general-5' in tup[0] for tup in self.failed):
-            self.passed.append(('general-5', 'Versions were consistent over all files'))
+        if not any("general-5" in tup[0] for tup in self.failed):
+            self.passed.append(("general-5", "Versions were consistent over all files"))
 
     def _check_version_match(self, path: str, version: str, section: str) -> None:
         """
@@ -257,64 +267,71 @@ class TemplateLinter(object):
         with open(path) as file:
             for line in file:
                 # if a tag is found and (depending on whether its a white or blacklisted file) check if the versions are matching
-                if ('<<MLF-CORE_NO_BUMP>>' not in line and not section == 'bumpversion_files_blacklisted') or '<<MLF-CORE_FORCE_BUMP>>' in line:
-                    line_version = re.search(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', line)
+                if (
+                    "<<MLF-CORE_NO_BUMP>>" not in line and not section == "bumpversion_files_blacklisted"
+                ) or "<<MLF-CORE_FORCE_BUMP>>" in line:
+                    line_version = re.search(r"(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)", line)
                     if line_version:
-                        line_version = line_version.group(0)
+                        line_version = line_version.group(0)  # type: ignore
                         # No match between the current version number and version in source code file
                         if line_version != version:
-                            corrected_line = re.sub(r'(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)', version, line)
-                            self.failed.append(('general-5', f'Version number don´t match in\n {path}: \n {line.strip()} should be {corrected_line.strip()}'))
+                            corrected_line = re.sub(r"(?<!\.)\d+(?:\.\d+){2}(?:-SNAPSHOT)?(?!\.)", version, line)
+                            self.failed.append(
+                                (
+                                    "general-5",
+                                    f"Version number don´t match in\n {path}: \n {line.strip()} should be {corrected_line.strip()}",
+                                )
+                            )
 
     def mlflow_check_conda_environment(self) -> None:
         passed_conda_check = True
-        conda_env = load_yaml_file(f'{self.path}/environment.yml')
+        conda_env = load_yaml_file(f"{self.path}/environment.yml")
 
         # Verify that the structure is somewhat reasonable
-        for section in ['name', 'channels', 'dependencies']:
+        for section in ["name", "channels", "dependencies"]:
             if section not in conda_env:
                 passed_conda_check = False
-                self.failed.append(('general-7', f'Section {section} missing from environment.yml file!'))
+                self.failed.append(("general-7", f"Section {section} missing from environment.yml file!"))
 
-        conda_only = list(filter(lambda dep: '::' in dep, conda_env['dependencies']))
+        conda_only = list(filter(lambda dep: "::" in dep, conda_env["dependencies"]))
 
         # Verify that all Conda dependencies have a pinned version number and are up to date
         for idx, dependency in enumerate(conda_only):
-            comment_token = conda_env['dependencies'].ca.items.get(idx)
+            comment_token = conda_env["dependencies"].ca.items.get(idx)
             check_dependency = True
-            if comment_token and 'MLF-CORE IGNORE' in comment_token[0].value:
+            if comment_token and "MLF-CORE IGNORE" in comment_token[0].value:
                 check_dependency = False
             else:
                 # after an = sign there should be a specified version
-                split = dependency.split('==') if '==' in dependency else dependency.split('=')
+                split = dependency.split("==") if "==" in dependency else dependency.split("=")
                 if len(split) < 2:
                     passed_conda_check = False
                     check_dependency = False
-                    self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+                    self.failed.append(("general-7", f"Dependency {dependency} does not have a pinned version!"))
             if check_dependency:
                 self._check_anaconda_package(dependency, conda_env)
 
         # all pip dependencies are inside a dict
-        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env['dependencies']))[0]['pip']
+        pip_only = list(filter(lambda dep: isinstance(dep, dict), conda_env["dependencies"]))[0]["pip"]
 
         # Verify that all PyPI/pip dependencies have a pinned version number and are up to date
         for idx, dependency in enumerate(pip_only):
             comment_token = pip_only.ca.items.get(idx)
             check_dependency = True
-            if comment_token and 'MLF-CORE IGNORE' in comment_token[0].value:
+            if comment_token and "MLF-CORE IGNORE" in comment_token[0].value:
                 check_dependency = False
             else:
                 # after an = sign there should be a specified version
-                split = dependency.split('==') if '==' in dependency else dependency.split('=')
+                split = dependency.split("==") if "==" in dependency else dependency.split("=")
                 if len(split) < 2:
                     passed_conda_check = False
                     check_dependency = False
-                    self.failed.append(('general-7', f'Dependency {dependency} does not have a pinned version!'))
+                    self.failed.append(("general-7", f"Dependency {dependency} does not have a pinned version!"))
             if check_dependency:
                 self._check_pip_package(dependency)
 
         if passed_conda_check:
-            self.passed.append(('general-7', 'Passed conda environment checks.'))
+            self.passed.append(("general-7", "Passed conda environment checks."))
 
     def _check_anaconda_package(self, dependency, conda_environment):
         """Query conda package information.
@@ -323,112 +340,129 @@ class TemplateLinter(object):
         :param conda_environment: A dictionary of the read in environment.yml
         """
         # Check if each dependency is the latest available version
-        dependency_split = dependency.split('==') if '==' in dependency else dependency.split('=')
+        dependency_split = dependency.split("==") if "==" in dependency else dependency.split("=")
         dependency_name, dependency_version = dependency_split[0], dependency_split[1]
-        dep_channels = conda_environment.get('channels', [])
+        dep_channels = conda_environment.get("channels", [])
 
-        if '::' in dependency_name:
-            dep_channels = [dependency_name.split('::')[0]]
-            dependency_name = dependency_name.split('::')[1]
+        if "::" in dependency_name:
+            dep_channels = [dependency_name.split("::")[0]]
+            dependency_name = dependency_name.split("::")[1]
 
         # 'defaults' isn't actually a channel name. See https://docs.anaconda.com/anaconda/user-guide/tasks/using-repositories/
-        if 'defaults' in dep_channels:
-            dep_channels.remove('defaults')
-            dep_channels.extend(['main', 'anaconda', 'r', 'free', 'archive', 'anaconda-extras'])
+        if "defaults" in dep_channels:
+            dep_channels.remove("defaults")
+            dep_channels.extend(["main", "anaconda", "r", "free", "archive", "anaconda-extras"])
         for ch in dep_channels:
-            anaconda_api_url = f'https://api.anaconda.org/package/{ch}/{dependency_name}'
+            anaconda_api_url = f"https://api.anaconda.org/package/{ch}/{dependency_name}"
             try:
                 response = requests.get(anaconda_api_url, timeout=10)
             except requests.exceptions.Timeout:
-                self.warned.append(('general-7', f'Anaconda API timed out: {anaconda_api_url}'))
+                self.warned.append(("general-7", f"Anaconda API timed out: {anaconda_api_url}"))
             except requests.exceptions.ConnectionError:
-                self.warned.append(('general-7', 'Could not connect to Anaconda API'))
+                self.warned.append(("general-7", "Could not connect to Anaconda API"))
             else:
                 if response.status_code == 200:
                     conda_dep_json = response.json()
-                    latest_dependency_version = conda_dep_json['latest_version']
-                    latest_dependency_version = latest_dependency_version.split('=')[0]
-                    dependency_version = dependency_version.split('==')[0]
+                    latest_dependency_version = conda_dep_json["latest_version"]
+                    latest_dependency_version = latest_dependency_version.split("=")[0]
+                    dependency_version = dependency_version.split("==")[0]
                     if parse_version(dependency_version) < parse_version(latest_dependency_version):
-                        self.warned.append(('general-7', f'Version {dependency_version} of {dependency_name}'
-                                                         f' is not the latest available: {latest_dependency_version}'))
+                        self.warned.append(
+                            (
+                                "general-7",
+                                f"Version {dependency_version} of {dependency_name}"
+                                f" is not the latest available: {latest_dependency_version}",
+                            )
+                        )
                     return
                 elif response.status_code != 404:
-                    self.warned.append(('general-7', f'Anaconda API returned unexpected response code `{response.status_code}`'
-                                                     f' for: {anaconda_api_url}\n{response}'))
+                    self.warned.append(
+                        (
+                            "general-7",
+                            f"Anaconda API returned unexpected response code `{response.status_code}`"
+                            f" for: {anaconda_api_url}\n{response}",
+                        )
+                    )
                 elif response.status_code == 404:
-                    print(f'[red]Could not find {dependency} in conda channel {ch}')
+                    print(f"[red]Could not find {dependency} in conda channel {ch}")
         else:
             # We have looped through each channel and had a 404 response code on everything
-            self.failed.append(('general-7', f'Could not find Conda dependency {dependency} using the Anaconda API'))
+            self.failed.append(("general-7", f"Could not find Conda dependency {dependency} using the Anaconda API"))
 
     def _check_pip_package(self, dependency):
         """Query PyPi package information.
         Sends a HTTP GET request to the PyPi remote API.
         :param dependency: A PyPi package name.
         """
-        pip_dependency_name, pip_dependency_version = dependency.split('==')
+        pip_dependency_name, pip_dependency_version = dependency.split("==")
         pip_api_url = "https://pypi.python.org/pypi/{}/json".format(pip_dependency_name)
         try:
             response = requests.get(pip_api_url, timeout=10)
         except requests.exceptions.Timeout:
-            self.warned.append(('general-7', f'PyPi API timed out: {pip_api_url}'))
+            self.warned.append(("general-7", f"PyPi API timed out: {pip_api_url}"))
         except requests.exceptions.ConnectionError:
-            self.warned.append(('general-7', f'PyPi API Connection error: {pip_api_url}'))
+            self.warned.append(("general-7", f"PyPi API Connection error: {pip_api_url}"))
         else:
             if response.status_code == 200:
                 pip_dep_json = response.json()
-                latest_dependency_version = pip_dep_json['info']['version']
+                latest_dependency_version = pip_dep_json["info"]["version"]
                 if parse_version(pip_dependency_version) < parse_version(latest_dependency_version):
-                    self.warned.append(('general-7', f'Version {pip_dependency_version} of {pip_dependency_name}'
-                                                     f' is not the latest available: {latest_dependency_version}'))
+                    self.warned.append(
+                        (
+                            "general-7",
+                            f"Version {pip_dependency_version} of {pip_dependency_name}"
+                            f" is not the latest available: {latest_dependency_version}",
+                        )
+                    )
             else:
-                self.failed.append(('general-7', f'Could not find pip dependency using the PyPi API: {dependency}'))
+                self.failed.append(("general-7", f"Could not find pip dependency using the PyPi API: {dependency}"))
 
     def mlflow_mlf_core_py_complete(self) -> None:
         """
         Verifies that the random_seed method exists and
 
         """
-        mlf_core_py_path = find_filepath_in_dir('mlf_core.py', self.path)
+        mlf_core_py_path = find_filepath_in_dir("mlf_core.py", self.path)
         if not mlf_core_py_path:
-            self.failed.append(('mlflow-general-8', 'mlf_core.py could not be found!'))
+            self.failed.append(("mlflow-general-8", "mlf_core.py could not be found!"))
             return
 
         with open(mlf_core_py_path) as f:
             mlf_core_py_content = list(map(lambda line: line.strip(), f.readlines()))
 
         # Verify that general_random_seeds is complete
-        expected_lines_general_random_seeds = ['def set_general_random_seeds(seed):',
-                                               'os.environ[\'PYTHONHASHSEED\'] = str(seed)  # Python general',
-                                               'np.random.seed(seed)  # Numpy random',
-                                               'random.seed(seed)  # Python random']
+        expected_lines_general_random_seeds = [
+            "def set_general_random_seeds(seed):",
+            "os.environ['PYTHONHASHSEED'] = str(seed)  # Python general",
+            "np.random.seed(seed)  # Numpy random",
+            "random.seed(seed)  # Python random",
+        ]
 
         # Verify that system-intelligence and conda environment logging are intact
         expected_lines_sys_intell_conda_env = [
-            'def log_sys_intel_conda_env(cls):',
-            'reports_output_dir = tempfile.mkdtemp()',
-            'def log_system_intelligence(reports_output_dir: str):',
-            'def log_conda_environment(reports_output_dir: str):',
-            'query_and_export(query_scope={\'all\'},',
-            'mlflow.log_artifacts(reports_output_dir, artifact_path=\'reports\')',
-            f'subprocess.call([\'conda\', \'env\', \'export\', \'--name\', \'{self.project_slug_no_hyphen}\'], stdout=conda_env_filehandler)',
-            f'mlflow.log_artifact(f\'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml\', artifact_path=\'reports\')'
+            "def log_sys_intel_conda_env(cls):",
+            "reports_output_dir = tempfile.mkdtemp()",
+            "def log_system_intelligence(reports_output_dir: str):",
+            "def log_conda_environment(reports_output_dir: str):",
+            "query_and_export(query_scope={'all'},",
+            "mlflow.log_artifacts(reports_output_dir, artifact_path='reports')",
+            f"subprocess.call(['conda', 'env', 'export', '--name', '{self.project_slug_no_hyphen}'], stdout=conda_env_filehandler)",
+            f"mlflow.log_artifact(f'{{reports_output_dir}}/{self.project_slug_no_hyphen}_conda_environment.yml', artifact_path='reports')",
         ]
 
         for expected_line in expected_lines_general_random_seeds + expected_lines_sys_intell_conda_env:
             if expected_line.strip() not in mlf_core_py_content:
-                self.failed.append(('mlflow-general-8', f'{expected_line} not found in mlf_core.py'))
+                self.failed.append(("mlflow-general-8", f"{expected_line} not found in mlf_core.py"))
 
     def _print_results(self):
         console.print()
         console.rule("[bold blue]LINT RESULTS")
         console.print()
         console.print(
-            f'     [bold green][[\u2714]] {len(self.passed):>4} tests passed\n     [bold yellow][[!]] {len(self.warned):>4} tests had warnings\n'
-            f'     [bold red][[\u2717]] {len(self.failed):>4} tests failed',
+            f"     [bold green][[\u2714]] {len(self.passed):>4} tests passed\n     [bold yellow][[!]] {len(self.warned):>4} tests had warnings\n"
+            f"     [bold red][[\u2717]] {len(self.failed):>4} tests failed",
             overflow="ellipsis",
-            highlight=False
+            highlight=False,
         )
 
         # Helper function to format test links nicely
@@ -439,8 +473,10 @@ class TemplateLinter(object):
             """
             results = []
             for eid, msg in test_results:
-                results.append(f"1. [https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}]"
-                               f"(https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}) : {msg}")
+                results.append(
+                    f"1. [https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}]"
+                    f"(https://mlf-core.readthedocs.io/en/latest/lint.html#{eid}) : {msg}"
+                )
             return rich.markdown.Markdown("\n".join(results))
 
         if len(self.passed) > 0:
@@ -470,13 +506,15 @@ class TemplateLinter(object):
         return ansi_escape.sub(replace_with, string)
 
 
-def files_exist_linting(self,
-                        files_fail: list,
-                        files_fail_ifexists: list,
-                        files_warn: list,
-                        files_warn_ifexists: list,
-                        is_subclass_calling=True,
-                        handle: str = 'general') -> None:
+def files_exist_linting(
+    self,
+    files_fail: list,
+    files_fail_ifexists: list,
+    files_warn: list,
+    files_warn_ifexists: list,
+    is_subclass_calling=True,
+    handle: str = "general",
+) -> None:
     """
     Verifies that passed lists of files exist or do not exist.
     Depending on the desired result passing, warning or failing results are appended to the linter object.
@@ -494,15 +532,15 @@ def files_exist_linting(self,
     for files in files_fail:
         if not any([os.path.isfile(pf(self, f)) for f in files]):
             all_exists = False
-            self.failed.append((f'{handle}-1', f'File not found: {self._wrap_quotes(files)}'))
+            self.failed.append((f"{handle}-1", f"File not found: {self._wrap_quotes(files)}"))
     # flag that indicates whether all required files exist or not
     if all_exists:
         # called linting from a specific template linter
         if is_subclass_calling:
-            self.passed.append((f'{handle}-1', f'All required {handle} specific files were found!'))
+            self.passed.append((f"{handle}-1", f"All required {handle} specific files were found!"))
         # called as general linting
         else:
-            self.passed.append((f'{handle}-1', f'All required {handle} files were found!'))
+            self.passed.append((f"{handle}-1", f"All required {handle} files were found!"))
 
     # Files that cause a warning if they don't exist
     for files in files_warn:
@@ -510,17 +548,17 @@ def files_exist_linting(self,
             # pass cause if a file was found it will be summarised in one "all required files found" statement
             pass
         else:
-            self.warned.append((f'{handle}-1', f'File not found: {self._wrap_quotes(files)}'))
+            self.warned.append((f"{handle}-1", f"File not found: {self._wrap_quotes(files)}"))
 
     # Files that cause an error if they exist
     for file in files_fail_ifexists:
         if os.path.isfile(pf(self, file)):
-            self.failed.append((f'{handle}-1', f'File must be removed: {self._wrap_quotes(file)}'))
+            self.failed.append((f"{handle}-1", f"File must be removed: {self._wrap_quotes(file)}"))
 
     # Files that cause a warning if they exist
     for file in files_warn_ifexists:
         if os.path.isfile(pf(self, file)):
-            self.warned.append((f'{handle}-1', f'File should be removed: {self._wrap_quotes(file)}'))
+            self.warned.append((f"{handle}-1", f"File should be removed: {self._wrap_quotes(file)}"))
 
 
 class GetLintingFunctionsMeta(type):
@@ -531,10 +569,18 @@ class GetLintingFunctionsMeta(type):
 
         :param cls: The specific linting class
         """
-        specific_linter_function_names = ([func for func in dir(cls) if (callable(getattr(cls, func)) and not func.startswith('__'))])
-        general_linter_function_names = ([func for func in dir(TemplateLinter) if (callable(getattr(TemplateLinter, func)) and not func.startswith('__'))])
+        specific_linter_function_names = [
+            func for func in dir(cls) if (callable(getattr(cls, func)) and not func.startswith("__"))
+        ]
+        general_linter_function_names = [
+            func
+            for func in dir(TemplateLinter)
+            if (callable(getattr(TemplateLinter, func)) and not func.startswith("__"))
+        ]
         cls_only_funcs = list(set(specific_linter_function_names) - set(general_linter_function_names))
-        cls_only_funcs.remove('lint')  # remove 'lint', since we only want the newly defined methods and not the method itself
+        cls_only_funcs.remove(
+            "lint"
+        )  # remove 'lint', since we only want the newly defined methods and not the method itself
 
         return cls_only_funcs
 
@@ -543,7 +589,7 @@ class GetLintingFunctionsMeta(type):
         cls = type.__call__(self, *args)
 
         # set the methods attribute to a list of all specific linting functions
-        setattr(cls, 'methods', self.get_linting_functions())
+        setattr(cls, "methods", self.get_linting_functions())  # noqa: B010
 
         return cls
 
@@ -570,7 +616,7 @@ class ChangelogLinter:
         self.line_counter = 0
         self.header_offset = 0
 
-    def lint_header(self) -> (int, bool, bool):
+    def lint_header(self):
         """
         Lint the header which consists of an optional label, the headline CHANGELOG and an optional small description
         """
@@ -587,12 +633,15 @@ class ChangelogLinter:
                     1.2.3 (12.12.2020)
                     Some text were underscores belong for correct underline
                     """
-                    self.main_linter.failed.append(('general-6', 'Invalid section header start detected!'))
+                    self.main_linter.failed.append(("general-6", "Invalid section header start detected!"))
                     return -1, header_detected, False
             # lint header (optional label, title and an optional small description)
-            elif any(cl in line for cl in ['CHANGELOG', 'Changelog']):
+            elif any(cl in line for cl in ["CHANGELOG", "Changelog"]):
                 head_liner = f'{"=" * len(line)}\n'
-                header_ok = self.changelog_content[self.line_counter - 1] == head_liner and self.changelog_content[self.line_counter + 1] == head_liner
+                header_ok = (
+                    self.changelog_content[self.line_counter - 1] == head_liner
+                    and self.changelog_content[self.line_counter + 1] == head_liner
+                )
                 """
                 Example:
                 ======
@@ -600,7 +649,9 @@ class ChangelogLinter:
                 =====================
                 """
                 if not header_ok:
-                    self.main_linter.failed.append(('general-6', 'Your Changelog header syntax does not match length of your Changelogs title!'))
+                    self.main_linter.failed.append(
+                        ("general-6", "Your Changelog header syntax does not match length of your Changelogs title!")
+                    )
                     return -1, header_detected, False
                 header_detected = True
 
@@ -616,7 +667,7 @@ class ChangelogLinter:
 
                 End
                 """
-                self.main_linter.failed.append(('general-6', 'No changelog sections detected!'))
+                self.main_linter.failed.append(("general-6", "No changelog sections detected!"))
                 return -1, header_detected, False
             self.header_offset += 1
             self.line_counter += 1
@@ -640,7 +691,7 @@ class ChangelogLinter:
         Whats deprecated now ...
         """
         # this will actually not generate a copy of the list, it just copies a reference
-        section_changelog_content = self.changelog_content[self.header_offset:]
+        section_changelog_content = self.changelog_content[self.header_offset :]
         versions = []
 
         # define separator keys
@@ -657,24 +708,32 @@ class ChangelogLinter:
         # keep track how many sections seen so far
         section_nr = 0
         # keep track of the last version of the processed section; init with high number
-        last_version = '1000000.1000000.1000000'
+        last_version = "1000000.1000000.1000000"
 
         for section in sections:
             # check if newer sections have a strict greater version than older sections
-            current_section_version = versions[section_nr][:-1].replace('-SNAPSHOT', '').split(' ')[0]
+            current_section_version = versions[section_nr][:-1].replace("-SNAPSHOT", "").split(" ")[0]
             if version.parse(current_section_version) >= version.parse(last_version):
-                self.main_linter.failed.append(('general-6', 'Older sections cannot have greater version numbers than newer sections!'))
+                self.main_linter.failed.append(
+                    ("general-6", "Older sections cannot have greater version numbers than newer sections!")
+                )
                 return False
             else:
                 last_version = current_section_version
 
             # check if ever section subheader is underlined correctly
             if not section[0] >= f'{"-" * (len(versions[section_nr]) - 1)}\n':
-                self.main_linter.failed.append(('general-6', 'Your sections subheader underline does not match the headers length!'))
+                self.main_linter.failed.append(
+                    ("general-6", "Your sections subheader underline does not match the headers length!")
+                )
                 return False
             try:
-                index_order_ok = section.index('**Added**\n') < section.index('**Fixed**\n') < section.index('**Dependencies**\n') < \
-                                 section.index('**Deprecated**\n')
+                index_order_ok = (
+                    section.index("**Added**\n")
+                    < section.index("**Fixed**\n")
+                    < section.index("**Dependencies**\n")
+                    < section.index("**Deprecated**\n")
+                )
                 if not index_order_ok:
                     """
                     Example (for a section)
@@ -689,8 +748,13 @@ class ChangelogLinter:
 
                     Dependencies and Deprecated should be changed
                     """
-                    self.main_linter.failed.append(('general-6', 'Sections subheader order should be **Added**\n**Fixed**\n'
-                                                                 '**Dependencies**\n**Deprecated**!'))
+                    self.main_linter.failed.append(
+                        (
+                            "general-6",
+                            "Sections subheader order should be **Added**\n**Fixed**\n"
+                            "**Dependencies**\n**Deprecated**!",
+                        )
+                    )
                     return False
 
             except ValueError:
@@ -705,7 +769,7 @@ class ChangelogLinter:
 
                 Fixed section is missing
                 """
-                self.main_linter.failed.append(('general-6', 'Section misses one or more required subsections!'))
+                self.main_linter.failed.append(("general-6", "Section misses one or more required subsections!"))
                 return False
             section_nr += 1
         return True
@@ -715,8 +779,8 @@ class ChangelogLinter:
         Check if beginning of a section header was reached
         :param line: The current line that has been read
         """
-        no_snapshot_header = re.compile(r'^(?<!\.)\d+(?:\.\d+){2}(?!\.) \(\d\d\d\d-\d\d-\d\d\)$')
-        snapshot_header = re.compile(r'^(?<!\.)\d+(?:\.\d+){2}(?!\.)-SNAPSHOT \(\d\d\d\d-\d\d-\d\d\)$')
+        no_snapshot_header = re.compile(r"^(?<!\.)\d+(?:\.\d+){2}(?!\.) \(\d\d\d\d-\d\d-\d\d\)$")
+        snapshot_header = re.compile(r"^(?<!\.)\d+(?:\.\d+){2}(?!\.)-SNAPSHOT \(\d\d\d\d-\d\d-\d\d\)$")
 
         return bool(no_snapshot_header.match(line)) or bool(snapshot_header.match(line))
 
@@ -725,7 +789,7 @@ class ChangelogLinter:
         Reads from the project's CHANGELOG.rst.
         :return: Changelog.rst contents line by line as a list
         """
-        with open(self.changelog_path, 'r') as f:
+        with open(self.changelog_path, "r") as f:
             content = f.readlines()
 
         return content

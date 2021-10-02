@@ -1,15 +1,17 @@
-import os
 import logging
+import os
 import sys
-from rich import print
-from rich.style import Style
-from rich.console import Console
-from rich.table import Table
-from rich.box import HEAVY_HEAD
+from typing import List
+
 from mlf_core.common.levensthein_dist import most_similar_command
 from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.util.dict_util import is_nested_dictionary
 from mlf_core.common.suggest_similar_commands import load_available_handles
+from mlf_core.util.dict_util import is_nested_dictionary
+from rich import print
+from rich.box import HEAVY_HEAD
+from rich.console import Console
+from rich.style import Style
+from rich.table import Table
 
 log = logging.getLogger(__name__)
 
@@ -21,10 +23,10 @@ class TemplateInfo:
 
     def __init__(self):
         self.WD = os.path.dirname(__file__)
-        self.TEMPLATES_PATH = f'{self.WD}/../create/templates'
-        self.available_handles = ''
+        self.TEMPLATES_PATH = f"{self.WD}/../create/templates"
+        self.available_handles = ""
         self.most_sim = []
-        self.action = ''
+        self.action = ""
 
     def show_info(self, handle: str) -> None:
         """
@@ -33,39 +35,39 @@ class TemplateInfo:
         :param handle: domain/language/template handle (examples: cli or cli-python)
         """
         # list of all templates that should be printed according to the passed handle
-        templates_to_print = []
-        available_templates = load_yaml_file(f'{self.TEMPLATES_PATH}/available_templates.yml')
-        specifiers = handle.split('-')
+        templates_to_print: List = []
+        available_templates = load_yaml_file(f"{self.TEMPLATES_PATH}/available_templates.yml")
+        specifiers = handle.split("-")
         domain = specifiers[0]
-        global template_info
+        global template_info  # TODO fix this
 
         # only domain OR language specified
         if len(specifiers) == 1:
-            log.debug('Only domain or language was specified.')
+            log.debug("Only domain or language was specified.")
             try:
-                template_info = available_templates[domain]
+                template_info = available_templates[domain]  # type: ignore
             except KeyError:
                 self.handle_domain_or_language_only(handle, available_templates)
         # domain, subdomain, language
         elif len(specifiers) > 2:
-            log.debug('A domain, subdomain and language was specified.')
+            log.debug("A domain, subdomain and language was specified.")
             try:
                 sub_domain = specifiers[1]
                 language = specifiers[2]
-                template_info = available_templates[domain][sub_domain][language]
+                template_info = available_templates[domain][sub_domain][language]  # type: ignore
             except KeyError:
                 self.handle_non_existing_command(handle, True)
         # domain, language OR domain, subdomain
         else:
-            log.debug('A domain and language OR domain and a subdomain was specified.')
+            log.debug("A domain and language OR domain and a subdomain was specified.")
             try:
                 second_specifier = specifiers[1]
-                template_info = available_templates[domain][second_specifier]
+                template_info = available_templates[domain][second_specifier]  # type: ignore
             except KeyError:
                 self.handle_non_existing_command(handle, True)
 
         # Add all templates under template_info to list and output them
-        self.flatten_nested_dict(template_info, templates_to_print)
+        self.flatten_nested_dict(template_info, templates_to_print)  # type: ignore
         self.output_table(templates_to_print, handle)
 
     def handle_domain_or_language_only(self, handle: str, available_templates: dict) -> None:
@@ -77,11 +79,11 @@ class TemplateInfo:
         # try to find a similar domain
         self.handle_non_existing_command(handle)
         # we found a similar handle matching a domain, use it (suggest it maybe later)
-        if self.most_sim and self.action not in ('suggest', ''):
+        if self.most_sim and self.action not in ("suggest", ""):
             self.print_console_output(handle)
 
         # input may be a language so try this
-        templates_flatted = []
+        templates_flatted: List = []
         self.flatten_nested_dict(available_templates, templates_flatted)
         # load all available languages
         available_languages = self.load_available_languages(templates_flatted)
@@ -97,13 +99,13 @@ class TemplateInfo:
             # try to find a similar language for instant use
             self.most_sim, self.action = most_similar_command(handle, available_languages)
             # use language if available
-            if self.most_sim and self.action not in ('', 'suggest'):
+            if self.most_sim and self.action not in ("", "suggest"):
                 self.print_console_output(handle)
             # try to suggest a similar domain handle
-            elif domain_action == 'suggest' and domain_handle:
+            elif domain_action == "suggest" and domain_handle:
                 self.print_suggestion(handle, domain_handle)
             # try to suggest a similar language handle
-            elif self.action == 'suggest' and self.most_sim:
+            elif self.action == "suggest" and self.most_sim:
                 self.print_suggestion(handle, self.most_sim)
             # we're done there is no similar handle
             else:
@@ -119,8 +121,13 @@ class TemplateInfo:
         for template in templates_to_print:
             template[2] = TemplateInfo.set_linebreaks(template[2])
 
-        table = Table(title=f'[bold]Info on mlf-core´s {handle}', title_style="blue", header_style=Style(color="blue", bold=True), box=HEAVY_HEAD)
-        log.debug('Building info table.')
+        table = Table(
+            title=f"[bold]Info on mlf-core´s {handle}",
+            title_style="blue",
+            header_style=Style(color="blue", bold=True),
+            box=HEAVY_HEAD,
+        )
+        log.debug("Building info table.")
         table.add_column("Name", justify="left", style="green", no_wrap=True)
         table.add_column("Handle", justify="left")
         table.add_column("Long Description", justify="left")
@@ -128,7 +135,7 @@ class TemplateInfo:
         table.add_column("Version", justify="left")
 
         for template in templates_to_print:
-            table.add_row(f'[bold]{template[0]}', template[1], template[2], template[3], template[4])
+            table.add_row(f"[bold]{template[0]}", template[1], template[2], template[3], template[4])
 
         console = Console()
         console.print(table)
@@ -151,18 +158,20 @@ class TemplateInfo:
         """
         if self.most_sim:
             # found exactly one similar handle
-            if len(self.most_sim) == 1 and self.action == 'use':
-                print(f'[bold red]Unknown handle \'{handle}\'. See [green]mlf-core list [red]for all valids handles')
-                print(f'[bold blue]Will use best match [green]{self.most_sim[0]}.\n')
+            if len(self.most_sim) == 1 and self.action == "use":
+                print(f"[bold red]Unknown handle '{handle}'. See [green]mlf-core list [red]for all valids handles")
+                print(f"[bold blue]Will use best match [green]{self.most_sim[0]}.\n")
                 # use best match if exactly one similar handle was found
                 self.show_info(self.most_sim[0])
-            elif len(self.most_sim) == 1 and self.action == 'suggest':
+            elif len(self.most_sim) == 1 and self.action == "suggest":
                 self.print_suggestion(handle, self.most_sim)
             else:
                 # found multiple similar handles
-                nl = '\n'
-                print(f'[green red]Unknown handle \'{handle}\'. See [green] mlf-core list [red]for all valid handles.' +
-                      f'\nMost similar handles are: [green]{nl}{nl.join(sorted(self.most_sim))}')
+                nl = "\n"
+                print(
+                    f"[green red]Unknown handle '{handle}'. See [green] mlf-core list [red]for all valid handles."
+                    + f"\nMost similar handles are: [green]{nl}{nl.join(sorted(self.most_sim))}"
+                )
             sys.exit(0)
 
         else:
@@ -175,15 +184,17 @@ class TemplateInfo:
         :param handle: Handle inputted by the user
         :param domain_handle: A list of similar commands (will contain only one element most of the time)
         """
-        print(f'[bold red]Unknown handle \'{handle}\'. See [green] mlf-core list [red] for all valid handles.\n')
-        print(f'[bold red] Did you mean [green]{domain_handle[0]}?\n')
+        print(f"[bold red]Unknown handle '{handle}'. See [green] mlf-core list [red] for all valid handles.\n")
+        print(f"[bold red] Did you mean [green]{domain_handle[0]}?\n")
 
     def non_existing_handle(self) -> None:
         """
         Handling key not found access error for non existing template handles.
         Displays an error message and terminates mlf-core.
         """
-        print('[bold red]Handle does not exist. Please enter a valid handle.\nUse [green] mlf-core list [red]to display all template handles.')
+        print(
+            "[bold red]Handle does not exist. Please enter a valid handle.\nUse [green] mlf-core list [red]to display all template handles."
+        )
         sys.exit(0)
 
     def flatten_nested_dict(self, template_info_, templates_to_print) -> None:
@@ -197,14 +208,28 @@ class TemplateInfo:
         if is_nested_dictionary(template_info_):
             for templ in template_info_.values():
                 if not is_nested_dictionary(templ):
-                    templates_to_print.append([templ['name'], templ['handle'], templ['long description'],
-                                               templ['available libraries'], templ['version']])
+                    templates_to_print.append(
+                        [
+                            templ["name"],
+                            templ["handle"],
+                            templ["long description"],
+                            templ["available libraries"],
+                            templ["version"],
+                        ]
+                    )
                 else:
                     self.flatten_nested_dict(templ, templates_to_print)
         else:
             # a single template to append was reached
-            templates_to_print.append([template_info_['name'], template_info_['handle'], template_info_['long description'],
-                                       template_info_['available libraries'], template_info_['version']])
+            templates_to_print.append(
+                [
+                    template_info_["name"],
+                    template_info_["handle"],
+                    template_info_["long description"],
+                    template_info_["available libraries"],
+                    template_info_["version"],
+                ]
+            )
 
     @staticmethod
     def set_linebreaks(desc: str) -> str:
@@ -222,9 +247,9 @@ class TemplateInfo:
         while idx < len(desc):
             if cnt == linebreak_limit:
                 # set a line break at the last space encountered to avoid separating words
-                desc = desc[:last_space] + '\n' + desc[last_space + 1:]
+                desc = desc[:last_space] + "\n" + desc[last_space + 1 :]
                 cnt = 0
-            elif desc[idx] == ' ':
+            elif desc[idx] == " ":
                 last_space = idx
             cnt += 1
             idx += 1
@@ -238,4 +263,4 @@ class TemplateInfo:
         :param ls: The flattended list from the available templates dict
         :return: All available languages as a set
         """
-        return {ls[1].split('-')[1] if len(ls[1].split('-')) == 2 else ls[1].split('-')[2] for ls in ls}
+        return {ls[1].split("-")[1] if len(ls[1].split("-")) == 2 else ls[1].split("-")[2] for ls in ls}

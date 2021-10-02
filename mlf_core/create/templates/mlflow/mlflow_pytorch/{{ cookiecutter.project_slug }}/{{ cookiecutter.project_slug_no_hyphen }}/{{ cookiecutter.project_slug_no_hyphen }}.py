@@ -1,14 +1,15 @@
-import pytorch_lightning as pl
+import os
 from argparse import ArgumentParser
-from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import TensorBoardLogger
+
 import mlflow
+import pytorch_lightning as pl
 from data_loading.data_loader import MNISTDataModule
 from model.model import LightningMNISTClassifier
-from mlf_core.mlf_core import MLFCore
-import os
+from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import TensorBoardLogger
 from rich import print
 
+from mlf_core.mlf_core import MLFCore
 
 if __name__ == "__main__":
     parser = ArgumentParser(description='PyTorch Autolog Mnist Example')

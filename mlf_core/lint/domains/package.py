@@ -1,9 +1,9 @@
 import os
+from typing import List
 
 import requests
+from mlf_core.lint.template_linter import GetLintingFunctionsMeta, TemplateLinter, files_exist_linting
 from pkg_resources import parse_version
-
-from mlf_core.lint.template_linter import TemplateLinter, GetLintingFunctionsMeta, files_exist_linting
 
 
 class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
@@ -25,8 +25,8 @@ class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             Check for a given file whether no dependencies are outdated.
             :param filename: Name of the dependency file to parse (either requirements.txt or requirements_dev.txt)
             """
-            with open(f'{self.path}/{filename}') as req_file:
-                dependencies = [line[:-1].split('==') for line in req_file]
+            with open(f"{self.path}/{filename}") as req_file:
+                dependencies = [line[:-1].split("==") for line in req_file]
             for dependency in dependencies:
                 if len(dependency) == 2:
                     _check_pip_package(dependency[0], dependency[1])
@@ -39,28 +39,37 @@ class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
             :param pip_dependency_name: The name of the dependency
             :param pip_dependency_version: Dependency version used by the user's project
             """
-            pip_api_url = f'https://pypi.python.org/pypi/{pip_dependency_name}/json'
+            pip_api_url = f"https://pypi.python.org/pypi/{pip_dependency_name}/json"
             try:
                 response = requests.get(pip_api_url, timeout=10)
             except requests.exceptions.Timeout:
-                self.warned.append(('cli-python-2', f'PyPi API timed out: {pip_api_url}'))
+                self.warned.append(("cli-python-2", f"PyPi API timed out: {pip_api_url}"))
             except requests.exceptions.ConnectionError:
-                self.warned.append(('cli-python-2', f'PyPi API Connection error: {pip_api_url}'))
+                self.warned.append(("cli-python-2", f"PyPi API Connection error: {pip_api_url}"))
             else:
                 if response.status_code == 200:
                     pip_dep_json = response.json()
-                    latest_dependency_version = pip_dep_json['info']['version']
+                    latest_dependency_version = pip_dep_json["info"]["version"]
                     if parse_version(pip_dependency_version) < parse_version(latest_dependency_version):
-                        self.warned.append(('package-prediction-2', f'Version {pip_dependency_version} of {pip_dependency_name} is not the latest available: '
-                        f'{latest_dependency_version}'))  # noqa: E128
+                        self.warned.append(
+                            (
+                                "package-prediction-2",
+                                f"Version {pip_dependency_version} of {pip_dependency_name} is not the latest available: "
+                                f"{latest_dependency_version}",
+                            )
+                        )  # noqa: E128
                 else:
-                    self.failed.append(('package-prediction-2',
-                                        f'Could not find pip dependency using the PyPi API: {pip_dependency_name}=={pip_dependency_version}'))
+                    self.failed.append(
+                        (
+                            "package-prediction-2",
+                            f"Could not find pip dependency using the PyPi API: {pip_dependency_name}=={pip_dependency_version}",
+                        )
+                    )
 
         # check general dependencies
-        check_dependencies('requirements.txt')
+        check_dependencies("requirements.txt")
         # check development dependencies
-        check_dependencies('requirements_dev.txt')
+        check_dependencies("requirements_dev.txt")
         return True
 
     def python_files_exist(self) -> None:
@@ -84,22 +93,20 @@ class PackagePredictionLint(TemplateLinter, metaclass=GetLintingFunctionsMeta):
         # NB: Should all be files, not directories
         # List of lists. Passes if any of the files in the sublist are found.
         files_fail = [
-            ['setup.py'],
-            ['setup.cfg'],
-            ['MANIFEST.in'],
+            ["setup.py"],
+            ["setup.cfg"],
+            ["MANIFEST.in"],
         ]
         files_warn = [
-            [os.path.join('.github', 'workflows', 'build_package.yml')],
-            [os.path.join('.github', 'workflows', 'publish_package.yml')],
-            [os.path.join('.github', 'workflows', 'run_flake8_linting.yml')],
+            [os.path.join(".github", "workflows", "build_package.yml")],
+            [os.path.join(".github", "workflows", "publish_package.yml")],
+            [os.path.join(".github", "workflows", "run_flake8_linting.yml")],
         ]
 
         # List of strings. Fails / warns if any of the strings exist.
-        files_fail_ifexists = [
-            '__pycache__'
-        ]
-        files_warn_ifexists = [
+        files_fail_ifexists: List = ["__pycache__"]
+        files_warn_ifexists: List = []
 
-        ]
-
-        files_exist_linting(self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle='package-prediction')
+        files_exist_linting(
+            self, files_fail, files_fail_ifexists, files_warn, files_warn_ifexists, handle="package-prediction"
+        )

@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from ruamel.yaml import YAML
 
 
@@ -10,6 +11,6 @@ def load_yaml_file(yaml_file_path: str) -> dict:
     """
     path = Path(yaml_file_path)
     yaml = YAML()
-    yaml.boolean_representation = ['False', 'True']
+    yaml.boolean_representation = ["False", "True"]  # type: ignore
 
     return yaml.load(path)

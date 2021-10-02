@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from mlf_core.common.suggest_similar_commands import SIMILARITY_SUGGEST_FACTOR, SIMILARITY_USE_FACTOR
 
 
@@ -35,7 +37,7 @@ def levensthein_dist(input_command: str, candidate: str) -> int:
     return dp_table[len(candidate)][len(input_command)]
 
 
-def most_similar_command(command: str, command_list: set) -> (list, str):
+def most_similar_command(command: str, command_list: set) -> Tuple[list, str]:
     """
     Determine whether its possible to suggest a similar command.
     The similarity is determined by the levensthein distance and a factor (currently 1/3)
@@ -79,4 +81,10 @@ def most_similar_command(command: str, command_list: set) -> (list, str):
                 sim_command_suggest.append(handle)
 
     # return the use list, as those are closer, but if its empty, return the list of suggested commands (or if that is empty too, an empty list)
-    return (sim_command_use, 'use') if sim_command_use else (sim_command_suggest, 'suggest') if sim_command_suggest else ([], '')
+    return (
+        (sim_command_use, "use")
+        if sim_command_use
+        else (sim_command_suggest, "suggest")
+        if sim_command_suggest
+        else ([], "")
+    )

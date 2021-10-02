@@ -2,11 +2,10 @@ import logging
 import sys
 from pathlib import Path
 
-from rich import print
-from ruamel.yaml import YAML
-
 from mlf_core.lint.domains.mlflow import MlflowPytorchLint, MlflowTensorflowLint, MlflowXGBoostLint
 from mlf_core.lint.domains.package import PackagePredictionLint
+from rich import print
+from ruamel.yaml import YAML
 
 log = logging.getLogger(__name__)
 

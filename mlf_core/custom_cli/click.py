@@ -5,13 +5,13 @@ from configparser import NoSectionError
 from pathlib import Path
 
 import click
+from mlf_core.common.levensthein_dist import most_similar_command
+from mlf_core.common.suggest_similar_commands import MAIN_COMMANDS
 from rich import print
 from rich.console import Console
 
 from mlf_core import __version__
 from mlf_core.bump_version.bump_version import VersionBumper
-from mlf_core.common.levensthein_dist import most_similar_command
-from mlf_core.common.suggest_similar_commands import MAIN_COMMANDS
 
 
 class HelpErrorHandling(click.Group):

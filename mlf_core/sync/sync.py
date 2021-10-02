@@ -16,15 +16,15 @@ from typing import Tuple
 
 import git
 from github import Github, GithubException
+from mlf_core.common.load_yaml import load_yaml_file
+from mlf_core.common.version import load_mlf_core_template_version, load_project_template_version_and_handle
+from mlf_core.create.github_support import create_sync_secret, decrypt_pat, load_github_username
+from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 from packaging import version
 from rich import print
 
-from mlf_core.common.load_yaml import load_yaml_file
-from mlf_core.common.version import load_mlf_core_template_version, load_project_template_version_and_handle
 from mlf_core.config.config import ConfigCommand
 from mlf_core.create.create import choose_domain
-from mlf_core.create.github_support import create_sync_secret, decrypt_pat, load_github_username
-from mlf_core.custom_cli.questionary import mlf_core_questionary_or_dot_mlf_core
 
 log = logging.getLogger(__name__)
 
@@ -469,11 +469,11 @@ class TemplateSync:
         repo = git.Repo(project_dir)
         try:
             repo.git.checkout("development")
-        except git.exc.GitCommandError:
+        except git.exc.GitCommandError:  # type: ignore[misc]
             print("[bold red]Could not checkout development branch. Trying to checkout master...")
             try:
                 repo.git.checkout("master")
-            except git.exc.GitCommandError as e:
+            except git.exc.GitCommandError as e:  # type: ignore[misc]
                 print(f"[bold red]Could not checkout master branch.\n{e}")
                 sys.exit(1)
 

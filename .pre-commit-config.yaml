@@ -48,15 +48,3 @@ repos:
       hooks:
           - id: prettier
             exclude: templates
-    - repo: https://github.com/pycqa/isort
-      rev: 5.8.0
-      hooks:
-          - id: isort
-            name: isort (python)
-            exclude: template_creator.py
-          - id: isort
-            name: isort (cython)
-            types: [cython]
-          - id: isort
-            name: isort (pyi)
-            types: [pyi]

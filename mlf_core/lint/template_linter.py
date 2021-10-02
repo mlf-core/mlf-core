@@ -10,13 +10,12 @@ import rich.console
 import rich.markdown
 import rich.panel
 import rich.progress
-from packaging import version
-from pkg_resources import parse_version
-from rich import print
-
 from mlf_core.common.load_yaml import load_yaml_file
 from mlf_core.util.dir_util import find_filepath_in_dir, pf
 from mlf_core.util.rich import console
+from packaging import version
+from pkg_resources import parse_version
+from rich import print
 
 log = logging.getLogger(__name__)
 

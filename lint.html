@@ -1,76 +1,42 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Linting your project &mdash; mlf-core 1.11.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Linting your project &mdash; mlf-core 1.11.3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/dark_mode_js/default_dark.js"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Fixing the paths of locally saved MLflow runs" href="fix_artifact_paths.html" />
     <link rel="prev" title="Getting information about available templates" href="list_info.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> mlf-core
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                1.11.2
+                1.11.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -78,19 +44,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">mlf-core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
@@ -151,82 +106,41 @@
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="adding_new_templates.html">Adding new templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">mlf-core</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Linting your project</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/lint.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="linting-your-project">
-<span id="lint"></span><h1>Linting your project<a class="headerlink" href="#linting-your-project" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="linting-your-project">
+<span id="lint"></span><h1>Linting your project<a class="headerlink" href="#linting-your-project" title="Permalink to this headline"></a></h1>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Lint_(software)">Linting</a> is the process of statically analyzing code to find code style violations and to detect errors.
 mlf-core implements a custom linting system, but depending on the template external tools linting tools may additionally be called.</p>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <p>mlf-core lint can be invoked on an existing project using</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mlf-core lint &lt;OPTIONS&gt; &lt;PATH&gt;
 </pre></div>
@@ -246,153 +160,139 @@ mlf-core implements a custom linting system, but depending on the template exter
 <li><p><span class="red">Failed</span></p></li>
 </ol>
 <p>If any of the checks failed linting stops and returns an error code.</p>
-<div class="figure align-default" id="id3">
+<figure class="align-default" id="id3">
 <a class="reference internal image-reference" href="_images/linting_example.png"><img alt="Linting example" src="_images/linting_example.png" style="width: 1312.0px; height: 647.0px;" /></a>
-<p class="caption"><span class="caption-text">Linting applied to a newly created mlflow-pytorch project.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Linting applied to a newly created mlflow-pytorch project.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 <p>To examine the reason for a failed linting test please follow the URL. All reasons are explained in the section <a class="reference internal" href="#linting-codes"><span class="std std-ref">Linting codes</span></a>.</p>
-</div>
-<div class="section" id="linting-codes">
-<span id="id1"></span><h2>Linting codes<a class="headerlink" href="#linting-codes" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="linting-codes">
+<span id="id1"></span><h2>Linting codes<a class="headerlink" href="#linting-codes" title="Permalink to this headline"></a></h2>
 <p>The following error or warning numbers correspond to errors found during linting.
 If you are not sure why a specific linting error has occurred you may find more information using the respective error code.</p>
-<div class="section" id="general">
-<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="general-1">
-<h4>general-1<a class="headerlink" href="#general-1" title="Permalink to this headline">¶</a></h4>
+<section id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline"></a></h3>
+<section id="general-1">
+<h4>general-1<a class="headerlink" href="#general-1" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">File not found. This error occurs when your project does not include all of mlf-core’s files, which all templates share.</div>
 <div class="line">Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
 at the time of the project creation using mlf-core this file should not have been missing!</div>
 </div>
-</div>
-<div class="section" id="general-2">
-<h4>general-2<a class="headerlink" href="#general-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="general-2">
+<h4>general-2<a class="headerlink" href="#general-2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Dockerfile invalid. This error usually originates from empty Dockerfiles or missing FROM statements.</div>
 </div>
-</div>
-<div class="section" id="general-3">
-<h4>general-3<a class="headerlink" href="#general-3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="general-3">
+<h4>general-3<a class="headerlink" href="#general-3" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">TODO String found. The origin of this warning are <code class="docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">TODO:</span></code> <code class="docutils literal notranslate"><span class="pre">TODO</span> <span class="pre">mlf-core:</span></code> or strings in the respective files. Usually, they point to things that should be
 manually configured or require other attention. You may remove them if there is no task for you to be solved.</div>
 </div>
-</div>
-<div class="section" id="general-4">
-<h4>general-4<a class="headerlink" href="#general-4" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="general-4">
+<h4>general-4<a class="headerlink" href="#general-4" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Cookiecutter string found. This error occurs if something went wrong at the project creation stage. After a project has been created using mlf-core
 there should not be any jinja2 syntax left.</div>
 </div>
-</div>
-<div class="section" id="general-5">
-<h4>general-5<a class="headerlink" href="#general-5" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="general-5">
+<h4>general-5<a class="headerlink" href="#general-5" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Versions not consistent. If the version of all files specified in the [bumpversion] sections defined in the qube.cfg file are not consistent,
 this error may be found. Please ensure that the version is consistent! If you need to exclude specific lines from this check please consult <a class="reference internal" href="bump_version.html#bump-version"><span class="std std-ref">Bumping the version of an existing project</span></a>.
 To prevent this error you should only increase the version of your project using <code class="code docutils literal notranslate"><span class="pre">mlf-core</span> <span class="pre">bump-version</span></code>.</div>
 </div>
-</div>
-<div class="section" id="general-6">
-<h4>general-6<a class="headerlink" href="#general-6" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="general-6">
+<h4>general-6<a class="headerlink" href="#general-6" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">changelog.rst</span></code> invalid. The <code class="docutils literal notranslate"><span class="pre">changelog.rst</span></code> file requires that every changelog section has a header with the version and the corresponding release date.
 The version above another changelog section should always be <em>greater</em> than the section below (e.g. 1.1.0 above 1.0.0).
 Every section must have the headings <code class="docutils literal notranslate"><span class="pre">**Added**</span></code>, <code class="docutils literal notranslate"><span class="pre">**Fixed**</span></code>, <code class="docutils literal notranslate"><span class="pre">**Dependencies**</span></code> and <code class="docutils literal notranslate"><span class="pre">**Deprecated**</span></code>.</div>
 </div>
-</div>
-</div>
-<div class="section" id="mlflow-pytorch">
-<h3>mlflow-pytorch<a class="headerlink" href="#mlflow-pytorch" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mlflow-pytorch-1">
-<h4>mlflow-pytorch-1<a class="headerlink" href="#mlflow-pytorch-1" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="mlflow-pytorch">
+<h3>mlflow-pytorch<a class="headerlink" href="#mlflow-pytorch" title="Permalink to this headline"></a></h3>
+<section id="mlflow-pytorch-1">
+<h4>mlflow-pytorch-1<a class="headerlink" href="#mlflow-pytorch-1" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">File not found. This error occurs when your project does not include all of mlflow-pytorch’s expected files.</div>
 <div class="line">Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
 at the time of the project creation using mlf-core this file should not have been missing!</div>
 </div>
-</div>
-<div class="section" id="mlflow-pytorch-2">
-<h4>mlflow-pytorch-2<a class="headerlink" href="#mlflow-pytorch-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-pytorch-2">
+<h4>mlflow-pytorch-2<a class="headerlink" href="#mlflow-pytorch-2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-pytorch expects the following lines in the main entry script:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">trainer</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
- <span class="n">trainer</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
- <span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">general_seed</span><span class="p">),</span>
- <span class="n">set_pytorch_random_seeds</span><span class="p">(</span><span class="n">pytorch_seed</span><span class="p">,</span> <span class="n">num_of_gpus</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span> <span class="n">trainer</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="linenos">2</span> <span class="n">trainer</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="linenos">3</span> <span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">general_seed</span><span class="p">),</span>
+<span class="linenos">4</span> <span class="n">set_pytorch_random_seeds</span><span class="p">(</span><span class="n">pytorch_seed</span><span class="p">,</span> <span class="n">num_of_gpus</span><span class="p">)</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <div class="line-block">
 <div class="line">Line 1 enables deterministic training operations</div>
 <div class="line">Line 2 disables the search for the optimal algorithm for specific operations, which may not necessarily be deterministic.</div>
 <div class="line">Line 3 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 4 sets the seed of Pytorch</div>
 </div>
-</div>
-<div class="section" id="mlflow-pytorch-3">
-<h4>mlflow-pytorch-3<a class="headerlink" href="#mlflow-pytorch-3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-pytorch-3">
+<h4>mlflow-pytorch-3<a class="headerlink" href="#mlflow-pytorch-3" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Function operates non-deterministically.</div>
 <div class="line">Several functions and algorithms available in Pytorch are still based on atomic add or other non-deterministic operators. Hence, these functions are not allowed to be used.</div>
 <div class="line">Source: <a class="reference external" href="https://pytorch.org/docs/stable/notes/randomness.html">https://pytorch.org/docs/stable/notes/randomness.html</a></div>
 <div class="line">Currently mlflow-pytorch reports:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;index_add&#39;</span><span class="p">,</span>
-<span class="s1">&#39;scatter_add&#39;</span><span class="p">,</span>
-<span class="s1">&#39;bincount&#39;</span><span class="p">,</span>
-<span class="s1">&#39;embedding_bag&#39;</span><span class="p">,</span>
-<span class="s1">&#39;ctc_loss&#39;</span><span class="p">,</span>
-<span class="s1">&#39;interpolate&#39;</span><span class="p">,</span>
-<span class="s1">&#39;repeat_interleave&#39;</span><span class="p">,</span>
-<span class="s1">&#39;index_select&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="s1">&#39;index_add&#39;</span><span class="p">,</span>
+<span class="linenos">2</span><span class="s1">&#39;scatter_add&#39;</span><span class="p">,</span>
+<span class="linenos">3</span><span class="s1">&#39;bincount&#39;</span><span class="p">,</span>
+<span class="linenos">4</span><span class="s1">&#39;embedding_bag&#39;</span><span class="p">,</span>
+<span class="linenos">5</span><span class="s1">&#39;ctc_loss&#39;</span><span class="p">,</span>
+<span class="linenos">6</span><span class="s1">&#39;interpolate&#39;</span><span class="p">,</span>
+<span class="linenos">7</span><span class="s1">&#39;repeat_interleave&#39;</span><span class="p">,</span>
+<span class="linenos">8</span><span class="s1">&#39;index_select&#39;</span>
 </pre></div>
-</td></tr></table></div>
 </div>
-</div>
-<div class="section" id="mlflow-tensorflow">
-<h3>mlflow-tensorflow<a class="headerlink" href="#mlflow-tensorflow" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mlflow-tensorflow-1">
-<h4>mlflow-tensorflow-1<a class="headerlink" href="#mlflow-tensorflow-1" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="mlflow-tensorflow">
+<h3>mlflow-tensorflow<a class="headerlink" href="#mlflow-tensorflow" title="Permalink to this headline"></a></h3>
+<section id="mlflow-tensorflow-1">
+<h4>mlflow-tensorflow-1<a class="headerlink" href="#mlflow-tensorflow-1" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">File not found. This error occurs when your project does not include all of mlflow-tensorflow’s expected files.</div>
 <div class="line">Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
 at the time of the project creation using mlf-core this file should not have been missing!</div>
 </div>
-</div>
-<div class="section" id="mlflow-tensorflow-2">
-<h4>mlflow-tensorflow-2<a class="headerlink" href="#mlflow-tensorflow-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-tensorflow-2">
+<h4>mlflow-tensorflow-2<a class="headerlink" href="#mlflow-tensorflow-2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-tensorflow expects:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
-<span class="n">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;tensorflow_seed&quot;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_intra_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_inter_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_DETERMINISTIC_OPS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="linenos">2</span><span class="n">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;tensorflow_seed&quot;</span><span class="p">])</span>
+<span class="linenos">3</span><span class="k">def</span> <span class="nf">set_tensorflow_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="linenos">5</span>    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_intra_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
+<span class="linenos">6</span>    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_inter_op_parallelism_threads</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># CPU only</span>
+<span class="linenos">7</span>    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_DETERMINISTIC_OPS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of Tensorflow</div>
@@ -401,161 +301,137 @@ at the time of the project creation using mlf-core this file should not have bee
 <div class="line">Line 6 sets the number of threads between independent operations for parallelism to 1</div>
 <div class="line">Line 7 enables and forces all deterministic operations</div>
 </div>
-</div>
-<div class="section" id="mlflow-tensorflow-3">
-<h4>mlflow-tensorflow-3<a class="headerlink" href="#mlflow-tensorflow-3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-tensorflow-3">
+<h4>mlflow-tensorflow-3<a class="headerlink" href="#mlflow-tensorflow-3" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Function operates non-deterministically.</div>
 <div class="line">There are a couple of functions left in Tensorflow, which are known to be operating non-deterministically. They are not allowed to be used.</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="s1">&#39;softmax_cross_entropy_with_logits&#39;</span><span class="p">,</span>
-<span class="s1">&#39;sparse_softmax_cross_entropy_with_logits&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="s1">&#39;softmax_cross_entropy_with_logits&#39;</span><span class="p">,</span>
+<span class="linenos">2</span><span class="s1">&#39;sparse_softmax_cross_entropy_with_logits&#39;</span>
 </pre></div>
-</td></tr></table></div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost">
-<h3>mlflow-xgboost<a class="headerlink" href="#mlflow-xgboost" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mlflow-xgboost-1">
-<h4>mlflow-xgboost-1<a class="headerlink" href="#mlflow-xgboost-1" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="mlflow-xgboost">
+<h3>mlflow-xgboost<a class="headerlink" href="#mlflow-xgboost" title="Permalink to this headline"></a></h3>
+<section id="mlflow-xgboost-1">
+<h4>mlflow-xgboost-1<a class="headerlink" href="#mlflow-xgboost-1" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">File not found. This error occurs when your project does not include all of mlflow-dask’s expected files.</div>
 <div class="line">Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
 at the time of the project creation using mlf-core this file should not have been missing!</div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost-2">
-<h4>mlflow-xgboost-2<a class="headerlink" href="#mlflow-xgboost-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-xgboost-2">
+<h4>mlflow-xgboost-2<a class="headerlink" href="#mlflow-xgboost-2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-xgboost expects:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
-<span class="n">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="linenos">2</span><span class="n">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
+<span class="linenos">3</span><span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of XGBoost</div>
 <div class="line">Line 4 fixes the seed of XGBoost</div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost-3">
-<h4>mlflow-xgboost-3<a class="headerlink" href="#mlflow-xgboost-3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-xgboost-3">
+<h4>mlflow-xgboost-3<a class="headerlink" href="#mlflow-xgboost-3" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.</div>
 <div class="line">Refrain from using versions older than 1.1.0, especially when making use of GPUs.</div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost-4">
-<h4>mlflow-xgboost-4<a class="headerlink" href="#mlflow-xgboost-4" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-xgboost-4">
+<h4>mlflow-xgboost-4<a class="headerlink" href="#mlflow-xgboost-4" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">The <code class="docutils literal notranslate"><span class="pre">all_reduce</span></code> algorithm in XGBoost may not operate deterministically.</div>
 <div class="line">Source: <a class="reference external" href="https://github.com/dmlc/xgboost/issues/5023">https://github.com/dmlc/xgboost/issues/5023</a></div>
 </div>
-</div>
-</div>
-<div class="section" id="mlflow-xgboost-dask">
-<h3>mlflow-xgboost_dask<a class="headerlink" href="#mlflow-xgboost-dask" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="mlflow-xgboost-dask-1">
-<h4>mlflow-xgboost_dask-1<a class="headerlink" href="#mlflow-xgboost-dask-1" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="mlflow-xgboost-dask">
+<h3>mlflow-xgboost_dask<a class="headerlink" href="#mlflow-xgboost-dask" title="Permalink to this headline"></a></h3>
+<section id="mlflow-xgboost-dask-1">
+<h4>mlflow-xgboost_dask-1<a class="headerlink" href="#mlflow-xgboost-dask-1" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">File not found. This error occurs when your project does not include all of mlflow-xgboost_dask’s expected files.</div>
 <div class="line">Please create the file and populate it with appropriate values. You should also critically reflect why it is missing, since
 at the time of the project creation using mlf-core this file should not have been missing!</div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost-dask-2">
-<h4>mlflow-xgboost_dask-2<a class="headerlink" href="#mlflow-xgboost-dask-2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-xgboost-dask-2">
+<h4>mlflow-xgboost_dask-2<a class="headerlink" href="#mlflow-xgboost-dask-2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">Expected line not found. This error occurs when CPU/GPU deterministic training may no longer be guaranteed, since a required setting has been disabled or removed.</div>
 <div class="line">Currently, mlflow-xgboost_dask expects:</div>
 </div>
-<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
-<span class="n">set_xgboost_dask_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">set_general_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;general_seed&quot;</span><span class="p">]),</span>
+<span class="linenos">2</span><span class="n">set_xgboost_dask_random_seeds</span><span class="p">(</span><span class="n">dict_args</span><span class="p">[</span><span class="s2">&quot;xgboost_seed&quot;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
+<span class="linenos">3</span><span class="k">def</span> <span class="nf">set_xgboost_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
+<span class="linenos">4</span>    <span class="n">param</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seed</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <div class="line-block">
 <div class="line">Line 1 sets the general random seeds (python random, numpy random and python general)</div>
 <div class="line">Line 2 sets the seed of XGBoost</div>
 <div class="line">Line 4 fixes the seed of XGBoost</div>
 </div>
-</div>
-<div class="section" id="mlflow-xgboost-dask-3">
-<h4>mlflow-xgboost_dask-3<a class="headerlink" href="#mlflow-xgboost-dask-3" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="mlflow-xgboost-dask-3">
+<h4>mlflow-xgboost_dask-3<a class="headerlink" href="#mlflow-xgboost-dask-3" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">The version of XGBoost has to be at least 1.1.0, since this is first version which includes all deterministic operations.</div>
 <div class="line">Refrain from using versions older than 1.1.0, especially when making use of GPUs.</div>
 </div>
-</div>
-<div class="section" id="id2">
-<h4>mlflow-xgboost-4<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id2">
+<h4>mlflow-xgboost-4<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
 <div class="line-block">
 <div class="line">The <code class="docutils literal notranslate"><span class="pre">all_reduce</span></code> algorithm in XGBoost may not operate deterministically.</div>
 <div class="line">Source: <a class="reference external" href="https://github.com/dmlc/xgboost/issues/5023">https://github.com/dmlc/xgboost/issues/5023</a></div>
 </div>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="fix_artifact_paths.html" class="btn btn-neutral float-right" title="Fixing the paths of locally saved MLflow runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="list_info.html" class="btn btn-neutral float-left" title="Getting information about available templates" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="fix_artifact_paths.html" class="btn btn-neutral float-right" title="Fixing the paths of locally saved MLflow runs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Lukas Heumos.
-
-    </p>
+    <p>&#169; Copyright 2021, Lukas Heumos.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

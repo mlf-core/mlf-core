@@ -1,74 +1,40 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>mlflow-pytorch &mdash; mlf-core 1.11.2 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/custom_cookietemple.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>mlflow-pytorch &mdash; mlf-core 1.11.3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom_cookietemple.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/dark_mode_css/general.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/dark_mode_css/dark.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script src="../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../_static/dark_mode_js/theme_switcher.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> mlf-core
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
-                1.11.2
+                1.11.3
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,19 +42,8 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">mlf-core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
@@ -108,87 +63,46 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../adding_new_templates.html">Adding new templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">mlf-core</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>mlflow-pytorch</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/available_templates/mlflow_pytorch.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="mlflow-pytorch">
-<h1>mlflow-pytorch<a class="headerlink" href="#mlflow-pytorch" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="purpose">
-<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="mlflow-pytorch">
+<h1>mlflow-pytorch<a class="headerlink" href="#mlflow-pytorch" title="Permalink to this headline"></a></h1>
+<section id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline"></a></h2>
 <p>mlflow-pytorch is a <a class="reference external" href="https://mlflow.org/">MLflow</a> based template designed for <a class="reference external" href="https://pytorch.org/">Pytorch</a> machine learning models.
 Additionally, <a class="reference external" href="https://github.com/PyTorchLightning/pytorch-lightning">Pytorch Lightning</a> abstracts away boilerplate code.
 The project is fully CPU and GPU deterministic with <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a> integration.
 Additionally, Conda and Docker are supported out of the box.</p>
-</div>
-<div class="section" id="design">
-<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="design">
+<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline"></a></h2>
 <p>The package follows the mlf-core convention of a single environment.yml file in conjunction with an mlf-core based Dockerfile.
 As required a MLproject file serves as entry point and for parameter definitions.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── AUTHORS.rst
@@ -246,9 +160,9 @@ As required a MLproject file serves as entry point and for parameter definitions
 └── .readthedocs.yml
 </pre></div>
 </div>
-</div>
-<div class="section" id="included-frameworks-libraries">
-<h2>Included frameworks/libraries<a class="headerlink" href="#included-frameworks-libraries" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="included-frameworks-libraries">
+<h2>Included frameworks/libraries<a class="headerlink" href="#included-frameworks-libraries" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="https://mlflow.org/">MLflow</a> as the primary framework for parameter and artifact logging.</p></li>
 <li><p><a class="reference external" href="https://pytorch.org/">Pytorch</a> as the primary machine learning library.</p></li>
@@ -268,84 +182,68 @@ As required a MLproject file serves as entry point and for parameter definitions
 <li><p><code class="docutils literal notranslate"><span class="pre">publish_docker.yml</span></code>, which builds and pushes a Docker container to Github Packages</p></li>
 </ol>
 </div></blockquote>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <p>It is strongly advised to use Docker to run mlf-core models, since support for other OS besides Linux is limited and dependency management is greatly simplified.</p>
-<div class="section" id="building-the-docker-container">
-<h3>Building the Docker container<a class="headerlink" href="#building-the-docker-container" title="Permalink to this headline">¶</a></h3>
+<section id="building-the-docker-container">
+<h3>Building the Docker container<a class="headerlink" href="#building-the-docker-container" title="Permalink to this headline"></a></h3>
 <p>The name (=tag) of the Docker Container is specified in the MLproject file in <code class="docutils literal notranslate"><span class="pre">image:</span></code>.
 If you created your project with mlf-core’s Github support your Docker container should automatically be building in your Github Container Registry.
 Furthermore, it should match the name specified in the MLproject file.
 If the Docker container is not available in your Github Container Registry for any reason you must build it locally.
 Run: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">ghcr.io/GITHUB_USERNAME/PROJECT_SLUG:version</span> <span class="pre">.</span></code>, where <code class="docutils literal notranslate"><span class="pre">PROJECT_SLUG</span></code> is your project’s name and <code class="docutils literal notranslate"><span class="pre">version</span></code> the current project version.
 The MLproject file can always be examined to determine the required Docker container tag.</p>
-</div>
-<div class="section" id="running-the-project-with-docker">
-<h3>Running the project with Docker<a class="headerlink" href="#running-the-project-with-docker" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="running-the-project-with-docker">
+<h3>Running the project with Docker<a class="headerlink" href="#running-the-project-with-docker" title="Permalink to this headline"></a></h3>
 <p>After having build the Docker container you can now launch your project with <code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">run</span> <span class="pre">.</span></code>.
 The Docker container will automatically spin up.</p>
 <p><strong>Note</strong> if you want to run your project with GPU support you must have the <a class="reference external" href="https://github.com/NVIDIA/nvidia-docker">NVIDIA Container Toolkit</a> installed.
 Moreover, you need to pass additional Docker runtime arguments e.g. <code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">run</span> <span class="pre">.</span> <span class="pre">-A</span> <span class="pre">gpus=all</span></code>, which makes all available GPUs accessible to the Docker container.</p>
-</div>
-<div class="section" id="running-the-project-with-conda">
-<h3>Running the project with Conda<a class="headerlink" href="#running-the-project-with-conda" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="running-the-project-with-conda">
+<h3>Running the project with Conda<a class="headerlink" href="#running-the-project-with-conda" title="Permalink to this headline"></a></h3>
 <p>Running the project using Conda is possible, but discouraged, since <a class="reference external" href="https://github.com/mlf-core/system-intelligence">system-intelligence</a> currently only really supports Linux.
 Comment out <code class="docutils literal notranslate"><span class="pre">docker_env</span></code> and comment in <code class="docutils literal notranslate"><span class="pre">conda_env</span></code>. Now run the project using e.g. <code class="docutils literal notranslate"><span class="pre">mlflow</span> <span class="pre">run</span> <span class="pre">.</span></code>.
 GPUs will be automatically be detected and used.</p>
-</div>
-</div>
-<div class="section" id="faq">
-<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="i-am-using-docker-but-no-gpus-are-used-for-training">
-<h3>I am using Docker but no GPUs are used for training!<a class="headerlink" href="#i-am-using-docker-but-no-gpus-are-used-for-training" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline"></a></h2>
+<section id="i-am-using-docker-but-no-gpus-are-used-for-training">
+<h3>I am using Docker but no GPUs are used for training!<a class="headerlink" href="#i-am-using-docker-but-no-gpus-are-used-for-training" title="Permalink to this headline"></a></h3>
 <p>Please ensure that you have CUDA configured, the <a class="reference external" href="https://github.com/NVIDIA/nvidia-docker">NVIDIA Container Toolkit</a> installed and pass <code class="docutils literal notranslate"><span class="pre">-A</span> <span class="pre">gpus=all</span></code> when running the project.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, Lukas Heumos.
-
-    </p>
+    <p>&#169; Copyright 2021, Lukas Heumos.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

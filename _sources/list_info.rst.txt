@@ -54,4 +54,3 @@ Invoke :code:`mlf-core info` *via*
 - ``DOMAIN`` : a domain for which mlf-core provides templates for. Example: ``mlflow``.
 
 - ``FRAMEWORK`` : A framework or library for which mlf-core provides templates for. Example: ``pytorch``.
-

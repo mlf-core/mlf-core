@@ -9,7 +9,7 @@ dependencies:
   - defaults::python=3.8.5
   - defaults::boto3==1.17.109
   - conda-forge::rich=10.11.0
-  - conda-forge::mlflow=1.19.0
+  - conda-forge::mlflow=1.20.2
   - conda-forge::scikit-learn=0.24.2
   - conda-forge::matplotlib=3.4.2
   - pip

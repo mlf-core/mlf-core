@@ -45,6 +45,10 @@ mlf-core
    :target: https://discord.gg/Mv8sAcq
    :alt: Discord
 
+Preprint
+--------
+
+`mlf-core: a framework for deterministic machine learning <https://arxiv.org/abs/2104.07651>`_
 
 Overview
 --------

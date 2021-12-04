@@ -15,5 +15,5 @@ full_name: Lukas Heumos
 email: lukas.heumos@posteo.net
 project_name: mlf-core
 project_short_description: Reproducible machine learning pipelines using mlflow.
-version: 1.11.3
+version: 1.11.4
 license: Apache2.0

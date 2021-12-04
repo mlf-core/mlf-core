@@ -50,7 +50,7 @@ Overview
 --------
 
 .. figure:: https://user-images.githubusercontent.com/31141763/110704981-02921c80-81f6-11eb-8775-bd73f565568c.png
-   :alt: mlf-core soverview
+   :alt: mlf-core overview
 
    mlf-core provides CPU and GPU deterministic machine learning templates based on MLflow, Conda, Docker and a strong Github integration.
    Templates are available for PyTorch, TensorFlow and XGBoost.

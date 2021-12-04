@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mlf-core"
-version = "1.11.4"  # <<COOKIETEMPLE_FORCE_BUMP>>
+version = "1.11.5"  # <<COOKIETEMPLE_FORCE_BUMP>>
 description = "Reproducible machine learning pipelines using mlflow."
 authors = ["Lukas Heumos <lukas.heumos@posteo.net>"]
 license = "Apache2.0"

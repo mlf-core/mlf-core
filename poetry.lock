@@ -687,7 +687,7 @@ python-versions = "*"
 
 [[package]]
 name = "mlflow"
-version = "1.23.0"
+version = "1.23.1"
 description = "MLflow: A Platform for ML Development and Productionization"
 category = "main"
 optional = false
@@ -719,7 +719,7 @@ sqlparse = ">=0.3.1"
 waitress = {version = "*", markers = "platform_system == \"Windows\""}
 
 [package.extras]
-aliyun_oss = ["aliyunstoreplugin"]
+aliyun-oss = ["aliyunstoreplugin"]
 extras = ["scikit-learn", "pyarrow", "boto3", "google-cloud-storage", "azureml-core (>=1.2.0)", "pysftp", "kubernetes", "mlserver (>=0.5.3)", "mlserver-mlflow (>=0.5.3)"]
 sqlserver = ["mlflow-dbstore"]
 
@@ -2161,8 +2161,8 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 mlflow = [
-    {file = "mlflow-1.23.0-py3-none-any.whl", hash = "sha256:345b3dd64140529e53ee34c2d34cb2e50e1dca440ec29d7f71628b26c59af8fa"},
-    {file = "mlflow-1.23.0.tar.gz", hash = "sha256:66a1959a5d09bd5f2bd46ba53233c964973c2ef7e16bb4498f1bcc61bb3403c5"},
+    {file = "mlflow-1.23.1-py3-none-any.whl", hash = "sha256:14d2b758f20d9172fc72237759d743dea233b9b698f58f770e76503a7a713fdc"},
+    {file = "mlflow-1.23.1.tar.gz", hash = "sha256:be64c34749965ffa8aed4db5113b57e3df2479abe5f00ffe0d6bed1329f42e0f"},
 ]
 mypy = [
     {file = "mypy-0.931-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:3c5b42d0815e15518b1f0990cff7a705805961613e701db60387e6fb663fe78a"},

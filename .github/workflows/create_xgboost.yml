@@ -51,7 +51,7 @@ jobs:
               run: bandit -r exploding_springfield -c exploding_springfield/.bandit.yml
 
             - name: Build Docker container
-              uses: docker/build-push-action@v1
+              uses: docker/build-push-action@v2.9.0
               with:
                   repository: ghcr.io/homergithub/exploding_springfield
                   tags: 0.1.0-SNAPSHOT
